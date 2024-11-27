@@ -7,7 +7,7 @@ public class PlayerSkill : MonoBehaviour
     [Header("Skill Settings")]
     public List<SkillSO> skills;
     private float[] cooldownTimers;
-    private int[] hitCounters;
+    private bool[] isBuffActive;
 
     void Start()
     {
@@ -25,12 +25,12 @@ public class PlayerSkill : MonoBehaviour
         if (skills == null || skills.Count == 0) return;
 
         cooldownTimers = new float[skills.Count];
-        hitCounters = new int[skills.Count];
+        isBuffActive = new bool[skills.Count];
 
         for (int i = 0; i < skills.Count; i++)
         {
             cooldownTimers[i] = 0f;
-            hitCounters[i] = 0;
+            isBuffActive[i] = false;
         }
     }
 
@@ -53,12 +53,12 @@ public class PlayerSkill : MonoBehaviour
         {
             SkillSO skill = skills[i];
 
-            if (skill.skillType == SkillSO.SkillType.Passive &&
-                skill.activationCondition == SkillSO.ActivationCondition.Cooldown &&
-                cooldownTimers[i] <= 0)
+            if (skill.skillType == SkillSO.SkillType.Passive && skill.activationCondition == SkillSO.ActivationCondition.Cooldown)
             {
-                ExecutePassiveSkill(skill);
-                cooldownTimers[i] = skill.cooldown;
+                if (cooldownTimers[i] <= 0 && !isBuffActive[i])
+                {
+                    StartCoroutine(ApplyPassiveSkill(skill, i));
+                }
             }
         }
     }
@@ -73,10 +73,6 @@ public class PlayerSkill : MonoBehaviour
         {
             return cooldownTimers[skillIndex] <= 0 && HasEnoughMana(skill.manaCost);
         }
-        else if (skill.activationCondition == SkillSO.ActivationCondition.HitBased)
-        {
-            return hitCounters[skillIndex] >= skill.requiredHits && HasEnoughMana(skill.manaCost);
-        }
 
         return false;
     }
@@ -88,7 +84,12 @@ public class PlayerSkill : MonoBehaviour
         Collider[] hitEnemies = Physics.OverlapSphere(position, skill.effectRange);
         foreach (var enemy in hitEnemies)
         {
-            // 적에게 데미지 처리
+            IDamageable damageable = enemy.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                float damage = skill.damagePercent;
+                //damageable.TakeDamage(damage);
+            }
         }
 
         ConsumeMana(skill.manaCost);
@@ -101,13 +102,37 @@ public class PlayerSkill : MonoBehaviour
 
     private IEnumerator ApplyBuffCoroutine(SkillSO skill)
     {
-        // 공격력 증가 구현
+        // 버프 효과 적용
+        IncreasePlayerAttack(skill.attackIncreasePercent);
+
         yield return new WaitForSeconds(skill.buffDuration);
+
+        // 버프 효과 종료
+        ResetPlayerAttack();
     }
 
-    public void ExecutePassiveSkill(SkillSO skill)
+    public void TriggerPassiveSkill(SkillSO skill)
     {
-        // 패시브 스킬 효과 구현
+        if (skill == null) return;
+
+        // 패시브 스킬 즉시 발동 로직
+        StartCoroutine(ApplyPassiveSkill(skill, skills.IndexOf(skill)));
+    }
+
+    private IEnumerator ApplyPassiveSkill(SkillSO skill, int skillIndex)
+    {
+        isBuffActive[skillIndex] = true;
+        cooldownTimers[skillIndex] = skill.cooldown;
+
+        // 패시브 스킬 효과 적용
+        IncreasePlayerAttack(skill.attackIncreasePercent);
+
+        yield return new WaitForSeconds(skill.buffDuration);
+
+        isBuffActive[skillIndex] = false;
+
+        // 패시브 효과 종료
+        ResetPlayerAttack();
     }
 
     private bool HasEnoughMana(int manaCost)
@@ -121,14 +146,15 @@ public class PlayerSkill : MonoBehaviour
         // 마나 소모 로직
     }
 
-    public void IncrementHitCounter(int skillIndex)
+    private void IncreasePlayerAttack(float percent)
     {
-        if (skillIndex < 0 || skillIndex >= hitCounters.Length) return;
+        // 플레이어의 공격력 증가
+        // 예시: playerStats.attackPower *= (1 + percent / 100);
+    }
 
-        SkillSO skill = skills[skillIndex];
-        if (skill.activationCondition == SkillSO.ActivationCondition.HitBased)
-        {
-            hitCounters[skillIndex]++;
-        }
+    private void ResetPlayerAttack()
+    {
+        // 플레이어의 공격력 원래대로 복구
+        // 예시: playerStats.ResetAttackPower();
     }
 }

@@ -16,7 +16,7 @@ public class SkillManager : Singleton<SkillManager>
         }
         else if (skill.skillType == SkillSO.SkillType.Passive)
         {
-            playerSkill.ExecutePassiveSkill(skill);
+            playerSkill.TriggerPassiveSkill(skill);
         }
     }
 }

@@ -15,15 +15,9 @@ public class StarterManager : Singleton<StarterManager>
 
     private void InitializeGame()
     {
-        // 데이터 매니저 초기화 및 데이터 로드
         InitializeDataManager();
-
-        // 다른 시스템 초기화
         InitializeGlobalSystems();
-
-        // 초기 씬 로드
         LoadInitialScene();
-
         isInitialized = true;
     }
 
