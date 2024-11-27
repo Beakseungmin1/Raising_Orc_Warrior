@@ -32,7 +32,7 @@ public class MonsterBattle : MonoBehaviour// IDamageable
 
     public void Die()
     {
-        // 애니메이션 재생
+        // 애니메이션 재생추가 예정
         gameObject.SetActive(false);
     }
 

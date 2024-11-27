@@ -35,7 +35,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     {
         while (monster != null && monster.GetActive())
         {
-            // 공격 애니메이션 재생
+            // 공격 애니메이션 재생예정
             // animator.SetTrigger("Attack");
             yield return new WaitForSeconds(attackDelay);
 
