@@ -15,9 +15,13 @@ public class ParallaxBackground : MonoBehaviour
     {
         if (backgrounds.Length > 0)
         {
-            Sprite sprite = backgrounds[0].GetComponent<SpriteRenderer>().sprite;
-            Texture2D texture = sprite.texture;
-            backgroundWidth = texture.width / sprite.pixelsPerUnit;
+            SpriteRenderer spriteRenderer = backgrounds[0].GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                Sprite sprite = spriteRenderer.sprite;
+                Texture2D texture = sprite.texture;
+                backgroundWidth = texture.width / sprite.pixelsPerUnit;
+            }
         }
     }
 
@@ -33,7 +37,7 @@ public class ParallaxBackground : MonoBehaviour
             if (backgrounds[i].position.x <= -backgroundWidth)
             {
                 int nextIndex = (i + 1) % backgrounds.Length;
-                backgrounds[i].position = new Vector3(backgrounds[nextIndex].position.x + backgroundWidth, backgrounds[i].position.y, backgrounds[i].position.z);
+                backgrounds[i].position = new Vector3(backgrounds[nextIndex].position.x + backgroundWidth, backgrounds[i].position.y);
             }
         }
     }

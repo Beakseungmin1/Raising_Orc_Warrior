@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour
+public class ObjectPool : Singleton<ObjectPool>
 {
     [SerializeField]
     private GameObject prefab;
@@ -50,6 +50,7 @@ public class ObjectPool : MonoBehaviour
     public void ReturnObject(GameObject obj)
     {
         obj.SetActive(false);
+        // 오브젝트 초기화 (위치 초기화 등 필요 시 추가)
         pool.Enqueue(obj);
     }
 }
