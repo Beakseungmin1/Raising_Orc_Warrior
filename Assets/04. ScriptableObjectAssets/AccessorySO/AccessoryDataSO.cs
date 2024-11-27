@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Accessory", menuName = "New Accessory")]
+[CreateAssetMenu(fileName = "Accessory", menuName = "Equipment/New Accessory")]
 public class AccessoryDataSO : ScriptableObject
 {
     [Header("AccessoryStat")]
@@ -12,7 +12,6 @@ public class AccessoryDataSO : ScriptableObject
     public Sprite icon;
     public Sprite inGameImage;
     public string accessoryName;
-    public string description;
     public Grade grade;
     public int upgradeLevel; //현재강화레벨
     public int rank; //해당 아이템의 등급. 1,2,3,4등급 있음.(1등급이 가장 높음)

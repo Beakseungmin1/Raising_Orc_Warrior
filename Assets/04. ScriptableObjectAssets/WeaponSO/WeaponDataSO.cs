@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu (fileName = "Weapon", menuName = "New Weapon")]
+[CreateAssetMenu (fileName = "Weapon", menuName = "Equipment/New Weapon")]
 public class WeaponDataSO : ScriptableObject
 {
     [Header("WeaponStat")]
@@ -12,10 +12,9 @@ public class WeaponDataSO : ScriptableObject
     public Sprite icon;
     public Sprite inGameImage;
     public string weaponName;
-    public string description;
     public Grade grade;
     public int upgradeLevel; //현재강화레벨
-    public int rank; //해당 아이템의 등급. 1,2,3,4등급 있음.(1등급이 가장 높음)
+    [Range(1,4)]public int rank; //해당 아이템의 등급. 1,2,3,4등급 있음.(1등급이 가장 높음)
     public int requireCubeForUpgrade; //강화에 필요한 큐브량
 
     [Header("Stacking")]
