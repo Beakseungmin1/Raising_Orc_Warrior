@@ -9,22 +9,45 @@ public class ParallaxBackground : MonoBehaviour
     private Transform[] backgrounds;
 
     private float backgroundWidth;
-    private bool isPaused = false;
+    private bool isBattlePaused = false;
 
     private void Start()
     {
         if (backgrounds.Length > 0)
         {
-            Sprite sprite = backgrounds[0].GetComponent<SpriteRenderer>().sprite;
-            Texture2D texture = sprite.texture;
-            backgroundWidth = texture.width / sprite.pixelsPerUnit;
+            SpriteRenderer spriteRenderer = backgrounds[0].GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                backgroundWidth = Mathf.Round(spriteRenderer.bounds.size.x);
+            }
+
+            // 배경을 초기 위치에 정확히 배치
+            for (int i = 1; i < backgrounds.Length; i++)
+            {
+                backgrounds[i].position = new Vector3(
+                    Mathf.Round(backgrounds[i - 1].position.x + backgroundWidth),
+                    backgrounds[i - 1].position.y,
+                    backgrounds[i - 1].position.z
+                );
+            }
+        }
+
+        BattleManager.Instance.OnBattleStart += PauseScroll;
+        BattleManager.Instance.OnBattleEnd += ResumeScroll;
+    }
+
+    private void OnDestroy()
+    {
+        if (BattleManager.Instance != null)
+        {
+            BattleManager.Instance.OnBattleStart -= PauseScroll;
+            BattleManager.Instance.OnBattleEnd -= ResumeScroll;
         }
     }
 
     private void Update()
     {
-        if (isPaused)
-            return;
+        if (isBattlePaused) return;
 
         for (int i = 0; i < backgrounds.Length; i++)
         {
@@ -32,19 +55,38 @@ public class ParallaxBackground : MonoBehaviour
 
             if (backgrounds[i].position.x <= -backgroundWidth)
             {
-                int nextIndex = (i + 1) % backgrounds.Length;
-                backgrounds[i].position = new Vector3(backgrounds[nextIndex].position.x + backgroundWidth, backgrounds[i].position.y, backgrounds[i].position.z);
+                float rightmostPosition = GetRightmostBackgroundPosition();
+                backgrounds[i].position = new Vector3(
+                    Mathf.Round(rightmostPosition + backgroundWidth),
+                    backgrounds[i].position.y,
+                    backgrounds[i].position.z
+                );
             }
         }
     }
 
-    public void PauseParallax()
+    private float GetRightmostBackgroundPosition()
     {
-        isPaused = true;
+        float maxX = backgrounds[0].position.x;
+
+        for (int i = 1; i < backgrounds.Length; i++)
+        {
+            if (backgrounds[i].position.x > maxX)
+            {
+                maxX = backgrounds[i].position.x;
+            }
+        }
+
+        return maxX;
     }
 
-    public void ResumeParallax()
+    private void PauseScroll()
     {
-        isPaused = false;
+        isBattlePaused = true;
+    }
+
+    private void ResumeScroll()
+    {
+        isBattlePaused = false;
     }
 }

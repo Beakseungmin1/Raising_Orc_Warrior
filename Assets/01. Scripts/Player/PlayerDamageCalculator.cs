@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerDamageCalculator : MonoBehaviour
 {
     public float TotalDamage;
-    public float basicDamage;
+    public float basicDamage = 10;
     public float WeaponDamage;
 
     public float GetTotalDamage()

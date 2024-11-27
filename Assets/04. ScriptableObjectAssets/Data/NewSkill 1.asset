@@ -12,10 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab55d9d3f7d1dbb4ab57a7a0fd4890e9, type: 3}
   m_Name: NewSkill 1
   m_EditorClassIdentifier: 
-  skillName: 
-  description: 
-  cooldown: 0
+  skillName: "\uBD88\uAF43 \uBCA0\uAE30"
+  description: "\uBC94\uC704 3 \uC774\uB0B4\uC758 \uC801 \uBAA8\uB450\uC5D0\uAC8C
+    \uACF5\uACA9\uB825\uC758 n%[3]\xD71.5\uB85C 1 \u2022 2\uD68C \uACF5\uACA9"
+  skillType: 0
+  activationCondition: 1
+  cooldown: 5
+  requiredHits: 12
   manaCost: 0
   skillEffectPrefab: {fileID: 0}
-  damage: 0
-  range: 0
+  effectRange: 3
+  damagePercent: 400
+  buffDuration: 0
+  attackIncreasePercent: 0
+  currentSkillLevel: 1
+  requireEmelardForUpgrade: 20
+  requiredSkillCardsForUpgrade: 2
+  currentStackAmount: 0
