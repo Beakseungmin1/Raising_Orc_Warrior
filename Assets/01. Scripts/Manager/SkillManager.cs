@@ -2,16 +2,21 @@ using UnityEngine;
 
 public class SkillManager : Singleton<SkillManager>
 {
-    public void ExecuteSkill(SkillSO skill, Vector3 position)
+    public void TriggerSkill(SkillSO skill, PlayerSkill playerSkill, Vector3 position)
     {
-        if (skill == null)
-        {
-            return;
-        }
+        if (skill == null || playerSkill == null) return;
 
-        if (skill.skillEffectPrefab != null)
+        if (skill.skillType == SkillSO.SkillType.Active)
         {
-            Instantiate(skill.skillEffectPrefab, position, Quaternion.identity);
+            playerSkill.ExecuteActiveSkill(skill, position);
+        }
+        else if (skill.skillType == SkillSO.SkillType.Buff)
+        {
+            playerSkill.ApplyBuff(skill);
+        }
+        else if (skill.skillType == SkillSO.SkillType.Passive)
+        {
+            playerSkill.ExecutePassiveSkill(skill);
         }
     }
 }
