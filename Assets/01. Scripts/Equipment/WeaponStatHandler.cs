@@ -9,4 +9,6 @@ public class WeaponStatHandler : MonoBehaviour
         // 1. 플레이어에 부착된 웨폰DataSO를 받아온다.
         // 그 공격력을 받아와서 플레이어에게 적용하기.
     }
+
+    
 }
