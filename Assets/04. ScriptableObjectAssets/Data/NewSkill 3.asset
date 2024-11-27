@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab55d9d3f7d1dbb4ab57a7a0fd4890e9, type: 3}
+  m_Name: NewSkill 3
+  m_EditorClassIdentifier: 
+  skillName: 
+  description: 
+  cooldown: 0
+  manaCost: 0
+  skillEffectPrefab: {fileID: 0}
+  damage: 0
+  range: 0
