@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBattle : MonoBehaviour
+public class PlayerBattle : MonoBehaviour, IDamageable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private float totalDamage;
+    private float attackSpeed;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+
+
+
+
 }
