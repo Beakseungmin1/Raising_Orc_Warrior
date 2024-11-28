@@ -40,7 +40,7 @@ public class PlayerSkill : MonoBehaviour
         {
             SkillSO skill = skills[i];
 
-            if (skill.activationCondition == SkillSO.ActivationCondition.Cooldown && cooldownTimers[i] > 0)
+            if (skill.activationCondition == ActivationCondition.Cooldown && cooldownTimers[i] > 0)
             {
                 cooldownTimers[i] -= Time.deltaTime;
             }
@@ -53,7 +53,7 @@ public class PlayerSkill : MonoBehaviour
         {
             SkillSO skill = skills[i];
 
-            if (skill.skillType == SkillSO.SkillType.Passive && skill.activationCondition == SkillSO.ActivationCondition.Cooldown)
+            if (skill.skillType == SkillType.Passive && skill.activationCondition == ActivationCondition.Cooldown)
             {
                 if (cooldownTimers[i] <= 0 && !isBuffActive[i])
                 {
@@ -69,7 +69,7 @@ public class PlayerSkill : MonoBehaviour
 
         SkillSO skill = skills[skillIndex];
 
-        if (skill.activationCondition == SkillSO.ActivationCondition.Cooldown)
+        if (skill.activationCondition == ActivationCondition.Cooldown)
         {
             return cooldownTimers[skillIndex] <= 0 && HasEnoughMana(skill.manaCost);
         }
