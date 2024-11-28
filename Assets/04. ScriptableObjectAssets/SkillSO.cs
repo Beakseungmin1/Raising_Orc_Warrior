@@ -3,19 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewSkill", menuName = "Skills/Skill")]
 public class SkillSO : ScriptableObject
 {
-    public enum SkillType
-    {
-        Active, // 일반 액티브 스킬
-        Buff, // 버프 스킬
-        Passive // 패시브 스킬
-    }
-
-    public enum ActivationCondition
-    {
-        Cooldown, // 쿨다운 기반 발동
-        HitBased // 공격 횟수 기반 발동
-    }
-
     [Header("Skill Details")]
     public string skillName; // 스킬 이름
     public string description; // 스킬 설명
@@ -40,7 +27,7 @@ public class SkillSO : ScriptableObject
 
 
     [Header("Gacha Data")]
-    //public Grade skillGrade; // 스킬 등급
+    public Grade skillGrade; // 스킬 등급
     public int currentSkillLevel; // 현재 스킬 레벨
     public int requireEmelardForUpgrade; // 업그레이드에 필요한 에메랄드 수
     public int requiredSkillCardsForUpgrade; // 업그레이드에 필요한 스킬 카드 수

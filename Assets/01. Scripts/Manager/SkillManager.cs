@@ -6,15 +6,15 @@ public class SkillManager : Singleton<SkillManager>
     {
         if (skill == null || playerSkill == null) return;
 
-        if (skill.skillType == SkillSO.SkillType.Active)
+        if (skill.skillType == SkillType.Active)
         {
             playerSkill.ExecuteActiveSkill(skill, position);
         }
-        else if (skill.skillType == SkillSO.SkillType.Buff)
+        else if (skill.skillType == SkillType.Buff)
         {
             playerSkill.ApplyBuff(skill);
         }
-        else if (skill.skillType == SkillSO.SkillType.Passive)
+        else if (skill.skillType == SkillType.Passive)
         {
             playerSkill.TriggerPassiveSkill(skill);
         }
