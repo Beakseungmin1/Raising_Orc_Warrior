@@ -18,10 +18,10 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        if (run)
-        {
-            transform.position += Vector3.right * Time.deltaTime;
-        }
+        //if (run)
+        //{
+        //    transform.position += Vector3.right * Time.deltaTime;
+        //}
         totalDamage = PlayerDamageCalculator.GetTotalDamage();
     }
 
