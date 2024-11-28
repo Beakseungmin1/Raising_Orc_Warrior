@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerBattle : MonoBehaviour, IDamageable
 {
-    public PlayerDamageCalculator PlayerDamageCalculator;
+    private PlayerDamageCalculator PlayerDamageCalculator;
+
 
     private float totalDamage; // 계산기에서 받아온 최종데미지
     private float attackSpeed; // 공격 속도 퍼센트 게이지로 만들어 딜레이 에서 빼줄예정
     private float attackDelay = 1f; // 공격 딜레이
-    private bool run = true;
 
     private void Start()
     {
@@ -18,20 +18,16 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        //if (run)
-        //{
-        //    transform.position += Vector3.right * Time.deltaTime;
-        //}
         totalDamage = PlayerDamageCalculator.GetTotalDamage();
     }
 
 
-    public void TakeDamage()
+    public void TakeDamage(float Damage)
     {
 
     }
 
-    IEnumerator PlayerAttack(MonsterBattle monster)
+    IEnumerator PlayerAttack(EnemyBattle monster)
     {
         while (monster != null && monster.GetActive())
         {
@@ -43,7 +39,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
             if (!monster.GetActive())
             {
-                run = true;
                 break;
             }
 
@@ -55,9 +50,19 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     {
         if (collision.CompareTag("Monster"))
         {
-            run = false;
-            MonsterBattle monster = collision.gameObject.GetComponent<MonsterBattle>();
+            BattleManager.Instance.StartBattle();
+            EnemyBattle monster = collision.gameObject.GetComponent<EnemyBattle>();
             StartCoroutine(PlayerAttack(monster));
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Monster"))
+        {
+            BattleManager.Instance.EndBattle();
+            EnemyBattle monster = collision.gameObject.GetComponent<EnemyBattle>();
+            StopCoroutine(PlayerAttack(monster));
         }
     }
 
