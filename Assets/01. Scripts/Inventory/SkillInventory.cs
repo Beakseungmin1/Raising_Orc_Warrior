@@ -1,27 +1,27 @@
 using System.Collections.Generic;
 
-public class SkillInventory : IInventory<SkillSO>
+public class SkillInventory : IInventory<SkillDataSO>
 {
-    private List<SkillSO> skills = new List<SkillSO>();
+    private List<SkillDataSO> skills = new List<SkillDataSO>();
 
-    public void AddItem(SkillSO item)
+    public void AddItem(SkillDataSO item)
     {
         skills.Add(item);
     }
 
-    public void RemoveItem(SkillSO item)
+    public void RemoveItem(SkillDataSO item)
     {
         skills.Remove(item);
     }
 
-    public SkillSO GetItem(string itemName)
+    public SkillDataSO GetItem(string itemName)
     {
         return skills.Find(skill => skill.itemName == itemName);
     }
 
-    public List<SkillSO> GetAllItems()
+    public List<SkillDataSO> GetAllItems()
     {
-        return new List<SkillSO>(skills);
+        return new List<SkillDataSO>(skills);
     }
 
     public int GetItemCount()

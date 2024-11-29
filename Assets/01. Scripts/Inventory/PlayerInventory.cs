@@ -13,11 +13,11 @@ public class PlayerInventory
         AccessoryInventory = new AccessoryInventory();
     }
 
-    public void AddItemToInventory(BaseItemSO item)
+    public void AddItemToInventory(BaseItemDataSO item)
     {
         switch (item)
         {
-            case SkillSO skill:
+            case SkillDataSO skill:
                 SkillInventory.AddItem(skill);
                 break;
 

@@ -32,11 +32,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5712696384022032913}
-  m_Father: {fileID: 8573410323382499698}
+  m_Father: {fileID: 5110291448583688984}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 200}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &7062269820477737808
@@ -1570,7 +1570,7 @@ GameObject:
   - component: {fileID: 7254092500688605525}
   - component: {fileID: 19477416220701326}
   m_Layer: 5
-  m_Name: WeaponFusionPopupUI
+  m_Name: WeaponFusionPopupPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1583,7 +1583,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4147468498059169223}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1595,11 +1595,11 @@ RectTransform:
   - {fileID: 8890875070684308557}
   - {fileID: 6584915853216263551}
   - {fileID: 8813685187148330549}
-  m_Father: {fileID: 8573410323382499698}
+  m_Father: {fileID: 5110291448583688984}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 30}
   m_SizeDelta: {x: 980, y: 1250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7254092500688605525
@@ -1805,9 +1805,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3090786643793032552}
-  - {fileID: 95398313294146780}
-  - {fileID: 5169669378130761608}
+  - {fileID: 5110291448583688984}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2120,6 +2118,66 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &4987347718463001216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5110291448583688984}
+  - component: {fileID: 5384570383165595257}
+  - component: {fileID: 6205094850913199965}
+  m_Layer: 5
+  m_Name: WeaponFusionPopupUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5110291448583688984
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4987347718463001216}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3090786643793032552}
+  - {fileID: 95398313294146780}
+  - {fileID: 5169669378130761608}
+  m_Father: {fileID: 8573410323382499698}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -30}
+  m_SizeDelta: {x: 980, y: 1460}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5384570383165595257
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4987347718463001216}
+  m_CullTransparentMesh: 1
+--- !u!114 &6205094850913199965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4987347718463001216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3db9d78b451ce384b9763ce765ab7feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5145390272179223803
 GameObject:
   m_ObjectHideFlags: 0
@@ -2363,11 +2421,11 @@ RectTransform:
   m_Children:
   - {fileID: 5928019246382346324}
   - {fileID: 7362169253207635769}
-  m_Father: {fileID: 8573410323382499698}
+  m_Father: {fileID: 5110291448583688984}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -50, y: -260}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 300, y: 60}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &9070992537246591046
@@ -2822,7 +2880,7 @@ GameObject:
   - component: {fileID: 7068506755850960088}
   - component: {fileID: 2489091901454601391}
   m_Layer: 5
-  m_Name: WeaponIconArea (1)
+  m_Name: WeaponIconArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

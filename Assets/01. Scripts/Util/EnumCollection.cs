@@ -31,3 +31,11 @@ public enum ActivationCondition
     Cooldown, // 쿨다운 기반 발동
     HitBased // 공격 횟수 기반 발동
 }
+
+public enum CurrencyType
+{
+    Gold,
+    Emerald,
+    Cube,
+    Diamond
+}

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SkillManager : Singleton<SkillManager>
 {
-    public void TriggerSkill(SkillSO skill, PlayerSkill playerSkill, Vector3 position)
+    public void TriggerSkill(SkillDataSO skill, PlayerSkill playerSkill, Vector3 position)
     {
         if (skill == null || playerSkill == null) return;
 
