@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerSkill : MonoBehaviour
 {
     [Header("Skill Settings")]
-    public List<SkillSO> skills;
+    public List<SkillDataSO> skills;
     private float[] cooldownTimers;
     private bool[] isBuffActive;
 
@@ -38,7 +38,7 @@ public class PlayerSkill : MonoBehaviour
     {
         for (int i = 0; i < skills.Count; i++)
         {
-            SkillSO skill = skills[i];
+            SkillDataSO skill = skills[i];
 
             if (skill.activationCondition == ActivationCondition.Cooldown && cooldownTimers[i] > 0)
             {
@@ -51,7 +51,7 @@ public class PlayerSkill : MonoBehaviour
     {
         for (int i = 0; i < skills.Count; i++)
         {
-            SkillSO skill = skills[i];
+            SkillDataSO skill = skills[i];
 
             if (skill.skillType == SkillType.Passive && skill.activationCondition == ActivationCondition.Cooldown)
             {
@@ -67,7 +67,7 @@ public class PlayerSkill : MonoBehaviour
     {
         if (skillIndex < 0 || skillIndex >= skills.Count) return false;
 
-        SkillSO skill = skills[skillIndex];
+        SkillDataSO skill = skills[skillIndex];
 
         if (skill.activationCondition == ActivationCondition.Cooldown)
         {
@@ -77,7 +77,7 @@ public class PlayerSkill : MonoBehaviour
         return false;
     }
 
-    public void ExecuteActiveSkill(SkillSO skill, Vector3 position)
+    public void ExecuteActiveSkill(SkillDataSO skill, Vector3 position)
     {
         if (skill == null) return;
 
@@ -95,12 +95,12 @@ public class PlayerSkill : MonoBehaviour
         ConsumeMana(skill.manaCost);
     }
 
-    public void ApplyBuff(SkillSO skill)
+    public void ApplyBuff(SkillDataSO skill)
     {
         StartCoroutine(ApplyBuffCoroutine(skill));
     }
 
-    private IEnumerator ApplyBuffCoroutine(SkillSO skill)
+    private IEnumerator ApplyBuffCoroutine(SkillDataSO skill)
     {
         // 버프 효과 적용
         IncreasePlayerAttack(skill.attackIncreasePercent);
@@ -111,7 +111,7 @@ public class PlayerSkill : MonoBehaviour
         ResetPlayerAttack();
     }
 
-    public void TriggerPassiveSkill(SkillSO skill)
+    public void TriggerPassiveSkill(SkillDataSO skill)
     {
         if (skill == null) return;
 
@@ -119,7 +119,7 @@ public class PlayerSkill : MonoBehaviour
         StartCoroutine(ApplyPassiveSkill(skill, skills.IndexOf(skill)));
     }
 
-    private IEnumerator ApplyPassiveSkill(SkillSO skill, int skillIndex)
+    private IEnumerator ApplyPassiveSkill(SkillDataSO skill, int skillIndex)
     {
         isBuffActive[skillIndex] = true;
         cooldownTimers[skillIndex] = skill.cooldown;
