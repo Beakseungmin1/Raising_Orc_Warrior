@@ -24,28 +24,28 @@ public class PlayerStat : MonoBehaviour
 
     public void EquipWeaponValue(Weapon weapon)
     {
-        float equipWeaponPower = attackPower * (weapon.atkIncreaseRate / 100);
-        attackPower += equipWeaponPower;
+        //float equipWeaponPower = attackPower * (weapon.atkIncreaseRate / 100);
+        //attackPower += equipWeaponPower;
 
     }
 
     public void unEquipWeaponValue(Weapon weapon)
     {
-        float equipWeaponPower = attackPower * (weapon.atkIncreaseRate / 100);
-        attackPower -= equipWeaponPower;
+        //float equipWeaponPower = attackPower * (weapon.atkIncreaseRate / 100);
+        //attackPower -= equipWeaponPower;
 
     }
 
     public void HoldIncreaseWeaponValue(Weapon weapon)
     {
-        float holdWeaponPower = attackPower * (weapon.atkIncreaseRate / 30 / 100);
-        attackPower += holdWeaponPower;
+        //float holdWeaponPower = attackPower * (weapon.atkIncreaseRate / 30 / 100);
+        //attackPower += holdWeaponPower;
         
-        float holdIncreaseCriticalPower = criticalIncreaseDamage * (weapon.criticalDamageBonus / 100);
-        criticalIncreaseDamage += holdIncreaseCriticalPower;
+        //float holdIncreaseCriticalPower = criticalIncreaseDamage * (weapon.criticalDamageBonus / 100);
+        //criticalIncreaseDamage += holdIncreaseCriticalPower;
 
-        float holdIncreaseGoldGain = extraGoldGainRate * (weapon.increaseGoldGainRate / 100);
-        extraGoldGainRate += holdIncreaseGoldGain;
+        //float holdIncreaseGoldGain = extraGoldGainRate * (weapon.increaseGoldGainRate / 100);
+        //extraGoldGainRate += holdIncreaseGoldGain;
     }
 
 }
