@@ -9,4 +9,5 @@ public abstract class BaseItemSO : ScriptableObject
     public Sprite icon; // 아이템 아이콘
     public Sprite inGameImage; // 인게임 이미지
     public Grade grade; // 등급
+
 }

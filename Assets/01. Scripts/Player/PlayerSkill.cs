@@ -88,7 +88,7 @@ public class PlayerSkill : MonoBehaviour
             if (damageable != null)
             {
                 float damage = skill.damagePercent;
-                //damageable.TakeDamage(damage);
+                damageable.TakeDamage(damage);
             }
         }
 
