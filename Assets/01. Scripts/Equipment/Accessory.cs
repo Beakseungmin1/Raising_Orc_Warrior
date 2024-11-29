@@ -26,9 +26,9 @@ public class Accessory : MonoBehaviour, IEquipment
         icon = GetComponent<Sprite>();
         inGameImage = GetComponent<Sprite>();
 
-        hpAndHpRecoveryIncreaseRate = accessoryDataSO.hpAndHpRecoveryIncreaseRate;
-        mpAndMpRecoveryIncreaseRate = accessoryDataSO.mpAndMpRecoveryIncreaseRate;
-        addEXPRate = accessoryDataSO.addEXPRate;
+        //hpAndHpRecoveryIncreaseRate = accessoryDataSO.hpAndHpRecoveryIncreaseRate;
+        //mpAndMpRecoveryIncreaseRate = accessoryDataSO.mpAndMpRecoveryIncreaseRate;
+        //addEXPRate = accessoryDataSO.addEXPRate;
         accessoryName = accessoryDataSO.itemName;
         grade = accessoryDataSO.grade;
         requireCubeForUpgrade = accessoryDataSO.requireCubeForUpgrade;
