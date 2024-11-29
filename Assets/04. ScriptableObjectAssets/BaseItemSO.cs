@@ -8,5 +8,4 @@ public abstract class BaseItemSO : ScriptableObject
     public Sprite inGameImage; // 인게임 이미지
     public Grade grade; // 등급
     public int currentSkillLevel; // 현재 강화 레벨
-    public int curStackAmount; // 현재 스택 수량
 }
