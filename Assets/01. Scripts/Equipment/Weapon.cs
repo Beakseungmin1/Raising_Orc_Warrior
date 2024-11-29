@@ -1,69 +1,48 @@
 using UnityEngine;
 
-public class Weapon : MonoBehaviour, IEquipment
+public class WeaponObject : MonoBehaviour
 {
-    public WeaponDataSO weaponDataSO;
-
-    [Header("WeaponStat")]
-    public float atkIncreaseRate; //공격력 증가율. 보유효과는 장착효과의 30%
-    public float criticalDamageBonus; //보유효과: 치명타 데미지
-    public float increaseGoldGainRate; //보유효과: 골드 획득량 증대량
-
-    [Header("Info")]
-    public Sprite icon;
+    [Header("Weapon Data")]
+    public WeaponDataSO weaponData;
     public Sprite inGameImage;
-    public string weaponName;
-    public Grade grade;
-    public int curLevel = 1; //현재강화레벨
-    [Range(1, 4)] public int rank; //해당 아이템의 등급. 1,2,3,4등급 있음.(1등급이 가장 높음)
-    public int requireCubeForUpgrade; //강화에 필요한 큐브량
+    public float enhancedAttackPower;
+    public int upgradeLevel = 0;
+    public int stackAmount = 0;
 
-    [Header("Stacking")]
-    public int curStackAmount = 1;
-
-    public void Awake()
+    public void InitializeWeapon(WeaponDataSO newWeaponData, float enhancedAtkPower, int upgradedLevel)
     {
-        icon = GetComponent<Sprite>();
-        inGameImage = GetComponent<Sprite>();
-
-        atkIncreaseRate = weaponDataSO.atkIncreaseRate;
-        criticalDamageBonus = weaponDataSO.criticalDamageBonus;
-        increaseGoldGainRate = weaponDataSO.increaseGoldGainRate;
-
-        icon = weaponDataSO.icon;
-        inGameImage = weaponDataSO.inGameImage;
-        weaponName = weaponDataSO.itemName;
-        grade = weaponDataSO.grade;
-        requireCubeForUpgrade = weaponDataSO.requireCubeForUpgrade;
+        weaponData = newWeaponData;
+        inGameImage = newWeaponData.inGameImage;
+        enhancedAttackPower = enhancedAtkPower;
+        upgradeLevel = upgradedLevel;
+        UpdateWeaponVisuals();
     }
 
-    public void Equip()
+    public void UpdateEnhancedData(float newAttackPower, int newUpgradeLevel)
     {
-        
+        enhancedAttackPower = newAttackPower;
+        upgradeLevel = newUpgradeLevel;
+        UpdateWeaponVisuals();
     }
 
-    public void Upgrade()
+    public void AddStack(int additionalStack)
     {
-        curLevel += 1;
+        stackAmount += additionalStack;
     }
 
-    public void UnEquip()
+    private void UpdateWeaponVisuals()
     {
-
+        //UIManager.Instance.UpdateWeaponUI(weaponData.itemName, inGameImage, enhancedAttackPower, upgradeLevel, stackAmount);
     }
 
-    public void Fusion()
+    public void PrintWeaponInfo()
     {
-
-    }
-
-    public void AddStackAmount(int count)
-    {
-        curStackAmount += count;
-    }
-
-    public void SubtractStackAmount(int count)
-    {
-        curStackAmount -= count;
+        Debug.Log($"--- 무기 정보 ---\n" +
+                  $"이름: {weaponData.itemName}\n" +
+                  $"등급: {weaponData.rank}\n" +
+                  $"기본 공격력 증가율: {weaponData.equipAtkIncreaseRate}\n" +
+                  $"강화 공격력: {enhancedAttackPower}\n" +
+                  $"강화 레벨: {upgradeLevel}\n" +
+                  $"스택: {stackAmount}\n");
     }
 }
