@@ -17,4 +17,13 @@ public class PlayerStat : MonoBehaviour
     private float NormalMonsterIncreaseDamage;
     private float BossMonsterIncreaseDamage;
 
+
+
+
+
+
+
+
+
+
 }
