@@ -1332,6 +1332,7 @@ GameObject:
   - component: {fileID: 1162108973397987441}
   - component: {fileID: 7446039874402491705}
   - component: {fileID: 3786882878375675602}
+  - component: {fileID: 4976785961199370416}
   m_Layer: 5
   m_Name: HUDPanel
   m_TagString: Untagged
@@ -1402,6 +1403,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4976785961199370416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7491918507310880899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a808ab5f6737d842920be6d3c5a75ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8329219567940056386
 GameObject:
   m_ObjectHideFlags: 0
