@@ -22,6 +22,26 @@ public class PlayerStat : MonoBehaviour
     private float normalMonsterIncreaseDamage;
     private float bossMonsterIncreaseDamage;
 
+    public void SetDefaultStat()
+    {
+        level = 1;
+        exp = 0;
+        attackPower = 20;
+        maxHealth = 20;
+        healthRegeneration = 0;
+        criticalProbability = 0;
+        criticalIncreaseDamage = 100;
+        maxMana = 20;
+        manaRegeneration = 10;
+        Avoid = 0;
+        extraGoldGainRate = 0;
+        extraExpRate = 0;
+        attackSpeed = 0;
+        normalMonsterIncreaseDamage = 0;
+        bossMonsterIncreaseDamage = 0;
+    }
+
+
     public void EquipWeaponValue(Weapon weapon)
     {
         //float equipWeaponPower = attackPower * (weapon.atkIncreaseRate / 100);
