@@ -7,7 +7,7 @@ public class UIManager : Singleton<UIManager>
 
     [SerializeField] private List<GameObject> prefabList = new List<GameObject>(); //프리팹
 
-    [SerializeField] private RectTransform canvas;
+    [SerializeField] private Transform canvas;
 
     private List<GameObject> uiList = new List<GameObject>(); //이미 생성된 리스트
 

@@ -1,67 +1,72 @@
 using UnityEngine;
 
-public class Accessory : MonoBehaviour, IEquipment
+[System.Serializable]
+public class Accessory : IEnhanceable, IFusable
 {
-    public AccessoryDataSO accessoryDataSO;
+    public AccessoryDataSO BaseData { get; private set; }
+    public int EnhancementLevel { get; private set; } // 현재 강화 레벨
+    public int StackCount { get; private set; } // 동일 악세사리 보유 개수
 
-    [Header("AccessoryStat")]
-    public float hpAndHpRecoveryIncreaseRate; //체력, 체력 회복량 증가율이다. 보유효과는 장착효과의 30%
-    public float mpAndMpRecoveryIncreaseRate; //보유효과 전체 마나, 마나회복량
-    public float addEXPRate; //보유효과 추가 경험치
-
-    [Header("Info")]
-    public Sprite icon;
-    public Sprite inGameImage;
-    public string accessoryName;
-    public Grade grade;
-    public int curLevel = 1; //현재강화레벨
-    [Range(1,5)]public int rank; //해당 아이템의 등급. 1,2,3,4등급 있음.(1등급이 가장 높음)
-    public int requireCubeForUpgrade; //강화에 필요한 큐브량
-
-    [Header("Stacking")]
-    public int curStackAmount = 1; //현재 보유량은 SO에 있는 게 X, 그냥 클래스자체에(악세서리프리팹 컴포넌트
-
-    public void Awake()
+    public Accessory(AccessoryDataSO baseData)
     {
-        icon = GetComponent<Sprite>();
-        inGameImage = GetComponent<Sprite>();
-
-        //hpAndHpRecoveryIncreaseRate = accessoryDataSO.hpAndHpRecoveryIncreaseRate;
-        //mpAndMpRecoveryIncreaseRate = accessoryDataSO.mpAndMpRecoveryIncreaseRate;
-        //addEXPRate = accessoryDataSO.addEXPRate;
-        accessoryName = accessoryDataSO.itemName;
-        grade = accessoryDataSO.grade;
-        requireCubeForUpgrade = accessoryDataSO.requireCubeForUpgrade;
+        BaseData = baseData;
+        EnhancementLevel = 0;
+        StackCount = 1;
     }
 
-    public void Equip()
+    public bool CanEnhance()
     {
-
+        return CurrencyManager.Instance.GetCurrency(CurrencyType.Cube) >= BaseData.requireCubeForUpgrade;
     }
 
-    public void Upgrade()
+    public bool Enhance()
     {
-        curLevel += 1;
+        if (!CanEnhance())
+        {
+            Debug.LogWarning("강화 실패! 큐브가 부족합니다.");
+            return false;
+        }
+
+        CurrencyManager.Instance.SubtractCurrency(CurrencyType.Cube, BaseData.requireCubeForUpgrade);
+        EnhancementLevel++;
+        Debug.Log($"악세사리 {BaseData.itemName} 강화 완료. 현재 레벨: {EnhancementLevel}");
+        return true;
     }
 
-    public void UnEquip()
+    public bool CanFuse()
     {
-
+        return StackCount >= BaseData.rank; // Rank별 요구 개수
     }
 
-    public void Fusion()
+    public bool Fuse()
     {
+        if (!CanFuse())
+        {
+            Debug.LogWarning("합성 실패! 보유 개수가 부족합니다.");
+            return false;
+        }
 
+        StackCount -= BaseData.rank;
+
+        AccessoryDataSO nextAccessory = DataManager.Instance.GetNextAccessory(BaseData.grade, BaseData.rank);
+        if (nextAccessory != null)
+        {
+            Debug.Log($"악세사리 합성 성공! 새로운 악세사리: {nextAccessory.itemName}");
+            return true;
+        }
+
+        Debug.LogWarning("합성 실패! 다음 단계의 악세사리 데이터를 찾을 수 없습니다.");
+        return false;
     }
 
-    public void AddStackAmount(int count)
+    public void AddStack(int count)
     {
-        curStackAmount += count; 
+        StackCount += count;
     }
 
-    public void SubtractStackAmount(int count)
+    public void RemoveStack(int count)
     {
-        curStackAmount -= count;
+        StackCount -= count;
+        if (StackCount < 0) StackCount = 0;
     }
-
 }
