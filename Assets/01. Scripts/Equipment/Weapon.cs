@@ -1,48 +1,72 @@
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+[System.Serializable]
+public class Weapon : IEnhanceable, IFusable
 {
-    [Header("Weapon Data")]
-    public WeaponDataSO weaponData;
-    public Sprite inGameImage;
-    public float enhancedAttackPower;
-    public int upgradeLevel = 0;
-    public int stackAmount = 0;
+    public WeaponDataSO BaseData { get; private set; }
+    public int EnhancementLevel { get; private set; }
+    public int StackCount { get; private set; }
 
-    public void InitializeWeapon(WeaponDataSO newWeaponData, float enhancedAtkPower, int upgradedLevel)
+    public Weapon(WeaponDataSO baseData)
     {
-        weaponData = newWeaponData;
-        inGameImage = newWeaponData.inGameImage;
-        enhancedAttackPower = enhancedAtkPower;
-        upgradeLevel = upgradedLevel;
-        UpdateWeaponVisuals();
+        BaseData = baseData;
+        EnhancementLevel = 0;
+        StackCount = 1;
     }
 
-    public void UpdateEnhancedData(float newAttackPower, int newUpgradeLevel)
+    public bool CanEnhance()
     {
-        enhancedAttackPower = newAttackPower;
-        upgradeLevel = newUpgradeLevel;
-        UpdateWeaponVisuals();
+        return CurrencyManager.Instance.GetCurrency(CurrencyType.Cube) >= BaseData.requireCubeForUpgrade;
     }
 
-    public void AddStack(int additionalStack)
+    public bool Enhance()
     {
-        stackAmount += additionalStack;
+        if (!CanEnhance())
+        {
+            Debug.LogWarning("강화 실패! 큐브가 부족합니다.");
+            return false;
+        }
+
+        CurrencyManager.Instance.SubtractCurrency(CurrencyType.Cube, BaseData.requireCubeForUpgrade);
+        EnhancementLevel++;
+        Debug.Log($"무기 {BaseData.itemName} 강화 완료. 현재 레벨: {EnhancementLevel}");
+        return true;
     }
 
-    private void UpdateWeaponVisuals()
+    public bool CanFuse()
     {
-        //UIManager.Instance.UpdateWeaponUI(weaponData.itemName, inGameImage, enhancedAttackPower, upgradeLevel, stackAmount);
+        return StackCount >= BaseData.rank;
     }
 
-    public void PrintWeaponInfo()
+    public bool Fuse()
     {
-        Debug.Log($"--- 무기 정보 ---\n" +
-                  $"이름: {weaponData.itemName}\n" +
-                  $"등급: {weaponData.rank}\n" +
-                  $"기본 공격력 증가율: {weaponData.equipAtkIncreaseRate}\n" +
-                  $"강화 공격력: {enhancedAttackPower}\n" +
-                  $"강화 레벨: {upgradeLevel}\n" +
-                  $"스택: {stackAmount}\n");
+        if (!CanFuse())
+        {
+            Debug.LogWarning("합성 실패! 보유 개수가 부족합니다.");
+            return false;
+        }
+
+        StackCount -= BaseData.rank;
+
+        WeaponDataSO nextWeapon = DataManager.Instance.GetNextWeapon(BaseData.grade, BaseData.rank);
+        if (nextWeapon != null)
+        {
+            Debug.Log($"무기 합성 성공! 새로운 무기: {nextWeapon.itemName}");
+            return true;
+        }
+
+        Debug.LogWarning("합성 실패! 다음 단계의 무기 데이터를 찾을 수 없습니다.");
+        return false;
+    }
+
+    public void AddStack(int count)
+    {
+        StackCount += count;
+    }
+
+    public void RemoveStack(int count)
+    {
+        StackCount -= count;
+        if (StackCount < 0) StackCount = 0;
     }
 }
