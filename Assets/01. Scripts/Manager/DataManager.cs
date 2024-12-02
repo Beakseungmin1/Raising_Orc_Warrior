@@ -4,13 +4,13 @@ using UnityEngine;
 public class DataManager : SingletonDontDestroy<DataManager>
 {
     [Header("Weapons")]
-    private List<WeaponDataSO> weaponDataList = new List<WeaponDataSO>();
+    private Dictionary<Grade, Dictionary<int, WeaponDataSO>> weaponDataDict = new Dictionary<Grade, Dictionary<int, WeaponDataSO>>();
 
     [Header("Accessories")]
-    private List<AccessoryDataSO> accessoryDataList = new List<AccessoryDataSO>();
+    private Dictionary<Grade, Dictionary<int, AccessoryDataSO>> accessoryDataDict = new Dictionary<Grade, Dictionary<int, AccessoryDataSO>>();
 
     [Header("Skills")]
-    private List<SkillDataSO> skillDataList = new List<SkillDataSO>();
+    private Dictionary<Grade, List<SkillDataSO>> skillDataDict = new Dictionary<Grade, List<SkillDataSO>>();
 
     protected override void Awake()
     {
@@ -20,40 +20,110 @@ public class DataManager : SingletonDontDestroy<DataManager>
 
     private void LoadAllData()
     {
-        weaponDataList.AddRange(Resources.LoadAll<WeaponDataSO>("Weapons"));
-        accessoryDataList.AddRange(Resources.LoadAll<AccessoryDataSO>("Accessories"));
-        skillDataList.AddRange(Resources.LoadAll<SkillDataSO>("Skills"));
+        // 무기 데이터 로드
+        foreach (var weapon in Resources.LoadAll<WeaponDataSO>("Weapons"))
+        {
+            if (!weaponDataDict.ContainsKey(weapon.grade))
+            {
+                weaponDataDict[weapon.grade] = new Dictionary<int, WeaponDataSO>();
+            }
+            weaponDataDict[weapon.grade][weapon.rank] = weapon;
+        }
 
-        Debug.Log($"무기 {weaponDataList.Count}개, 악세사리 {accessoryDataList.Count}개, 스킬 {skillDataList.Count}개 로드 완료");
+        // 악세사리 데이터 로드
+        foreach (var accessory in Resources.LoadAll<AccessoryDataSO>("Accessories"))
+        {
+            if (!accessoryDataDict.ContainsKey(accessory.grade))
+            {
+                accessoryDataDict[accessory.grade] = new Dictionary<int, AccessoryDataSO>();
+            }
+            accessoryDataDict[accessory.grade][accessory.rank] = accessory;
+        }
+
+        // 스킬 데이터 로드
+        foreach (var skill in Resources.LoadAll<SkillDataSO>("Skills"))
+        {
+            if (!skillDataDict.ContainsKey(skill.grade))
+            {
+                skillDataDict[skill.grade] = new List<SkillDataSO>();
+            }
+            skillDataDict[skill.grade].Add(skill);
+        }
+
+        Debug.Log("데이터 로드 완료");
     }
 
-    public WeaponDataSO GetWeaponData(string itemName)
+    // 무기 데이터 검색
+    public WeaponDataSO GetWeaponByGradeAndRank(Grade grade, int rank)
     {
-        return weaponDataList.Find(weapon => weapon.itemName == itemName);
+        if (weaponDataDict.ContainsKey(grade) && weaponDataDict[grade].ContainsKey(rank))
+        {
+            return weaponDataDict[grade][rank];
+        }
+        return null;
     }
 
-    public AccessoryDataSO GetAccessoryData(string itemName)
+    // 악세사리 데이터 검색
+    public AccessoryDataSO GetAccessoryByGradeAndRank(Grade grade, int rank)
     {
-        return accessoryDataList.Find(accessory => accessory.itemName == itemName);
+        if (accessoryDataDict.ContainsKey(grade) && accessoryDataDict[grade].ContainsKey(rank))
+        {
+            return accessoryDataDict[grade][rank];
+        }
+        return null;
     }
 
-    public SkillDataSO GetSkillData(string itemName)
+    // 스킬 데이터 무작위 검색
+    public SkillDataSO GetRandomSkillByGrade(Grade grade)
     {
-        return skillDataList.Find(skill => skill.itemName == itemName);
+        if (skillDataDict.ContainsKey(grade) && skillDataDict[grade].Count > 0)
+        {
+            int randomIndex = Random.Range(0, skillDataDict[grade].Count);
+            return skillDataDict[grade][randomIndex];
+        }
+        return null;
     }
 
-    public List<WeaponDataSO> GetAllWeaponData()
+    // 스킬 다음 단계 데이터 반환
+    public SkillDataSO GetNextSkill(Grade grade)
     {
-        return new List<WeaponDataSO>(weaponDataList); // 리스트 복사본 반환
+        // 다음 Grade의 스킬 중 하나를 무작위로 반환
+        Grade nextGrade = grade + 1;
+        if (skillDataDict.ContainsKey(nextGrade) && skillDataDict[nextGrade].Count > 0)
+        {
+            int randomIndex = Random.Range(0, skillDataDict[nextGrade].Count);
+            return skillDataDict[nextGrade][randomIndex];
+        }
+
+        Debug.LogWarning("다음 등급의 스킬 데이터를 찾을 수 없습니다.");
+        return null;
     }
 
-    public List<AccessoryDataSO> GetAllAccessoryData()
+    // 무기 다음 단계 데이터 반환
+    public WeaponDataSO GetNextWeapon(Grade grade, int rank)
     {
-        return new List<AccessoryDataSO>(accessoryDataList);
+        // Rank 1인 경우 다음 Grade의 Rank 4 반환
+        if (rank == 1)
+        {
+            Grade nextGrade = grade + 1;
+            return GetWeaponByGradeAndRank(nextGrade, 4);
+        }
+
+        // 그 외의 경우, 현재 Grade의 다음 Rank 반환
+        return GetWeaponByGradeAndRank(grade, rank - 1);
     }
 
-    public List<SkillDataSO> GetAllSkillData()
+    // 악세사리 다음 단계 데이터 반환
+    public AccessoryDataSO GetNextAccessory(Grade grade, int rank)
     {
-        return new List<SkillDataSO>(skillDataList);
+        // Rank 1인 경우 다음 Grade의 Rank 4 반환
+        if (rank == 1)
+        {
+            Grade nextGrade = grade + 1;
+            return GetAccessoryByGradeAndRank(nextGrade, 4);
+        }
+
+        // 그 외의 경우, 현재 Grade의 다음 Rank 반환
+        return GetAccessoryByGradeAndRank(grade, rank - 1);
     }
 }
