@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class WeaponFusionPopupUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void ShowWeaponUpgradePopupUI()
     {
-        
+        UIManager.Instance.Hide("WeaponFusionPopupUI");
+        UIManager.Instance.Show("WeaponUpgradePopupUI");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ExitBtn()
     {
-        
+        UIManager.Instance.Hide("DimmedImage");
+        UIManager.Instance.Hide("WeaponFusionPopupUI");
     }
 }

@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class HUDPanel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void ShowPlayerInfoPopupUI()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        UIManager.Instance.Show("DimmedImage");
+        UIManager.Instance.Show("PlayerInfoPopupUI");
     }
 }

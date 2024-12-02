@@ -1639,7 +1639,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6093082462370484101}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7042872858228115058}
+        m_TargetAssemblyTypeName: WeaponFusionPopupUI, Assembly-CSharp
+        m_MethodName: ExitBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4243631773122352614
 GameObject:
   m_ObjectHideFlags: 0
@@ -3433,7 +3445,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1280204721040017158}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7042872858228115058}
+        m_TargetAssemblyTypeName: WeaponFusionPopupUI, Assembly-CSharp
+        m_MethodName: ShowWeaponUpgradePopupUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8784428697539469695
 GameObject:
   m_ObjectHideFlags: 0

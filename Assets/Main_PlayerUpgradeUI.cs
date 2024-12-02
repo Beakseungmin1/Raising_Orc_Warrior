@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainButtonUI : MonoBehaviour
+public class Main_PlayerUpgradeUI : MonoBehaviour
 {
-
-    public void ShowCanvas(int index)
+    public void ShowMainUI(int index)
     {
         switch (index)
         {
             case 0:
-                UIManager.Instance.Show("PlayerLevelupBottomUI");
+                UIManager.Instance.Show("Main_PlayerUpgradeUI");
                 break;
             case 1:
-                UIManager.Instance.Show("SkillBottomUI");
+                UIManager.Instance.Show("Main_SkillUI");
                 break;
             case 2:
-                UIManager.Instance.Show("EquipmentBottomUI");
+                UIManager.Instance.Show("Main_EquipmentUI");
                 break;
             case 3:
                 Debug.Log("동료캔버스열기");
@@ -28,7 +27,12 @@ public class MainButtonUI : MonoBehaviour
                 Debug.Log("상점캔버스열기");
                 break;
         }
+        UIManager.Instance.Hide("Main_PlayerUpgradeUI");
     }
 
+    public void ShowPlayerInfoPopupUI()
+    {
+        UIManager.Instance.Show("DimmedImage");
+        UIManager.Instance.Show("PlayerInfoPopupUI");
+    }
 }
-

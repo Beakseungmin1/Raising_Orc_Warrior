@@ -11,6 +11,8 @@ public class UIManager : Singleton<UIManager>
 
     private List<GameObject> uiList = new List<GameObject>(); //이미 생성된 리스트
 
+
+
     public void Show(string uiName)
     {
         GameObject go = prefabList.Find(obj => obj.name == uiName); //이름이 같다면 반환해준다.
