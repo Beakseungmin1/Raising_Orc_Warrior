@@ -10,13 +10,13 @@ public class MainButtonUI : MonoBehaviour
         switch (index)
         {
             case 0:
-                UIManager.Instance.Show("PlayerLevelupBottomUICanvas");
+                UIManager.Instance.Show("PlayerLevelupBottomUI");
                 break;
             case 1:
-                UIManager.Instance.Show("SkillCanvas");
+                UIManager.Instance.Show("SkillBottomUI");
                 break;
             case 2:
-                UIManager.Instance.Show("EquipmentCanvas");
+                UIManager.Instance.Show("EquipmentBottomUI");
                 break;
             case 3:
                 Debug.Log("동료캔버스열기");
