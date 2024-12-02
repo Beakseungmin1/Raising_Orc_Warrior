@@ -19,6 +19,14 @@ public enum Grade
     Ultimate //불멸
 }
 
+public enum Rank
+{
+    Rank4 = 4,
+    Rank3 = 3,
+    Rank2 = 2,
+    Rank1 = 1
+}
+
 public enum SkillType
 {
     Active, // 일반 액티브 스킬
@@ -26,10 +34,18 @@ public enum SkillType
     Passive // 패시브 스킬
 }
 
+public enum EffectType
+{
+    OnPlayer,
+    OnMapCenter,
+    Projectile
+}
+
 public enum ActivationCondition
 {
     Cooldown, // 쿨다운 기반 발동
-    HitBased // 공격 횟수 기반 발동
+    HitBased, // 공격 횟수 기반 발동
+    Periodic  // 주기적 발동 (패시브 스킬)
 }
 
 public enum CurrencyType
