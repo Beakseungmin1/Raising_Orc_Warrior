@@ -3,54 +3,82 @@ using UnityEngine;
 
 public class ObjectPool : Singleton<ObjectPool>
 {
-    [SerializeField]
-    private GameObject prefab;
+    [System.Serializable]
+    private class Pool
+    {
+        public string prefabName;
+        public GameObject prefab;
+        public int initialSize = 10;
+        public Queue<GameObject> poolQueue = new Queue<GameObject>();
+    }
 
     [SerializeField]
-    private int initialPoolSize = 10;
+    private List<Pool> pools = new List<Pool>();
 
-    private Queue<GameObject> pool = new Queue<GameObject>();
+    private Dictionary<string, Pool> nameToPoolMap = new Dictionary<string, Pool>();
 
     private void Awake()
     {
-        InitializePool();
+        InitializePools();
     }
 
-    private void InitializePool()
+    private void InitializePools()
     {
-        for (int i = 0; i < initialPoolSize; i++)
+        foreach (var pool in pools)
         {
-            GameObject obj = CreateNewObject();
-            obj.SetActive(false);
-            pool.Enqueue(obj);
+            if (!nameToPoolMap.ContainsKey(pool.prefabName))
+            {
+                nameToPoolMap.Add(pool.prefabName, pool);
+
+                for (int i = 0; i < pool.initialSize; i++)
+                {
+                    GameObject obj = CreateNewObject(pool);
+                    obj.SetActive(false);
+                    pool.poolQueue.Enqueue(obj);
+                }
+            }           
         }
     }
 
-    private GameObject CreateNewObject()
+    private GameObject CreateNewObject(Pool pool)
     {
-        GameObject obj = Instantiate(prefab);
+        GameObject obj = Instantiate(pool.prefab);
         obj.transform.SetParent(this.transform);
         return obj;
     }
 
-    public GameObject GetObject()
+    public GameObject GetObject(string prefabName)
     {
-        if (pool.Count > 0)
+        if (!nameToPoolMap.ContainsKey(prefabName))
         {
-            GameObject obj = pool.Dequeue();
+            return null;
+        }
+
+        Pool pool = nameToPoolMap[prefabName];
+
+        if (pool.poolQueue.Count > 0)
+        {
+            GameObject obj = pool.poolQueue.Dequeue();
             obj.SetActive(true);
             return obj;
         }
         else
         {
-            return CreateNewObject();
+            return CreateNewObject(pool);
         }
     }
 
     public void ReturnObject(GameObject obj)
     {
         obj.SetActive(false);
-        // 오브젝트 초기화 (위치 초기화 등 필요 시 추가)
-        pool.Enqueue(obj);
+
+        foreach (var pool in pools)
+        {
+            if (pool.prefabName == obj.name.Replace("(Clone)", "").Trim())
+            {
+                pool.poolQueue.Enqueue(obj);
+                return;
+            }
+        }
     }
 }
