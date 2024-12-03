@@ -13,13 +13,14 @@ public class UIManager : Singleton<UIManager>
 
 
 
-    public void Show(string uiName)
+    public GameObject Show(string uiName)
     {
         GameObject go = prefabList.Find(obj => obj.name == uiName); //이름이 같다면 반환해준다.
 
         GameObject ui = Instantiate(go, canvas);
         ui.name = ui.name.Replace("(Clone)", "");
         uiList.Add(ui); //씬에 생성된 UI의 정보를 갖게된다.
+        return ui;
     }
 
     public void Hide(string uiName)
