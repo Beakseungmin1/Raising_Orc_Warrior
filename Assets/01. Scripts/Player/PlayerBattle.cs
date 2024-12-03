@@ -56,26 +56,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     }
 
-    //IEnumerator PlayerAttack(EnemyBattle monster)
-    //{
-    //    while (monster != null && monster.GetActive())
-    //    {
-    //        // 공격 애니메이션 재생예정
-    //        // animator.SetTrigger("Attack");
-    //        yield return new WaitForSeconds(attackDelay);
-
-    //        monster.TakeDamage(totalDamage);
-
-    //        if (!monster.GetActive())
-    //        {
-    //            currentState = State.Idle;
-    //            break;
-    //        }
-
-    //    }
-
-    //}
-
     private void PlayerAttack()
     {
         if (currentMonster != null && currentMonster.GetActive())
