@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    PlayerStat stat;
-    PlayerInventory inventory;
-    PlayerBattle PlayerBattle;
+    public PlayerStat stat;
+    public PlayerInventory inventory;
+    public PlayerBattle PlayerBattle;
 
     private void Awake()
     {
