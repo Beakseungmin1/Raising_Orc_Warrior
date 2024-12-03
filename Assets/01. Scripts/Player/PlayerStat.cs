@@ -42,6 +42,11 @@ public class PlayerStat : MonoBehaviour
     }
 
 
+    public float GetDamage()
+    {
+        return attackPower;
+    }
+
     public void EquipWeaponValue(Weapon weapon)
     {
         //float equipWeaponPower = attackPower * (weapon.atkIncreaseRate / 100);
@@ -67,5 +72,49 @@ public class PlayerStat : MonoBehaviour
         //float holdIncreaseGoldGain = extraGoldGainRate * (weapon.increaseGoldGainRate / 100);
         //extraGoldGainRate += holdIncreaseGoldGain;
     }
+
+    public void UseTimelimitBuffSkill(Skill skill)
+    {
+        float skillValue = skill.BaseData.attackIncreasePercent;
+        float skillTime = skill.BaseData.buffDuration;
+
+        StartCoroutine(BuffCoroutine(skillValue, skillTime));
+    }
+
+
+
+
+
+    private IEnumerator BuffCoroutine(float skillValue, float skillTime)
+    {
+        // 버프 적용
+        attackPower += attackPower * (skillValue / 100);
+
+        yield return new WaitForSeconds(skillTime);
+
+        attackPower -= attackPower * (skillValue / 100);
+    }
+
+    public void UseHealSkill(Skill skill)
+    {
+        float skillValue = skill.BaseData.attackIncreasePercent;
+
+        float Healhealth = maxHealth * (skillValue / 100);
+
+        if (health + Healhealth <= maxHealth)
+        {
+            health += Healhealth;
+        }
+        else
+        {
+            health = maxHealth;
+        }
+
+    }
+
+    
+
+
+
 
 }
