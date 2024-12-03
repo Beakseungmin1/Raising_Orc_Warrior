@@ -19,7 +19,7 @@ public class PlayerDamageCalculator : MonoBehaviour
     public void UpdateValue()
     {
         basicDamage = PlayerobjManager.Instance.Player.stat.GetDamage();
-        WeaponIncreaseDamage = basicDamage * (PlayerobjManager.Instance.Player.curWeapon.BaseData.equipAtkIncreaseRate / 100);
+        //WeaponIncreaseDamage = basicDamage * (PlayerobjManager.Instance.Player.curWeapon.BaseData.equipAtkIncreaseRate / 100);
 
 
     }
