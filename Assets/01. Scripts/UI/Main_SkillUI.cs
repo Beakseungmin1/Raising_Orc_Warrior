@@ -33,6 +33,6 @@ public class Main_SkillUI : MonoBehaviour
     public void ShowSkillInfoPopupUI()
     {
         UIManager.Instance.Show("DimmedImage");
-        UIManager.Instance.Show("SkillInfoPopupUI");
+        //UIManager.Instance.Show("SkillInfoPopupUI");
     }
 }

@@ -4,7 +4,8 @@ using UnityEngine;
 public class SkillDataSO : BaseItemDataSO
 {
     [Header("Skill Details")]
-    public string description; // 스킬 설명
+    public string description; // 스킬 데미지 설명
+    public string description2; // 스킬 설명
     public SkillType skillType; // 스킬 타입 (액티브, 버프, 패시브)
     public EffectType effectType; // 스킬 이펙트 타입
 

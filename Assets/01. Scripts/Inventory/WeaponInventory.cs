@@ -1,31 +1,54 @@
-using UnityEngine;
 using System.Collections.Generic;
 
 public class WeaponInventory : IInventory<WeaponDataSO>
 {
-    private List<WeaponDataSO> weapons = new List<WeaponDataSO>();
+    private Dictionary<WeaponDataSO, int> weapons = new Dictionary<WeaponDataSO, int>();
 
     public void AddItem(WeaponDataSO item)
     {
-        weapons.Add(item);
+        if (weapons.ContainsKey(item))
+        {
+            weapons[item]++;
+        }
+        else
+        {
+            weapons[item] = 1;
+        }
     }
 
     public void RemoveItem(WeaponDataSO item)
     {
-        weapons.Remove(item);
+        if (weapons.ContainsKey(item))
+        {
+            weapons[item]--;
+            if (weapons[item] <= 0)
+            {
+                weapons.Remove(item);
+            }
+        }
     }
 
     public WeaponDataSO GetItem(string itemName)
     {
-        return weapons.Find(weapon => weapon.itemName == itemName);
+        foreach (var weapon in weapons.Keys)
+        {
+            if (weapon.itemName == itemName)
+                return weapon;
+        }
+        return null;
+    }
+
+    public int GetItemStackCount(WeaponDataSO item)
+    {
+        return weapons.TryGetValue(item, out int count) ? count : 0;
     }
 
     public List<WeaponDataSO> GetAllItems()
     {
-        return new List<WeaponDataSO>(weapons);
+        return new List<WeaponDataSO>(weapons.Keys);
     }
 
-    public int GetItemCount()
+    public int GetTotalItemCount()
     {
         return weapons.Count;
     }
