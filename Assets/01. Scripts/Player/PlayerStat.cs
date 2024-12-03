@@ -68,4 +68,25 @@ public class PlayerStat : MonoBehaviour
         //extraGoldGainRate += holdIncreaseGoldGain;
     }
 
+    public void UseBuffSkill(Skill skill)
+    {
+        float skillValue = skill.BaseData.attackIncreasePercent;
+        float skillTime = skill.BaseData.buffDuration;
+
+        StartCoroutine(BuffCoroutine(skillValue, skillTime));
+    }
+
+    private IEnumerator BuffCoroutine(float skillValue, float skillTime)
+    {
+        // 버프 적용
+        attackPower += skillValue;
+
+        yield return new WaitForSeconds(skillTime);
+
+        // 버프 해제
+        attackPower -= skillValue;
+    }
+
+
+
 }
