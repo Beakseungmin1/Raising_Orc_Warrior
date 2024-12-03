@@ -4,7 +4,7 @@ using UnityEngine;
 public class ChapterSO : ScriptableObject
 {
     public int chapterNum;
-    public StageSO[] stageSOs;
+    //public StageSO[] stageSOs;
     public AudioClip chapterMusic;
 
     [Header("BackGround")]

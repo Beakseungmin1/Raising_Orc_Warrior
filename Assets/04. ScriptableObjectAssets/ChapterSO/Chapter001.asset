@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad4bb63e1f13adc49afaa97a03d08321, type: 3}
+  m_Name: Chapter001
+  m_EditorClassIdentifier: 
+  chapterNum: 1
+  stageSOs:
+  - {fileID: 11400000, guid: 015b1f5fedc26514fb86f82fca6e3c5a, type: 2}
+  - {fileID: 11400000, guid: 2770d7e05f325134a9784061ea1d823e, type: 2}
+  - {fileID: 11400000, guid: f9cf7699764fa304baba8d4764929497, type: 2}
+  - {fileID: 11400000, guid: 2689e113f2b523f46b46ebf938eae432, type: 2}
+  - {fileID: 11400000, guid: 25f0998ae1b481d48b6f2ea1f8924cce, type: 2}
+  chapterMusic: {fileID: 0}
+  bgSprite: {fileID: 21300000, guid: 9096b57e194dba3429c64b7b3f9f244b, type: 3}
+  chapterName: "\uC2DC\uC791\uC758 \uB545"
