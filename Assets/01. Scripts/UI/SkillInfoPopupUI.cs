@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillInfoPopupUI : MonoBehaviour
+public class SkillInfoPopupUI : UIBase
 {
     public void ExitBtn()
     {
-        UIManager.Instance.Hide("DimmedImage");
-        UIManager.Instance.Hide("SkillInfoPopupUI");
+        UIManager.Instance.Hide<DimmedUI>();
+        Hide();
     }
 }

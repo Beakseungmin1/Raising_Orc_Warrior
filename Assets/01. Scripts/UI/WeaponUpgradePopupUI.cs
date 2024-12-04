@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponUpgradePopupUI : MonoBehaviour
+public class WeaponUpgradePopupUI : UIBase
 {
     public void ShowWeaponFusionPopupUI()
     {
-        UIManager.Instance.Hide("WeaponUpgradePopupUI");
-        UIManager.Instance.Show("WeaponFusionPopupUI");
+        Hide();
+        UIManager.Instance.Show<WeaponFusionPopupUI>();
     }
 
     public void ExitBtn()
     {
-        UIManager.Instance.Hide("DimmedImage");
-        UIManager.Instance.Hide("WeaponUpgradePopupUI");
+        UIManager.Instance.Hide<DimmedUI>();
+        Hide();
     }
 }

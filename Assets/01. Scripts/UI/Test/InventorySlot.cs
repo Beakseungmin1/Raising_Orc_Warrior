@@ -43,10 +43,10 @@ public class InventorySlot : MonoBehaviour
     private void OnClickSlot()
     {
         // UIManager를 통해 SkillInfoPopupUI를 활성화하고, SkillDetailUI를 설정
-        var skillDetailUI = UIManager.Instance.Show("SkillInfoPopupUI").GetComponent<SkillDetailUI>();
-        if (skillDetailUI != null && skillData != null)
-        {
-            skillDetailUI.DisplaySkillDetails(skillData);
-        }
+        //var skillDetailUI = UIManager.Instance.Show("SkillInfoPopupUI").GetComponent<SkillDetailUI>();
+        //if (skillDetailUI != null && skillData != null)
+        //{
+        //    skillDetailUI.DisplaySkillDetails(skillData);
+        //}
     }
 }
