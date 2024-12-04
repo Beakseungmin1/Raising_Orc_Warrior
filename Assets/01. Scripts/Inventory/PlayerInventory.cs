@@ -22,17 +22,20 @@ public class PlayerInventory : MonoBehaviour
     {
         switch (item)
         {
-            case SkillDataSO skill:
+            case SkillDataSO skillData:
+                Skill skill = SkillInventory.GetItem(skillData.itemName) ?? new Skill(skillData);
                 SkillInventory.AddItem(skill);
                 OnSkillsChanged?.Invoke();
                 break;
 
-            case WeaponDataSO weapon:
+            case WeaponDataSO weaponData:
+                Weapon weapon = WeaponInventory.GetItem(weaponData.itemName) ?? new Weapon(weaponData);
                 WeaponInventory.AddItem(weapon);
                 OnWeaponsChanged?.Invoke();
                 break;
 
-            case AccessoryDataSO accessory:
+            case AccessoryDataSO accessoryData:
+                Accessory accessory = AccessoryInventory.GetItem(accessoryData.itemName) ?? new Accessory(accessoryData);
                 AccessoryInventory.AddItem(accessory);
                 OnAccessoriesChanged?.Invoke();
                 break;
@@ -47,19 +50,31 @@ public class PlayerInventory : MonoBehaviour
     {
         switch (item)
         {
-            case SkillDataSO skill:
-                SkillInventory.RemoveItem(skill);
-                OnSkillsChanged?.Invoke();
+            case SkillDataSO skillData:
+                Skill skill = SkillInventory.GetItem(skillData.itemName);
+                if (skill != null)
+                {
+                    SkillInventory.RemoveItem(skill);
+                    OnSkillsChanged?.Invoke();
+                }
                 break;
 
-            case WeaponDataSO weapon:
-                WeaponInventory.RemoveItem(weapon);
-                OnWeaponsChanged?.Invoke();
+            case WeaponDataSO weaponData:
+                Weapon weapon = WeaponInventory.GetItem(weaponData.itemName);
+                if (weapon != null)
+                {
+                    WeaponInventory.RemoveItem(weapon);
+                    OnWeaponsChanged?.Invoke();
+                }
                 break;
 
-            case AccessoryDataSO accessory:
-                AccessoryInventory.RemoveItem(accessory);
-                OnAccessoriesChanged?.Invoke();
+            case AccessoryDataSO accessoryData:
+                Accessory accessory = AccessoryInventory.GetItem(accessoryData.itemName);
+                if (accessory != null)
+                {
+                    AccessoryInventory.RemoveItem(accessory);
+                    OnAccessoriesChanged?.Invoke();
+                }
                 break;
 
             default:

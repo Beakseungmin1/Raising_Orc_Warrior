@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
-public class WeaponInventory : IInventory<WeaponDataSO>
+public class WeaponInventory : IInventory<Weapon>
 {
-    private Dictionary<WeaponDataSO, int> weapons = new Dictionary<WeaponDataSO, int>();
+    private Dictionary<Weapon, int> weapons = new Dictionary<Weapon, int>();
 
-    public void AddItem(WeaponDataSO item)
+    public void AddItem(Weapon item)
     {
         if (weapons.ContainsKey(item))
         {
@@ -16,7 +16,7 @@ public class WeaponInventory : IInventory<WeaponDataSO>
         }
     }
 
-    public void RemoveItem(WeaponDataSO item)
+    public void RemoveItem(Weapon item)
     {
         if (weapons.ContainsKey(item))
         {
@@ -28,24 +28,24 @@ public class WeaponInventory : IInventory<WeaponDataSO>
         }
     }
 
-    public WeaponDataSO GetItem(string itemName)
+    public Weapon GetItem(string itemName)
     {
         foreach (var weapon in weapons.Keys)
         {
-            if (weapon.itemName == itemName)
+            if (weapon.BaseData.itemName == itemName)
                 return weapon;
         }
         return null;
     }
 
-    public int GetItemStackCount(WeaponDataSO item)
+    public int GetItemStackCount(Weapon item)
     {
         return weapons.TryGetValue(item, out int count) ? count : 0;
     }
 
-    public List<WeaponDataSO> GetAllItems()
+    public List<Weapon> GetAllItems()
     {
-        return new List<WeaponDataSO>(weapons.Keys);
+        return new List<Weapon>(weapons.Keys);
     }
 
     public int GetTotalItemCount()

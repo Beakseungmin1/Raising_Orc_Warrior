@@ -1,51 +1,51 @@
 using System.Collections.Generic;
 
-public class SkillInventory : IInventory<SkillDataSO>
+public class SkillInventory : IInventory<Skill>
 {
-    private Dictionary<SkillDataSO, int> skills = new Dictionary<SkillDataSO, int>();
+    private Dictionary<Skill, int> skills = new Dictionary<Skill, int>();
 
-    public void AddItem(SkillDataSO item)
+    public void AddItem(Skill skill)
     {
-        if (skills.ContainsKey(item))
+        if (skills.ContainsKey(skill))
         {
-            skills[item]++;
+            skills[skill]++;
         }
         else
         {
-            skills[item] = 1;
+            skills[skill] = 1;
         }
     }
 
-    public void RemoveItem(SkillDataSO item)
+    public void RemoveItem(Skill skill)
     {
-        if (skills.ContainsKey(item))
+        if (skills.ContainsKey(skill))
         {
-            skills[item]--;
-            if (skills[item] <= 0)
+            skills[skill]--;
+            if (skills[skill] <= 0)
             {
-                skills.Remove(item);
+                skills.Remove(skill);
             }
         }
     }
 
-    public SkillDataSO GetItem(string itemName)
+    public Skill GetItem(string itemName)
     {
         foreach (var skill in skills.Keys)
         {
-            if (skill.itemName == itemName)
+            if (skill.BaseData.itemName == itemName)
                 return skill;
         }
         return null;
     }
 
-    public int GetItemStackCount(SkillDataSO item)
+    public int GetItemStackCount(Skill skill)
     {
-        return skills.TryGetValue(item, out int count) ? count : 0;
+        return skills.TryGetValue(skill, out int count) ? count : 0;
     }
 
-    public List<SkillDataSO> GetAllItems()
+    public List<Skill> GetAllItems()
     {
-        return new List<SkillDataSO>(skills.Keys);
+        return new List<Skill>(skills.Keys);
     }
 
     public int GetTotalItemCount()
