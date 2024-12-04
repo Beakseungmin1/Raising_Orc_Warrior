@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b47a7f738dfaec4aa384fe6ab378b38, type: 3}
-  m_Name: TestEnemy
+  m_Name: TestEnemy 3
   m_EditorClassIdentifier: 
   enemyCode: 1
   hp: 100
   maxHp: 100
-  sprite: {fileID: -7786538801905712091, guid: fea53425b09f2aa4b8888109780b0de5, type: 3}
+  sprite: {fileID: 21300000, guid: 296fa0f52e1fd47109c6fb6f17968669, type: 3}
   cooldown: 10
   skillEffectPrefab: {fileID: 0}
   effectRange: {fileID: 0}
