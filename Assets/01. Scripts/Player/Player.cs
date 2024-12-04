@@ -8,6 +8,11 @@ public class Player : MonoBehaviour
     public PlayerInventory inventory;
     public PlayerBattle PlayerBattle;
 
+    public Weapon curWeapon;
+
+
+
+
     private void Awake()
     {
         PlayerobjManager.Instance.Player = this;

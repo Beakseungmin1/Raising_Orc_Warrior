@@ -11,6 +11,7 @@ public class PlayerDamageCalculator : MonoBehaviour
     public float SkillIncreaseDamage;
 
 
+
     private void Start()
     {
         UpdateValue();
@@ -21,13 +22,17 @@ public class PlayerDamageCalculator : MonoBehaviour
         basicDamage = PlayerobjManager.Instance.Player.stat.GetDamage();
         //WeaponIncreaseDamage = basicDamage * (PlayerobjManager.Instance.Player.curWeapon.BaseData.equipAtkIncreaseRate / 100);
 
+        foreach (var skill in PlayerobjManager.Instance.Player.PlayerBattle.activeBuffSkills)
+        {
+            SkillIncreaseDamage += basicDamage * (skill.BaseData.attackIncreasePercent / 100);
+        }
 
     }
 
 
     public float GetTotalDamage()
     {
-        TotalDamage = basicDamage + WeaponIncreaseDamage;
+        TotalDamage = basicDamage + WeaponIncreaseDamage + SkillIncreaseDamage;
 
         return TotalDamage;
 
