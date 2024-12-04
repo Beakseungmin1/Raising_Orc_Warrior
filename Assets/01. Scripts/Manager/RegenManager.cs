@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class RegenManager : Singleton<RegenManager>
 {
@@ -10,6 +11,9 @@ public class RegenManager : Singleton<RegenManager>
 
     [SerializeField] private Transform field;
 
+    public int curEnemyCount; //적 개수
+    //액션으로 몬스터 죽을때마다 값을 받아와서 차감한다.
+    //0이 되면 스테이지매니저에 정보 전달한다.
 
     private void Start()
     {
@@ -17,12 +21,13 @@ public class RegenManager : Singleton<RegenManager>
         curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterNum];
 
         enemySOs = curChapterSO.stageSOs[StageManager.Instance.curStageNum].enemySOs;
+        curEnemyCount = enemySOs.Length;
         RegenStagesEnemy();
     }
 
     private void RegenStagesEnemy()
     {
-        for (int i = 0; i < enemySOs.Length; i++)
+        for (int i = 0; i < curEnemyCount; i++)
         {
             Transform enemyRegenPos = enemyRegenPoss[i];
             EnemySO enemySO = enemySOs[i];
@@ -46,4 +51,5 @@ public class RegenManager : Singleton<RegenManager>
         return enemy;
     }
 
+    
 }

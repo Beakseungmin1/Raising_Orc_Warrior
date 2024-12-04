@@ -36,4 +36,15 @@ public class Enemy : MonoBehaviour
         effectRange = enemySO.effectRange;
         damagePercent = enemySO.damagePercent;
     }
+
+    public void Die()
+    {
+        RegenManager.Instance.curEnemyCount--;
+
+        if (RegenManager.Instance.curEnemyCount <= 0)
+        {
+            RegenManager.Instance.curEnemyCount = 0;
+            StageManager.Instance.NextStage();
+        }
+    }
 }

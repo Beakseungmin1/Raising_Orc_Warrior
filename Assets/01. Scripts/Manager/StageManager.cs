@@ -37,7 +37,7 @@ public class StageManager : Singleton<StageManager>
         }
     }
 
-    private void NextStage()
+    public void NextStage()
     {
         curStageNum++;
     }

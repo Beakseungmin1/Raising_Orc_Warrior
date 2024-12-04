@@ -794,17 +794,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chapterSOs:
   - {fileID: 11400000, guid: 27bddaeb908c12f40ac301ab9b0f5943, type: 2}
-  stageSOs:
-  - {fileID: 11400000, guid: 015b1f5fedc26514fb86f82fca6e3c5a, type: 2}
-  - {fileID: 11400000, guid: 2770d7e05f325134a9784061ea1d823e, type: 2}
-  - {fileID: 11400000, guid: f9cf7699764fa304baba8d4764929497, type: 2}
-  - {fileID: 11400000, guid: 2689e113f2b523f46b46ebf938eae432, type: 2}
-  - {fileID: 11400000, guid: 25f0998ae1b481d48b6f2ea1f8924cce, type: 2}
+  - {fileID: 11400000, guid: feb03856ac8ad774a98c1a1fe79f3149, type: 2}
+  stageSOs: []
   chapterName: 
   stageName: 
   bgSprite: {fileID: 0}
-  curChapterNum: 0
-  curStageNum: 0
+  curChapterNum: 1
+  curStageNum: 1
 --- !u!4 &999174433
 Transform:
   m_ObjectHideFlags: 0
@@ -914,7 +910,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7249950515092072011, guid: 17af02ad8fc1ca347a2558c4b70c1f8d, type: 3}
       propertyPath: scrollSpeed
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7389099246524601256, guid: 17af02ad8fc1ca347a2558c4b70c1f8d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2403,9 +2399,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f34bd8d1e63f604db1cbae88e57a5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chapterSOs:
-  - {fileID: 11400000, guid: 27bddaeb908c12f40ac301ab9b0f5943, type: 2}
-  - {fileID: 11400000, guid: feb03856ac8ad774a98c1a1fe79f3149, type: 2}
   enemySOs: []
   enemyRegenPoss:
   - {fileID: 1029867470}
@@ -2419,6 +2412,7 @@ MonoBehaviour:
   - {fileID: 1537267822}
   - {fileID: 1184129276}
   field: {fileID: 1158462664}
+  curEnemyCount: 0
 --- !u!4 &2022926548
 Transform:
   m_ObjectHideFlags: 0
