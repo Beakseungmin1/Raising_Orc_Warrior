@@ -14,4 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySOs:
   - {fileID: 11400000, guid: 547484622fde0b94bb7d98e7f378db2c, type: 2}
+  - {fileID: 11400000, guid: 547484622fde0b94bb7d98e7f378db2c, type: 2}
+  - {fileID: 11400000, guid: 547484622fde0b94bb7d98e7f378db2c, type: 2}
+  - {fileID: 11400000, guid: 2a738d9562888be47b7fb8915a20d6b8, type: 2}
+  - {fileID: 11400000, guid: 2a738d9562888be47b7fb8915a20d6b8, type: 2}
+  - {fileID: 11400000, guid: 2a738d9562888be47b7fb8915a20d6b8, type: 2}
   chapterName: "\uC2DC\uC791\uC758 \uB545 \uB0A8\uBD80"

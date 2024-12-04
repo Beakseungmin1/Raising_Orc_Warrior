@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class RegenManager : Singleton<RegenManager>
 {
-    [SerializeField] private StageSO stageSO;
+    private ChapterSO curChapterSO;
     [SerializeField] private EnemySO[] enemySOs;
     [SerializeField] private Transform[] enemyRegenPoss;
 
     [SerializeField] private Transform field;
 
+
     private void Start()
     {
-        enemySOs = stageSO.enemySOs;
+        //스테이지매니저의 챕터SO를 참조한다.
+        curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterNum];
+
+        enemySOs = curChapterSO.stageSOs[StageManager.Instance.curStageNum].enemySOs;
         RegenStagesEnemy();
     }
 
