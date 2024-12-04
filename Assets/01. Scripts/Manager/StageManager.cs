@@ -11,8 +11,8 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] private List<StageSO> stageSOs;
 
     [Header("Info")]
-    [SerializeField] private int curChapterNum = 1;
-    [SerializeField] private int curStageNum = 1;
+    [SerializeField] private int curChapterNum = 0;
+    [SerializeField] private int curStageNum = 0;
     [SerializeField] private string chapterName;
     [SerializeField] private string stageName;
     [SerializeField] private Sprite bgSprite;
