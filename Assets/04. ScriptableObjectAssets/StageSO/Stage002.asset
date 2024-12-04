@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c8de651b269a284fb16532bcc548063, type: 3}
+  m_Name: Stage002
+  m_EditorClassIdentifier: 
+  enemySOs:
+  - {fileID: 11400000, guid: 547484622fde0b94bb7d98e7f378db2c, type: 2}
+  - {fileID: 11400000, guid: 547484622fde0b94bb7d98e7f378db2c, type: 2}
+  - {fileID: 11400000, guid: 2a738d9562888be47b7fb8915a20d6b8, type: 2}
+  - {fileID: 11400000, guid: 2a738d9562888be47b7fb8915a20d6b8, type: 2}
+  - {fileID: 11400000, guid: 2a738d9562888be47b7fb8915a20d6b8, type: 2}
+  - {fileID: 11400000, guid: 0783f9fb3ec7adb47b255a3cd822f7ea, type: 2}
+  - {fileID: 11400000, guid: 0783f9fb3ec7adb47b255a3cd822f7ea, type: 2}
+  chapterName: "\uC2DC\uC791\uC758 \uB545 \uC11C\uBD80"

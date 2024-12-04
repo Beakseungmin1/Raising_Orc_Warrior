@@ -43,6 +43,7 @@ public class ObjectPool : Singleton<ObjectPool>
     private GameObject CreateNewObject(Pool pool)
     {
         GameObject obj = Instantiate(pool.prefab);
+        obj.name = pool.prefabName;
         obj.transform.SetParent(this.transform);
         return obj;
     }
