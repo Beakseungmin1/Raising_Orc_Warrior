@@ -41,6 +41,17 @@ public class PlayerStat : MonoBehaviour
         bossMonsterIncreaseDamage = 0;
     }
 
+    public float GetMana()
+    {
+        return mana;
+    }
+
+    public void reduceMana(float value)
+    {
+        mana -= value;
+    }
+
+
 
     public float GetDamage()
     {
@@ -80,8 +91,6 @@ public class PlayerStat : MonoBehaviour
 
         StartCoroutine(BuffCoroutine(skillValue, skillTime));
     }
-
-
 
 
 
