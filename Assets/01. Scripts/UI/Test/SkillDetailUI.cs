@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class SkillDetailUI : MonoBehaviour
+public class SkillDetailUI : UIBase
 {
     [SerializeField] private TextMeshProUGUI skillNameTxt;
     [SerializeField] private TextMeshProUGUI skillDescription1Txt;
@@ -37,7 +38,7 @@ public class SkillDetailUI : MonoBehaviour
 
         equipSlotManager.PrepareSkillForEquip(currentSkill);
 
-        UIManager.Instance.Hide("SkillInfoPopupUI");
-        UIManager.Instance.Hide("DimmedImage");
+        UIManager.Instance.Hide<SkillInfoPopupUI>();
+        UIManager.Instance.Hide<DimmedUI>();
     }
 }

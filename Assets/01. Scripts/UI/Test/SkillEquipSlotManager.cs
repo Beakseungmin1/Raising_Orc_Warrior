@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillEquipSlotManager : MonoBehaviour
+public class SkillEquipSlotManager : UIBase
 {
     private List<SkillEquipSlot> equipSlots = new List<SkillEquipSlot>();
     private Skill skillToEquip;
@@ -48,20 +48,33 @@ public class SkillEquipSlotManager : MonoBehaviour
     {
         if (skillToEquip != null && slotIndex >= 0 && slotIndex < equipSlots.Count)
         {
+            // 이미 슬롯에 장착된 스킬을 제거
             Skill previouslyEquippedSkill = equipSlots[slotIndex].GetEquippedSkill();
             if (previouslyEquippedSkill != null)
             {
                 RemoveSkillFromPreviousSlot(previouslyEquippedSkill);
             }
 
+            // **새로운 스킬이 다른 슬롯에 이미 장착되어 있는지 확인**
+            if (IsSkillEquipped(skillToEquip.BaseData))
+            {
+                // 기존 슬롯에서 해당 스킬 제거
+                RemoveSkillFromPreviousSlot(skillToEquip);
+            }
+
+            // 선택한 슬롯에 스킬 장착
             equipSlots[slotIndex].EquipSkill(skillToEquip);
 
+            // EquipManager와 동기화
             equipManager.EquipSkill(skillToEquip, slotIndex);
 
             Debug.Log($"스킬 {skillToEquip.BaseData.itemName}이(가) 슬롯 {slotIndex}에 장착되었습니다.");
 
+            // 이벤트 호출 및 UI 업데이트
             OnSkillEquipped?.Invoke(skillToEquip);
             NotifySlotsUpdated();
+
+            // 스킬 장착 대기 상태 초기화
             skillToEquip = null;
         }
     }

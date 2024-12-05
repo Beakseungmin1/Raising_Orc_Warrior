@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillEquipSlot : MonoBehaviour
+public class SkillEquipSlot : UIBase
 {
     [SerializeField] private Image skillIcon;
     [SerializeField] private Button slotButton;
