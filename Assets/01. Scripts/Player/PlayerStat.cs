@@ -6,6 +6,7 @@ public class PlayerStat : MonoBehaviour
 {
     private float level;
     private float exp;
+    private float needExp;
     private float attackPower;
     private float health;
     private float maxHealth;
@@ -21,6 +22,23 @@ public class PlayerStat : MonoBehaviour
     private float attackSpeed;
     private float normalMonsterIncreaseDamage;
     private float bossMonsterIncreaseDamage;
+    private int attackLevel;
+    private int healthLevel;
+    private int healthRegenerationLevel;
+    private int criticalIncreaseDamageLevel;
+    private int criticalProbabilityLevel;
+    private int bluecriticalIncreaseDamageLevel;
+    private int bluecriticalProbabilityLevel;
+
+
+
+
+    public void OnAttackUpgrade()
+    {
+        //if 돈이 충분할시
+
+    }
+
 
     public void SetDefaultStat()
     {
