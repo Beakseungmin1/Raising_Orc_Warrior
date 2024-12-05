@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillInventorySlotManager : MonoBehaviour
+public class SkillInventorySlotManager : UIBase
 {
     [SerializeField] private List<SkillInventorySlot> inventorySlots;
     [SerializeField] private SkillEquipSlotManager skillEquipSlotManager;

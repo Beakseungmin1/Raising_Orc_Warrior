@@ -1,20 +1,28 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class StarterManager : Singleton<StarterManager>
 {
     private bool isInitialized = false;
+    private GameObject eventSystemObject;
+
 
     void Start()
     {
+
+        CreateInitialUI();
+        CreateEventSystem();
         if (!isInitialized)
         {
-            InitializeGame();
+            //InitializeGame();
         }
     }
 
     private void InitializeGame()
     {
+        //SetUI(); //start보다는 여기에 있는 게 나음.
+        //CreateEventSystem(); //start보다는 여기에 있는 게 나음.
         InitializeDataManager();
         InitializeGlobalSystems();
         LoadInitialScene();
@@ -46,5 +54,22 @@ public class StarterManager : Singleton<StarterManager>
     {
         string initialSceneName = "MainMenu";
         SceneManager.LoadScene(initialSceneName);
+    }
+
+    private void CreateInitialUI()
+    {
+        UIManager.Instance.Show<HUDPanel>();
+        UIManager.Instance.Show<StageInfoUI>();
+        UIManager.Instance.Show<Main_PlayerUpgradeUI>();
+    }
+
+    private void CreateEventSystem()
+    {
+        if (eventSystemObject == null)
+        {
+            eventSystemObject = new GameObject("EventSystem");
+            eventSystemObject.AddComponent<EventSystem>();
+            eventSystemObject.AddComponent<StandaloneInputModule>();
+        }
     }
 }
