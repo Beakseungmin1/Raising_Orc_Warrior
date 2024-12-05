@@ -12,7 +12,4 @@ public class AccessoryDataSO : BaseItemDataSO
 
     [Header("General Info")]
     public int rank;
-
-    [Header("Upgrade Info")]
-    public int requireCubeForUpgrade; // 강화에 필요한 큐브 수
 }
