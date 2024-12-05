@@ -21,20 +21,12 @@ public class StageManager : Singleton<StageManager>
 
     private void Awake()
     {
-        SetUI();
         SetStageList();
         chapterName = chapterSOs[curChapterNum].name;
         stageName = stageSOs[curStageNum].name;
 
         bgSprite = GetComponent<Sprite>();
         bgSprite = chapterSOs[curChapterNum].bgSprite;
-    }
-
-    private void SetUI()
-    {
-        UIManager.Instance.Show<HUDPanel>();
-        UIManager.Instance.Show<StageInfoUI>();
-        UIManager.Instance.Show<Main_PlayerUpgradeUI>();
     }
 
     private void SetStageList()
