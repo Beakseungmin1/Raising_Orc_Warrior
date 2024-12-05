@@ -16,7 +16,7 @@ public class Skill : IEnhanceable, IFusable
 
     public bool CanEnhance()
     {
-        return CurrencyManager.Instance.GetCurrency(CurrencyType.Emerald) >= BaseData.requireEmelardForUpgrade &&
+        return CurrencyManager.Instance.GetCurrency(CurrencyType.Emerald) >= BaseData.requiredCurrencyForUpgrade &&
                StackCount >= BaseData.requireSkillCardsForUpgrade;
     }
 
@@ -28,7 +28,7 @@ public class Skill : IEnhanceable, IFusable
             return false;
         }
 
-        CurrencyManager.Instance.SubtractCurrency(CurrencyType.Emerald, BaseData.requireEmelardForUpgrade);
+        CurrencyManager.Instance.SubtractCurrency(CurrencyType.Emerald, BaseData.requiredCurrencyForUpgrade);
         StackCount -= BaseData.requireSkillCardsForUpgrade;
 
         EnhancementLevel++;

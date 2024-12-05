@@ -16,7 +16,7 @@ public class Weapon : IEnhanceable, IFusable
 
     public bool CanEnhance()
     {
-        return CurrencyManager.Instance.GetCurrency(CurrencyType.Cube) >= BaseData.requireCubeForUpgrade;
+        return CurrencyManager.Instance.GetCurrency(CurrencyType.Cube) >= BaseData.requiredCurrencyForUpgrade;
     }
 
     public bool Enhance()
@@ -27,7 +27,7 @@ public class Weapon : IEnhanceable, IFusable
             return false;
         }
 
-        CurrencyManager.Instance.SubtractCurrency(CurrencyType.Cube, BaseData.requireCubeForUpgrade);
+        CurrencyManager.Instance.SubtractCurrency(CurrencyType.Cube, BaseData.requiredCurrencyForUpgrade);
         EnhancementLevel++;
         Debug.Log($"무기 {BaseData.itemName} 강화 완료. 현재 레벨: {EnhancementLevel}");
         return true;
