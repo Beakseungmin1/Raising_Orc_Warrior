@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-
-    [SerializeField] private Transform canvas;
-
     private List<UIBase> uiList = new List<UIBase>(); //捞固 积己等 府胶飘
     public static float ScreenWidth = 1080;
     public static float ScreenHeight = 1920;
@@ -32,6 +29,7 @@ public class UIManager : Singleton<UIManager>
         var canvasScaler = newCanvasObject.AddComponent<CanvasScaler>();
         canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         canvasScaler.referenceResolution = new Vector2(ScreenWidth, ScreenHeight);
+        canvasScaler.matchWidthOrHeight = 1;
 
         newCanvasObject.AddComponent<GraphicRaycaster>();
 
