@@ -16,20 +16,24 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 2fc732779b691bf48bc8899a2b44d408, type: 3}
   inGameImage: {fileID: 0}
   grade: 1
-  description: "10\uCD08\uAC04 \uC804\uCCB4 \uACF5\uACA9\uB825 +n%"
-  description2: "\uBD88\uC758 \uD798\uC744 \uC2E4\uC5B4 \uACF5\uACA9\uB825\uC744
-    \uAE09\uACA9\uD788 \uC62C\uB9AC\uB294 \uAE30\uC220"
+  gradeColor: {r: 0.44779414, g: 0.8301887, b: 0.043075833, a: 1}
+  currencyIcon: {fileID: 21300000, guid: 27dd9ee893a5df146bf63f9eac175270, type: 3}
+  requiredCurrencyForUpgrade: 100
+  currentLevel: 1
+  description: "\uBD88\uC758 \uD798\uC744 \uC2E4\uC5B4 \uACF5\uACA9\uB825\uC744 \uAE09\uACA9\uD788
+    \uC62C\uB9AC\uB294 \uAE30\uC220"
+  effectDescription: "10\uCD08\uAC04 \uC804\uCCB4 \uACF5\uACA9\uB825 +n%"
   skillType: 1
   effectType: 0
   activationCondition: 0
   cooldown: 17
   requiredHits: 0
   periodicInterval: 0
-  manaCost: 0
-  effectPrefab: {fileID: 4977641869697003404, guid: d38566189dfbe9c469a6ee3f0072008d, type: 3}
-  effectRange: 0
   damagePercent: 0
-  buffDuration: 3
-  attackIncreasePercent: 80
-  requireEmelardForUpgrade: 15
-  requireSkillCardsForUpgrade: 3
+  manaCost: 30
+  effectRange: 0
+  buffDuration: 5
+  attackIncreasePercent: 50
+  requireSkillCardsForUpgrade: 1
+  maxLevel: 100
+  effectPrefab: {fileID: 4977641869697003404, guid: d38566189dfbe9c469a6ee3f0072008d, type: 3}
