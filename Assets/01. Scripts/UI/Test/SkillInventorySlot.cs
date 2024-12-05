@@ -53,28 +53,28 @@ public class SkillInventorySlot : UIBase
         amountSlider.value = 0;
 
         UpdateSlotColor(false);
-
+        equippedTxt.gameObject.SetActive(false);
         slotButton.onClick.RemoveAllListeners();
     }
 
     private void OnClickSlot()
     {
         var dimmedUI = UIManager.Instance.Show<DimmedUI>();
-
         dimmedUI.canvas.sortingOrder = 4;
 
         if (skillData != null)
         {
             var skillDetailUIInstance = UIManager.Instance.Show<SkillInfoPopupUI>();
-
             skillDetailUIInstance.canvas.sortingOrder = 5;
 
             if (skillDetailUIInstance != null)
             {
+                int currentMaterialCount = PlayerobjManager.Instance.Player.inventory.SkillInventory.GetItemStackCount(skillData);
+
                 skillDetailUIInstance.Initialize(equipSlotManager);
-                skillDetailUIInstance.DisplaySkillDetails(skillData);
+                skillDetailUIInstance.DisplaySkillDetails(skillData, currentMaterialCount);
             }
-        }       
+        }
     }
 
     public void SetEquippedState(bool isEquipped)

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SkillEquipSlotManager : UIBase
 {
+    [SerializeField] private GameObject skillSlotPrefab;
+    [SerializeField] private Transform contentParent;
+    [SerializeField] private int slotCount = 8;
+
     private List<SkillEquipSlot> equipSlots = new List<SkillEquipSlot>();
     private Skill skillToEquip;
 
@@ -12,6 +16,8 @@ public class SkillEquipSlotManager : UIBase
     public event Action<List<Skill>> OnSlotsUpdated;
 
     private EquipManager equipManager;
+
+    public int SlotCount => equipSlots.Count;
 
     private void Start()
     {
@@ -22,21 +28,31 @@ public class SkillEquipSlotManager : UIBase
             return;
         }
 
-        InitializeSlots();
-        SyncEquipManager(); // EquipManager와 동기화
+        CreateSlots(slotCount);
+        SyncEquipManager();
     }
 
-    private void InitializeSlots()
+    private void CreateSlots(int slotCount)
     {
-        equipSlots = new List<SkillEquipSlot>(GetComponentsInChildren<SkillEquipSlot>());
-
-        for (int i = 0; i < equipSlots.Count; i++)
+        foreach (var slot in equipSlots)
         {
-            equipSlots[i].InitializeSlot(i, this);
+            Destroy(slot.gameObject);
+        }
+        equipSlots.Clear();
+
+        for (int i = 0; i < slotCount; i++)
+        {
+            GameObject slotObj = Instantiate(skillSlotPrefab, contentParent);
+            SkillEquipSlot slot = slotObj.GetComponent<SkillEquipSlot>();
+            if (slot != null)
+            {
+                slot.InitializeSlot(i, this);
+                equipSlots.Add(slot);
+            }
         }
 
-        Debug.Log($"[SkillEquipSlotManager] {equipSlots.Count}개의 슬롯이 초기화되었습니다.");
         NotifySlotsUpdated();
+        equipManager?.UpdateSkillSlotCount(SlotCount);
     }
 
     public void PrepareSkillForEquip(Skill skill)
@@ -48,33 +64,24 @@ public class SkillEquipSlotManager : UIBase
     {
         if (skillToEquip != null && slotIndex >= 0 && slotIndex < equipSlots.Count)
         {
-            // 이미 슬롯에 장착된 스킬을 제거
             Skill previouslyEquippedSkill = equipSlots[slotIndex].GetEquippedSkill();
             if (previouslyEquippedSkill != null)
             {
                 RemoveSkillFromPreviousSlot(previouslyEquippedSkill);
             }
 
-            // **새로운 스킬이 다른 슬롯에 이미 장착되어 있는지 확인**
             if (IsSkillEquipped(skillToEquip.BaseData))
             {
-                // 기존 슬롯에서 해당 스킬 제거
                 RemoveSkillFromPreviousSlot(skillToEquip);
             }
 
-            // 선택한 슬롯에 스킬 장착
             equipSlots[slotIndex].EquipSkill(skillToEquip);
 
-            // EquipManager와 동기화
             equipManager.EquipSkill(skillToEquip, slotIndex);
 
-            Debug.Log($"스킬 {skillToEquip.BaseData.itemName}이(가) 슬롯 {slotIndex}에 장착되었습니다.");
-
-            // 이벤트 호출 및 UI 업데이트
             OnSkillEquipped?.Invoke(skillToEquip);
             NotifySlotsUpdated();
 
-            // 스킬 장착 대기 상태 초기화
             skillToEquip = null;
         }
     }
@@ -90,7 +97,6 @@ public class SkillEquipSlotManager : UIBase
                 int slotIndex = equipSlots.IndexOf(slot);
                 equipManager.UnequipSkill(slotIndex);
 
-                Debug.Log($"스킬 {skill.BaseData.itemName}이(가) 이전 슬롯에서 제거되었습니다.");
                 OnSkillUnequipped?.Invoke(skill);
                 NotifySlotsUpdated();
                 return;
@@ -127,7 +133,7 @@ public class SkillEquipSlotManager : UIBase
         OnSlotsUpdated?.Invoke(updatedSkills);
     }
 
-    private void SyncEquipManager() // EquipManager의 스킬과 동기화
+    private void SyncEquipManager()
     {
         foreach (var slot in equipSlots)
         {
@@ -152,10 +158,5 @@ public class SkillEquipSlotManager : UIBase
             }
         }
         return equippedSkills;
-    }
-
-    public int GetSlotCount()
-    {
-        return equipSlots.Count;
     }
 }

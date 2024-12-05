@@ -3,18 +3,29 @@ using UnityEngine;
 
 public class SkillInventorySlotManager : UIBase
 {
-    [SerializeField] private List<SkillInventorySlot> inventorySlots;
+    [SerializeField] private GameObject skillSlotPrefab;
+    [SerializeField] private Transform contentParent;
+    [SerializeField] private int initialSlotCount = 8;
+
+    private List<SkillInventorySlot> inventorySlots = new List<SkillInventorySlot>();
     [SerializeField] private SkillEquipSlotManager skillEquipSlotManager;
     private PlayerInventory playerInventory;
 
     private void Start()
     {
         playerInventory = PlayerobjManager.Instance?.Player?.inventory;
+        if (playerInventory == null)
+        {
+            Debug.LogError("[SkillInventorySlotManager] PlayerInventory를 찾을 수 없습니다.");
+            return;
+        }
+
+        CreateSlotsIfNeeded(initialSlotCount);
+
         Initialize(playerInventory, skillEquipSlotManager);
 
-        // SkillEquipSlotManager 이벤트 구독
         skillEquipSlotManager.OnSkillEquipped += UpdateSkillSlotState;
-        skillEquipSlotManager.OnSkillUnequipped += UpdateSkillSlotState; // 장착 해제 이벤트 구독
+        skillEquipSlotManager.OnSkillUnequipped += UpdateSkillSlotState;
     }
 
     private void OnDestroy()
@@ -31,6 +42,25 @@ public class SkillInventorySlotManager : UIBase
         }
     }
 
+    private void CreateSlotsIfNeeded(int requiredSlotCount)
+    {
+        // 현재 슬롯 개수 확인
+        int currentSlotCount = inventorySlots.Count;
+
+        // 부족한 슬롯만 추가 생성
+        for (int i = currentSlotCount; i < requiredSlotCount; i++)
+        {
+            GameObject slotObj = Instantiate(skillSlotPrefab, contentParent);
+            SkillInventorySlot slot = slotObj.GetComponent<SkillInventorySlot>();
+            if (slot != null)
+            {
+                inventorySlots.Add(slot);
+            }
+        }
+
+        Debug.Log($"[SkillInventorySlotManager] {requiredSlotCount - currentSlotCount}개의 슬롯이 추가로 생성되었습니다.");
+    }
+
     public void Initialize(PlayerInventory inventory, SkillEquipSlotManager equipSlotManager)
     {
         playerInventory = inventory;
@@ -43,6 +73,9 @@ public class SkillInventorySlotManager : UIBase
     private void UpdateSkillInventory()
     {
         List<Skill> skillList = playerInventory.SkillInventory.GetAllItems();
+
+        // 필요한 만큼 슬롯을 동적으로 생성
+        CreateSlotsIfNeeded(skillList.Count);
 
         for (int i = 0; i < inventorySlots.Count; i++)
         {
