@@ -8,6 +8,7 @@ public class EnemyBattle : MonoBehaviour, IDamageable
 
     public float Hp;
     public float MaxHp;
+    public float giveExp;
 
     public PlayerBattle Player;
 
@@ -15,6 +16,7 @@ public class EnemyBattle : MonoBehaviour, IDamageable
     {
         Hp = data.hp;
         MaxHp = data.maxHp;
+        giveExp = 20;
     }
 
 
