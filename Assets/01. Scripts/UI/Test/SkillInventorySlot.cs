@@ -60,12 +60,10 @@ public class SkillInventorySlot : UIBase
     private void OnClickSlot()
     {
         var dimmedUI = UIManager.Instance.Show<DimmedUI>();
-        dimmedUI.canvas.sortingOrder = 4;
 
         if (skillData != null)
         {
             var skillDetailUIInstance = UIManager.Instance.Show<SkillInfoPopupUI>();
-            skillDetailUIInstance.canvas.sortingOrder = 5;
 
             if (skillDetailUIInstance != null)
             {

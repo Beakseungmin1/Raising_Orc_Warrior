@@ -9,6 +9,8 @@ public class UIManager : Singleton<UIManager>
     public static float ScreenWidth = 1080;
     public static float ScreenHeight = 1920;
 
+    private int currentSortingOrder = 0;
+
     public T Show<T>() where T : UIBase
     {
         string uiName = typeof(T).ToString(); //UIManager.Instance.Show<MainPopup>(); 으로 코드를 쓰면 MainPopup이 uiName으로 반영된다. T는 각종 클래스에 대응함.
@@ -36,7 +38,8 @@ public class UIManager : Singleton<UIManager>
         UIBase ui = Instantiate(prefab, newCanvasObject.transform);
         ui.name = ui.name.Replace("(Clone)", "");
         ui.canvas = canvas;
-        ui.canvas.sortingOrder = uiList.Count; //생성된 ui의 개수를 넣어주면 가장 앞에 나온다. 가장 최상단에 나옴.
+        currentSortingOrder++;
+        ui.canvas.sortingOrder = currentSortingOrder;
         return (T)ui;
     }
 
@@ -50,6 +53,15 @@ public class UIManager : Singleton<UIManager>
     {
         UIBase go = uiList.Find(obj => obj.name == uiName);
         uiList.Remove(go);
-        Destroy(go.canvas.gameObject);
+        if (go != null)
+        {
+            uiList.Remove(go);
+            Destroy(go.canvas.gameObject);
+
+            if (uiList.Count > 0)
+                currentSortingOrder = uiList[uiList.Count - 1].canvas.sortingOrder;
+            else
+                currentSortingOrder = 0;
+        }
     }
 }
