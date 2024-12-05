@@ -13,6 +13,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private State currentState;
     private PlayerDamageCalculator PlayerDamageCalculator;
+    private PlayerStat playerStat;
 
     private float totalDamage; // 계산기에서 받아온 최종데미지
     private float attackSpeed; // 공격 속도 퍼센트 게이지로 만들어 딜레이 에서 빼줄예정
@@ -24,6 +25,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     private void Start()
     {
         PlayerDamageCalculator = GetComponent<PlayerDamageCalculator>();
+        playerStat = GetComponent<PlayerStat>();
         currentState = State.Idle;
     }
 
@@ -65,8 +67,17 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         }
         else
         {
+            Debug.Log("몬스터 잡음");
             // 몬스터가 사망하면 Idle 상태로 전환
             currentState = State.Idle;
+
+            // 몬스터의 giveexp 값만큼 플레이어가 exp 획득
+            playerStat.AddExpFromMonsters(currentMonster);
+
+            // 플레이어 레벨 ui 업데이트
+            PlayerLevelInfoUI.Instance.UpdateLevelUI();
+
+            currentMonster = null;
         }
     }
 
@@ -95,13 +106,12 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Monster"))
-        {
-            currentMonster = null;
-            currentState = State.Idle;
-        }
-    }
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Monster"))
+    //    {
+    //        currentState = State.Idle;
+    //    }
+    //}
 
 }
