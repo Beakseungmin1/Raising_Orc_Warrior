@@ -1255,7 +1255,6 @@ GameObject:
   - component: {fileID: 7008138275206785427}
   - component: {fileID: 3479739219253574685}
   - component: {fileID: 9005895767813660667}
-  - component: {fileID: 5801968428177465800}
   m_Layer: 5
   m_Name: SkillInfoPopupUI
   m_TagString: Untagged
@@ -1339,23 +1338,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25b218b65c6c7604492f8fba6e5cc9ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5801968428177465800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2477519180338507594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e59b1874c6025be438a3042e8424f3f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
   skillNameTxt: {fileID: 4206926632638127524}
-  skillDescription1Txt: {fileID: 3513756666232854562}
-  skillDescription2Txt: {fileID: 2600902512899114532}
+  skillDescription1Txt: {fileID: 2600902512899114532}
+  skillDescription2Txt: {fileID: 3513756666232854562}
   skillImage: {fileID: 6452244958868022612}
   equipButton: {fileID: 8596471170249422410}
+  exitButton: {fileID: 5683693432822703628}
 --- !u!1 &2952740040551207950
 GameObject:
   m_ObjectHideFlags: 0
@@ -2266,9 +2255,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9005895767813660667}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SkillInfoPopupUI, Assembly-CSharp
-        m_MethodName: ExitBtn
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
