@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Main_EquipmentUI : MonoBehaviour
+public class Main_EquipmentUI : UIBase
 {
     public void ShowMainUI(int index)
     {
         switch (index)
         {
             case 0:
-                UIManager.Instance.Show("Main_PlayerUpgradeUI");
+                UIManager.Instance.Show<Main_PlayerUpgradeUI>();
                 break;
             case 1:
-                UIManager.Instance.Show("Main_SkillUI");
+                UIManager.Instance.Show<Main_SkillUI>();
                 break;
             case 2:
-                UIManager.Instance.Show("Main_EquipmentUI");
+                UIManager.Instance.Show<Main_EquipmentUI>();
                 break;
             case 3:
                 Debug.Log("동료캔버스열기");
@@ -27,12 +27,12 @@ public class Main_EquipmentUI : MonoBehaviour
                 Debug.Log("상점캔버스열기");
                 break;
         }
-        UIManager.Instance.Hide("Main_EquipmentUI");
+        Hide();
     }
 
     public void ShowEquipmentUpgradePopupUI()
     {
-        UIManager.Instance.Show("DimmedImage");
-        UIManager.Instance.Show("WeaponUpgradePopupUI");
+        UIManager.Instance.Show<DimmedUI>();
+        UIManager.Instance.Show<WeaponUpgradePopupUI>();
     }
 }

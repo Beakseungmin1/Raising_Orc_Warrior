@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HUDPanel : MonoBehaviour
+public class HUDPanel : UIBase
 {
     public void ShowPlayerInfoPopupUI()
     {
-        UIManager.Instance.Show("DimmedImage");
-        UIManager.Instance.Show("PlayerInfoPopupUI");
+        UIManager.Instance.Show<DimmedUI>();
+        UIManager.Instance.Show<PlayerInfoPopupUI>();
     }
 }

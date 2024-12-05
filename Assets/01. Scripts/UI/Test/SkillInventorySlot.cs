@@ -62,13 +62,13 @@ public class SkillInventorySlot : MonoBehaviour
     {
         if (skillData != null)
         {
-            var skillDetailUIInstance = UIManager.Instance.Show("SkillInfoPopupUI").GetComponent<SkillDetailUI>();
+            //var skillDetailUIInstance = UIManager.Instance.Show("SkillInfoPopupUI").GetComponent<SkillDetailUI>();
 
-            if (skillDetailUIInstance != null)
-            {
-                skillDetailUIInstance.Initialize(equipSlotManager);
-                skillDetailUIInstance.DisplaySkillDetails(skillData);
-            }
+            //if (skillDetailUIInstance != null)
+            //{
+            //    skillDetailUIInstance.Initialize(equipSlotManager);
+            //    skillDetailUIInstance.DisplaySkillDetails(skillData);
+            //}
         }
     }
 
