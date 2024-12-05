@@ -25,11 +25,11 @@ MonoBehaviour:
   cooldown: 17
   requiredHits: 0
   periodicInterval: 0
-  manaCost: 50
+  manaCost: 0
   effectPrefab: {fileID: 4977641869697003404, guid: d38566189dfbe9c469a6ee3f0072008d, type: 3}
   effectRange: 0
   damagePercent: 0
-  buffDuration: 10
+  buffDuration: 3
   attackIncreasePercent: 80
   requireEmelardForUpgrade: 15
-  requireSkillCardsForUpgrade: 2
+  requireSkillCardsForUpgrade: 3

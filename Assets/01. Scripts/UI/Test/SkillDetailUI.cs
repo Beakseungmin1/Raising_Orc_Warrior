@@ -5,37 +5,39 @@ using TMPro;
 public class SkillDetailUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI skillNameTxt;
-    [SerializeField] private TextMeshProUGUI skillDescription1Txt; // 첫 번째 설명
-    [SerializeField] private TextMeshProUGUI skillDescription2Txt; // 두 번째 설명
+    [SerializeField] private TextMeshProUGUI skillDescription1Txt;
+    [SerializeField] private TextMeshProUGUI skillDescription2Txt;
     [SerializeField] private Image skillImage;
     [SerializeField] private Button equipButton;
-    private SkillDataSO currentSkill;
 
-    public void DisplaySkillDetails(SkillDataSO skill)
+    private Skill currentSkill;
+    private SkillEquipSlotManager equipSlotManager;
+
+    public void Initialize(SkillEquipSlotManager manager)
+    {
+        equipSlotManager = manager;
+    }
+
+    public void DisplaySkillDetails(Skill skill)
     {
         currentSkill = skill;
 
-        // SO에서 데이터 불러오기
-        skillNameTxt.text = skill.itemName;
-        skillDescription1Txt.text = skill.description; // 첫 번째 설명
-        skillDescription2Txt.text = skill.description2; // 두 번째 설명
-        skillImage.sprite = skill.icon;
+        skillNameTxt.text = skill.BaseData.itemName;
+        skillDescription1Txt.text = skill.BaseData.description;
+        skillDescription2Txt.text = skill.BaseData.description2;
+        skillImage.sprite = skill.BaseData.icon;
 
-        // 버튼 이벤트 설정
         equipButton.onClick.RemoveAllListeners();
-        equipButton.onClick.AddListener(SetSkillToEquip);
+        equipButton.onClick.AddListener(PrepareSkillForEquip);
     }
 
-    private void SetSkillToEquip()
+    private void PrepareSkillForEquip()
     {
-        // 스킬 장착 준비
-        var skillSlotManager = FindObjectOfType<SkillSlotManager>();
-        if (skillSlotManager != null)
-        {
-            skillSlotManager.PrepareSkillForEquip(currentSkill);
-        }
+        if (currentSkill == null) return;
 
-        // UI 닫기
+        equipSlotManager.PrepareSkillForEquip(currentSkill);
+
         UIManager.Instance.Hide("SkillInfoPopupUI");
+        UIManager.Instance.Hide("DimmedImage");
     }
 }

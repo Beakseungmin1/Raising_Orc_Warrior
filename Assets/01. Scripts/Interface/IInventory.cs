@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public interface IInventory<T> where T : BaseItemDataSO
+public interface IInventory<T>
 {
     void AddItem(T item); // 아이템 추가
     void RemoveItem(T item); // 아이템 삭제

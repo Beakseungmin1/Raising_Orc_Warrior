@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
-public class AccessoryInventory : IInventory<AccessoryDataSO>
+public class AccessoryInventory : IInventory<Accessory>
 {
-    private Dictionary<AccessoryDataSO, int> accessories = new Dictionary<AccessoryDataSO, int>();
+    private Dictionary<Accessory, int> accessories = new Dictionary<Accessory, int>();
 
-    public void AddItem(AccessoryDataSO item)
+    public void AddItem(Accessory item)
     {
         if (accessories.ContainsKey(item))
         {
@@ -16,7 +16,7 @@ public class AccessoryInventory : IInventory<AccessoryDataSO>
         }
     }
 
-    public void RemoveItem(AccessoryDataSO item)
+    public void RemoveItem(Accessory item)
     {
         if (accessories.ContainsKey(item))
         {
@@ -28,24 +28,24 @@ public class AccessoryInventory : IInventory<AccessoryDataSO>
         }
     }
 
-    public AccessoryDataSO GetItem(string itemName)
+    public Accessory GetItem(string itemName)
     {
         foreach (var accessory in accessories.Keys)
         {
-            if (accessory.itemName == itemName)
+            if (accessory.BaseData.itemName == itemName)
                 return accessory;
         }
         return null;
     }
 
-    public int GetItemStackCount(AccessoryDataSO item)
+    public int GetItemStackCount(Accessory item)
     {
         return accessories.TryGetValue(item, out int count) ? count : 0;
     }
 
-    public List<AccessoryDataSO> GetAllItems()
+    public List<Accessory> GetAllItems()
     {
-        return new List<AccessoryDataSO>(accessories.Keys);
+        return new List<Accessory>(accessories.Keys);
     }
 
     public int GetTotalItemCount()

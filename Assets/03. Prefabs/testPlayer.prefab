@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d3a3a27b79e3e4a87abd26e2c26bb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeBuffSkills: []
 --- !u!114 &1201181367610977052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,7 +165,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TotalDamage: 0
   basicDamage: 10
-  WeaponDamage: 10
+  WeaponIncreaseDamage: 0
+  SkillIncreaseDamage: 0
 --- !u!50 &4312387512106555360
 Rigidbody2D:
   serializedVersion: 4
@@ -233,6 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 089daacc2b3cf954daf7100948978195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equipSlots: []
 --- !u!114 &4365298221228220091
 MonoBehaviour:
   m_ObjectHideFlags: 0
