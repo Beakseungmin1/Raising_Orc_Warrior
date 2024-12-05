@@ -23,13 +23,36 @@ public class EquipManager : MonoBehaviour
             Debug.LogError("[EquipManager] PlayerStat 또는 PlayerSkillHandler를 찾을 수 없습니다.");
         }
 
-        InitializeSkillSlots(); // 초기화 메서드 호출
+        InitializeSkillSlots(0); // 초기화 메서드 호출
     }
 
-    private void InitializeSkillSlots()
+    public void InitializeSkillSlots(int slotCount)
     {
-        // 초기화된 상태에서 null 값으로 슬롯 확보
-        EquippedSkills = new List<Skill> { null, null, null }; // 예: 3개의 슬롯
+        EquippedSkills = new List<Skill>();
+        for (int i = 0; i < slotCount; i++)
+        {
+            EquippedSkills.Add(null);
+        }
+
+        Debug.Log($"[EquipManager] 슬롯 초기화 완료. 슬롯 개수: {slotCount}");
+    }
+
+    public void UpdateSkillSlotCount(int newSlotCount)
+    {
+        if (newSlotCount > EquippedSkills.Count)
+        {
+            int slotsToAdd = newSlotCount - EquippedSkills.Count;
+            for (int i = 0; i < slotsToAdd; i++)
+            {
+                EquippedSkills.Add(null);
+            }
+        }
+        else if (newSlotCount < EquippedSkills.Count)
+        {
+            EquippedSkills.RemoveRange(newSlotCount, EquippedSkills.Count - newSlotCount);
+        }
+
+        Debug.Log($"[EquipManager] 슬롯 개수가 {newSlotCount}개로 업데이트되었습니다.");
     }
 
     public void EquipWeapon(WeaponDataSO weaponData)
