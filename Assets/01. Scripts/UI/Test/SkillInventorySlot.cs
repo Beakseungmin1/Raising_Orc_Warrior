@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SkillInventorySlot : MonoBehaviour
+public class SkillInventorySlot : UIBase
 {
     [SerializeField] private Image skillIcon;
     [SerializeField] private TextMeshProUGUI curAmountTxt;
@@ -31,7 +31,6 @@ public class SkillInventorySlot : MonoBehaviour
             maxAmountTxt.text = requiredAmount.ToString();
             amountSlider.value = (float)currentAmount / requiredAmount;
 
-            // 슬롯에 스킬이 추가되면 흰색으로 변경
             UpdateSlotColor(true);
 
             equippedTxt.gameObject.SetActive(isEquipped);
@@ -60,23 +59,28 @@ public class SkillInventorySlot : MonoBehaviour
 
     private void OnClickSlot()
     {
+        var dimmedUI = UIManager.Instance.Show<DimmedUI>();
+
+        dimmedUI.canvas.sortingOrder = 4;
+
         if (skillData != null)
         {
-            //var skillDetailUIInstance = UIManager.Instance.Show("SkillInfoPopupUI").GetComponent<SkillDetailUI>();
+            var skillDetailUIInstance = UIManager.Instance.Show<SkillInfoPopupUI>();
 
-            //if (skillDetailUIInstance != null)
-            //{
-            //    skillDetailUIInstance.Initialize(equipSlotManager);
-            //    skillDetailUIInstance.DisplaySkillDetails(skillData);
-            //}
-        }
+            skillDetailUIInstance.canvas.sortingOrder = 5;
+
+            if (skillDetailUIInstance != null)
+            {
+                skillDetailUIInstance.Initialize(equipSlotManager);
+                skillDetailUIInstance.DisplaySkillDetails(skillData);
+            }
+        }       
     }
 
     public void SetEquippedState(bool isEquipped)
     {
         equippedTxt.gameObject.SetActive(isEquipped);
 
-        // 슬롯 장착 해제 시 회색으로 복원
         UpdateSlotColor(!isEquipped);
     }
 
