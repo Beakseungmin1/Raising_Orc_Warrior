@@ -4,11 +4,24 @@ using UnityEngine;
 
 public class PlayerUpgradeStat : MonoBehaviour
 {
-    private int attack;
-    private int health;
-    private int healthRegeneration;
-    private int criticalIncreaseDamage;
-    private int criticalProbability;
-    private int bluecriticalIncreaseDamage;
-    private int bluecriticalProbability;
+
+    private int attackLevel;
+    private int healthLevel;
+    private int healthRegenerationLevel;
+    private int criticalIncreaseDamageLevel;
+    private int criticalProbabilityLevel;
+    private int bluecriticalIncreaseDamageLevel;
+    private int bluecriticalProbabilityLevel;
+
+    public void UpgradeAttackLevel()
+    {
+        
+    }
+
+
+
+
+
+
+
 }
