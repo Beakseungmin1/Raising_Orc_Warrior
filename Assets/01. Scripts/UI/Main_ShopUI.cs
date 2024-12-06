@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Main_ShopUI : UIBase
 {
+    private Summon Summon;
+
+    private void Awake()
+    {
+        Summon = GetComponent<Summon>();
+    }
+
     public void ShowMainUI(int index)
     {
         switch (index)
@@ -32,16 +39,16 @@ public class Main_ShopUI : UIBase
 
     public void OnWeaponSummonBtnClick(int SummonCount)
     {
-        SummonManager.Instance.SummonWeapon(SummonCount);
+        Summon.SummonWeapon(SummonCount);
     }
 
     public void OnAccSummonBtnClick(int SummonCount)
     {
-        SummonManager.Instance.SummonAccessary(SummonCount);
+        Summon.SummonAccessary(SummonCount);
     }
 
     public void OnSkillCardSummonBtnClick(int SummonCount)
     {
-        SummonManager.Instance.SummonSkillCard(SummonCount);
+        Summon.SummonSkillCard(SummonCount);
     }
 }
