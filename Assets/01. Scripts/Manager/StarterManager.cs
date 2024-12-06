@@ -7,7 +7,6 @@ public class StarterManager : Singleton<StarterManager>
     private bool isInitialized = false;
     private GameObject eventSystemObject;
 
-
     void Start()
     {
 

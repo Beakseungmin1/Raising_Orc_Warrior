@@ -24,7 +24,7 @@ public class Main_SkillUI : UIBase
                 Debug.Log("모험캔버스열기");
                 break;
             case 5:
-                Debug.Log("상점캔버스열기");
+                UIManager.Instance.Show<Main_ShopUI>();
                 break;
         }
         Hide();
