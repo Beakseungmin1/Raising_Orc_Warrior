@@ -6,7 +6,7 @@ public class SkillEquipSlotManager : UIBase
 {
     [SerializeField] private GameObject skillSlotPrefab;
     [SerializeField] private Transform contentParent;
-    [SerializeField] private int slotCount = 8;
+    [SerializeField] private int initialSlotCount = 8;
 
     private List<SkillEquipSlot> equipSlots = new List<SkillEquipSlot>();
     private Skill skillToEquip;
@@ -28,7 +28,7 @@ public class SkillEquipSlotManager : UIBase
             return;
         }
 
-        CreateSlots(slotCount);
+        CreateSlots(initialSlotCount);
         SyncEquipManager();
     }
 
