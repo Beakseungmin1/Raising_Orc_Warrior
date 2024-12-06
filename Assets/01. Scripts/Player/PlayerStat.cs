@@ -62,7 +62,7 @@ public class PlayerStat : MonoBehaviour
             int curNeedExp = needExp;
             exp -= curNeedExp;
             needExp = needExp * 2;
-            PlayerLevelInfoUI.Instance.UpdateLevelUI();
+            //PlayerLevelInfoUI.Instance.UpdateLevelUI();
         }
         else
         {
@@ -76,7 +76,7 @@ public class PlayerStat : MonoBehaviour
         //현재 돈에서 니드머니 빼기 기능 추가
         needAttackUpgradeMoney = attackLevel * 1000; //필요가격 수정예정
         attackPower = attackLevel * 4;
-        PlayerStatUpgradeUI.Instance.attackUi.UpdateAttackStatUI();
+        //PlayerStatUpgradeUI.Instance.attackUi.UpdateAttackStatUI();
     }
 
     public void HealthLevelUp()
@@ -86,7 +86,7 @@ public class PlayerStat : MonoBehaviour
         needHealthUpgradeMoney = healthLevel * 1000;
         maxHealth = healthLevel * 40;
         health += 40;
-        PlayerStatUpgradeUI.Instance.healthUi.UpdateHealthStatUI();
+        //PlayerStatUpgradeUI.Instance.healthUi.UpdateHealthStatUI();
     }
 
     public void HealthRegenerationLevelUp()
@@ -95,7 +95,7 @@ public class PlayerStat : MonoBehaviour
         //현재 돈에서 니드머니 빼기 기능 추가
         needHealthRegenerationUpgradeMoney = healthRegenerationLevel * 1000;
         healthRegeneration = healthRegenerationLevel * 4;
-        PlayerStatUpgradeUI.Instance.healthRegenUi.UpdateHealthRegenerationUI();
+        //PlayerStatUpgradeUI.Instance.healthRegenUi.UpdateHealthRegenerationUI();
     }
 
     public void CriticalIncreaseDamageLevelUp()
@@ -104,7 +104,7 @@ public class PlayerStat : MonoBehaviour
         //현재 돈에서 니드머니 빼기 기능 추가
         needCriticalIncreaseDamageUpgradeMoney = criticalIncreaseDamageLevel * 1000;
         criticalIncreaseDamage = criticalIncreaseDamageLevel;
-        PlayerStatUpgradeUI.Instance.criticalDamageUi.UpdateCriticalIncreaseDamageUI();
+        //PlayerStatUpgradeUI.Instance.criticalDamageUi.UpdateCriticalIncreaseDamageUI();
     }
 
     public void CriticalProbabilityLevelUp()
@@ -113,7 +113,7 @@ public class PlayerStat : MonoBehaviour
         //현재 돈에서 니드머니 빼기 기능 추가
         needCriticalProbabilityUpgradeMoney = criticalProbabilityLevel * 1000;
         criticalProbability = criticalProbabilityLevel * 0.1f;
-        PlayerStatUpgradeUI.Instance.criticalProbabilityUi.UpdateCriticalProbabilityUI();
+        //PlayerStatUpgradeUI.Instance.criticalProbabilityUi.UpdateCriticalProbabilityUI();
     }
 
     public void BlueCriticalIncreaseDamageLevelUp()
@@ -122,7 +122,7 @@ public class PlayerStat : MonoBehaviour
         //현재 돈에서 니드머니 빼기 기능 추가
         needBlueCriticalIncreaseDamageUpgradeMoney = bluecriticalIncreaseDamageLevel * 1000;
         bluecriticalIncreaseDamage = bluecriticalIncreaseDamageLevel;
-        PlayerStatUpgradeUI.Instance.blueCriticalDamageUi.UpdateblueCriticalIncreaseDamageStatUI();
+        //PlayerStatUpgradeUI.Instance.blueCriticalDamageUi.UpdateblueCriticalIncreaseDamageStatUI();
     }
 
     public void BlueCriticalProbabilityLevelUp()
@@ -131,7 +131,7 @@ public class PlayerStat : MonoBehaviour
         //현재 돈에서 니드머니 빼기 기능 추가
         needBlueCriticalProbabilityUpgradeMoney = bluecriticalProbabilityLevel * 1000;
         bluecriticalProbability = bluecriticalProbabilityLevel * 0.1f;
-        PlayerStatUpgradeUI.Instance.blueCriticalProbabilityUi.UpdateblueCriticalProbabilityStatUI();
+        //PlayerStatUpgradeUI.Instance.blueCriticalProbabilityUi.UpdateblueCriticalProbabilityStatUI();
     }
 
     public void SetDefaultStat()
