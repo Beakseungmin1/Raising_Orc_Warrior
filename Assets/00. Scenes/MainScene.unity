@@ -194,7 +194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7389099246524601256, guid: 17af02ad8fc1ca347a2558c4b70c1f8d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 16.8
       objectReference: {fileID: 0}
     - target: {fileID: 7389099246524601256, guid: 17af02ad8fc1ca347a2558c4b70c1f8d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -241,11 +241,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17af02ad8fc1ca347a2558c4b70c1f8d, type: 3}
---- !u!4 &124355283 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 150466895004680245, guid: 17af02ad8fc1ca347a2558c4b70c1f8d, type: 3}
-  m_PrefabInstance: {fileID: 124355282}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &263953502
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -457,7 +452,7 @@ PrefabInstance:
     - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
       propertyPath: field
       value: 
-      objectReference: {fileID: 124355283}
+      objectReference: {fileID: 1897463364}
     - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
       propertyPath: enemyRegenPoss.Array.data[0]
       value: 
@@ -972,6 +967,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c03e0db519b8b2488b4b9499a89b5e2, type: 3}
+--- !u!4 &1897463364 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8008408115907324945, guid: 17af02ad8fc1ca347a2558c4b70c1f8d, type: 3}
+  m_PrefabInstance: {fileID: 124355282}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1962555955 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1155664533143091486, guid: c04e37576c7eebe478462b9b0788215f, type: 3}
