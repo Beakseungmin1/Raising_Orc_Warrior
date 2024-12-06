@@ -40,7 +40,7 @@ public class PlayerStat : MonoBehaviour
     public float needBlueCriticalIncreaseDamageUpgradeMoney { get; private set; }
     public float needBlueCriticalProbabilityUpgradeMoney { get; private set; }
 
-    public Action UpdateStatUI;
+    public Action UpdateLevelStatUI;
 
     private void Start()
     {

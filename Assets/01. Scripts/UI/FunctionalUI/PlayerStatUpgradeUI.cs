@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStatUpgradeUI : Singleton<PlayerStatUpgradeUI>
+public class PlayerStatUpgradeUI : MonoBehaviour
 {
     public UpgradeTabUI attackUi;
     public UpgradeTabUI healthUi;

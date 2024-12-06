@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerLevelInfoUI : Singleton<PlayerLevelInfoUI>
+public class PlayerLevelInfoUI : MonoBehaviour
 {
     private PlayerStat stat;
 

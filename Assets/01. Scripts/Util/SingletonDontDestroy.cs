@@ -37,8 +37,7 @@ public class SingletonDontDestroy<T> : MonoBehaviour where T : Component
     {
         if (instance == null)
         {
-            instance = this as T;
-            DontDestroyOnLoad(gameObject);
+            SetupInstance();
         }
         else
         {
