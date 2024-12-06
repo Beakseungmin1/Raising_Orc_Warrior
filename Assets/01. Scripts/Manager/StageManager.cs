@@ -12,12 +12,14 @@ public class StageManager : Singleton<StageManager>
     public List<StageSO> stageSOs; //이 스테이지의 스테이지SO
 
     [Header("Info")]
-    [SerializeField] private string chapterName;
-    [SerializeField] private string stageName;
+    public string chapterName;
+    public string stageName;
     [SerializeField] private Sprite bgSprite;
 
     public int curChapterNum = 0;
     public int curStageNum = 0;
+
+    public Action onStageChanged; 
 
     private void Awake()
     {
@@ -41,5 +43,6 @@ public class StageManager : Singleton<StageManager>
     public void NextStage()
     {
         curStageNum++;
+        onStageChanged?.Invoke();
     }
 }
