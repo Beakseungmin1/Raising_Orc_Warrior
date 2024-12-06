@@ -4,47 +4,36 @@ using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
-    private int level;
-    private float exp;
-    private float needExp;
-    private float attackPower;
-    private float health;
-    private float maxHealth;
-    private float healthRegeneration;
-    private float criticalProbability;
-    private float criticalIncreaseDamage;
-    private float mana;
-    private float maxMana;
-    private float manaRegeneration;
-    private float Avoid;
-    private float extraGoldGainRate;
-    private float extraExpRate;
-    private float attackSpeed;
-    private float normalMonsterIncreaseDamage;
-    private float bossMonsterIncreaseDamage;
-    private int attackLevel;
-    private int healthLevel;
-    private int healthRegenerationLevel;
-    private int criticalIncreaseDamageLevel;
-    private int criticalProbabilityLevel;
-    private int bluecriticalIncreaseDamageLevel;
-    private int bluecriticalProbabilityLevel;
-
-    public int GetLevel()
-    {
-        return level;
-    }
-    public float GetExp()
-    {
-        return exp;
-    }
-    public float GetNeedExp()
-    {
-        return needExp;
-    }
-
-
-
+    public int level { get; private set; }
+    public float exp { get; private set; }
+    public float needExp { get; private set; }
+    public float attackPower { get; private set; }
+    public float health { get; private set; }
+    public float maxHealth { get; private set; }
+    public float healthRegeneration { get; private set; }
+    public float criticalProbability { get; private set; }
+    public float criticalIncreaseDamage { get; private set; }
+    public float mana { get; private set; }
+    public float maxMana { get; private set; }
+    public float manaRegeneration { get; private set; }
+    public float Avoid { get; private set; }
+    public float extraGoldGainRate { get; private set; }
+    public float extraExpRate { get; private set; }
+    public float attackSpeed { get; private set; }
+    public float normalMonsterIncreaseDamage { get; private set; }
+    public float bossMonsterIncreaseDamage { get; private set; }
+    public int attackLevel {  get; private set; }
+    public int healthLevel { get; private set; }
+    public int healthRegenerationLevel { get; private set; }
+    public int criticalIncreaseDamageLevel { get; private set; }
+    public int criticalProbabilityLevel { get; private set; }
+    public int bluecriticalIncreaseDamageLevel { get; private set; }
+    public int bluecriticalProbabilityLevel { get; private set; }
+    public float needAttackUpgradeMoney { get; private set; }
+    public float needHealthUpgradeMoney { get; private set; }
+    public float needHealthRegenerationUpgradeMoney { get; private set; }
+    public float needCriticalIncreaseDamageUpgradeMoney { get; private set; }
+    public float needCriticalProbabilityUpgradeMoney { get; private set; }
 
     private void Start()
     {
@@ -162,9 +151,18 @@ public class PlayerStat : MonoBehaviour
 
     }
 
-    
-
-
+    public int GetLevel()
+    {
+        return level;
+    }
+    public float GetExp()
+    {
+        return exp;
+    }
+    public float GetNeedExp()
+    {
+        return needExp;
+    }
 
 
 }
