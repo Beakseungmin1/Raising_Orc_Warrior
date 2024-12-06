@@ -364,6 +364,16 @@ MonoBehaviour:
   skill1: {fileID: 11400000, guid: 7cea4b16773fe114db7a86eb02f4985a, type: 2}
   skill2: {fileID: 11400000, guid: 603afa5e7f58b794a94d391af8c56404, type: 2}
   skill3: {fileID: 11400000, guid: 6f1272a844fc28c44a4df6a1eb5ec35b, type: 2}
+  weapon1: {fileID: 11400000, guid: debfef814216716488434a970a6d0278, type: 2}
+  weapon2: {fileID: 11400000, guid: 85c931af63fe185499df3a7912a9b376, type: 2}
+  weapon3: {fileID: 11400000, guid: b38eaa08e43ebc1459d345af86c43d07, type: 2}
+  weapon4: {fileID: 11400000, guid: 4e26611470e4be2449e9c460ccadf7fd, type: 2}
+  weapon5: {fileID: 11400000, guid: 0387b50f76953e540992d65b807bda1c, type: 2}
+  accessory1: {fileID: 11400000, guid: 8b28910729210134ba19d00554f39f1a, type: 2}
+  accessory2: {fileID: 11400000, guid: d9fbe8e38f5a51d4396979d72dafd0a2, type: 2}
+  accessory3: {fileID: 11400000, guid: f9ebd8a48c3586b4eab52032eac94c4c, type: 2}
+  accessory4: {fileID: 11400000, guid: d294ca0738c2c7746afa6a2909bae6be, type: 2}
+  accessory5: {fileID: 11400000, guid: df83d9ed49973e044980020efaec50ae, type: 2}
 --- !u!4 &1033885162
 Transform:
   m_ObjectHideFlags: 0
