@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Accessory 0
   m_EditorClassIdentifier: 
   itemName: "\uB179\uC2A8 \uD314\uCC0C"
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: faf451a5697297b449fa111ec7203638, type: 3}
   inGameImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   grade: 0
   gradeColor: {r: 0, g: 0, b: 0, a: 0}
   currencyIcon: {fileID: 0}
   requiredCurrencyForUpgrade: 0
-  currentLevel: 0
+  currentLevel: 1
   equipHpAndHpRecoveryIncreaseRate: 0
   passiveMpAndMpRecoveryIncreaseRate: 0
   passiveAddEXPRate: 0
-  rank: 4
+  rank: 1

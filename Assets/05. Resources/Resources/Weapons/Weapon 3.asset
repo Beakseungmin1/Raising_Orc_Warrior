@@ -16,8 +16,11 @@ MonoBehaviour:
   icon: {fileID: 0}
   inGameImage: {fileID: 0}
   grade: 0
+  gradeColor: {r: 0, g: 0, b: 0, a: 0}
+  currencyIcon: {fileID: 0}
+  requiredCurrencyForUpgrade: 0
+  currentLevel: 1
   equipAtkIncreaseRate: 5
   passiveCriticalDamageBonus: 0
   passiveGoldGainRate: 0
   rank: 4
-  requireCubeForUpgrade: 5

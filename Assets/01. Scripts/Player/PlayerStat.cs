@@ -1,50 +1,46 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
-    private int level;
-    private float exp;
-    private float needExp;
-    private float attackPower;
-    private float health;
-    private float maxHealth;
-    private float healthRegeneration;
-    private float criticalProbability;
-    private float criticalIncreaseDamage;
-    private float mana;
-    private float maxMana;
-    private float manaRegeneration;
-    private float Avoid;
-    private float extraGoldGainRate;
-    private float extraExpRate;
-    private float attackSpeed;
-    private float normalMonsterIncreaseDamage;
-    private float bossMonsterIncreaseDamage;
-    private int attackLevel;
-    private int healthLevel;
-    private int healthRegenerationLevel;
-    private int criticalIncreaseDamageLevel;
-    private int criticalProbabilityLevel;
-    private int bluecriticalIncreaseDamageLevel;
-    private int bluecriticalProbabilityLevel;
+    public int level { get; private set; }
+    public float exp { get; private set; }
+    public float needExp { get; private set; }
+    public float attackPower { get; private set; }
+    public float health { get; private set; }
+    public float maxHealth { get; private set; }
+    public float healthRegeneration { get; private set; }
+    public float criticalProbability { get; private set; }
+    public float criticalIncreaseDamage { get; private set; }
+    public float bluecriticalIncreaseDamage { get; private set; }
+    public float bluecriticalProbability { get; private set; }
+    public float mana { get; private set; }
+    public float maxMana { get; private set; }
+    public float manaRegeneration { get; private set; }
+    public float Avoid { get; private set; }
+    public float extraGoldGainRate { get; private set; }
+    public float extraExpRate { get; private set; }
+    public float attackSpeed { get; private set; }
+    public float normalMonsterIncreaseDamage { get; private set; }
+    public float bossMonsterIncreaseDamage { get; private set; }
+    public int attackLevel { get; private set; }
+    public int healthLevel { get; private set; }
+    public int healthRegenerationLevel { get; private set; }
+    public int criticalIncreaseDamageLevel { get; private set; }
+    public int criticalProbabilityLevel { get; private set; }
+    public int bluecriticalIncreaseDamageLevel { get; private set; }
+    public int bluecriticalProbabilityLevel { get; private set; }
+    public float needAttackUpgradeMoney { get; private set; }
+    public float needHealthUpgradeMoney { get; private set; }
+    public float needHealthRegenerationUpgradeMoney { get; private set; }
+    public float needCriticalIncreaseDamageUpgradeMoney { get; private set; }
+    public float needCriticalProbabilityUpgradeMoney { get; private set; }
+    public float needBlueCriticalIncreaseDamageUpgradeMoney { get; private set; }
+    public float needBlueCriticalProbabilityUpgradeMoney { get; private set; }
 
-    public int GetLevel()
-    {
-        return level;
-    }
-    public float GetExp()
-    {
-        return exp;
-    }
-    public float GetNeedExp()
-    {
-        return needExp;
-    }
-
-
-
+    public Action UpdateStatUI;
 
     private void Start()
     {
@@ -74,6 +70,69 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
+    public void AttackLevelUp()
+    {
+        attackLevel++;
+        //현재 돈에서 니드머니 빼기 기능 추가
+        needAttackUpgradeMoney = attackLevel * 1000; //필요가격 수정예정
+        attackPower = attackLevel * 4;
+        PlayerStatUpgradeUI.Instance.attackUi.UpdateAttackStatUI();
+    }
+
+    public void HealthLevelUp()
+    {
+        healthLevel++;
+        //현재 돈에서 니드머니 빼기 기능 추가
+        needHealthUpgradeMoney = healthLevel * 1000;
+        maxHealth = healthLevel * 40;
+        health += 40;
+        PlayerStatUpgradeUI.Instance.healthUi.UpdateHealthStatUI();
+    }
+
+    public void HealthRegenerationLevelUp()
+    {
+        healthRegenerationLevel++;
+        //현재 돈에서 니드머니 빼기 기능 추가
+        needHealthRegenerationUpgradeMoney = healthRegenerationLevel * 1000;
+        healthRegeneration = healthRegenerationLevel * 4;
+        PlayerStatUpgradeUI.Instance.healthRegenUi.UpdateHealthRegenerationUI();
+    }
+
+    public void CriticalIncreaseDamageLevelUp()
+    {
+        criticalIncreaseDamageLevel++;
+        //현재 돈에서 니드머니 빼기 기능 추가
+        needCriticalIncreaseDamageUpgradeMoney = criticalIncreaseDamageLevel * 1000;
+        criticalIncreaseDamage = criticalIncreaseDamageLevel;
+        PlayerStatUpgradeUI.Instance.criticalDamageUi.UpdateCriticalIncreaseDamageUI();
+    }
+
+    public void CriticalProbabilityLevelUp()
+    {
+        criticalProbabilityLevel++;
+        //현재 돈에서 니드머니 빼기 기능 추가
+        needCriticalProbabilityUpgradeMoney = criticalProbabilityLevel * 1000;
+        criticalProbability = criticalProbabilityLevel * 0.1f;
+        PlayerStatUpgradeUI.Instance.criticalProbabilityUi.UpdateCriticalProbabilityUI();
+    }
+
+    public void BlueCriticalIncreaseDamageLevelUp()
+    {
+        bluecriticalIncreaseDamageLevel++;
+        //현재 돈에서 니드머니 빼기 기능 추가
+        needBlueCriticalIncreaseDamageUpgradeMoney = bluecriticalIncreaseDamageLevel * 1000;
+        bluecriticalIncreaseDamage = bluecriticalIncreaseDamageLevel;
+        PlayerStatUpgradeUI.Instance.blueCriticalDamageUi.UpdateblueCriticalIncreaseDamageStatUI();
+    }
+
+    public void BlueCriticalProbabilityLevelUp()
+    {
+        bluecriticalProbabilityLevel++;
+        //현재 돈에서 니드머니 빼기 기능 추가
+        needBlueCriticalProbabilityUpgradeMoney = bluecriticalProbabilityLevel * 1000;
+        bluecriticalProbability = bluecriticalProbabilityLevel * 0.1f;
+        PlayerStatUpgradeUI.Instance.blueCriticalProbabilityUi.UpdateblueCriticalProbabilityStatUI();
+    }
 
     public void SetDefaultStat()
     {
@@ -95,6 +154,20 @@ public class PlayerStat : MonoBehaviour
         attackSpeed = 0;
         normalMonsterIncreaseDamage = 0;
         bossMonsterIncreaseDamage = 0;
+        attackLevel = 1;
+        healthLevel = 1;
+        healthRegenerationLevel = 1;
+        criticalIncreaseDamageLevel = 1;
+        criticalProbabilityLevel = 1;
+        bluecriticalIncreaseDamageLevel = 1;
+        bluecriticalProbabilityLevel = 1;
+        needAttackUpgradeMoney = 1000;
+        needHealthUpgradeMoney = 1000;
+        needHealthRegenerationUpgradeMoney = 1000;
+        needCriticalIncreaseDamageUpgradeMoney = 1000;
+        needCriticalProbabilityUpgradeMoney = 1000;
+        needBlueCriticalIncreaseDamageUpgradeMoney = 1000;
+        needBlueCriticalProbabilityUpgradeMoney = 1000;
     }
 
     public float GetMana()
@@ -107,17 +180,11 @@ public class PlayerStat : MonoBehaviour
         mana -= value;
     }
 
-
-
-    public float GetDamage()
-    {
-        return attackPower;
-    }
     public void HoldIncreaseWeaponValue(Weapon weapon)
     {
         //float holdWeaponPower = attackPower * (weapon.atkIncreaseRate / 30 / 100);
         //attackPower += holdWeaponPower;
-        
+
         //float holdIncreaseCriticalPower = criticalIncreaseDamage * (weapon.criticalDamageBonus / 100);
         //criticalIncreaseDamage += holdIncreaseCriticalPower;
 
@@ -132,8 +199,6 @@ public class PlayerStat : MonoBehaviour
 
         StartCoroutine(BuffCoroutine(skillValue, skillTime));
     }
-
-
 
     private IEnumerator BuffCoroutine(float skillValue, float skillTime)
     {
@@ -161,10 +226,5 @@ public class PlayerStat : MonoBehaviour
         }
 
     }
-
-    
-
-
-
 
 }

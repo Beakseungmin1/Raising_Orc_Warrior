@@ -19,8 +19,8 @@ MonoBehaviour:
   gradeColor: {r: 0, g: 0, b: 0, a: 0}
   currencyIcon: {fileID: 0}
   requiredCurrencyForUpgrade: 0
-  currentLevel: 0
+  currentLevel: 1
   equipHpAndHpRecoveryIncreaseRate: 0
   passiveMpAndMpRecoveryIncreaseRate: 0
   passiveAddEXPRate: 0
-  rank: 3
+  rank: 2
