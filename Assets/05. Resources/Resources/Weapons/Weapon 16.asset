@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: Weapon 16
   m_EditorClassIdentifier: 
   itemName: "\uD639\uD55C\uC758 \uCE7C\uB0A0"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: b07b0ff1e40bcee41acf02d59f0974ab, type: 3}
   inGameImage: {fileID: 0}
   grade: 4
+  gradeColor: {r: 0, g: 0, b: 0, a: 0}
+  currencyIcon: {fileID: 0}
+  requiredCurrencyForUpgrade: 0
+  currentLevel: 1
   equipAtkIncreaseRate: 3000
   passiveCriticalDamageBonus: 0
   passiveGoldGainRate: 0
   rank: 1
-  requireCubeForUpgrade: 10000

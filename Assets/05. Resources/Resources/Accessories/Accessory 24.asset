@@ -16,7 +16,11 @@ MonoBehaviour:
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   inGameImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   grade: 6
-  hpAndHpRecoveryIncreaseRate: 30
-  mpAndMpRecoveryIncreaseRate: 0
-  addEXPRate: 0
-  requireCubeForUpgrade: 8
+  gradeColor: {r: 0, g: 0, b: 0, a: 0}
+  currencyIcon: {fileID: 0}
+  requiredCurrencyForUpgrade: 0
+  currentLevel: 1
+  equipHpAndHpRecoveryIncreaseRate: 0
+  passiveMpAndMpRecoveryIncreaseRate: 0
+  passiveAddEXPRate: 0
+  rank: 1

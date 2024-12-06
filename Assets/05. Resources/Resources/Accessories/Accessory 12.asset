@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: Accessory 12
   m_EditorClassIdentifier: 
   itemName: "\uB2E8\uB828\uC758 \uD314\uCC0C"
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: d6ee3e163e965c84cbb12805c255477f, type: 3}
   inGameImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   grade: 3
-  hpAndHpRecoveryIncreaseRate: 30
-  mpAndMpRecoveryIncreaseRate: 0
-  addEXPRate: 0
-  requireCubeForUpgrade: 8
+  gradeColor: {r: 0, g: 0, b: 0, a: 0}
+  currencyIcon: {fileID: 0}
+  requiredCurrencyForUpgrade: 0
+  currentLevel: 1
+  equipHpAndHpRecoveryIncreaseRate: 0
+  passiveMpAndMpRecoveryIncreaseRate: 0
+  passiveAddEXPRate: 0
+  rank: 1
