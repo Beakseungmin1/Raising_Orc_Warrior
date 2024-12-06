@@ -8,6 +8,7 @@ public class EnemySO : ScriptableObject
     public string enemyCode; // 적식별코드
     public float hp; // 체력
     public float maxHp; // 최대체력
+    public int giveExp; // 주는 경험치
     public Sprite sprite; //적 이미지
 
     [Header("Skill Properties")]
