@@ -6,8 +6,8 @@ using UnityEngine;
 public class PlayerStat : MonoBehaviour
 {
     public int level { get; private set; }
-    public float exp { get; private set; }
-    public float needExp { get; private set; }
+    public int exp { get; private set; }
+    public int needExp { get; private set; }
     public float attackPower { get; private set; }
     public float health { get; private set; }
     public float maxHealth { get; private set; }
@@ -46,12 +46,12 @@ public class PlayerStat : MonoBehaviour
     {
         // юс╫ц
         SetDefaultStat();
-        PlayerLevelInfoUI.Instance.UpdateLevelUI();
     }
 
-    public void AddExpFromMonsters(EnemyBattle enemy)
+
+    public void AddExpFromMonsters(Enemy enemy)
     {
-        exp += enemy.giveExp;
+        exp += enemy.GiveExp();
     }
 
     public void LevelUp()
@@ -59,7 +59,7 @@ public class PlayerStat : MonoBehaviour
         if (exp >= needExp)
         {
             level++;
-            float curNeedExp = needExp;
+            int curNeedExp = needExp;
             exp -= curNeedExp;
             needExp = needExp * 2;
             PlayerLevelInfoUI.Instance.UpdateLevelUI();

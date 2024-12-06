@@ -14,10 +14,13 @@ public class PlayerLevelInfoUI : Singleton<PlayerLevelInfoUI>
     [SerializeField] private TextMeshProUGUI UICurExpTxt;
     [SerializeField] private TextMeshProUGUI UINeedExpTxt;
 
-    private void Awake()
+
+    private void Start()
     {
         stat = PlayerobjManager.Instance.Player.stat;
+        UpdateLevelUI();
     }
+
 
 
     public void UpdateLevelUI()
@@ -41,6 +44,10 @@ public class PlayerLevelInfoUI : Singleton<PlayerLevelInfoUI>
 
             UICurExpTxt.text = currentExp.ToString();
             UINeedExpTxt.text = needExp.ToString();
+        }
+        else
+        {
+            return;
         }
     }
 

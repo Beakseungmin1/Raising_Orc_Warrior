@@ -20,7 +20,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     private float attackDelay = 1f; // 공격 딜레이
     public List<Skill> activeBuffSkills = new List<Skill>(); // 현재 활성화된 버프 스킬 리스트
 
-    private EnemyBattle currentMonster; // 현재 공격 중인 몬스터
+    private Enemy currentMonster; // 현재 공격 중인 몬스터
 
     private void Start()
     {
@@ -101,7 +101,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     {
         if (collision.CompareTag("Monster"))
         {
-            currentMonster = collision.gameObject.GetComponent<EnemyBattle>();
+            currentMonster = collision.gameObject.GetComponent<Enemy>();
             currentState = State.Attacking;
         }
     }
