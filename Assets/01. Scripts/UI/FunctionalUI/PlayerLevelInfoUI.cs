@@ -24,10 +24,10 @@ public class PlayerLevelInfoUI : Singleton<PlayerLevelInfoUI>
     {
         if (stat != null)
         {
-            UILevelTxt.text = stat.GetLevel().ToString();
+            UILevelTxt.text = stat.level.ToString();
 
-            float currentExp = stat.GetExp();
-            float needExp = stat.GetNeedExp();
+            float currentExp = stat.exp;
+            float needExp = stat.needExp;
 
             //현재 경험치가 총경험치의 몇% 인지 계산
             float percentage = needExp > 0 ? (currentExp / needExp) * 100 : 0;
