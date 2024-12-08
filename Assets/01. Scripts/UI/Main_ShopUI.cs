@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 public class Main_ShopUI : UIBase
 {
-    private Summon Summon;
+    private Summon summon;
 
     private void Awake()
     {
-        Summon = GetComponent<Summon>();
+        summon = GetComponent<Summon>();
     }
 
     public void ShowMainUI(int index)
@@ -37,18 +38,20 @@ public class Main_ShopUI : UIBase
         Hide();
     }
 
-    public void OnWeaponSummonBtnClick(int SummonCount)
+    public void OnWeaponSummonBtnClick(int summonCount)
     {
-        Summon.SummonWeapon(SummonCount);
+        List<WeaponDataSO> weaponDataSOs = summon.SummonWeapon(summonCount); //웨폰데이터 리스트가 세팅된다.
+        SummonPopupUI summonPopupUI = UIManager.Instance.Show<SummonPopupUI>();
+        summonPopupUI.SetWeaponDataSOs(weaponDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
     }
 
-    public void OnAccSummonBtnClick(int SummonCount)
+    public void OnAccSummonBtnClick(int summonCount)
     {
-        Summon.SummonAccessary(SummonCount);
+        summon.SummonAccessary(summonCount);
     }
 
-    public void OnSkillCardSummonBtnClick(int SummonCount)
+    public void OnSkillCardSummonBtnClick(int summonCount)
     {
-        Summon.SummonSkillCard(SummonCount);
+        summon.SummonSkillCard(summonCount);
     }
 }

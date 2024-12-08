@@ -9,20 +9,25 @@ public class SummonPopupUI : UIBase
     public List<GameObject> summonSlotObjs; //SummonSlots 배열 33개 전부 연결하기
     public List<WeaponDataSO> weaponDataSOs;
 
-    private List<SummonSlot> summonSlots;
 
-    private void Awake()
+    private void Start()
     {
         summon = GetComponent<Summon>();
     }
 
+    public void SetWeaponDataSOs(List<WeaponDataSO> SOs)
+    {
+        Debug.LogWarning("SetWeaponDataSOs");
+        weaponDataSOs = SOs;
+        for (int i = 0; i < summonSlotObjs.Count; i++)
+        {
+            summonSlotObjs[i].GetComponent<SummonSlot>().SetSlot(weaponDataSOs[i]);
+        }
+    }
+
     private void SetSummonSlots()
     {
-        for(int i = 0; i < summonSlotObjs.Count; i++)
-        {
-            summonSlots[i] = summonSlotObjs[i].GetComponent<SummonSlot>();
-            summonSlots[i].weaponDataSO = weaponDataSOs[i];
-        }
+        Debug.Log("SetSummonSlots");
     }
 
     public void OnExitBtn()
@@ -32,7 +37,8 @@ public class SummonPopupUI : UIBase
 
     public void OnClickSummonBtn(int summonCount) //acc, skill 추가할때 enum Type값도 추가해야겠다.
     {
-        summon.SummonWeapon(summonCount);
+        List<WeaponDataSO> weaponDataSOs = summon.SummonWeapon(summonCount);
+        SetWeaponDataSOs(weaponDataSOs);
     }
 
 }

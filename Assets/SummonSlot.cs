@@ -4,16 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SummonSlot : MonoBehaviour
+public class SummonSlot : UIBase
 {
-    public WeaponDataSO weaponDataSO;
+    [SerializeField] private WeaponDataSO weaponDataSO;
 
     public TextMeshProUGUI gradeTxt;
     public TextMeshProUGUI rankTxt;
     public Image image;
 
-    private void Awake()
+    public void SetSlot(WeaponDataSO so)
     {
+        Debug.Log("SetSLot");
+        weaponDataSO = so;
         gradeTxt.text = weaponDataSO.grade.ToString();
         rankTxt.text = weaponDataSO.rank.ToString();
         image.sprite = weaponDataSO.icon;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -91,16 +92,22 @@ public class Summon : MonoBehaviour
         return 4;
     }
 
-    public void SummonWeapon(int summonCount)
+    public List<WeaponDataSO> SummonWeapon(int summonCount)
     {
+        Debug.Log("SummonWeapon");
+        List<WeaponDataSO> weaponDataSOs = new List<WeaponDataSO>();
+
         for (int i = 0; i < summonCount; i++)
         {
             Grade grade = GetGradeBySummonRate();
             int rank = GetRankBySummonRate();
             WeaponDataSO weaponDataSO = DataManager.Instance.GetWeaponByGradeAndRank(grade, rank);
             PlayerobjManager.Instance.Player.inventory.AddItemToInventory(weaponDataSO);
-            Debug.Log(weaponDataSO);
+            weaponDataSOs.Add(weaponDataSO);
         }
+        Debug.LogError(weaponDataSOs);
+        return weaponDataSOs;
+        //summon.cs에서 만든 weaponDataSO List를 -> summonPopupUI로 전달만 하면 됨.
     }
 
     public void SummonSkillCard(int summonCount)
