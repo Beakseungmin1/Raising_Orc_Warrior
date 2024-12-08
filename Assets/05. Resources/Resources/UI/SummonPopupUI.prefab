@@ -2791,7 +2791,7 @@ GameObject:
   - component: {fileID: 9063338981907345225}
   - component: {fileID: 6158880752337214262}
   m_Layer: 5
-  m_Name: SummonPupupUI
+  m_Name: SummonPopupUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
