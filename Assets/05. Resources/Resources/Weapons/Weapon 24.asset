@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Weapon 24
   m_EditorClassIdentifier: 
   itemName: "\uBE5B\uC758 \uAC80 - \uC624\uB974"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 9794293e4605a44d0826e3814ddc8431, type: 3}
   inGameImage: {fileID: 0}
   grade: 6
   gradeColor: {r: 0, g: 0, b: 0, a: 0}

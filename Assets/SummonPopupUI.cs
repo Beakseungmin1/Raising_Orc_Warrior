@@ -21,7 +21,10 @@ public class SummonPopupUI : UIBase
         weaponDataSOs = SOs;
         for (int i = 0; i < summonSlotObjs.Count; i++)
         {
-            summonSlotObjs[i].GetComponent<SummonSlot>().SetSlot(weaponDataSOs[i]);
+            if (weaponDataSOs[i] != null)
+            {
+                summonSlotObjs[i].GetComponent<SummonSlot>().SetSlot(weaponDataSOs[i]);
+            }
         }
     }
 
