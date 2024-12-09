@@ -7,6 +7,7 @@ public class AccessoryDataSO : BaseItemDataSO
     public float equipHpAndHpRecoveryIncreaseRate; // 체력 및 체력 회복량 증가율 (장착 효과)
 
     [Header("Ownership Effects")] // 보유 효과
+    public float passiveHpAndHpRecoveryIncreaseRate;
     public float passiveMpAndMpRecoveryIncreaseRate; // 마나 및 마나 회복량 증가율 (보유 효과)
     public float passiveAddEXPRate; // 추가 경험치 증가율 (보유 효과)
 
