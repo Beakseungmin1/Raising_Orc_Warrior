@@ -4,7 +4,7 @@ using TMPro;
 
 public class EquipmentInventorySlot : UIBase
 {
-    [SerializeField] private Image weaponIcon;
+    [SerializeField] private Image equipmentIcon;
     [SerializeField] private TextMeshProUGUI currentLevelTxt;
     [SerializeField] private TextMeshProUGUI rankTxt;
     [SerializeField] private Slider expGauge;
@@ -12,32 +12,31 @@ public class EquipmentInventorySlot : UIBase
     [SerializeField] private TextMeshProUGUI curAmountTxt;
     [SerializeField] private Button slotButton;
 
-    private Weapon weaponData;
+    private IEnhanceable equipmentData;
     private EquipmentInventorySlotManager slotManager;
+    private bool isWeapon;
 
-    private Color defaultColor = Color.white; // 기본 색상 (장착된 경우)
-    private Color emptyColor = new Color32(80, 80, 80, 255); // 비어 있을 때의 색상
+    private Color defaultColor = Color.white;
+    private Color emptyColor = new Color32(80, 80, 80, 255);
 
-    public void InitializeSlot(Weapon weapon, int currentAmount, int requiredAmount, EquipmentInventorySlotManager manager)
+    public void InitializeSlot(IEnhanceable equipment, int currentAmount, int requiredAmount, EquipmentInventorySlotManager manager, bool isWeaponType)
     {
-        weaponData = weapon;
+        equipmentData = equipment;
         slotManager = manager;
+        isWeapon = isWeaponType;
 
-        if (weaponData != null && weaponData.BaseData != null)
+        if (equipmentData != null)
         {
-            WeaponDataSO weaponBaseData = weaponData.BaseData;
-
-            weaponIcon.sprite = weaponBaseData.icon;
-            currentLevelTxt.text = $"+{weaponBaseData.currentLevel}";
-            rankTxt.text = $"{weaponBaseData.rank}등급";
-            curAmountTxt.text = currentAmount.ToString();
-            maxAmountTxt.text = requiredAmount.ToString();
-            expGauge.value = (float)currentAmount / requiredAmount;
+            equipmentIcon.sprite = equipment.BaseData.icon;
+            curAmountTxt.text = equipment.StackCount.ToString();
+            maxAmountTxt.text = "1"; // 무기와 악세사리는 항상 1개 필요
+            currentLevelTxt.text = $"+{equipment.EnhancementLevel}";
+            expGauge.value = Mathf.Clamp01((float)currentAmount / 1);
 
             UpdateSlotColor(true);
 
             slotButton.onClick.RemoveAllListeners();
-            slotButton.onClick.AddListener(OpenUpgradePopup);
+            slotButton.onClick.AddListener(() => OpenUpgradePopup());
         }
         else
         {
@@ -47,8 +46,8 @@ public class EquipmentInventorySlot : UIBase
 
     private void ClearSlot()
     {
-        weaponData = null;
-        weaponIcon.sprite = null;
+        equipmentData = null;
+        equipmentIcon.sprite = null;
         currentLevelTxt.text = string.Empty;
         rankTxt.text = string.Empty;
         curAmountTxt.text = "0";
@@ -62,16 +61,16 @@ public class EquipmentInventorySlot : UIBase
 
     private void OpenUpgradePopup()
     {
-        if (weaponData != null)
+        if (equipmentData != null)
         {
             UIManager.Instance.Show<DimmedUI>();
-            var upgradePopup = UIManager.Instance.Show<WeaponUpgradePopupUI>();
-            upgradePopup.SetWeaponData(weaponData);
+            var upgradePopup = UIManager.Instance.Show<EquipmentUpgradePopupUI>();
+            upgradePopup.SetEquipmentData(equipmentData, isWeapon);
         }
     }
 
-    private void UpdateSlotColor(bool hasWeapon)
+    private void UpdateSlotColor(bool hasEquipment)
     {
-        weaponIcon.color = hasWeapon ? defaultColor : emptyColor;
+        equipmentIcon.color = hasEquipment ? defaultColor : emptyColor;
     }
 }
