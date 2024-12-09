@@ -17,15 +17,15 @@ public class WeaponUpgradePopupUI : UIBase
     [SerializeField] private TextMeshProUGUI equipEffectValueTxt;
 
     [Header("Possess Effect Area")]
+    [SerializeField] private GameObject possessEffectRow0;
+    [SerializeField] private TextMeshProUGUI possessEffectTypeTxt0;
+    [SerializeField] private TextMeshProUGUI possessEffectValueTxt0;
     [SerializeField] private GameObject possessEffectRow1;
-    [SerializeField] private TextMeshProUGUI possessEffect1TypeTxt;
-    [SerializeField] private TextMeshProUGUI possessEffect1ValueTxt;
+    [SerializeField] private TextMeshProUGUI possessEffectTypeTxt1;
+    [SerializeField] private TextMeshProUGUI possessEffectValueTxt1;
     [SerializeField] private GameObject possessEffectRow2;
-    [SerializeField] private TextMeshProUGUI possessEffect2TypeTxt;
-    [SerializeField] private TextMeshProUGUI possessEffect2ValueTxt;
-    [SerializeField] private GameObject possessEffectRow3;
-    [SerializeField] private TextMeshProUGUI possessEffect3TypeTxt;
-    [SerializeField] private TextMeshProUGUI possessEffect3ValueTxt;
+    [SerializeField] private TextMeshProUGUI possessEffectTypeTxt2;
+    [SerializeField] private TextMeshProUGUI possessEffectValueTxt2;
 
     [Header("Upgrade Info")]
     [SerializeField] private Button upgradeBtn;
@@ -70,45 +70,65 @@ public class WeaponUpgradePopupUI : UIBase
         equipEffectValueTxt.text = $"{weaponData.equipAtkIncreaseRate}%";
 
         // Possess Effect Area (보유 효과)
-        if (weaponData.equipAtkIncreaseRate > 0)
-        {
-            possessEffectRow1.SetActive(true);
-            possessEffect1TypeTxt.text = "공격력 증가율";
-            possessEffect1ValueTxt.text = $"{weaponData.equipAtkIncreaseRate}%";
-        }
-        else
-        {
-            possessEffectRow1.SetActive(false);
-        }
-
-        // 치명타 데미지 증가
-        if (weaponData.passiveCriticalDamageBonus > 0)
-        {
-            possessEffectRow2.SetActive(true);
-            possessEffect2TypeTxt.text = "치명타 데미지 증가";
-            possessEffect2ValueTxt.text = $"{weaponData.passiveCriticalDamageBonus}%";
-        }
-        else
-        {
-            possessEffectRow2.SetActive(false);
-        }
-
-        // 골드 획득량 증가율
-        if (weaponData.passiveGoldGainRate > 0)
-        {
-            possessEffectRow3.SetActive(true);
-            possessEffect3TypeTxt.text = "골드 획득량 증가율";
-            possessEffect3ValueTxt.text = $"{weaponData.passiveGoldGainRate}%";
-        }
-        else
-        {
-            possessEffectRow3.SetActive(false);
-        }
+        UpdatePossessEffects(weaponData);
 
         // Upgrade Info
         upgradeCostTxt.text = weaponData.requiredCurrencyForUpgrade.ToString();
         curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Cube).ToString();
         curCubeIcon.sprite = weaponData.currencyIcon;
+    }
+
+    private void UpdatePossessEffects(WeaponDataSO weaponData)
+    {
+        // 보유 효과 초기화
+        possessEffectRow0.SetActive(false);
+        possessEffectRow1.SetActive(false);
+        possessEffectRow2.SetActive(false);
+
+        int rowIndex = 0;
+
+        // 공격력 증가율
+        if (weaponData.equipAtkIncreaseRate > 0)
+        {
+            UpdateEffectRow(rowIndex++, "공격력 증가율", $"{Mathf.RoundToInt(weaponData.equipAtkIncreaseRate / 3)}%");
+        }
+
+        // 치명타 데미지 증가
+        if (weaponData.passiveCriticalDamageBonus > 0)
+        {
+            UpdateEffectRow(rowIndex++, "치명타 데미지 증가", $"{weaponData.passiveCriticalDamageBonus}%");
+        }
+
+        // 골드 획득량 증가율
+        if (weaponData.passiveGoldGainRate > 0)
+        {
+            UpdateEffectRow(rowIndex++, "골드 획득량 증가율", $"{weaponData.passiveGoldGainRate}%");
+        }
+    }
+
+    private void UpdateEffectRow(int rowIndex, string effectType, string effectValue)
+    {
+        switch (rowIndex)
+        {
+            case 0:
+                possessEffectRow0.SetActive(true);
+                possessEffectTypeTxt0.text = effectType;
+                possessEffectValueTxt0.text = effectValue;
+                break;
+            case 1:
+                possessEffectRow1.SetActive(true);
+                possessEffectTypeTxt1.text = effectType;
+                possessEffectValueTxt1.text = effectValue;
+                break;
+            case 2:
+                possessEffectRow2.SetActive(true);
+                possessEffectTypeTxt2.text = effectType;
+                possessEffectValueTxt2.text = effectValue;
+                break;
+            default:
+                Debug.LogWarning($"[WeaponUpgradePopupUI] 지원되지 않는 보유 효과 행 인덱스: {rowIndex}");
+                break;
+        }
     }
 
     private void UpgradeWeapon()
