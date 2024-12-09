@@ -6,7 +6,7 @@ using TMPro;
 
 public class SummonSlot : UIBase
 {
-    [SerializeField] private WeaponDataSO weaponDataSO;
+    public WeaponDataSO weaponDataSO;
 
     public TextMeshProUGUI gradeTxt;
     public TextMeshProUGUI rankTxt;
@@ -32,5 +32,18 @@ public class SummonSlot : UIBase
         gradeTxt.enabled = true;
         rankTxt.enabled = true;
         rankLabel.enabled = true;
+    }
+
+    public void ClearSlot()
+    {
+        Debug.Log("ClearSLot");
+        weaponDataSO = null;
+        gradeTxt.text = null;
+        rankTxt.text = null;
+        image.sprite = null;
+        image.enabled = false;
+        gradeTxt.enabled = false;
+        rankTxt.enabled = false;
+        rankLabel.enabled = false;
     }
 }

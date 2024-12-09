@@ -27,7 +27,6 @@ public class SummonPopupUI : UIBase
 
     public void SetSlotAsCount(int count)
     {
-        summonSlotObjs.Clear(); //한번 클리어해주고 시작.
         summonSlotListArea33obj.SetActive(false);
         summonSlotListArea11obj.SetActive(false);
         summonSlotListArea1obj.SetActive(false);
@@ -48,6 +47,14 @@ public class SummonPopupUI : UIBase
         }
     }
 
+    public void ClearSlotData()
+    {
+        for (int i = 0; i < summonSlotObjs.Count; i++)
+        {
+            summonSlotObjs[i].GetComponent<SummonSlot>().ClearSlot();
+        }
+    }
+
     public void StartSetWeaponDataSOs(List<WeaponDataSO> SOs)
     {
         if (coroutine != null)
@@ -55,7 +62,6 @@ public class SummonPopupUI : UIBase
             StopCoroutine(coroutine);
         }
         coroutine = StartCoroutine(SetWeaponDataSOs(SOs));
-
     }
 
     private IEnumerator SetWeaponDataSOs(List<WeaponDataSO> SOs)
@@ -70,7 +76,7 @@ public class SummonPopupUI : UIBase
                 yield return new WaitForSeconds(0.05f);
             }
         }
-        SetBtnInteractable(true);
+        SetBtnInteractable(true); //코루틴 진행되는 동안만 꺼져있어야함.
     }
 
     private void SetBtnInteractable(bool canInteractable)
@@ -92,8 +98,10 @@ public class SummonPopupUI : UIBase
 
     public void OnClickSummonBtn(int summonCount) //acc, skill 추가할때 enum Type값도 추가해야겠다.
     {
-        List<WeaponDataSO> weaponDataSOs = summon.SummonWeaponDataSOList(summonCount); //웨폰데이터 리스트가 세팅된다.
+
+        weaponDataSOs = summon.SummonWeaponDataSOList(summonCount); //웨폰데이터 리스트가 세팅된다.
         SetSlotAsCount(summonCount);
+        ClearSlotData();
         StartSetWeaponDataSOs(weaponDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
     }
 
