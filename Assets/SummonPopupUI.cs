@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SummonPopupUI : UIBase
 {
@@ -10,6 +11,10 @@ public class SummonPopupUI : UIBase
     public List<WeaponDataSO> weaponDataSOs;
 
     private Coroutine coroutine;
+
+    public Button extBtn;
+    public Button summonBtn11;
+    public Button summonBtn33;
 
     private void Start()
     {
@@ -23,10 +28,12 @@ public class SummonPopupUI : UIBase
             StopCoroutine(coroutine);
         }
         coroutine = StartCoroutine(SetWeaponDataSOs(SOs));
+
     }
 
     private IEnumerator SetWeaponDataSOs(List<WeaponDataSO> SOs)
     {
+        SetBtnInteractable(false);
         weaponDataSOs = SOs;
         for (int i = 0; i < summonSlotObjs.Count; i++)
         {
@@ -36,6 +43,14 @@ public class SummonPopupUI : UIBase
                 yield return new WaitForSeconds(0.05f);
             }
         }
+        SetBtnInteractable(true);
+    }
+
+    private void SetBtnInteractable(bool canInteractable)
+    {
+        extBtn.interactable = canInteractable;
+        summonBtn11.interactable = canInteractable;
+        summonBtn33.interactable = canInteractable;
     }
 
     private void SetSummonSlots()
