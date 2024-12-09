@@ -19,7 +19,8 @@ public class PlayerStat : MonoBehaviour
     public float mana { get; private set; }
     public float maxMana { get; private set; }
     public float manaRegeneration { get; private set; }
-    public float Avoid { get; private set; }
+    public float hitLate { get; private set; }
+    public float avoid { get; private set; }
     public float extraGoldGainRate { get; private set; }
     public float extraExpRate { get; private set; }
     public float attackSpeed { get; private set; }
@@ -42,12 +43,13 @@ public class PlayerStat : MonoBehaviour
 
     public Action UpdateLevelStatUI;
 
+    public Action UpdateUserInformationUI;
+
     private void Start()
     {
         // 임시
         SetDefaultStat();
     }
-
 
     public void AddExpFromMonsters(Enemy enemy)
     {
@@ -62,7 +64,7 @@ public class PlayerStat : MonoBehaviour
             int curNeedExp = needExp;
             exp -= curNeedExp;
             needExp = needExp * 2;
-            //PlayerLevelInfoUI.Instance.UpdateLevelUI();
+            UpdateLevelStatUI.Invoke();
         }
         else
         {
@@ -76,7 +78,6 @@ public class PlayerStat : MonoBehaviour
         //현재 돈에서 니드머니 빼기 기능 추가
         needAttackUpgradeMoney = attackLevel * 1000; //필요가격 수정예정
         attackPower = attackLevel * 4;
-        //PlayerStatUpgradeUI.Instance.attackUi.UpdateAttackStatUI();
     }
 
     public void HealthLevelUp()
@@ -86,7 +87,6 @@ public class PlayerStat : MonoBehaviour
         needHealthUpgradeMoney = healthLevel * 1000;
         maxHealth = healthLevel * 40;
         health += 40;
-        //PlayerStatUpgradeUI.Instance.healthUi.UpdateHealthStatUI();
     }
 
     public void HealthRegenerationLevelUp()
@@ -95,7 +95,6 @@ public class PlayerStat : MonoBehaviour
         //현재 돈에서 니드머니 빼기 기능 추가
         needHealthRegenerationUpgradeMoney = healthRegenerationLevel * 1000;
         healthRegeneration = healthRegenerationLevel * 4;
-        //PlayerStatUpgradeUI.Instance.healthRegenUi.UpdateHealthRegenerationUI();
     }
 
     public void CriticalIncreaseDamageLevelUp()
@@ -104,7 +103,6 @@ public class PlayerStat : MonoBehaviour
         //현재 돈에서 니드머니 빼기 기능 추가
         needCriticalIncreaseDamageUpgradeMoney = criticalIncreaseDamageLevel * 1000;
         criticalIncreaseDamage = criticalIncreaseDamageLevel;
-        //PlayerStatUpgradeUI.Instance.criticalDamageUi.UpdateCriticalIncreaseDamageUI();
     }
 
     public void CriticalProbabilityLevelUp()
@@ -113,7 +111,6 @@ public class PlayerStat : MonoBehaviour
         //현재 돈에서 니드머니 빼기 기능 추가
         needCriticalProbabilityUpgradeMoney = criticalProbabilityLevel * 1000;
         criticalProbability = criticalProbabilityLevel * 0.1f;
-        //PlayerStatUpgradeUI.Instance.criticalProbabilityUi.UpdateCriticalProbabilityUI();
     }
 
     public void BlueCriticalIncreaseDamageLevelUp()
@@ -122,7 +119,6 @@ public class PlayerStat : MonoBehaviour
         //현재 돈에서 니드머니 빼기 기능 추가
         needBlueCriticalIncreaseDamageUpgradeMoney = bluecriticalIncreaseDamageLevel * 1000;
         bluecriticalIncreaseDamage = bluecriticalIncreaseDamageLevel;
-        //PlayerStatUpgradeUI.Instance.blueCriticalDamageUi.UpdateblueCriticalIncreaseDamageStatUI();
     }
 
     public void BlueCriticalProbabilityLevelUp()
@@ -131,7 +127,6 @@ public class PlayerStat : MonoBehaviour
         //현재 돈에서 니드머니 빼기 기능 추가
         needBlueCriticalProbabilityUpgradeMoney = bluecriticalProbabilityLevel * 1000;
         bluecriticalProbability = bluecriticalProbabilityLevel * 0.1f;
-        //PlayerStatUpgradeUI.Instance.blueCriticalProbabilityUi.UpdateblueCriticalProbabilityStatUI();
     }
 
     public void SetDefaultStat()
@@ -140,7 +135,7 @@ public class PlayerStat : MonoBehaviour
         exp = 0;
         needExp = 100;
         attackPower = 20;
-        maxHealth = 20;
+        maxHealth = 40;
         health = maxHealth;
         healthRegeneration = 0;
         criticalProbability = 0;
@@ -148,7 +143,8 @@ public class PlayerStat : MonoBehaviour
         maxMana = 20;
         mana = maxMana;
         manaRegeneration = 10;
-        Avoid = 0;
+        hitLate = 0;
+        avoid = 0;
         extraGoldGainRate = 0;
         extraExpRate = 0;
         attackSpeed = 0;
