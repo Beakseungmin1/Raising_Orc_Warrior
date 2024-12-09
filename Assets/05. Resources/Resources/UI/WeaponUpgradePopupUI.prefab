@@ -1988,15 +1988,15 @@ MonoBehaviour:
   progressSlider: {fileID: 6655195861059915428}
   equipEffectTypeTxt: {fileID: 8771461065100533692}
   equipEffectValueTxt: {fileID: 6341911598601470047}
-  possessEffectRow1: {fileID: 395085474591707210}
-  possessEffect1TypeTxt: {fileID: 779210986805884347}
-  possessEffect1ValueTxt: {fileID: 7997923173163555080}
-  possessEffectRow2: {fileID: 7927249654221834675}
-  possessEffect2TypeTxt: {fileID: 7472118834275382758}
-  possessEffect2ValueTxt: {fileID: 6932301414874196597}
-  possessEffectRow3: {fileID: 5026758246280131182}
-  possessEffect3TypeTxt: {fileID: 2398411002587735066}
-  possessEffect3ValueTxt: {fileID: 3391876653641797918}
+  possessEffectRow0: {fileID: 395085474591707210}
+  possessEffectTypeTxt0: {fileID: 779210986805884347}
+  possessEffectValueTxt0: {fileID: 7997923173163555080}
+  possessEffectRow1: {fileID: 7927249654221834675}
+  possessEffectTypeTxt1: {fileID: 7472118834275382758}
+  possessEffectValueTxt1: {fileID: 6932301414874196597}
+  possessEffectRow2: {fileID: 5026758246280131182}
+  possessEffectTypeTxt2: {fileID: 2398411002587735066}
+  possessEffectValueTxt2: {fileID: 3391876653641797918}
   upgradeBtn: {fileID: 8887737831814000324}
   upgradeCostTxt: {fileID: 2372828401270943514}
   curCubeAmountTxt: {fileID: 1202861498809843763}
