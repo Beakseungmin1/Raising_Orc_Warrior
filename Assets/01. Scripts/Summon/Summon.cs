@@ -105,7 +105,6 @@ public class Summon : MonoBehaviour
             weaponDataSOs.Add(weaponDataSO);
         }
         return weaponDataSOs;
-        //summon.cs에서 만든 weaponDataSO List를 -> summonPopupUI로 전달만 하면 됨.
     }
 
     public void SummonSkillCard(int summonCount)
