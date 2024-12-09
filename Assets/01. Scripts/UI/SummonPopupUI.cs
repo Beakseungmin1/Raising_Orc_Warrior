@@ -40,7 +40,8 @@ public class SummonPopupUI : UIBase
         summonSlotListArea33obj.SetActive(false);
         summonSlotListArea11obj.SetActive(false);
         summonSlotListArea1obj.SetActive(false);
-        /*
+        /* 
+        switch문 -> dictionary로 수정하여 더 깔끔한 코드로 변경.
         switch (count)
         {
             case 1:
