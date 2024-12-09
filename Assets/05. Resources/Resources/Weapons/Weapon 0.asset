@@ -18,9 +18,10 @@ MonoBehaviour:
   grade: 0
   gradeColor: {r: 0, g: 0, b: 0, a: 0}
   currencyIcon: {fileID: 0}
-  requiredCurrencyForUpgrade: 0
+  requiredCurrencyForUpgrade: 1
   currentLevel: 1
-  equipAtkIncreaseRate: 2
+  equipAtkIncreaseRate: 2380
+  passiveEquipAtkIncreaseRate: 793
   passiveCriticalDamageBonus: 0
   passiveGoldGainRate: 0
   rank: 1
