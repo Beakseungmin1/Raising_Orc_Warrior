@@ -10,17 +10,17 @@ public class SummonDataManager : Singleton<SummonDataManager>
     //소환 레벨
     public int weaponSummonLevel;
     public int skillSummonLevel;
-    public int accessarySummonLevel;
+    public int accessorySummonLevel;
 
     //소환 레벨 경험치
     public int curWeaponSummonEXP;
     public int curSkillSummonEXP;
-    public int curAccessarySummonEXP;
+    public int curAccessorySummonEXP;
 
     //소환 레벨 최대 경험치
     public int maxWeaponSummonEXP;
     public int maxSkillSummonEXP;
-    public int maxAccessarySummonEXP;
+    public int maxAccessorySummonEXP;
 
     // 등급별 소환 확률 변수
     public float normalGradeSummonRate = 60.5f;
