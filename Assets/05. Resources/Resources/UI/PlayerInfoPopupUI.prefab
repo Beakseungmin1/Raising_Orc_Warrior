@@ -2706,6 +2706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ddba0421d9dac4bbb4c2ed0e4ffa31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
 --- !u!1 &5378776280729544457
 GameObject:
   m_ObjectHideFlags: 0
@@ -3673,6 +3674,7 @@ GameObject:
   - component: {fileID: 8045657057098982886}
   - component: {fileID: 2298568039383686587}
   - component: {fileID: 4104695154989932288}
+  - component: {fileID: 3695561682719367044}
   m_Layer: 5
   m_Name: PlayerInfoPanel
   m_TagString: Untagged
@@ -3741,6 +3743,36 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3695561682719367044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7018647244934167740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e428590a1270540b1d1590f9abd1d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerLevelTxt: {fileID: 1077596484994079966}
+  playerNameTxt: {fileID: 0}
+  playerImage: {fileID: 0}
+  equipWeaponNameTxt: {fileID: 0}
+  equipWeaponImage: {fileID: 0}
+  equipAccNameTxt: {fileID: 0}
+  equipAccImage: {fileID: 0}
+  attackPowerTxt: {fileID: 3577061246631049468}
+  maxHealthTxt: {fileID: 5465409084184261126}
+  healthRegenTxt: {fileID: 3884275148700692083}
+  criticalProbabilityTxt: {fileID: 8109673841920337230}
+  criticalIncreaseDamageTxt: {fileID: 6346630930294808398}
+  maxManaTxt: {fileID: 2004008042917902659}
+  manaRegenTxt: {fileID: 3497086038716238055}
+  hitLateTxt: {fileID: 7074024962167928830}
+  avoidTxt: {fileID: 1664611304317611801}
+  extraGoldGainRateTxt: {fileID: 682643922366265170}
+  extraExpRateTxt: {fileID: 3197366009274570587}
 --- !u!1 &7353476055504308595
 GameObject:
   m_ObjectHideFlags: 0
