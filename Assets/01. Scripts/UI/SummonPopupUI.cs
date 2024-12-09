@@ -7,7 +7,7 @@ public class SummonPopupUI : UIBase
 {
     private Summon summon;
 
-    public List<GameObject> summonSlotObjs; //SummonSlots 배열 33개 전부 연결하기
+    public List<GameObject> summonSlotObjs;
     public List<WeaponDataSO> weaponDataSOs;
 
     public GameObject summonSlotListArea33obj;
