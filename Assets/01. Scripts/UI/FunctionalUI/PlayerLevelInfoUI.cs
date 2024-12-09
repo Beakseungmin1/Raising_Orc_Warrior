@@ -18,6 +18,9 @@ public class PlayerLevelInfoUI : MonoBehaviour
     private void Start()
     {
         stat = PlayerobjManager.Instance.Player.stat;
+
+        stat.UpdateLevelStatUI += UpdateLevelUI;
+
         UpdateLevelUI();
     }
 
@@ -44,6 +47,7 @@ public class PlayerLevelInfoUI : MonoBehaviour
 
             UICurExpTxt.text = currentExp.ToString();
             UINeedExpTxt.text = needExp.ToString();
+
         }
         else
         {
