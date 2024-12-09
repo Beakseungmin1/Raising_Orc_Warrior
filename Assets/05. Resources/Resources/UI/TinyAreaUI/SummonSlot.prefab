@@ -497,4 +497,5 @@ MonoBehaviour:
   weaponDataSO: {fileID: 0}
   gradeTxt: {fileID: 4944875082137605188}
   rankTxt: {fileID: 8763038144452645253}
+  rankLabel: {fileID: 2785166295600644807}
   image: {fileID: 6063328253592504627}
