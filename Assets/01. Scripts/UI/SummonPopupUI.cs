@@ -14,15 +14,25 @@ public class SummonPopupUI : UIBase
     public GameObject summonSlotListArea11obj;
     public GameObject summonSlotListArea1obj;
 
+    private Dictionary<int, GameObject> summonSlotMapping;
+
     private Coroutine coroutine;
 
     public Button extBtn;
     public Button summonBtn11;
     public Button summonBtn33;
 
-    private void Start()
+    private void Awake()
     {
         summon = GetComponent<Summon>();
+
+        // Dictionary 초기화
+        summonSlotMapping = new Dictionary<int, GameObject>
+        {
+            { 1, summonSlotListArea1obj },
+            { 11, summonSlotListArea11obj },
+            { 33, summonSlotListArea33obj }
+        };
     }
 
     public void SetSlotAsCount(int count)
@@ -30,6 +40,7 @@ public class SummonPopupUI : UIBase
         summonSlotListArea33obj.SetActive(false);
         summonSlotListArea11obj.SetActive(false);
         summonSlotListArea1obj.SetActive(false);
+        /*
         switch (count)
         {
             case 1:
@@ -44,6 +55,19 @@ public class SummonPopupUI : UIBase
                 summonSlotListArea33obj.SetActive(true);
                 summonSlotObjs = summonSlotListArea33obj.GetComponent<SummonSlotListArea>().summonSlots;
                 break;
+        }
+        */
+        GameObject selectedSlotObj;
+
+        // count 값에 해당하는 GameObject 가져오기
+        if (summonSlotMapping.TryGetValue(count, out selectedSlotObj))
+        {
+            selectedSlotObj.SetActive(true);
+            summonSlotObjs = selectedSlotObj.GetComponent<SummonSlotListArea>().summonSlots;
+        }
+        else
+        {
+            Debug.LogWarning($"No slot found for count: {count}");
         }
     }
 
