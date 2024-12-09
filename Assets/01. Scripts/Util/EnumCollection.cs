@@ -55,3 +55,10 @@ public enum CurrencyType
     Cube,
     Diamond
 }
+
+public enum ItemType
+{
+    Weapon,
+    Accessary,
+    Skill
+}

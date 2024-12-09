@@ -75,7 +75,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
             playerStat.AddExpFromMonsters(currentMonster);
 
             // 플레이어 레벨 ui 업데이트
-            PlayerLevelInfoUI.Instance.UpdateLevelUI();
+            playerStat.UpdateLevelStatUI.Invoke();
 
             currentMonster = null;
         }

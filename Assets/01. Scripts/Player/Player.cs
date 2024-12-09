@@ -11,13 +11,11 @@ public class Player : MonoBehaviour
     public Weapon curWeapon;
 
 
-
-
     private void Awake()
     {
-        PlayerobjManager.Instance.Player = this;
         stat = GetComponent<PlayerStat>();
         inventory = GetComponent<PlayerInventory>();
         PlayerBattle = GetComponent<PlayerBattle>();
+        PlayerobjManager.Instance.Player = this;
     }
 }

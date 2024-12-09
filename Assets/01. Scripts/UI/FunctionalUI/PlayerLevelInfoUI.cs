@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerLevelInfoUI : Singleton<PlayerLevelInfoUI>
+public class PlayerLevelInfoUI : MonoBehaviour
 {
     private PlayerStat stat;
 
@@ -18,6 +18,9 @@ public class PlayerLevelInfoUI : Singleton<PlayerLevelInfoUI>
     private void Start()
     {
         stat = PlayerobjManager.Instance.Player.stat;
+
+        stat.UpdateLevelStatUI += UpdateLevelUI;
+
         UpdateLevelUI();
     }
 
@@ -44,6 +47,7 @@ public class PlayerLevelInfoUI : Singleton<PlayerLevelInfoUI>
 
             UICurExpTxt.text = currentExp.ToString();
             UINeedExpTxt.text = needExp.ToString();
+
         }
         else
         {

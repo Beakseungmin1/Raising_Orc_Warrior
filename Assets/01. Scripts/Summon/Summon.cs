@@ -92,9 +92,8 @@ public class Summon : MonoBehaviour
         return 4;
     }
 
-    public List<WeaponDataSO> SummonWeapon(int summonCount)
+    public List<WeaponDataSO> SummonWeaponDataSOList(int summonCount)
     {
-        Debug.Log("SummonWeapon");
         List<WeaponDataSO> weaponDataSOs = new List<WeaponDataSO>();
 
         for (int i = 0; i < summonCount; i++)
@@ -105,13 +104,13 @@ public class Summon : MonoBehaviour
             PlayerobjManager.Instance.Player.inventory.AddItemToInventory(weaponDataSO);
             weaponDataSOs.Add(weaponDataSO);
         }
-        Debug.LogError(weaponDataSOs);
         return weaponDataSOs;
-        //summon.cs에서 만든 weaponDataSO List를 -> summonPopupUI로 전달만 하면 됨.
     }
 
-    public void SummonSkillCard(int summonCount)
+    public List<SkillDataSO> SummonSkillDataSOList(int summonCount)
     {
+        List<SkillDataSO> skillDataSOs = new List<SkillDataSO>();
+
         for (int i = 0; i < summonCount; i++)
         {
             Grade grade = GetGradeBySummonRate();
@@ -119,10 +118,13 @@ public class Summon : MonoBehaviour
             PlayerobjManager.Instance.Player.inventory.AddItemToInventory(skillDataSO);
             Debug.Log(skillDataSO);
         }
+        return skillDataSOs;
     }
 
-    public void SummonAccessary(int summonCount)
+    public List<AccessoryDataSO> SummonAccessaryDataSOList(int summonCount)
     {
+        List<AccessoryDataSO> accessoryDataSOs = new List<AccessoryDataSO>();
+
         for (int i = 0; i < summonCount; i++)
         {
             Grade grade = GetGradeBySummonRate();
@@ -131,5 +133,6 @@ public class Summon : MonoBehaviour
             PlayerobjManager.Instance.Player.inventory.AddItemToInventory(accessoryDataSO);
             Debug.Log(accessoryDataSO);
         }
+        return accessoryDataSOs;
     }
 }
