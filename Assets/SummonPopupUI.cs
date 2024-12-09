@@ -86,11 +86,6 @@ public class SummonPopupUI : UIBase
         summonBtn33.interactable = canInteractable;
     }
 
-    private void SetSummonSlots()
-    {
-        Debug.Log("SetSummonSlots");
-    }
-
     public void OnExitBtn()
     {
         Hide();
