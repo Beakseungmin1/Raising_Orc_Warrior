@@ -3,16 +3,20 @@ using System.Collections.Generic;
 public class SkillInventory : IInventory<Skill>
 {
     private Dictionary<Skill, int> skills = new Dictionary<Skill, int>();
+    private int maxInventorySize = 100;
 
     public void AddItem(Skill skill)
     {
-        if (skills.ContainsKey(skill))
+        if (CanAddItem(skill))
         {
-            skills[skill]++;
-        }
-        else
-        {
-            skills[skill] = 1;
+            if (skills.ContainsKey(skill))
+            {
+                skills[skill]++;
+            }
+            else
+            {
+                skills[skill] = 1;
+            }
         }
     }
 
@@ -51,5 +55,14 @@ public class SkillInventory : IInventory<Skill>
     public int GetTotalItemCount()
     {
         return skills.Count;
+    }
+
+    public bool CanAddItem(Skill skill)
+    {
+        if (skills.ContainsKey(skill))
+        {
+            return true;
+        }
+        return skills.Count < maxInventorySize;
     }
 }

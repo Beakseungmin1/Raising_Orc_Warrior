@@ -24,20 +24,41 @@ public class PlayerInventory : MonoBehaviour
         {
             case SkillDataSO skillData:
                 Skill skill = SkillInventory.GetItem(skillData.itemName) ?? new Skill(skillData);
-                SkillInventory.AddItem(skill);
-                OnSkillsChanged?.Invoke();
+                if (SkillInventory.CanAddItem(skill))
+                {
+                    SkillInventory.AddItem(skill);
+                    OnSkillsChanged?.Invoke();
+                }
+                else
+                {
+                    Debug.LogWarning("스킬 인벤토리에 더 이상 아이템을 추가할 수 없습니다.");
+                }
                 break;
 
             case WeaponDataSO weaponData:
                 Weapon weapon = WeaponInventory.GetItem(weaponData.itemName) ?? new Weapon(weaponData);
-                WeaponInventory.AddItem(weapon);
-                OnWeaponsChanged?.Invoke();
+                if (WeaponInventory.CanAddItem(weapon))
+                {
+                    WeaponInventory.AddItem(weapon);
+                    OnWeaponsChanged?.Invoke();
+                }
+                else
+                {
+                    Debug.LogWarning("무기 인벤토리에 더 이상 아이템을 추가할 수 없습니다.");
+                }
                 break;
 
             case AccessoryDataSO accessoryData:
                 Accessory accessory = AccessoryInventory.GetItem(accessoryData.itemName) ?? new Accessory(accessoryData);
-                AccessoryInventory.AddItem(accessory);
-                OnAccessoriesChanged?.Invoke();
+                if (AccessoryInventory.CanAddItem(accessory))
+                {
+                    AccessoryInventory.AddItem(accessory);
+                    OnAccessoriesChanged?.Invoke();
+                }
+                else
+                {
+                    Debug.LogWarning("악세사리 인벤토리에 더 이상 아이템을 추가할 수 없습니다.");
+                }
                 break;
 
             default:
@@ -56,6 +77,7 @@ public class PlayerInventory : MonoBehaviour
                 {
                     SkillInventory.RemoveItem(skill);
                     OnSkillsChanged?.Invoke();
+                    NotifySkillsChanged();
                 }
                 break;
 
@@ -65,6 +87,7 @@ public class PlayerInventory : MonoBehaviour
                 {
                     WeaponInventory.RemoveItem(weapon);
                     OnWeaponsChanged?.Invoke();
+                    NotifyWeaponsChanged();
                 }
                 break;
 
@@ -74,6 +97,7 @@ public class PlayerInventory : MonoBehaviour
                 {
                     AccessoryInventory.RemoveItem(accessory);
                     OnAccessoriesChanged?.Invoke();
+                    NotifyAccessoriesChanged();
                 }
                 break;
 
@@ -81,5 +105,20 @@ public class PlayerInventory : MonoBehaviour
                 Debug.LogError("지원되지 않는 아이템");
                 break;
         }
+    }
+
+    public void NotifyWeaponsChanged()
+    {
+        OnWeaponsChanged?.Invoke();
+    }
+
+    public void NotifyAccessoriesChanged()
+    {
+        OnAccessoriesChanged?.Invoke();
+    }
+
+    public void NotifySkillsChanged()
+    {
+        OnSkillsChanged?.Invoke();
     }
 }

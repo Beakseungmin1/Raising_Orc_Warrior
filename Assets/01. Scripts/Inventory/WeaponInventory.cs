@@ -3,16 +3,20 @@ using System.Collections.Generic;
 public class WeaponInventory : IInventory<Weapon>
 {
     private Dictionary<Weapon, int> weapons = new Dictionary<Weapon, int>();
+    private int maxInventorySize = 100;
 
     public void AddItem(Weapon item)
     {
-        if (weapons.ContainsKey(item))
+        if (CanAddItem(item))
         {
-            weapons[item]++;
-        }
-        else
-        {
-            weapons[item] = 1;
+            if (weapons.ContainsKey(item))
+            {
+                weapons[item]++;
+            }
+            else
+            {
+                weapons[item] = 1;
+            }
         }
     }
 
@@ -51,5 +55,14 @@ public class WeaponInventory : IInventory<Weapon>
     public int GetTotalItemCount()
     {
         return weapons.Count;
+    }
+
+    public bool CanAddItem(Weapon item)
+    {
+        if (weapons.ContainsKey(item))
+        {
+            return true;
+        }
+        return weapons.Count < maxInventorySize;
     }
 }
