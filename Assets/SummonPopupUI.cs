@@ -93,7 +93,6 @@ public class SummonPopupUI : UIBase
 
     public void OnClickSummonBtn(int summonCount) //acc, skill 추가할때 enum Type값도 추가해야겠다.
     {
-
         weaponDataSOs = summon.SummonWeaponDataSOList(summonCount); //웨폰데이터 리스트가 세팅된다.
         SetSlotAsCount(summonCount);
         ClearSlotData();

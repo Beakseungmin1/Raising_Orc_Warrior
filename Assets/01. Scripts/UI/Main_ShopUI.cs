@@ -51,11 +51,13 @@ public class Main_ShopUI : UIBase
 
     public void OnAccSummonBtnClick(int summonCount)
     {
-        summon.SummonAccessary(summonCount);
+        List<AccessoryDataSO> accessoryDataSOs = new List<AccessoryDataSO>();
+        accessoryDataSOs = summon.SummonAccessaryDataSOList(summonCount);
     }
 
     public void OnSkillCardSummonBtnClick(int summonCount)
     {
-        summon.SummonSkillCard(summonCount);
+        List<SkillDataSO> skillDataSOs = new List<SkillDataSO>();
+        skillDataSOs = summon.SummonSkillDataSOList(summonCount);
     }
 }
