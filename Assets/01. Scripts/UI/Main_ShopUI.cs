@@ -42,6 +42,7 @@ public class Main_ShopUI : UIBase
     {
         List<WeaponDataSO> weaponDataSOs = summon.SummonWeaponDataSOList(summonCount); //웨폰데이터 리스트가 세팅된다.
         SummonPopupUI summonPopupUI = UIManager.Instance.Show<SummonPopupUI>();
+        summonPopupUI.SetSlotAsCount(summonCount);
         summonPopupUI.StartSetWeaponDataSOs(weaponDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
     }
 
