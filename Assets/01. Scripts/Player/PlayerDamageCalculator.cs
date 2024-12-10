@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerDamageCalculator : MonoBehaviour
 {
+    private PlayerStat stat;
+    private EquipManager equipManager;
+
+
+
 
     public float TotalDamage;
     public float basicDamage;
@@ -14,13 +19,19 @@ public class PlayerDamageCalculator : MonoBehaviour
 
     private void Start()
     {
-        UpdateValue();
+        stat = GetComponent<PlayerStat>();
+        equipManager = GetComponent<EquipManager>();
     }
 
     public void UpdateValue()
     {
-        basicDamage = PlayerobjManager.Instance.Player.stat.attackPower;
-        //WeaponIncreaseDamage = basicDamage * (PlayerobjManager.Instance.Player.curWeapon.BaseData.equipAtkIncreaseRate / 100);
+        basicDamage = stat.attackPower;
+
+        if (equipManager.EquippedWeapon != null)
+        {
+            WeaponIncreaseDamage = basicDamage * (equipManager.EquippedWeapon.BaseData.equipAtkIncreaseRate / 100);
+        }
+        
 
         foreach (var skill in PlayerobjManager.Instance.Player.PlayerBattle.activeBuffSkills)
         {
