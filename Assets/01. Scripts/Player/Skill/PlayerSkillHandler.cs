@@ -19,7 +19,6 @@ public class PlayerSkillHandler : MonoBehaviour
 
         if (equipManager == null || playerStat == null)
         {
-            Debug.LogError("PlayerSkillHandler: EquipManager 또는 PlayerStat를 찾을 수 없습니다.");
             return;
         }
 
@@ -45,18 +44,7 @@ public class PlayerSkillHandler : MonoBehaviour
         {
             cooldownTimers[i] = 0f;
             hitCounters[i] = 0; // 각 스킬의 hitCounters 초기화
-
-            if (equippedSkills[i] != null)
-            {
-                Debug.Log($"PlayerSkillHandler: 스킬 {equippedSkills[i].BaseData.itemName}이(가) 장착되었습니다.");
-            }
-            else
-            {
-                Debug.LogWarning($"PlayerSkillHandler: EquippedSkills[{i}]가 null입니다.");
-            }
         }
-
-        Debug.Log($"PlayerSkillHandler: EquipManager와 동기화 완료. 장착된 스킬 수: {equippedSkills.Count}");
     }
 
     private void Update()
@@ -77,28 +65,23 @@ public class PlayerSkillHandler : MonoBehaviour
     {
         if (skill == null)
         {
-            Debug.LogWarning("PlayerSkillHandler: 발동할 스킬이 없습니다.");
             return;
         }
 
         int skillIndex = equippedSkills.IndexOf(skill);
         if (skillIndex < 0 || cooldownTimers[skillIndex] > 0)
         {
-            Debug.Log($"PlayerSkillHandler: 스킬 {skill.BaseData.itemName}은 쿨다운 중입니다.");
             return;
         }
 
         if (skill.BaseData.manaCost > playerStat.GetMana())
         {
-            Debug.Log($"PlayerSkillHandler: 스킬 {skill.BaseData.itemName} 사용 실패! 마나 부족.");
             return;
         }
 
         skillEffectManager.TriggerEffect(skill, targetPosition);
 
-        // 스킬 사용 후 hitCounters 증가
         hitCounters[skillIndex]++;
-        Debug.Log($"스킬 {skill.BaseData.itemName} 사용 완료! 현재 hitCounters: {hitCounters[skillIndex]}");
 
         cooldownTimers[skillIndex] = skill.BaseData.cooldown;
         playerStat.reduceMana(skill.BaseData.manaCost);
@@ -109,7 +92,6 @@ public class PlayerSkillHandler : MonoBehaviour
         int skillIndex = equippedSkills.IndexOf(skill);
         if (skillIndex < 0)
         {
-            Debug.LogError($"PlayerSkillHandler: 스킬 {skill.BaseData.itemName}은 장착되지 않았습니다.");
             return 0;
         }
         return hitCounters[skillIndex];
@@ -121,7 +103,6 @@ public class PlayerSkillHandler : MonoBehaviour
         if (skillIndex >= 0)
         {
             hitCounters[skillIndex] = 0;
-            Debug.Log($"스킬 {skill.BaseData.itemName}의 hitCounters 초기화 완료.");
         }
     }
 }
