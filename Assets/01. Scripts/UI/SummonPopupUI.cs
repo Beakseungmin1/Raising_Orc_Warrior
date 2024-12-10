@@ -8,19 +8,22 @@ public class SummonPopupUI : UIBase
     private Summon summon;
 
     public List<GameObject> summonSlotObjs;
-    public List<WeaponDataSO> weaponDataSOs;
 
     public GameObject summonSlotListArea33obj;
     public GameObject summonSlotListArea11obj;
     public GameObject summonSlotListArea1obj;
 
     private Dictionary<int, GameObject> summonSlotMapping;
-
     private Coroutine coroutine;
 
     public Button extBtn;
     public Button summonBtn11;
     public Button summonBtn33;
+
+    ItemType curItemType;
+
+    // 데이터 타입별 리스트 딕셔너리
+    private Dictionary<System.Type, IList> summonDataMapping;
 
     private void Awake()
     {
@@ -33,35 +36,19 @@ public class SummonPopupUI : UIBase
             { 11, summonSlotListArea11obj },
             { 33, summonSlotListArea33obj }
         };
+
+        // 데이터 매핑 딕셔너리 초기화
+        summonDataMapping = new Dictionary<System.Type, IList>();
     }
 
     public void SetSlotAsCount(int count)
     {
-        summonSlotListArea33obj.SetActive(false);
-        summonSlotListArea11obj.SetActive(false);
-        summonSlotListArea1obj.SetActive(false);
-        /* 
-        switch문 -> dictionary로 수정하여 더 깔끔한 코드로 변경.
-        switch (count)
+        foreach (var slotObj in summonSlotMapping.Values)
         {
-            case 1:
-                summonSlotListArea1obj.SetActive(true);
-                summonSlotObjs = summonSlotListArea1obj.GetComponent<SummonSlotListArea>().summonSlots;
-                break;
-            case 11:
-                summonSlotListArea11obj.SetActive(true);
-                summonSlotObjs = summonSlotListArea11obj.GetComponent<SummonSlotListArea>().summonSlots;
-                break;
-            default:
-                summonSlotListArea33obj.SetActive(true);
-                summonSlotObjs = summonSlotListArea33obj.GetComponent<SummonSlotListArea>().summonSlots;
-                break;
+            slotObj.SetActive(false);
         }
-        */
-        GameObject selectedSlotObj;
 
-        // count 값에 해당하는 GameObject 가져오기
-        if (summonSlotMapping.TryGetValue(count, out selectedSlotObj))
+        if (summonSlotMapping.TryGetValue(count, out var selectedSlotObj))
         {
             selectedSlotObj.SetActive(true);
             summonSlotObjs = selectedSlotObj.GetComponent<SummonSlotListArea>().summonSlots;
@@ -74,34 +61,36 @@ public class SummonPopupUI : UIBase
 
     public void ClearSlotData()
     {
-        for (int i = 0; i < summonSlotObjs.Count; i++)
+        foreach (var slotObj in summonSlotObjs)
         {
-            summonSlotObjs[i].GetComponent<SummonSlot>().ClearSlot();
+            slotObj.GetComponent<SummonSlot>().ClearSlot();
         }
     }
 
-    public void StartSetWeaponDataSOs(List<WeaponDataSO> SOs)
+    public void StartSetDataSOs<T>(List<T> dataSOs) where T : BaseItemDataSO
     {
         if (coroutine != null)
         {
             StopCoroutine(coroutine);
         }
-        coroutine = StartCoroutine(SetWeaponDataSOs(SOs));
+        coroutine = StartCoroutine(SetDataSOs(dataSOs));
     }
 
-    private IEnumerator SetWeaponDataSOs(List<WeaponDataSO> SOs)
+    private IEnumerator SetDataSOs<T>(List<T> dataSOs) where T : BaseItemDataSO
     {
         SetBtnInteractable(false);
-        weaponDataSOs = SOs;
+
+        summonDataMapping[typeof(T)] = dataSOs; // 데이터 매핑
         for (int i = 0; i < summonSlotObjs.Count; i++)
         {
-            if (weaponDataSOs[i] != null)
+            if (i < dataSOs.Count && dataSOs[i] != null)
             {
-                summonSlotObjs[i].GetComponent<SummonSlot>().SetSlot(weaponDataSOs[i]);
+                summonSlotObjs[i].GetComponent<SummonSlot>().SetSlot(dataSOs[i]);
                 yield return new WaitForSeconds(0.05f);
             }
         }
-        SetBtnInteractable(true); //코루틴 진행되는 동안만 꺼져있어야함.
+
+        SetBtnInteractable(true); // 코루틴 진행 동안 버튼 비활성화
     }
 
     private void SetBtnInteractable(bool canInteractable)
@@ -116,12 +105,46 @@ public class SummonPopupUI : UIBase
         Hide();
     }
 
-    public void OnClickSummonBtn(int summonCount) //acc, skill 추가할때 enum Type값도 추가해야겠다.
+    public void OnClickMoreBtn(int summonCount)
     {
-        weaponDataSOs = summon.SummonWeaponDataSOList(summonCount); //웨폰데이터 리스트가 세팅된다.
-        SetSlotAsCount(summonCount);
-        ClearSlotData();
-        StartSetWeaponDataSOs(weaponDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
+        switch (curItemType)
+        {
+            case(ItemType.Weapon):
+                OnWeaponSummon(summonCount);
+                break;
+            case(ItemType.Accessory):
+                OnAccSummon(summonCount);
+                break;
+            case (ItemType.Skill):
+                OnSkillCardSummon(summonCount);
+                break;
+        }
     }
 
+    public void OnWeaponSummon(int summonCount)
+    {
+        // 무기 소환 예제
+        var weaponDataSOs = summon.SummonWeaponDataSOList(summonCount);
+        SetSlotAsCount(summonCount);
+        ClearSlotData();
+        StartSetDataSOs(weaponDataSOs); // 제너릭 메서드 호출
+    }
+
+    public void OnAccSummon(int summonCount)
+    {
+        // 악세서리 소환 예제
+        var accessoryDataSOs = summon.SummonAccessoryDataSOList(summonCount);
+        SetSlotAsCount(summonCount);
+        ClearSlotData();
+        StartSetDataSOs(accessoryDataSOs); // 제너릭 메서드 호출
+    }
+
+    public void OnSkillCardSummon(int summonCount)
+    {
+        // 스킬 소환 예제
+        var skillDataSOs = summon.SummonSkillDataSOList(summonCount);
+        SetSlotAsCount(summonCount);
+        ClearSlotData();
+        StartSetDataSOs(skillDataSOs); // 제너릭 메서드 호출
+    }
 }
