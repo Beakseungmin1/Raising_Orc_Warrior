@@ -13,6 +13,8 @@ public class SummonSlot : UIBase
     public TextMeshProUGUI rankLabel;
     public Image image;
 
+    public bool isSkillSummoning = false;
+
     private void Awake()
     {
         image.gameObject.SetActive(false);
@@ -27,14 +29,17 @@ public class SummonSlot : UIBase
 
         if (so is WeaponDataSO weaponDataSO)
         {
+            isSkillSummoning = false;
             SetWeaponSlot(weaponDataSO);
         }
         else if (so is AccessoryDataSO accessoryDataSO)
         {
+            isSkillSummoning = false;
             SetAccessorySlot(accessoryDataSO);
         }
         else if (so is SkillDataSO skillDataSO)
         {
+            isSkillSummoning = true;
             SetSkillSlot(skillDataSO);
         }
         else
@@ -72,7 +77,7 @@ public class SummonSlot : UIBase
         image.gameObject.SetActive(true);
         gradeTxt.gameObject.SetActive(true);
         rankTxt.gameObject.SetActive(true);
-        rankLabel.gameObject.SetActive(SummonDataManager.Instance.curSummoningItemType != ItemType.Skill);
+        rankLabel.gameObject.SetActive(!isSkillSummoning);
     }
 
 

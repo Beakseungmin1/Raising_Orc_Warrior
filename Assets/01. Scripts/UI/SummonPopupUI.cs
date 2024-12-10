@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SummonPopupUI : UIBase
 {
+    public ItemType curSummoningItemType; //현재 소환중인 아이템 타입
+
     private Summon summon;
 
     public List<GameObject> summonSlotObjs;
@@ -105,7 +107,7 @@ public class SummonPopupUI : UIBase
 
     public void OnClickMoreBtn(int summonCount)
     {
-        switch (SummonDataManager.Instance.curSummoningItemType)
+        switch (curSummoningItemType)
         {
             case(ItemType.Weapon):
                 OnWeaponSummon(summonCount);
