@@ -21,6 +21,7 @@ MonoBehaviour:
   requiredCurrencyForUpgrade: 0
   currentLevel: 1
   equipHpAndHpRecoveryIncreaseRate: 0
+  passiveHpAndHpRecoveryIncreaseRate: 0
   passiveMpAndMpRecoveryIncreaseRate: 0
   passiveAddEXPRate: 0
-  rank: 3
+  rank: 2
