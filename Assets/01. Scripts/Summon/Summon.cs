@@ -116,7 +116,7 @@ public class Summon : MonoBehaviour
             Grade grade = GetGradeBySummonRate();
             SkillDataSO skillDataSO = DataManager.Instance.GetRandomSkillByGrade(grade);
             PlayerobjManager.Instance.Player.inventory.AddItemToInventory(skillDataSO);
-            Debug.Log(skillDataSO);
+            skillDataSOs.Add(skillDataSO);
         }
         return skillDataSOs;
     }
