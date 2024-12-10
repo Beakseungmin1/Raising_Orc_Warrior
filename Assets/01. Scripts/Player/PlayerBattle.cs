@@ -51,9 +51,14 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     }
 
 
-    public void TakeDamage(float Damage)
+    public void TakeDamage(float damage)
     {
-
+        playerStat.decreaseHp(damage);
+        if (playerStat.health <= 0)
+        {
+            currentState = State.Dead;
+            //animator.SetTrigger("Die"); // 사망 애니메이션 재생
+        }
     }
 
     private void PlayerAttack()
@@ -64,19 +69,51 @@ public class PlayerBattle : MonoBehaviour, IDamageable
             // 공격 애니메이션 재생예정
             // animator.SetTrigger("Attack");
             currentMonster.TakeDamage(totalDamage);
+
+            if (!currentMonster.GetActive())
+            {
+                Debug.Log("몬스터잡음");
+
+                currentState = State.Idle;
+
+                // 몬스터의 giveexp 값만큼 플레이어가 exp 획득
+                playerStat.AddExpFromMonsters(currentMonster);
+
+                // 플레이어 레벨 ui 업데이트
+                playerStat.UpdateLevelStatUI.Invoke();
+
+                currentMonster = null;
+            }
         }
-        else
+        //else
+        //{
+        //    Debug.Log("몬스터 잡음");
+        //    // 몬스터가 사망하면 Idle 상태로 전환
+        //    currentState = State.Idle;
+
+        //    // 몬스터의 giveexp 값만큼 플레이어가 exp 획득
+        //    playerStat.AddExpFromMonsters(currentMonster);
+
+        //    // 플레이어 레벨 ui 업데이트
+        //    playerStat.UpdateLevelStatUI.Invoke();
+
+        //    currentMonster = null;
+        //}
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Monster"))
         {
-            Debug.Log("몬스터 잡음");
-            // 몬스터가 사망하면 Idle 상태로 전환
-            currentState = State.Idle;
+            currentMonster = collision.gameObject.GetComponent<Enemy>();
+            currentState = State.Attacking;
+        }
+    }
 
-            // 몬스터의 giveexp 값만큼 플레이어가 exp 획득
-            playerStat.AddExpFromMonsters(currentMonster);
-
-            // 플레이어 레벨 ui 업데이트
-            playerStat.UpdateLevelStatUI.Invoke();
-
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Monster"))
+        {
             currentMonster = null;
         }
     }
@@ -96,22 +133,4 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         // 버프 해제
         activeBuffSkills.Remove(skill);
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Monster"))
-        {
-            currentMonster = collision.gameObject.GetComponent<Enemy>();
-            currentState = State.Attacking;
-        }
-    }
-
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("Monster"))
-    //    {
-    //        currentState = State.Idle;
-    //    }
-    //}
-
 }

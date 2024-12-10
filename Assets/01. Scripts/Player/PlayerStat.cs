@@ -56,6 +56,12 @@ public class PlayerStat : MonoBehaviour
         exp += enemy.GiveExp();
     }
 
+    public void decreaseHp(float damage)
+    {
+        health -= damage;
+    }
+
+
     public void LevelUp()
     {
         if (exp >= needExp)
