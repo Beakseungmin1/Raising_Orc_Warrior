@@ -5841,10 +5841,13 @@ MonoBehaviour:
   canvas: {fileID: 0}
   weaponSummonLevelTxt: {fileID: 6973932318799348942}
   weaponSummonExpTxt: {fileID: 517963772943512619}
+  weaponExpSlider: {fileID: 3637728790652694327}
   accSummonLevelTxt: {fileID: 4350898779133876355}
   accSummonExpTxt: {fileID: 8180269691239143184}
+  accExpSlider: {fileID: 4243017795684127703}
   skillSummonLevelTxt: {fileID: 994552176109629320}
   skillSummonExpTxt: {fileID: 3543311159720757878}
+  skillExpSlider: {fileID: 2305152520949472428}
 --- !u!114 &4471117982389591348
 MonoBehaviour:
   m_ObjectHideFlags: 0

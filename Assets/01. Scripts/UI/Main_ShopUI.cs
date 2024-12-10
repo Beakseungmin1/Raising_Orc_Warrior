@@ -12,14 +12,17 @@ public class Main_ShopUI : UIBase
     [Header("Weapon")]
     [SerializeField] private TextMeshProUGUI weaponSummonLevelTxt;
     [SerializeField] private TextMeshProUGUI weaponSummonExpTxt;
+    public Slider weaponExpSlider;
 
     [Header("Accessory")]
     [SerializeField] private TextMeshProUGUI accSummonLevelTxt;
     [SerializeField] private TextMeshProUGUI accSummonExpTxt;
+    public Slider accExpSlider;
 
     [Header("Skill")]
     [SerializeField] private TextMeshProUGUI skillSummonLevelTxt;
     [SerializeField] private TextMeshProUGUI skillSummonExpTxt;
+    public Slider skillExpSlider;
 
     private Dictionary<ItemType, int> summonTypeMapping;
 
@@ -100,11 +103,14 @@ public class Main_ShopUI : UIBase
     {
         weaponSummonLevelTxt.text = SummonDataManager.Instance.GetLevel(ItemType.Weapon).ToString();
         weaponSummonExpTxt.text = $"{SummonDataManager.Instance.GetExp(ItemType.Weapon).ToString("F0")} / {SummonDataManager.Instance.GetExpToNextLevel(ItemType.Weapon).ToString("F0")}";
+        weaponExpSlider.value = SummonDataManager.Instance.GetExp(ItemType.Weapon) / SummonDataManager.Instance.GetExpToNextLevel(ItemType.Weapon);
 
         accSummonLevelTxt.text = SummonDataManager.Instance.GetLevel(ItemType.Accessory).ToString();
         accSummonExpTxt.text = $"{SummonDataManager.Instance.GetExp(ItemType.Accessory).ToString("F0")} / {SummonDataManager.Instance.GetExpToNextLevel(ItemType.Accessory).ToString("F0")}";
+        accExpSlider.value = SummonDataManager.Instance.GetExp(ItemType.Accessory) / SummonDataManager.Instance.GetExpToNextLevel(ItemType.Accessory);
 
         skillSummonLevelTxt.text = SummonDataManager.Instance.GetLevel(ItemType.Skill).ToString();
         skillSummonExpTxt.text = $"{SummonDataManager.Instance.GetExp(ItemType.Skill).ToString("F0")} / {SummonDataManager.Instance.GetExpToNextLevel(ItemType.Skill).ToString("F0")}";
+        skillExpSlider.value = SummonDataManager.Instance.GetExp(ItemType.Skill) / SummonDataManager.Instance.GetExpToNextLevel(ItemType.Skill);
     }
 }
