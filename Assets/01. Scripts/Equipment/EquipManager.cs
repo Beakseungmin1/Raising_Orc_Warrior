@@ -18,11 +18,6 @@ public class EquipManager : MonoBehaviour
         playerStat = PlayerobjManager.Instance?.Player.stat;
         skillHandler = PlayerobjManager.Instance?.Player.GetComponent<PlayerSkillHandler>();
 
-        if (playerStat == null || skillHandler == null)
-        {
-            Debug.LogError("[EquipManager] PlayerStat 또는 PlayerSkillHandler를 찾을 수 없습니다.");
-        }
-
         InitializeSkillSlots(0); // 초기화 메서드 호출
     }
 
@@ -33,8 +28,6 @@ public class EquipManager : MonoBehaviour
         {
             EquippedSkills.Add(null);
         }
-
-        Debug.Log($"[EquipManager] 슬롯 초기화 완료. 슬롯 개수: {slotCount}");
     }
 
     public void UpdateSkillSlotCount(int newSlotCount)
@@ -52,7 +45,6 @@ public class EquipManager : MonoBehaviour
             EquippedSkills.RemoveRange(newSlotCount, EquippedSkills.Count - newSlotCount);
         }
 
-        Debug.Log($"[EquipManager] 슬롯 개수가 {newSlotCount}개로 업데이트되었습니다.");
     }
 
     public void EquipWeapon(WeaponDataSO weaponData)
@@ -67,7 +59,6 @@ public class EquipManager : MonoBehaviour
         EquippedWeapon = new Weapon(weaponData);
         ApplyWeaponEffect(EquippedWeapon);
 
-        Debug.Log($"[EquipManager] 무기 {weaponData.itemName} 장착 완료.");
         OnEquippedChanged?.Invoke();
     }
 
@@ -78,7 +69,6 @@ public class EquipManager : MonoBehaviour
         RemoveWeaponEffect(EquippedWeapon);
         EquippedWeapon = null;
 
-        Debug.Log("[EquipManager] 무기 해제 완료.");
         OnEquippedChanged?.Invoke();
     }
 
@@ -94,7 +84,6 @@ public class EquipManager : MonoBehaviour
         EquippedAccessory = new Accessory(accessoryData);
         ApplyAccessoryEffect(EquippedAccessory);
 
-        Debug.Log($"[EquipManager] 악세사리 {accessoryData.itemName} 장착 완료.");
         OnEquippedChanged?.Invoke();
     }
 
@@ -105,7 +94,6 @@ public class EquipManager : MonoBehaviour
         RemoveAccessoryEffect(EquippedAccessory);
         EquippedAccessory = null;
 
-        Debug.Log("[EquipManager] 악세사리 해제 완료.");
         OnEquippedChanged?.Invoke();
     }
 
@@ -113,7 +101,6 @@ public class EquipManager : MonoBehaviour
     {
         if (slotIndex < 0 || slotIndex >= EquippedSkills.Count)
         {
-            Debug.LogError("[EquipManager] 잘못된 슬롯 인덱스입니다.");
             return;
         }
 
@@ -128,7 +115,6 @@ public class EquipManager : MonoBehaviour
         // PlayerSkillHandler와 동기화
         skillHandler.SyncWithEquipManager();
 
-        Debug.Log($"[EquipManager] 스킬 {skill.BaseData.itemName}이(가) 슬롯 {slotIndex}에 장착되었습니다.");
         OnEquippedChanged?.Invoke();
     }
 
@@ -136,7 +122,6 @@ public class EquipManager : MonoBehaviour
     {
         if (slotIndex < 0 || slotIndex >= EquippedSkills.Count)
         {
-            Debug.LogError("[EquipManager] 잘못된 슬롯 인덱스입니다.");
             return;
         }
 
@@ -149,7 +134,6 @@ public class EquipManager : MonoBehaviour
         // PlayerSkillHandler와 동기화
         skillHandler.SyncWithEquipManager();
 
-        Debug.Log($"[EquipManager] 스킬 {skill.BaseData.itemName}이(가) 슬롯 {slotIndex}에서 해제되었습니다.");
         OnEquippedChanged?.Invoke();
     }
 
