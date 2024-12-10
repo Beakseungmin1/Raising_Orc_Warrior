@@ -16,12 +16,14 @@ public class EquipmentInventorySlotManager : UIBase
     private PlayerInventory playerInventory;
     private bool isWeaponTabActive = true;
 
+    // 강화 시 필요한 기본 아이템 수량 (항상 1)
+    private const int RequiredItemCountForEnhancement = 1;
+
     private void Start()
     {
         playerInventory = PlayerobjManager.Instance?.Player?.inventory;
         if (playerInventory == null)
         {
-            Debug.LogError("[EquipmentInventorySlotManager] PlayerInventory를 찾을 수 없습니다.");
             return;
         }
 
@@ -47,6 +49,8 @@ public class EquipmentInventorySlotManager : UIBase
     private void CreateSlotsIfNeeded(int requiredSlotCount)
     {
         int currentSlotCount = inventorySlots.Count;
+
+        // 부족한 슬롯 생성
         for (int i = currentSlotCount; i < requiredSlotCount; i++)
         {
             GameObject slotObj = Instantiate(equipmentSlotPrefab, contentParent);
@@ -55,6 +59,12 @@ public class EquipmentInventorySlotManager : UIBase
             {
                 inventorySlots.Add(slot);
             }
+        }
+
+        // 초과 슬롯 비활성화
+        for (int i = requiredSlotCount; i < inventorySlots.Count; i++)
+        {
+            inventorySlots[i].gameObject.SetActive(false);
         }
     }
 
@@ -89,11 +99,20 @@ public class EquipmentInventorySlotManager : UIBase
             {
                 var weapon = weaponList[i];
                 int currentAmount = playerInventory.WeaponInventory.GetItemStackCount(weapon);
-                inventorySlots[i].InitializeSlot(weapon, currentAmount, weapon.RequiredCurrencyForUpgrade, this, true);
+                inventorySlots[i].gameObject.SetActive(true); // 슬롯 활성화
+
+                // 슬롯 초기화
+                inventorySlots[i].InitializeSlot(
+                    weapon,
+                    currentAmount,
+                    RequiredItemCountForEnhancement, // 강화에 필요한 기본 수량
+                    this,
+                    true
+                );
             }
             else
             {
-                inventorySlots[i].InitializeSlot(null, 0, 0, this, true);
+                inventorySlots[i].gameObject.SetActive(false); // 슬롯 비활성화
             }
         }
     }
@@ -111,11 +130,20 @@ public class EquipmentInventorySlotManager : UIBase
             {
                 var accessory = accessoryList[i];
                 int currentAmount = playerInventory.AccessoryInventory.GetItemStackCount(accessory);
-                inventorySlots[i].InitializeSlot(accessory, currentAmount, accessory.RequiredCurrencyForUpgrade, this, false);
+                inventorySlots[i].gameObject.SetActive(true); // 슬롯 활성화
+
+                // 슬롯 초기화
+                inventorySlots[i].InitializeSlot(
+                    accessory,
+                    currentAmount,
+                    RequiredItemCountForEnhancement, // 강화에 필요한 기본 수량
+                    this,
+                    false
+                );
             }
             else
             {
-                inventorySlots[i].InitializeSlot(null, 0, 0, this, false);
+                inventorySlots[i].gameObject.SetActive(false); // 슬롯 비활성화
             }
         }
     }

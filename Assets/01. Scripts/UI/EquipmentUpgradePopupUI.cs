@@ -12,7 +12,7 @@ public class EquipmentUpgradePopupUI : UIBase
     [SerializeField] private TextMeshProUGUI currentAmountTxt;
     [SerializeField] private TextMeshProUGUI neededAmountTxt;
 
-    [Header("Equipment Effect Area")]
+    [Header("Effect Area")]
     [SerializeField] private TextMeshProUGUI equipEffectTypeTxt;
     [SerializeField] private TextMeshProUGUI equipEffectValueTxt;
 
@@ -36,131 +36,109 @@ public class EquipmentUpgradePopupUI : UIBase
 
     [Header("Navigation Buttons")]
     [SerializeField] private Button fusionReturnBtn;
+    [SerializeField] private Button leftArrowBtn;
+    [SerializeField] private Button rightArrowBtn;
 
-    private IEnhanceable currentItem; // 현재 장비 (Weapon 또는 Accessory)
-    private bool isWeapon; // 무기인지 여부를 판단
+    private IEnhanceable currentItem;
+    private bool isWeapon;
 
     private void Start()
     {
-        exitBtn.onClick.AddListener(ClosePopup);
         upgradeBtn.onClick.AddListener(UpgradeItem);
+        exitBtn.onClick.AddListener(ClosePopup);
         fusionReturnBtn.onClick.AddListener(ReturnToFusionUI);
+        leftArrowBtn.onClick.AddListener(SelectPreviousItem);
+        rightArrowBtn.onClick.AddListener(SelectNextItem);
     }
 
-    public void SetEquipmentData(object equipment, bool isWeaponType)
+    public void SetEquipmentData(IEnhanceable equipment, bool isWeaponType)
     {
         if (equipment == null)
         {
-            Debug.LogError("[EquipmentUpgradePopupUI] 장비 데이터가 유효하지 않습니다.");
             return;
         }
 
-        currentItem = equipment as IEnhanceable;
+        currentItem = equipment;
         isWeapon = isWeaponType;
+
+        InitializeUI();
+    }
+
+    private void InitializeUI()
+    {
+        equipmentIcon.sprite = currentItem.BaseData.icon;
+        nameTxt.text = currentItem.BaseData.itemName;
+        gradeTxt.text = $"[{currentItem.BaseData.grade}]";
+
+        currentAmountTxt.text = (currentItem as IStackable)?.StackCount.ToString() ?? "1";
+        neededAmountTxt.text = "1";
+
+        progressSlider.value = Mathf.Clamp01((float)((currentItem as IStackable)?.StackCount ?? 0) / int.Parse(neededAmountTxt.text));
 
         if (isWeapon && currentItem is Weapon weapon)
         {
-            UpdateUIForWeapon(weapon);
+            equipEffectTypeTxt.text = "공격력 증가";
+            equipEffectValueTxt.text = $"{weapon.EquipAtkIncreaseRate}%";
         }
         else if (!isWeapon && currentItem is Accessory accessory)
         {
-            UpdateUIForAccessory(accessory);
+            equipEffectTypeTxt.text = "체력/체력회복량 증가";
+            equipEffectValueTxt.text = $"{accessory.EquipHpAndHpRecoveryIncreaseRate}%";
         }
-    }
 
-    private void UpdateUIForWeapon(Weapon weapon)
-    {
-        var weaponData = weapon.BaseData;
+        UpdatePossessEffects();
 
-        equipmentIcon.sprite = weaponData.icon;
-        nameTxt.text = weaponData.itemName;
-        gradeTxt.text = $"[{weaponData.grade}]";
-        gradeTxt.color = weaponData.gradeColor;
-        currentAmountTxt.text = weapon.StackCount.ToString();
-        neededAmountTxt.text = "1";
-        progressSlider.value = Mathf.Clamp01((float)weapon.StackCount / 1);
-
-        equipEffectTypeTxt.text = "공격력 증가";
-        equipEffectValueTxt.text = $"{weapon.EquipAtkIncreaseRate}%";
-
-        UpdatePossessEffectsForWeapon(weapon.PassiveEquipAtkIncreaseRate, weapon.PassiveCriticalDamageBonus, weapon.PassiveGoldGainRate);
-
-        upgradeCostTxt.text = weapon.RequiredCurrencyForUpgrade.ToString();
+        upgradeCostTxt.text = currentItem.RequiredCurrencyForUpgrade.ToString();
         curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Cube).ToString();
-        curCubeIcon.sprite = weaponData.currencyIcon;
+        curCubeIcon.sprite = currentItem.BaseData.currencyIcon;
     }
 
-    private void UpdateUIForAccessory(Accessory accessory)
+    private void UpdatePossessEffects()
     {
-        var accessoryData = accessory.BaseData;
-
-        equipmentIcon.sprite = accessoryData.icon;
-        nameTxt.text = accessoryData.itemName;
-        gradeTxt.text = $"[{accessoryData.grade}]";
-        gradeTxt.color = accessoryData.gradeColor;
-        currentAmountTxt.text = accessory.StackCount.ToString();
-        neededAmountTxt.text = "1";
-        progressSlider.value = Mathf.Clamp01((float)accessory.StackCount / 1);
-
-        equipEffectTypeTxt.text = "체력/체력회복량 증가";
-        equipEffectValueTxt.text = $"{accessory.EquipHpAndHpRecoveryIncreaseRate}%";
-
-        UpdatePossessEffectsForAccessory(
-            accessory.PassiveHpAndHpRecoveryIncreaseRate,
-            accessory.PassiveMpAndMpRecoveryIncreaseRate,
-            accessory.PassiveAddEXPRate
-        );
-
-        upgradeCostTxt.text = accessory.RequiredCurrencyForUpgrade.ToString();
-        curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Cube).ToString();
-        curCubeIcon.sprite = accessoryData.currencyIcon;
-    }
-
-    private void UpdatePossessEffectsForWeapon(float atkIncreaseRate, float criticalDamageBonus, float goldGainRate)
-    {
+        // 모든 PossessEffectRow를 초기화 (비활성화)
         possessEffectRow0.SetActive(false);
         possessEffectRow1.SetActive(false);
         possessEffectRow2.SetActive(false);
 
         int rowIndex = 0;
 
-        if (atkIncreaseRate > 0)
+        // 무기 효과 추가
+        if (isWeapon && currentItem is Weapon weapon)
         {
-            UpdateEffectRow(rowIndex++, "공격력 증가", $"{atkIncreaseRate}%");
+            if (weapon.PassiveEquipAtkIncreaseRate > 0)
+            {
+                AddPossessEffectRow(rowIndex++, "공격력 증가", $"{weapon.PassiveEquipAtkIncreaseRate}%");
+            }
+            if (weapon.PassiveCriticalDamageBonus > 0)
+            {
+                AddPossessEffectRow(rowIndex++, "추가 치명타 데미지", $"{weapon.PassiveCriticalDamageBonus}%");
+            }
+            if (weapon.PassiveGoldGainRate > 0)
+            {
+                AddPossessEffectRow(rowIndex++, "추가 골드 획득량", $"{weapon.PassiveGoldGainRate}%");
+            }
         }
-        if (criticalDamageBonus > 0)
+        // 악세서리 효과 추가
+        else if (!isWeapon && currentItem is Accessory accessory)
         {
-            UpdateEffectRow(rowIndex++, "추가 치명타 데미지", $"{criticalDamageBonus}%");
+            if (accessory.PassiveHpAndHpRecoveryIncreaseRate > 0)
+            {
+                AddPossessEffectRow(rowIndex++, "체력/체력회복량 증가", $"{accessory.PassiveHpAndHpRecoveryIncreaseRate}%");
+            }
+            if (accessory.PassiveMpAndMpRecoveryIncreaseRate > 0)
+            {
+                AddPossessEffectRow(rowIndex++, "전체 마나/마나 회복량", $"{accessory.PassiveMpAndMpRecoveryIncreaseRate}%");
+            }
+            if (accessory.PassiveAddEXPRate > 0)
+            {
+                AddPossessEffectRow(rowIndex++, "추가 경험치", $"{accessory.PassiveAddEXPRate}%");
+            }
         }
-        if (goldGainRate > 0)
-        {
-            UpdateEffectRow(rowIndex++, "추가 골드 획득량", $"{goldGainRate}%");
-        }
+
+        // 남은 Row들은 비활성화된 상태로 유지됨
     }
 
-    private void UpdatePossessEffectsForAccessory(float hpRecoveryIncreaseRate, float manaRecoveryIncreaseRate, float expGainRate)
-    {
-        possessEffectRow0.SetActive(false);
-        possessEffectRow1.SetActive(false);
-        possessEffectRow2.SetActive(false);
-
-        int rowIndex = 0;
-
-        if (hpRecoveryIncreaseRate > 0)
-        {
-            UpdateEffectRow(rowIndex++, "체력/체력회복량 증가", $"{hpRecoveryIncreaseRate}%");
-        }
-        if (manaRecoveryIncreaseRate > 0)
-        {
-            UpdateEffectRow(rowIndex++, "전체 마나/마나 회복량", $"{manaRecoveryIncreaseRate}%");
-        }
-        if (expGainRate > 0)
-        {
-            UpdateEffectRow(rowIndex++, "추가 경험치", $"{expGainRate}%");
-        }
-    }
-
-    private void UpdateEffectRow(int rowIndex, string effectType, string effectValue)
+    private void AddPossessEffectRow(int rowIndex, string effectType, string effectValue)
     {
         switch (rowIndex)
         {
@@ -180,7 +158,6 @@ public class EquipmentUpgradePopupUI : UIBase
                 possessEffectValueTxt2.text = effectValue;
                 break;
             default:
-                Debug.LogWarning($"[EquipmentUpgradePopupUI] 지원되지 않는 보유 효과 행 인덱스: {rowIndex}");
                 break;
         }
     }
@@ -189,20 +166,15 @@ public class EquipmentUpgradePopupUI : UIBase
     {
         if (currentItem == null || !currentItem.CanEnhance())
         {
-            Debug.LogWarning("[EquipmentUpgradePopupUI] 강화 조건을 충족하지 못했습니다.");
             return;
         }
 
         bool success = currentItem.Enhance();
+
         if (success)
         {
-            Debug.Log("[EquipmentUpgradePopupUI] 아이템 강화 성공!");
-            SetEquipmentData(currentItem, isWeapon); // UI 갱신
-        }
-        else
-        {
-            Debug.LogWarning("[EquipmentUpgradePopupUI] 아이템 강화 실패!");
-        }
+            InitializeUI();
+        }        
     }
 
     private void ClosePopup()
@@ -224,9 +196,65 @@ public class EquipmentUpgradePopupUI : UIBase
     {
         Hide();
         var fusionPopup = UIManager.Instance.Show<EquipmentFusionPopupUI>();
-        if (fusionPopup != null)
+        if (fusionPopup != null && currentItem is IFusable fusableItem)
         {
-            fusionPopup.SetEquipmentData(currentItem, isWeapon);
+            fusionPopup.SetEquipmentData(fusableItem, currentItem.BaseData);
+        }
+    }
+
+    private void SelectPreviousItem()
+    {
+        var playerInventory = PlayerobjManager.Instance.Player.inventory;
+
+        if (isWeapon)
+        {
+            var weaponList = playerInventory.WeaponInventory.GetAllItems();
+            int currentIndex = weaponList.IndexOf(currentItem as Weapon);
+
+            if (currentIndex > 0) // 이전 아이템이 존재하는 경우
+            {
+                var previousWeapon = weaponList[currentIndex - 1];
+                SetEquipmentData(previousWeapon, true);
+            }            
+        }
+        else
+        {
+            var accessoryList = playerInventory.AccessoryInventory.GetAllItems();
+            int currentIndex = accessoryList.IndexOf(currentItem as Accessory);
+
+            if (currentIndex > 0) // 이전 아이템이 존재하는 경우
+            {
+                var previousAccessory = accessoryList[currentIndex - 1];
+                SetEquipmentData(previousAccessory, false);
+            }            
+        }
+    }
+
+    private void SelectNextItem()
+    {
+        var playerInventory = PlayerobjManager.Instance.Player.inventory;
+
+        if (isWeapon)
+        {
+            var weaponList = playerInventory.WeaponInventory.GetAllItems();
+            int currentIndex = weaponList.IndexOf(currentItem as Weapon);
+
+            if (currentIndex < weaponList.Count - 1) // 다음 아이템이 존재하는 경우
+            {
+                var nextWeapon = weaponList[currentIndex + 1];
+                SetEquipmentData(nextWeapon, true);
+            }            
+        }
+        else
+        {
+            var accessoryList = playerInventory.AccessoryInventory.GetAllItems();
+            int currentIndex = accessoryList.IndexOf(currentItem as Accessory);
+
+            if (currentIndex < accessoryList.Count - 1) // 다음 아이템이 존재하는 경우
+            {
+                var nextAccessory = accessoryList[currentIndex + 1];
+                SetEquipmentData(nextAccessory, false);
+            }            
         }
     }
 }

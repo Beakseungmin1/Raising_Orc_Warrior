@@ -8,18 +8,20 @@ public class EquipmentInventorySlot : UIBase
     [SerializeField] private TextMeshProUGUI currentLevelTxt;
     [SerializeField] private TextMeshProUGUI rankTxt;
     [SerializeField] private Slider expGauge;
-    [SerializeField] private TextMeshProUGUI maxAmountTxt;
-    [SerializeField] private TextMeshProUGUI curAmountTxt;
+    [SerializeField] private TextMeshProUGUI requiredItemCountTxt;
+    [SerializeField] private TextMeshProUGUI currentItemCountTxt;
     [SerializeField] private Button slotButton;
 
     private IEnhanceable equipmentData;
     private EquipmentInventorySlotManager slotManager;
     private bool isWeapon;
 
+    private int requiredItemCount = 1; // 기본 필요 수량
+
     private Color defaultColor = Color.white;
     private Color emptyColor = new Color32(80, 80, 80, 255);
 
-    public void InitializeSlot(IEnhanceable equipment, int currentAmount, int requiredAmount, EquipmentInventorySlotManager manager, bool isWeaponType)
+    public void InitializeSlot(IEnhanceable equipment, int currentItemCount, int requiredItemCount, EquipmentInventorySlotManager manager, bool isWeaponType)
     {
         equipmentData = equipment;
         slotManager = manager;
@@ -28,10 +30,29 @@ public class EquipmentInventorySlot : UIBase
         if (equipmentData != null)
         {
             equipmentIcon.sprite = equipment.BaseData.icon;
-            curAmountTxt.text = equipment.StackCount.ToString();
-            maxAmountTxt.text = "1"; // 무기와 악세사리는 항상 1개 필요
+
+            // 현재 보유 수량 표시
+            currentItemCountTxt.text = currentItemCount.ToString();
+
+            // 필요 수량 설정
+            requiredItemCountTxt.text = requiredItemCount.ToString();
+
+            // 강화 레벨 표시
             currentLevelTxt.text = $"+{equipment.EnhancementLevel}";
-            expGauge.value = Mathf.Clamp01((float)currentAmount / 1);
+
+            // 랭크 표시 (무기 또는 악세서리만 해당)
+            if (isWeaponType || equipment is Accessory)
+            {
+                rankTxt.text = (equipment.BaseData as WeaponDataSO)?.rank.ToString() ??
+                               (equipment.BaseData as AccessoryDataSO)?.rank.ToString();
+            }
+            else
+            {
+                rankTxt.text = string.Empty; // 스킬에는 rank 없음
+            }
+
+            // 경험치 게이지 업데이트
+            expGauge.value = Mathf.Clamp01((float)currentItemCount / requiredItemCount);
 
             UpdateSlotColor(true);
 
@@ -50,8 +71,8 @@ public class EquipmentInventorySlot : UIBase
         equipmentIcon.sprite = null;
         currentLevelTxt.text = string.Empty;
         rankTxt.text = string.Empty;
-        curAmountTxt.text = "0";
-        maxAmountTxt.text = "0";
+        currentItemCountTxt.text = "0";
+        requiredItemCountTxt.text = "0";
         expGauge.value = 0;
 
         UpdateSlotColor(false);
