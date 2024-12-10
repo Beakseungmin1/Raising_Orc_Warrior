@@ -67,7 +67,6 @@ public class SummonSlot : UIBase
     private void SetSkillSlot(SkillDataSO skillDataSO)
     {
         gradeTxt.text = skillDataSO.grade.ToString();
-        rankTxt.text = ""; // ½ºÅ³¿¡ ·©Å©°¡ ¾øÀ¸¸é ºóÄ­ Ã³¸®
         image.sprite = skillDataSO.icon;
         EnableUI();
     }
@@ -76,7 +75,7 @@ public class SummonSlot : UIBase
     {
         image.gameObject.SetActive(true);
         gradeTxt.gameObject.SetActive(true);
-        rankTxt.gameObject.SetActive(true);
+        rankTxt.gameObject.SetActive(!isSkillSummoning);
         rankLabel.gameObject.SetActive(!isSkillSummoning);
     }
 
