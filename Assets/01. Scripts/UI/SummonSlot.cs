@@ -13,12 +13,14 @@ public class SummonSlot : UIBase
     public TextMeshProUGUI rankLabel;
     public Image image;
 
+    public bool isSkillSummoning = false;
+
     private void Awake()
     {
-        image.enabled = false;
-        gradeTxt.enabled = false;
-        rankTxt.enabled = false;
-        rankLabel.enabled = false;
+        image.gameObject.SetActive(false);
+        gradeTxt.gameObject.SetActive(false);
+        rankTxt.gameObject.SetActive(false);
+        rankLabel.gameObject.SetActive(false);
     }
 
     public void SetSlot<T>(T so) where T : BaseItemDataSO
@@ -27,14 +29,17 @@ public class SummonSlot : UIBase
 
         if (so is WeaponDataSO weaponDataSO)
         {
+            isSkillSummoning = false;
             SetWeaponSlot(weaponDataSO);
         }
         else if (so is AccessoryDataSO accessoryDataSO)
         {
+            isSkillSummoning = false;
             SetAccessorySlot(accessoryDataSO);
         }
         else if (so is SkillDataSO skillDataSO)
         {
+            isSkillSummoning = true;
             SetSkillSlot(skillDataSO);
         }
         else
@@ -62,30 +67,28 @@ public class SummonSlot : UIBase
     private void SetSkillSlot(SkillDataSO skillDataSO)
     {
         gradeTxt.text = skillDataSO.grade.ToString();
-        rankTxt.text = ""; // ½ºÅ³¿¡ ·©Å©°¡ ¾øÀ¸¸é ºóÄ­ Ã³¸®
         image.sprite = skillDataSO.icon;
         EnableUI();
     }
 
     private void EnableUI()
     {
-        image.enabled = true;
-        gradeTxt.enabled = true;
-        rankTxt.enabled = true;
-        rankLabel.enabled = true;
+        image.gameObject.SetActive(true);
+        gradeTxt.gameObject.SetActive(true);
+        rankTxt.gameObject.SetActive(!isSkillSummoning);
+        rankLabel.gameObject.SetActive(!isSkillSummoning);
     }
 
 
     public void ClearSlot()
     {
-        Debug.Log("ClearSLot");
         baseItemDataSO = null;
         gradeTxt.text = null;
         rankTxt.text = null;
         image.sprite = null;
-        image.enabled = false;
-        gradeTxt.enabled = false;
-        rankTxt.enabled = false;
-        rankLabel.enabled = false;
+        image.gameObject.SetActive(false);
+        gradeTxt.gameObject.SetActive(false);
+        rankTxt.gameObject.SetActive(false);
+        rankLabel.gameObject.SetActive(false);
     }
 }

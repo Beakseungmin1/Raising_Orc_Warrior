@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SummonPopupUI : UIBase
 {
+    public ItemType curSummoningItemType; //현재 소환중인 아이템 타입
+
     private Summon summon;
 
     public List<GameObject> summonSlotObjs;
@@ -19,8 +21,6 @@ public class SummonPopupUI : UIBase
     public Button extBtn;
     public Button summonBtn11;
     public Button summonBtn33;
-
-    ItemType curItemType;
 
     // 데이터 타입별 리스트 딕셔너리
     private Dictionary<System.Type, IList> summonDataMapping;
@@ -86,7 +86,7 @@ public class SummonPopupUI : UIBase
             if (i < dataSOs.Count && dataSOs[i] != null)
             {
                 summonSlotObjs[i].GetComponent<SummonSlot>().SetSlot(dataSOs[i]);
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSeconds(0.03f);
             }
         }
 
@@ -107,7 +107,7 @@ public class SummonPopupUI : UIBase
 
     public void OnClickMoreBtn(int summonCount)
     {
-        switch (curItemType)
+        switch (curSummoningItemType)
         {
             case(ItemType.Weapon):
                 OnWeaponSummon(summonCount);
@@ -128,6 +128,7 @@ public class SummonPopupUI : UIBase
         SetSlotAsCount(summonCount);
         ClearSlotData();
         StartSetDataSOs(weaponDataSOs); // 제너릭 메서드 호출
+        SummonDataManager.Instance.AddExperience(ItemType.Weapon, summonCount);
     }
 
     public void OnAccSummon(int summonCount)
@@ -137,6 +138,7 @@ public class SummonPopupUI : UIBase
         SetSlotAsCount(summonCount);
         ClearSlotData();
         StartSetDataSOs(accessoryDataSOs); // 제너릭 메서드 호출
+        SummonDataManager.Instance.AddExperience(ItemType.Accessory, summonCount);
     }
 
     public void OnSkillCardSummon(int summonCount)
@@ -146,5 +148,6 @@ public class SummonPopupUI : UIBase
         SetSlotAsCount(summonCount);
         ClearSlotData();
         StartSetDataSOs(skillDataSOs); // 제너릭 메서드 호출
+        SummonDataManager.Instance.AddExperience(ItemType.Skill, summonCount);
     }
 }
