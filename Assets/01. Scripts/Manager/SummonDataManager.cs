@@ -1,29 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class SummonDataManager : Singleton<SummonDataManager>
 {
-    //현재 소환중인 아이템 타입이 무엇인가
+    //현재 소환 씬은 무슨 씬인가. //이 코드를 여기서 써야하는가?
     public ItemType curSummoningItemType;
 
     //소환 레벨
     //소환 레벨에 따른 등급, 랭크별 소환 확률, 소환 레벨 경험치만 관리하는 스크립트.
-
-    //소환 레벨
-    public int weaponSummonLevel;
-    public int skillSummonLevel;
-    public int accessorySummonLevel;
-
-    //소환 레벨 경험치
-    public int curWeaponSummonEXP;
-    public int curSkillSummonEXP;
-    public int curAccessorySummonEXP;
-
-    //소환 레벨 최대 경험치
-    public int maxWeaponSummonEXP;
-    public int maxSkillSummonEXP;
-    public int maxAccessorySummonEXP;
+    Dictionary<ItemType, SummonLevelProgress> summonLevelProgressDictionary;
 
     // 등급별 소환 확률 변수
     public float normalGradeSummonRate = 60.5f;
@@ -39,4 +24,34 @@ public class SummonDataManager : Singleton<SummonDataManager>
     public float rank3SummonRate = 20f;
     public float rank2SummonRate = 10f;
     public float rank1SummonRate = 5f;
+
+    private void Awake()
+    {
+        summonLevelProgressDictionary = new Dictionary<ItemType, SummonLevelProgress>
+        {
+            { ItemType.Weapon, new SummonLevelProgress(1, 0f, 100f) },
+            { ItemType.Skill, new SummonLevelProgress(1, 0f, 100f) },
+            { ItemType.Accessory, new SummonLevelProgress(1, 0f, 100f) }
+        };
+    }
+
+    public SummonLevelProgress GetProgress(ItemType type)
+    {
+        return summonLevelProgressDictionary.TryGetValue(type, out var progress) ? progress : null;
+    }
+
+    public void AddExperience(ItemType type, float experience)
+    {
+        if (!summonLevelProgressDictionary.ContainsKey(type)) return;
+
+        var progress = summonLevelProgressDictionary[type];
+        progress.Exp += experience;
+
+        while (progress.Exp >= progress.ExpToNextLevel)
+        {
+            progress.Exp -= progress.ExpToNextLevel;
+            progress.Level++;
+            progress.ExpToNextLevel *= 1.2f; // 레벨 업 경험치 증가 (예제)
+        }
+    }
 }
