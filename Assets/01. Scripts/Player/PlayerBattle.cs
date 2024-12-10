@@ -76,8 +76,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     public void GetMonsterReward()
     {
 
-        Debug.Log("몬스터잡음");
-
         playerStat.AddExpFromMonsters(currentMonster);
 
         // 플레이어 레벨 ui 업데이트
