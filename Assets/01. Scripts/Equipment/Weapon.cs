@@ -1,11 +1,11 @@
 using UnityEngine;
 
 [System.Serializable]
-public class Weapon : IEnhanceable, IFusable
+public class Weapon : IEnhanceable, IFusable, IStackable
 {
     public WeaponDataSO BaseData { get; private set; }
     BaseItemDataSO IEnhanceable.BaseData => BaseData;
-
+    public int Rank => BaseData.rank;
     public int EnhancementLevel { get; private set; }
     public int StackCount { get; private set; }
     public int RequiredCurrencyForUpgrade { get; private set; }
@@ -18,7 +18,7 @@ public class Weapon : IEnhanceable, IFusable
     {
         BaseData = baseData;
         EnhancementLevel = 0;
-        StackCount = 1;
+        StackCount = 1; // 기본 스택 수
         RequiredCurrencyForUpgrade = baseData.requiredCurrencyForUpgrade;
         EquipAtkIncreaseRate = baseData.equipAtkIncreaseRate;
         PassiveEquipAtkIncreaseRate = Mathf.RoundToInt(baseData.equipAtkIncreaseRate / 3f);
@@ -28,17 +28,14 @@ public class Weapon : IEnhanceable, IFusable
 
     public bool CanEnhance()
     {
-        int currentCube = CurrencyManager.Instance.GetCurrency(CurrencyType.Cube);
-        Debug.Log($"[CanEnhance] 현재 큐브: {currentCube}, 필요한 큐브: {RequiredCurrencyForUpgrade}");
-
-        return CurrencyManager.Instance.GetCurrency(CurrencyType.Cube) >= RequiredCurrencyForUpgrade;
+        return CurrencyManager.Instance.GetCurrency(CurrencyType.Cube) >= RequiredCurrencyForUpgrade
+               && EnhancementLevel < 100; // 최대 레벨 100으로 설정
     }
 
     public bool Enhance()
     {
         if (!CanEnhance())
         {
-            Debug.LogWarning("강화 실패! 큐브가 부족합니다.");
             return false;
         }
 
@@ -47,55 +44,7 @@ public class Weapon : IEnhanceable, IFusable
         RequiredCurrencyForUpgrade = Mathf.RoundToInt(RequiredCurrencyForUpgrade * 1.5f);
         UpdateWeaponEffects();
 
-        Debug.Log($"무기 {BaseData.itemName} 강화 완료. 현재 레벨: {EnhancementLevel}");
         return true;
-    }
-
-    public bool CanFuse()
-    {
-        return StackCount >= BaseData.rank;
-    }
-
-    public bool Fuse()
-    {
-        if (!CanFuse())
-        {
-            Debug.LogWarning("합성 실패! 보유 개수가 부족합니다.");
-            return false;
-        }
-
-        PlayerInventory playerInventory = PlayerobjManager.Instance.Player.inventory;
-        if (playerInventory == null)
-        {
-            Debug.LogError("플레이어 인벤토리를 찾을 수 없습니다.");
-            return false;
-        }
-
-        RemoveStack(BaseData.rank);
-
-        WeaponDataSO nextWeaponData = DataManager.Instance.GetNextWeapon(BaseData.grade, BaseData.rank);
-        if (nextWeaponData != null)
-        {
-            Weapon newWeapon = new Weapon(nextWeaponData);
-            playerInventory.WeaponInventory.AddItem(newWeapon);
-
-            Debug.Log($"무기 합성 성공! 새로운 무기: {nextWeaponData.itemName} 추가.");
-            return true;
-        }
-
-        Debug.LogWarning("합성 실패! 다음 단계의 무기 데이터를 찾을 수 없습니다.");
-        return false;
-    }
-
-    public void AddStack(int count)
-    {
-        StackCount += count;
-    }
-
-    public void RemoveStack(int count)
-    {
-        StackCount -= count;
-        if (StackCount < 0) StackCount = 0;
     }
 
     private void UpdateWeaponEffects()
@@ -107,9 +56,64 @@ public class Weapon : IEnhanceable, IFusable
         {
             PassiveCriticalDamageBonus += EnhancementLevel * 1;
         }
+
         if (PassiveGoldGainRate > 0)
         {
             PassiveGoldGainRate += EnhancementLevel * 0.5f;
         }
+    }
+
+    public bool Fuse(int materialCount)
+    {
+        int totalRequiredMaterials = materialCount;
+
+        if (StackCount < totalRequiredMaterials)
+        {
+            return false;
+        }
+
+        RemoveStack(totalRequiredMaterials); // 필요한 재료 수만큼 차감
+
+        if (BaseData.grade == Grade.Ultimate && BaseData.rank == 4)
+        {
+            return false;
+        }
+
+        // rank가 1인 경우, 다음 등급으로 넘어가고 rank 4로 설정
+        if (BaseData.rank == 1)
+        {
+            Grade nextGrade = BaseData.grade + 1;
+            WeaponDataSO nextWeaponData = DataManager.Instance.GetWeaponByGradeAndRank(nextGrade, 4);
+
+            if (nextWeaponData != null)
+            {
+                Weapon newWeapon = new Weapon(nextWeaponData);
+                PlayerobjManager.Instance.Player.inventory.WeaponInventory.AddItem(newWeapon);
+                return true;
+            }
+        }
+        else
+        {
+            WeaponDataSO nextWeaponData = DataManager.Instance.GetNextWeapon(BaseData.grade, BaseData.rank);
+
+            if (nextWeaponData != null)
+            {
+                Weapon newWeapon = new Weapon(nextWeaponData);
+                PlayerobjManager.Instance.Player.inventory.WeaponInventory.AddItem(newWeapon);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void AddStack(int count)
+    {
+        StackCount += count;
+    }
+
+    public void RemoveStack(int count)
+    {
+        StackCount = Mathf.Max(StackCount - count, 0);
     }
 }
