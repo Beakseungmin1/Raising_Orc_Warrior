@@ -69,7 +69,11 @@ public class Main_ShopUI : UIBase
         summonPopupUI.SetSlotAsCount(summonCount);
         summonPopupUI.ClearSlotData();
         summonPopupUI.StartSetDataSOs(weaponDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
-        SummonDataManager.Instance.AddExperience(ItemType.Weapon,summonCount);
+
+        if (SummonDataManager.Instance.GetLevel(ItemType.Weapon) < 50)
+        {
+            SummonDataManager.Instance.AddExperience(ItemType.Weapon, summonCount);
+        }
     }
 
     public void OnAccSummon(int summonCount)
@@ -82,7 +86,11 @@ public class Main_ShopUI : UIBase
         summonPopupUI.SetSlotAsCount(summonCount);
         summonPopupUI.ClearSlotData();
         summonPopupUI.StartSetDataSOs(accessoryDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
-        SummonDataManager.Instance.AddExperience(ItemType.Accessory, summonCount);
+
+        if (SummonDataManager.Instance.GetLevel(ItemType.Accessory) < 50)
+        {
+            SummonDataManager.Instance.AddExperience(ItemType.Accessory, summonCount);
+        }
     }
 
     public void OnSkillCardSummon(int summonCount)
@@ -95,7 +103,11 @@ public class Main_ShopUI : UIBase
         summonPopupUI.SetSlotAsCount(summonCount);
         summonPopupUI.ClearSlotData();
         summonPopupUI.StartSetDataSOs(skillDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
-        SummonDataManager.Instance.AddExperience(ItemType.Skill, summonCount);
+
+        if (SummonDataManager.Instance.GetLevel(ItemType.Skill) < 50)
+        {
+            SummonDataManager.Instance.AddExperience(ItemType.Skill, summonCount);
+        }
     }
 
     public void RefreshUI()
@@ -103,13 +115,28 @@ public class Main_ShopUI : UIBase
         weaponSummonLevelTxt.text = SummonDataManager.Instance.GetLevel(ItemType.Weapon).ToString();
         weaponSummonExpTxt.text = $"{SummonDataManager.Instance.GetExp(ItemType.Weapon).ToString("F0")} / {SummonDataManager.Instance.GetExpToNextLevel(ItemType.Weapon).ToString("F0")}";
         weaponExpSlider.value = SummonDataManager.Instance.GetExp(ItemType.Weapon) / SummonDataManager.Instance.GetExpToNextLevel(ItemType.Weapon);
+        if(SummonDataManager.Instance.GetLevel(ItemType.Weapon) >= 50)
+        {
+            weaponSummonExpTxt.text = "Max Level";
+            weaponExpSlider.value = 1;
+        }
 
         accSummonLevelTxt.text = SummonDataManager.Instance.GetLevel(ItemType.Accessory).ToString();
         accSummonExpTxt.text = $"{SummonDataManager.Instance.GetExp(ItemType.Accessory).ToString("F0")} / {SummonDataManager.Instance.GetExpToNextLevel(ItemType.Accessory).ToString("F0")}";
         accExpSlider.value = SummonDataManager.Instance.GetExp(ItemType.Accessory) / SummonDataManager.Instance.GetExpToNextLevel(ItemType.Accessory);
+        if (SummonDataManager.Instance.GetLevel(ItemType.Accessory) >= 50)
+        {
+            accSummonExpTxt.text = "Max Level";
+            accExpSlider.value = 1;
+        }
 
         skillSummonLevelTxt.text = SummonDataManager.Instance.GetLevel(ItemType.Skill).ToString();
         skillSummonExpTxt.text = $"{SummonDataManager.Instance.GetExp(ItemType.Skill).ToString("F0")} / {SummonDataManager.Instance.GetExpToNextLevel(ItemType.Skill).ToString("F0")}";
         skillExpSlider.value = SummonDataManager.Instance.GetExp(ItemType.Skill) / SummonDataManager.Instance.GetExpToNextLevel(ItemType.Skill);
+        if (SummonDataManager.Instance.GetLevel(ItemType.Skill) >= 50)
+        {
+            skillSummonExpTxt.text = "Max Level";
+            skillExpSlider.value = 1;
+        }
     }
 }
