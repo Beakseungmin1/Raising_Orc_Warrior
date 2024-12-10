@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,7 +9,10 @@ public class SummonDataManager : Singleton<SummonDataManager>
 
     //소환 레벨
     //소환 레벨에 따른 등급, 랭크별 소환 확률, 소환 레벨 경험치만 관리하는 스크립트.
-    Dictionary<ItemType, SummonLevelProgress> summonLevelProgressDictionary;
+    private Dictionary<ItemType, SummonLevelProgress> summonLevelProgressDictionary;
+
+    public Action OnExpChanged;
+    public Action OnLevelChanged;
 
     // 등급별 소환 확률 변수
     public float normalGradeSummonRate = 60.5f;
@@ -46,12 +50,29 @@ public class SummonDataManager : Singleton<SummonDataManager>
 
         var progress = summonLevelProgressDictionary[type];
         progress.Exp += experience;
+        OnExpChanged.Invoke();
 
         while (progress.Exp >= progress.ExpToNextLevel)
         {
             progress.Exp -= progress.ExpToNextLevel;
             progress.Level++;
             progress.ExpToNextLevel *= 1.2f; // 레벨 업 경험치 증가 (예제)
+            OnLevelChanged.Invoke();
         }
+    }
+
+    public int GetLevel(ItemType type)
+    {
+        return summonLevelProgressDictionary.TryGetValue(type, out var progress) ? progress.Level : 0;
+    }
+
+    public float GetExp(ItemType type)
+    {
+        return summonLevelProgressDictionary.TryGetValue(type, out var progress) ? progress.Exp : 0;
+    }
+
+    public float GetExpToNextLevel(ItemType type)
+    {
+        return summonLevelProgressDictionary.TryGetValue(type, out var progress) ? progress.ExpToNextLevel : 0;
     }
 }

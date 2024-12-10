@@ -1,17 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Burst.Intrinsics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Main_ShopUI : UIBase
 {
     private Summon summon;
+
+    [Header("Weapon")]
+    [SerializeField] private TextMeshProUGUI weaponSummonLevelTxt;
+    [SerializeField] private TextMeshProUGUI weaponSummonExpTxt;
+
+    [Header("Accessory")]
+    [SerializeField] private TextMeshProUGUI accSummonLevelTxt;
+    [SerializeField] private TextMeshProUGUI accSummonExpTxt;
+
+    [Header("Skill")]
+    [SerializeField] private TextMeshProUGUI skillSummonLevelTxt;
+    [SerializeField] private TextMeshProUGUI skillSummonExpTxt;
 
     private Dictionary<ItemType, int> summonTypeMapping;
 
     private void Awake()
     {
         summon = GetComponent<Summon>();
+        RefreshUI();
+        SummonDataManager.Instance.OnExpChanged += RefreshUI;
+        SummonDataManager.Instance.OnLevelChanged += RefreshUI;
     }
 
     public void ShowMainUI(int index)
@@ -74,5 +91,17 @@ public class Main_ShopUI : UIBase
         summonPopupUI.SetSlotAsCount(summonCount);
         summonPopupUI.ClearSlotData();
         summonPopupUI.StartSetDataSOs(skillDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
+    }
+
+    public void RefreshUI()
+    {
+        weaponSummonLevelTxt.text = SummonDataManager.Instance.GetLevel(ItemType.Weapon).ToString();
+        weaponSummonExpTxt.text = $"{SummonDataManager.Instance.GetExp(ItemType.Weapon).ToString()} / {SummonDataManager.Instance.GetExpToNextLevel(ItemType.Weapon).ToString()}";
+
+        accSummonLevelTxt.text = SummonDataManager.Instance.GetLevel(ItemType.Accessory).ToString();
+        accSummonExpTxt.text = $"{SummonDataManager.Instance.GetExp(ItemType.Accessory).ToString()} / {SummonDataManager.Instance.GetExpToNextLevel(ItemType.Accessory).ToString()}";
+
+        skillSummonLevelTxt.text = SummonDataManager.Instance.GetLevel(ItemType.Skill).ToString();
+        skillSummonExpTxt.text = $"{SummonDataManager.Instance.GetExp(ItemType.Skill).ToString()} / {SummonDataManager.Instance.GetExpToNextLevel(ItemType.Skill).ToString()}";
     }
 }

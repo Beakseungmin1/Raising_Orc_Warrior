@@ -2105,7 +2105,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 20}
+  m_SizeDelta: {x: 640, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4892448860280672741
 CanvasRenderer:
@@ -3461,7 +3461,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 20}
+  m_SizeDelta: {x: 662.3408, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6666901603781918314
 CanvasRenderer:
@@ -4368,7 +4368,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 20}
+  m_SizeDelta: {x: 660, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6254825532701868713
 CanvasRenderer:
@@ -5839,6 +5839,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
+  weaponSummonLevelTxt: {fileID: 6973932318799348942}
+  weaponSummonExpTxt: {fileID: 517963772943512619}
+  accSummonLevelTxt: {fileID: 4350898779133876355}
+  accSummonExpTxt: {fileID: 8180269691239143184}
+  skillSummonLevelTxt: {fileID: 994552176109629320}
+  skillSummonExpTxt: {fileID: 3543311159720757878}
 --- !u!114 &4471117982389591348
 MonoBehaviour:
   m_ObjectHideFlags: 0
