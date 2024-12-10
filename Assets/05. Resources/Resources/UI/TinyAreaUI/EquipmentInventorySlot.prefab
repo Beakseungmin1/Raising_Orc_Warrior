@@ -225,8 +225,8 @@ MonoBehaviour:
   currentLevelTxt: {fileID: 1764998348509896857}
   rankTxt: {fileID: 2128941667432946684}
   expGauge: {fileID: 5688559177304303821}
-  maxAmountTxt: {fileID: 8284737105540995986}
-  curAmountTxt: {fileID: 7034116109320039876}
+  requiredItemCountTxt: {fileID: 8284737105540995986}
+  currentItemCountTxt: {fileID: 7034116109320039876}
   slotButton: {fileID: 2995499691970211903}
 --- !u!1 &2571687798093126737
 GameObject:
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 8876426987446436592}
   - component: {fileID: 8284737105540995986}
   m_Layer: 5
-  m_Name: MaxAmountTxt
+  m_Name: RequiredItemCountTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -496,7 +496,7 @@ GameObject:
   - component: {fileID: 8593793238228214317}
   - component: {fileID: 7034116109320039876}
   m_Layer: 5
-  m_Name: CurAmountTxt
+  m_Name: CurrentItemCountTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
