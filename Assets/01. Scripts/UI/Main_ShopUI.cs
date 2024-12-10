@@ -67,6 +67,7 @@ public class Main_ShopUI : UIBase
         summonPopupUI.SetSlotAsCount(summonCount);
         summonPopupUI.ClearSlotData();
         summonPopupUI.StartSetDataSOs(weaponDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
+        SummonDataManager.Instance.AddExperience(ItemType.Weapon,summonCount);
     }
 
     public void OnAccSummon(int summonCount)
@@ -79,6 +80,7 @@ public class Main_ShopUI : UIBase
         summonPopupUI.SetSlotAsCount(summonCount);
         summonPopupUI.ClearSlotData();
         summonPopupUI.StartSetDataSOs(accessoryDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
+        SummonDataManager.Instance.AddExperience(ItemType.Accessory, summonCount);
     }
 
     public void OnSkillCardSummon(int summonCount)
@@ -91,17 +93,18 @@ public class Main_ShopUI : UIBase
         summonPopupUI.SetSlotAsCount(summonCount);
         summonPopupUI.ClearSlotData();
         summonPopupUI.StartSetDataSOs(skillDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
+        SummonDataManager.Instance.AddExperience(ItemType.Skill, summonCount);
     }
 
     public void RefreshUI()
     {
         weaponSummonLevelTxt.text = SummonDataManager.Instance.GetLevel(ItemType.Weapon).ToString();
-        weaponSummonExpTxt.text = $"{SummonDataManager.Instance.GetExp(ItemType.Weapon).ToString()} / {SummonDataManager.Instance.GetExpToNextLevel(ItemType.Weapon).ToString()}";
+        weaponSummonExpTxt.text = $"{SummonDataManager.Instance.GetExp(ItemType.Weapon).ToString("F0")} / {SummonDataManager.Instance.GetExpToNextLevel(ItemType.Weapon).ToString("F0")}";
 
         accSummonLevelTxt.text = SummonDataManager.Instance.GetLevel(ItemType.Accessory).ToString();
-        accSummonExpTxt.text = $"{SummonDataManager.Instance.GetExp(ItemType.Accessory).ToString()} / {SummonDataManager.Instance.GetExpToNextLevel(ItemType.Accessory).ToString()}";
+        accSummonExpTxt.text = $"{SummonDataManager.Instance.GetExp(ItemType.Accessory).ToString("F0")} / {SummonDataManager.Instance.GetExpToNextLevel(ItemType.Accessory).ToString("F0")}";
 
         skillSummonLevelTxt.text = SummonDataManager.Instance.GetLevel(ItemType.Skill).ToString();
-        skillSummonExpTxt.text = $"{SummonDataManager.Instance.GetExp(ItemType.Skill).ToString()} / {SummonDataManager.Instance.GetExpToNextLevel(ItemType.Skill).ToString()}";
+        skillSummonExpTxt.text = $"{SummonDataManager.Instance.GetExp(ItemType.Skill).ToString("F0")} / {SummonDataManager.Instance.GetExpToNextLevel(ItemType.Skill).ToString("F0")}";
     }
 }

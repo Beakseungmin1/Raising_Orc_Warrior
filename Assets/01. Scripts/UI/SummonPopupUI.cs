@@ -126,6 +126,7 @@ public class SummonPopupUI : UIBase
         SetSlotAsCount(summonCount);
         ClearSlotData();
         StartSetDataSOs(weaponDataSOs); // 제너릭 메서드 호출
+        SummonDataManager.Instance.AddExperience(ItemType.Weapon, summonCount);
     }
 
     public void OnAccSummon(int summonCount)
@@ -135,6 +136,7 @@ public class SummonPopupUI : UIBase
         SetSlotAsCount(summonCount);
         ClearSlotData();
         StartSetDataSOs(accessoryDataSOs); // 제너릭 메서드 호출
+        SummonDataManager.Instance.AddExperience(ItemType.Accessory, summonCount);
     }
 
     public void OnSkillCardSummon(int summonCount)
@@ -144,5 +146,6 @@ public class SummonPopupUI : UIBase
         SetSlotAsCount(summonCount);
         ClearSlotData();
         StartSetDataSOs(skillDataSOs); // 제너릭 메서드 호출
+        SummonDataManager.Instance.AddExperience(ItemType.Skill, summonCount);
     }
 }

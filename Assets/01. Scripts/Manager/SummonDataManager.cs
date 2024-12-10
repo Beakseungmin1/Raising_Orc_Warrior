@@ -44,7 +44,7 @@ public class SummonDataManager : Singleton<SummonDataManager>
         return summonLevelProgressDictionary.TryGetValue(type, out var progress) ? progress : null;
     }
 
-    public void AddExperience(ItemType type, float experience)
+    public void AddExperience(ItemType type, float experience) //소환횟수 한번당 경험치 +1
     {
         if (!summonLevelProgressDictionary.ContainsKey(type)) return;
 
