@@ -15,10 +15,10 @@ public class SummonSlot : UIBase
 
     private void Awake()
     {
-        image.enabled = false;
-        gradeTxt.enabled = false;
-        rankTxt.enabled = false;
-        rankLabel.enabled = false;
+        image.gameObject.SetActive(false);
+        gradeTxt.gameObject.SetActive(false);
+        rankTxt.gameObject.SetActive(false);
+        rankLabel.gameObject.SetActive(false);
     }
 
     public void SetSlot<T>(T so) where T : BaseItemDataSO
@@ -69,10 +69,10 @@ public class SummonSlot : UIBase
 
     private void EnableUI()
     {
-        image.enabled = true;
-        gradeTxt.enabled = true;
-        rankTxt.enabled = true;
-        rankLabel.enabled = true;
+        image.gameObject.SetActive(true);
+        gradeTxt.gameObject.SetActive(true);
+        rankTxt.gameObject.SetActive(true);
+        rankLabel.gameObject.SetActive(SummonDataManager.Instance.curSummoningItemType != ItemType.Skill);
     }
 
 
@@ -83,9 +83,9 @@ public class SummonSlot : UIBase
         gradeTxt.text = null;
         rankTxt.text = null;
         image.sprite = null;
-        image.enabled = false;
-        gradeTxt.enabled = false;
-        rankTxt.enabled = false;
-        rankLabel.enabled = false;
+        image.gameObject.SetActive(false);
+        gradeTxt.gameObject.SetActive(false);
+        rankTxt.gameObject.SetActive(false);
+        rankLabel.gameObject.SetActive(false);
     }
 }
