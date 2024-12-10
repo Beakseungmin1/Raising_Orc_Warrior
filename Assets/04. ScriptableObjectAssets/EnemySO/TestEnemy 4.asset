@@ -15,6 +15,7 @@ MonoBehaviour:
   enemyCode: 1
   hp: 100
   maxHp: 100
+  giveExp: 50
   sprite: {fileID: 21300000, guid: 7af5ad218eb4047749e482ba17094655, type: 3}
   cooldown: 10
   skillEffectPrefab: {fileID: 0}

@@ -55,7 +55,7 @@ public class EquipManager : MonoBehaviour
         Debug.Log($"[EquipManager] 슬롯 개수가 {newSlotCount}개로 업데이트되었습니다.");
     }
 
-    public void EquipWeapon(WeaponDataSO weaponData)
+    public void EquipWeapon(Weapon weaponData)
     {
         if (weaponData == null) return;
 
@@ -64,10 +64,10 @@ public class EquipManager : MonoBehaviour
             RemoveWeaponEffect(EquippedWeapon);
         }
 
-        EquippedWeapon = new Weapon(weaponData);
-        ApplyWeaponEffect(EquippedWeapon);
+        EquippedWeapon = weaponData;
+        //ApplyWeaponEffect(EquippedWeapon);
 
-        Debug.Log($"[EquipManager] 무기 {weaponData.itemName} 장착 완료.");
+        Debug.Log($"[EquipManager] 무기 {weaponData.BaseData.itemName} 장착 완료.");
         OnEquippedChanged?.Invoke();
     }
 
