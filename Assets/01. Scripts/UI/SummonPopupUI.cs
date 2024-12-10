@@ -86,7 +86,7 @@ public class SummonPopupUI : UIBase
             if (i < dataSOs.Count && dataSOs[i] != null)
             {
                 summonSlotObjs[i].GetComponent<SummonSlot>().SetSlot(dataSOs[i]);
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSeconds(0.03f);
             }
         }
 
