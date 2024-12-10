@@ -20,8 +20,6 @@ public class SummonPopupUI : UIBase
     public Button summonBtn11;
     public Button summonBtn33;
 
-    ItemType curItemType;
-
     // 데이터 타입별 리스트 딕셔너리
     private Dictionary<System.Type, IList> summonDataMapping;
 
@@ -107,7 +105,7 @@ public class SummonPopupUI : UIBase
 
     public void OnClickMoreBtn(int summonCount)
     {
-        switch (curItemType)
+        switch (SummonDataManager.Instance.curSummoningItemType)
         {
             case(ItemType.Weapon):
                 OnWeaponSummon(summonCount);

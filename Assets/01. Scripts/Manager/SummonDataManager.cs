@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SummonDataManager : Singleton<SummonDataManager>
 {
+    //현재 소환중인 아이템 타입이 무엇인가
+    public ItemType curSummoningItemType;
+
     //소환 레벨
     //소환 레벨에 따른 등급, 랭크별 소환 확률, 소환 레벨 경험치만 관리하는 스크립트.
 

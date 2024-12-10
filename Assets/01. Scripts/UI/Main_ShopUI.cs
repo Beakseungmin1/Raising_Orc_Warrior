@@ -42,6 +42,7 @@ public class Main_ShopUI : UIBase
 
     public void OnWeaponSummon(int summonCount)
     {
+        SummonDataManager.Instance.curSummoningItemType = ItemType.Weapon;
         List<WeaponDataSO> weaponDataSOs = new List<WeaponDataSO>();
         weaponDataSOs = summon.SummonWeaponDataSOList(summonCount); //웨폰데이터 리스트가 세팅된다. //OK
 
@@ -53,6 +54,7 @@ public class Main_ShopUI : UIBase
 
     public void OnAccSummon(int summonCount)
     {
+        SummonDataManager.Instance.curSummoningItemType = ItemType.Accessory;
         List<AccessoryDataSO> accessoryDataSOs = new List<AccessoryDataSO>();
         accessoryDataSOs = summon.SummonAccessoryDataSOList(summonCount);
 
@@ -64,6 +66,7 @@ public class Main_ShopUI : UIBase
 
     public void OnSkillCardSummon(int summonCount)
     {
+        SummonDataManager.Instance.curSummoningItemType = ItemType.Skill;
         List<SkillDataSO> skillDataSOs = new List<SkillDataSO>();
         skillDataSOs = summon.SummonSkillDataSOList(summonCount);
 
