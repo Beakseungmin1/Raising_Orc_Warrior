@@ -7,8 +7,7 @@ public class Player : MonoBehaviour
     public PlayerStat stat;
     public PlayerInventory inventory;
     public PlayerBattle PlayerBattle;
-
-    public Weapon curWeapon;
+    public EquipManager EquipManager;
 
 
     private void Awake()
@@ -16,6 +15,7 @@ public class Player : MonoBehaviour
         stat = GetComponent<PlayerStat>();
         inventory = GetComponent<PlayerInventory>();
         PlayerBattle = GetComponent<PlayerBattle>();
+        EquipManager = GetComponent<EquipManager>();
         PlayerobjManager.Instance.Player = this;
     }
 }
