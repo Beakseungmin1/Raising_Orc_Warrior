@@ -125,7 +125,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 932480378984242375}
         m_TargetAssemblyTypeName: Main_ShopUI, Assembly-CSharp
-        m_MethodName: OnAccSummonBtnClick
+        m_MethodName: OnAccSummon
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1387,7 +1387,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 932480378984242375}
         m_TargetAssemblyTypeName: Main_ShopUI, Assembly-CSharp
-        m_MethodName: OnWeaponSummonBtnClick
+        m_MethodName: OnWeaponSummon
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5605,7 +5605,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 932480378984242375}
         m_TargetAssemblyTypeName: Main_ShopUI, Assembly-CSharp
-        m_MethodName: OnWeaponSummonBtnClick
+        m_MethodName: OnWeaponSummon
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5740,7 +5740,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 932480378984242375}
         m_TargetAssemblyTypeName: Main_ShopUI, Assembly-CSharp
-        m_MethodName: OnSkillCardSummonBtnClick
+        m_MethodName: OnSkillCardSummon
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6631,7 +6631,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 932480378984242375}
         m_TargetAssemblyTypeName: Main_ShopUI, Assembly-CSharp
-        m_MethodName: OnAccSummonBtnClick
+        m_MethodName: OnAccSummon
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7920,7 +7920,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 932480378984242375}
         m_TargetAssemblyTypeName: Main_ShopUI, Assembly-CSharp
-        m_MethodName: OnSkillCardSummonBtnClick
+        m_MethodName: OnSkillCardSummon
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

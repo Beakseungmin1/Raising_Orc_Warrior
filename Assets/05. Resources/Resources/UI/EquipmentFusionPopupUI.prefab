@@ -2887,7 +2887,7 @@ GameObject:
   - component: {fileID: 6334221064309940791}
   - component: {fileID: 8332746736212588453}
   m_Layer: 5
-  m_Name: NameTxt (1)
+  m_Name: AmountTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3156,7 +3156,7 @@ GameObject:
   - component: {fileID: 9014083661276430166}
   - component: {fileID: 7042872858228115058}
   m_Layer: 5
-  m_Name: WeaponFusionPopupUI
+  m_Name: EquipmentFusionPopupUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3204,6 +3204,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3db9d78b451ce384b9763ce765ab7feb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  currentEquipmentIcon: {fileID: 4776701427961975793}
+  currentEquipmentNameTxt: {fileID: 7133234884016334944}
+  currentEquipmentAmountTxt: {fileID: 7785237630114015366}
+  leftArrowBtn: {fileID: 8159322813041520062}
+  rightArrowBtn: {fileID: 5866919218572940669}
+  resultEquipmentIcon: {fileID: 9089737122990474750}
+  resultEquipmentNameTxt: {fileID: 8458416912766109696}
+  fusionBtn: {fileID: 7392189419910053502}
+  materialCountTxt: {fileID: 2114469095461151372}
+  subtractBtn: {fileID: 8719345882787023343}
+  addBtn: {fileID: 7842515552786543047}
+  exitBtn: {fileID: 1905835272841313459}
+  curCubeAmountTxt: {fileID: 39001690645988850}
+  curCubeIcon: {fileID: 5589654676779455703}
+  upgradeReturnBtn: {fileID: 7649053874173311320}
 --- !u!1 &8431691208143821938
 GameObject:
   m_ObjectHideFlags: 0

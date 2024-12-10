@@ -412,7 +412,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
   summonSlotObjs: []
-  weaponDataSOs: []
   summonSlotListArea33obj: {fileID: 548208721670091952}
   summonSlotListArea11obj: {fileID: 3781866773118282479}
   summonSlotListArea1obj: {fileID: 5290094809407495980}
@@ -963,7 +962,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: -9037820625032799616}
         m_TargetAssemblyTypeName: SummonPopupUI, Assembly-CSharp
-        m_MethodName: OnClickSummonBtn
+        m_MethodName: OnClickMoreBtn
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1766,7 +1765,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: -9037820625032799616}
         m_TargetAssemblyTypeName: SummonPopupUI, Assembly-CSharp
-        m_MethodName: OnClickSummonBtn
+        m_MethodName: OnClickMoreBtn
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

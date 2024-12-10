@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
-  weaponIcon: {fileID: 2744052189059793600}
+  equipmentIcon: {fileID: 2744052189059793600}
   currentLevelTxt: {fileID: 1764998348509896857}
   rankTxt: {fileID: 2128941667432946684}
   expGauge: {fileID: 5688559177304303821}

@@ -121,7 +121,7 @@ public class Summon : MonoBehaviour
         return skillDataSOs;
     }
 
-    public List<AccessoryDataSO> SummonAccessaryDataSOList(int summonCount)
+    public List<AccessoryDataSO> SummonAccessoryDataSOList(int summonCount)
     {
         List<AccessoryDataSO> accessoryDataSOs = new List<AccessoryDataSO>();
 
@@ -131,7 +131,7 @@ public class Summon : MonoBehaviour
             int rank = GetRankBySummonRate();
             AccessoryDataSO accessoryDataSO = DataManager.Instance.GetAccessoryByGradeAndRank(grade, rank);
             PlayerobjManager.Instance.Player.inventory.AddItemToInventory(accessoryDataSO);
-            Debug.Log(accessoryDataSO);
+            accessoryDataSOs.Add(accessoryDataSO);
         }
         return accessoryDataSOs;
     }

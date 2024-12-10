@@ -7,6 +7,8 @@ public class Main_ShopUI : UIBase
 {
     private Summon summon;
 
+    private Dictionary<ItemType, int> summonTypeMapping;
+
     private void Awake()
     {
         summon = GetComponent<Summon>();
@@ -38,26 +40,36 @@ public class Main_ShopUI : UIBase
         Hide();
     }
 
-    public void OnWeaponSummonBtnClick(int summonCount)
+    public void OnWeaponSummon(int summonCount)
     {
         List<WeaponDataSO> weaponDataSOs = new List<WeaponDataSO>();
-        weaponDataSOs = summon.SummonWeaponDataSOList(summonCount); //웨폰데이터 리스트가 세팅된다.
+        weaponDataSOs = summon.SummonWeaponDataSOList(summonCount); //웨폰데이터 리스트가 세팅된다. //OK
 
         SummonPopupUI summonPopupUI = UIManager.Instance.Show<SummonPopupUI>();
         summonPopupUI.SetSlotAsCount(summonCount);
         summonPopupUI.ClearSlotData();
-        summonPopupUI.StartSetWeaponDataSOs(weaponDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
+        summonPopupUI.StartSetDataSOs(weaponDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
     }
 
-    public void OnAccSummonBtnClick(int summonCount)
+    public void OnAccSummon(int summonCount)
     {
         List<AccessoryDataSO> accessoryDataSOs = new List<AccessoryDataSO>();
-        accessoryDataSOs = summon.SummonAccessaryDataSOList(summonCount);
+        accessoryDataSOs = summon.SummonAccessoryDataSOList(summonCount);
+
+        SummonPopupUI summonPopupUI = UIManager.Instance.Show<SummonPopupUI>();
+        summonPopupUI.SetSlotAsCount(summonCount);
+        summonPopupUI.ClearSlotData();
+        summonPopupUI.StartSetDataSOs(accessoryDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
     }
 
-    public void OnSkillCardSummonBtnClick(int summonCount)
+    public void OnSkillCardSummon(int summonCount)
     {
         List<SkillDataSO> skillDataSOs = new List<SkillDataSO>();
         skillDataSOs = summon.SummonSkillDataSOList(summonCount);
+
+        SummonPopupUI summonPopupUI = UIManager.Instance.Show<SummonPopupUI>();
+        summonPopupUI.SetSlotAsCount(summonCount);
+        summonPopupUI.ClearSlotData();
+        summonPopupUI.StartSetDataSOs(skillDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
     }
 }

@@ -59,6 +59,6 @@ public enum CurrencyType
 public enum ItemType
 {
     Weapon,
-    Accessary,
+    Accessory,
     Skill
 }

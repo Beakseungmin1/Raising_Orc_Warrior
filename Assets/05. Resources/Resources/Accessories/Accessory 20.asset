@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Accessory 20
   m_EditorClassIdentifier: 
   itemName: "\uD22C\uC2E0\uC758 \uD314\uCC0C"
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 5902650331669622779, guid: 30f45f9a124dd104caedd36e5a3f8a75, type: 3}
   inGameImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   grade: 5
   gradeColor: {r: 0, g: 0, b: 0, a: 0}

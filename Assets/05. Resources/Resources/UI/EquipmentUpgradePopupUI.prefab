@@ -1256,7 +1256,7 @@ GameObject:
   - component: {fileID: 4837521107702189817}
   - component: {fileID: 7489110367001657302}
   m_Layer: 5
-  m_Name: UpgradeBtn
+  m_Name: CurrencyIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1330,6 +1330,7 @@ GameObject:
   - component: {fileID: 8506463097642664544}
   - component: {fileID: 4158171387522678821}
   - component: {fileID: 779210986805884347}
+  - component: {fileID: 1202907117653186617}
   m_Layer: 5
   m_Name: PossessEffectTypeTxt0
   m_TagString: Untagged
@@ -1354,7 +1355,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 30, y: 0}
-  m_SizeDelta: {x: 380, y: 40}
+  m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &4158171387522678821
 CanvasRenderer:
@@ -1453,6 +1454,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1202907117653186617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843004469518344052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 0
 --- !u!1 &1899219161036110180
 GameObject:
   m_ObjectHideFlags: 0
@@ -1464,6 +1479,7 @@ GameObject:
   - component: {fileID: 4578217351594589222}
   - component: {fileID: 272196021301671635}
   - component: {fileID: 2398411002587735066}
+  - component: {fileID: 2108942382731830381}
   m_Layer: 5
   m_Name: PossessEffectTypeTxt2
   m_TagString: Untagged
@@ -1488,7 +1504,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 30, y: 0}
-  m_SizeDelta: {x: 380, y: 40}
+  m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &272196021301671635
 CanvasRenderer:
@@ -1587,6 +1603,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2108942382731830381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899219161036110180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 0
 --- !u!1 &2026359453418068862
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,7 +1961,7 @@ GameObject:
   - component: {fileID: 3457610840911517453}
   - component: {fileID: 3514263867087519321}
   m_Layer: 5
-  m_Name: WeaponUpgradePopupUI
+  m_Name: EquipmentUpgradePopupUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1976,16 +2006,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3350010485795144090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ed591db8ae3cb44e99e1172ce9e248e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6936054ccb38bdf4ab53b74146f80711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
   equipmentIcon: {fileID: 5299567504458013721}
-  currentAmountTxt: {fileID: 5720688617361448532}
-  neededAmountTxt: {fileID: 4418115950285600935}
   nameTxt: {fileID: 3691552944310442503}
   gradeTxt: {fileID: 2941011948238857167}
   progressSlider: {fileID: 6655195861059915428}
+  currentAmountTxt: {fileID: 5720688617361448532}
+  neededAmountTxt: {fileID: 4418115950285600935}
   equipEffectTypeTxt: {fileID: 8771461065100533692}
   equipEffectValueTxt: {fileID: 6341911598601470047}
   possessEffectRow0: {fileID: 395085474591707210}
@@ -2001,8 +2031,8 @@ MonoBehaviour:
   upgradeCostTxt: {fileID: 2372828401270943514}
   curCubeAmountTxt: {fileID: 1202861498809843763}
   curCubeIcon: {fileID: 7988808063009745700}
-  equipBtn: {fileID: 8541578261380294318}
   exitBtn: {fileID: 6876223895582085829}
+  fusionReturnBtn: {fileID: 392460958152943511}
 --- !u!1 &3465507143273916721
 GameObject:
   m_ObjectHideFlags: 0
@@ -3556,19 +3586,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8593570965996383164}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3514263867087519321}
-        m_TargetAssemblyTypeName: WeaponUpgradePopupUI, Assembly-CSharp
-        m_MethodName: ShowWeaponFusionPopupUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &7245756583273339942
 GameObject:
   m_ObjectHideFlags: 0
@@ -4747,6 +4765,7 @@ GameObject:
   - component: {fileID: 5005297046295845204}
   - component: {fileID: 8576081308427182639}
   - component: {fileID: 7472118834275382758}
+  - component: {fileID: 3430968475500469975}
   m_Layer: 5
   m_Name: PossessEffectTypeTxt1
   m_TagString: Untagged
@@ -4771,7 +4790,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 30, y: 0}
-  m_SizeDelta: {x: 380, y: 40}
+  m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &8576081308427182639
 CanvasRenderer:
@@ -4870,6 +4889,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3430968475500469975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8723236866046054837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 0
 --- !u!1 &9115375381555395823
 GameObject:
   m_ObjectHideFlags: 0

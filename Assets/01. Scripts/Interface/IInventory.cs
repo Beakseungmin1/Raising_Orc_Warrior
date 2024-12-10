@@ -8,4 +8,5 @@ public interface IInventory<T>
     int GetItemStackCount(T item); // 특정 아이템의 스택 개수
     List<T> GetAllItems(); // 모든 아이템 가져오기
     int GetTotalItemCount(); // 전체 아이템 종류 개수
+    bool CanAddItem(T item); // 아이템 추가 가능 여부 확인
 }

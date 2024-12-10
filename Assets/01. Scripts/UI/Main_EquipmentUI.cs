@@ -33,6 +33,6 @@ public class Main_EquipmentUI : UIBase
     public void ShowEquipmentUpgradePopupUI()
     {
         UIManager.Instance.Show<DimmedUI>();
-        UIManager.Instance.Show<WeaponUpgradePopupUI>();
+        UIManager.Instance.Show<EquipmentUpgradePopupUI>();
     }
 }

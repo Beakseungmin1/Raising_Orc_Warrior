@@ -4,19 +4,31 @@ using UnityEngine;
 public class Accessory : IEnhanceable, IFusable
 {
     public AccessoryDataSO BaseData { get; private set; }
-    public int EnhancementLevel { get; private set; } // 현재 강화 레벨
-    public int StackCount { get; private set; } // 동일 악세사리 보유 개수
+    BaseItemDataSO IEnhanceable.BaseData => BaseData;
+
+    public int EnhancementLevel { get; private set; }
+    public int StackCount { get; private set; }
+    public int RequiredCurrencyForUpgrade { get; private set; }
+    public float EquipHpAndHpRecoveryIncreaseRate { get; private set; }
+    public float PassiveHpAndHpRecoveryIncreaseRate { get; private set; }
+    public float PassiveMpAndMpRecoveryIncreaseRate { get; private set; }
+    public float PassiveAddEXPRate { get; private set; }
 
     public Accessory(AccessoryDataSO baseData)
     {
         BaseData = baseData;
         EnhancementLevel = 0;
         StackCount = 1;
+        RequiredCurrencyForUpgrade = baseData.requiredCurrencyForUpgrade;
+        EquipHpAndHpRecoveryIncreaseRate = baseData.equipHpAndHpRecoveryIncreaseRate;
+        PassiveHpAndHpRecoveryIncreaseRate = Mathf.RoundToInt(baseData.equipHpAndHpRecoveryIncreaseRate / 3f);
+        PassiveMpAndMpRecoveryIncreaseRate = baseData.passiveMpAndMpRecoveryIncreaseRate;
+        PassiveAddEXPRate = baseData.passiveAddEXPRate;
     }
 
     public bool CanEnhance()
     {
-        return CurrencyManager.Instance.GetCurrency(CurrencyType.Cube) >= BaseData.requiredCurrencyForUpgrade;
+        return CurrencyManager.Instance.GetCurrency(CurrencyType.Cube) >= RequiredCurrencyForUpgrade;
     }
 
     public bool Enhance()
@@ -27,15 +39,18 @@ public class Accessory : IEnhanceable, IFusable
             return false;
         }
 
-        CurrencyManager.Instance.SubtractCurrency(CurrencyType.Cube, BaseData.requiredCurrencyForUpgrade);
+        CurrencyManager.Instance.SubtractCurrency(CurrencyType.Cube, RequiredCurrencyForUpgrade);
         EnhancementLevel++;
-        Debug.Log($"악세사리 {BaseData.itemName} 강화 완료. 현재 레벨: {EnhancementLevel}");
+        RequiredCurrencyForUpgrade = Mathf.RoundToInt(RequiredCurrencyForUpgrade * 1.5f);
+        UpdateAccessoryEffects();
+
+        Debug.Log($"악세사리 {BaseData.itemName} 강화 완료. 현재 레벨: {EnhancementLevel}, 다음 강화 비용: {RequiredCurrencyForUpgrade}");
         return true;
     }
 
     public bool CanFuse()
     {
-        return StackCount >= BaseData.rank; // Rank별 요구 개수
+        return StackCount >= BaseData.rank;
     }
 
     public bool Fuse()
@@ -46,12 +61,22 @@ public class Accessory : IEnhanceable, IFusable
             return false;
         }
 
-        StackCount -= BaseData.rank;
-
-        AccessoryDataSO nextAccessory = DataManager.Instance.GetNextAccessory(BaseData.grade, BaseData.rank);
-        if (nextAccessory != null)
+        PlayerInventory playerInventory = PlayerobjManager.Instance.Player.inventory;
+        if (playerInventory == null)
         {
-            Debug.Log($"악세사리 합성 성공! 새로운 악세사리: {nextAccessory.itemName}");
+            Debug.LogError("플레이어 인벤토리를 찾을 수 없습니다.");
+            return false;
+        }
+
+        RemoveStack(BaseData.rank);
+
+        AccessoryDataSO nextAccessoryData = DataManager.Instance.GetNextAccessory(BaseData.grade, BaseData.rank);
+        if (nextAccessoryData != null)
+        {
+            Accessory newAccessory = new Accessory(nextAccessoryData);
+            playerInventory.AccessoryInventory.AddItem(newAccessory);
+
+            Debug.Log($"악세사리 합성 성공! 새로운 악세사리: {nextAccessoryData.itemName}");
             return true;
         }
 
@@ -68,5 +93,21 @@ public class Accessory : IEnhanceable, IFusable
     {
         StackCount -= count;
         if (StackCount < 0) StackCount = 0;
+    }
+
+    private void UpdateAccessoryEffects()
+    {
+        EquipHpAndHpRecoveryIncreaseRate += EnhancementLevel * 1.5f;
+        PassiveHpAndHpRecoveryIncreaseRate = Mathf.RoundToInt(EquipHpAndHpRecoveryIncreaseRate / 3f);
+
+        if (PassiveMpAndMpRecoveryIncreaseRate > 0)
+        {
+            PassiveMpAndMpRecoveryIncreaseRate += EnhancementLevel * 1.2f;
+        }
+
+        if (PassiveAddEXPRate > 0)
+        {
+            PassiveAddEXPRate += EnhancementLevel * 0.5f;
+        }
     }
 }

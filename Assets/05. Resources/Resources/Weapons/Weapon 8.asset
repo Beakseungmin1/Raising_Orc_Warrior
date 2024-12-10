@@ -21,6 +21,6 @@ MonoBehaviour:
   requiredCurrencyForUpgrade: 0
   currentLevel: 1
   equipAtkIncreaseRate: 50
-  passiveCriticalDamageBonus: 0
+  passiveCriticalDamageBonus: 123
   passiveGoldGainRate: 0
   rank: 1

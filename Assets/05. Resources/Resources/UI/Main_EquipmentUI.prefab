@@ -2690,6 +2690,8 @@ MonoBehaviour:
   equipmentSlotPrefab: {fileID: 2528466175563865856, guid: 6215097dcc866bd44891203baf8ffd95, type: 3}
   contentParent: {fileID: 5814691941377222748}
   initialSlotCount: 24
+  weaponTabButton: {fileID: 8792876366237358476}
+  accessoryTabButton: {fileID: 6760251349719890894}
 --- !u!1 &8986096436748995889
 GameObject:
   m_ObjectHideFlags: 0
