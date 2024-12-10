@@ -54,6 +54,11 @@ public class DataManager : SingletonDontDestroy<DataManager>
     // 무기 데이터 검색
     public WeaponDataSO GetWeaponByGradeAndRank(Grade grade, int rank)
     {
+        if (grade == Grade.Ultimate)
+        {
+            rank = 4;
+        }
+
         if (weaponDataDict.ContainsKey(grade) && weaponDataDict[grade].ContainsKey(rank))
         {
             return weaponDataDict[grade][rank];
@@ -65,6 +70,11 @@ public class DataManager : SingletonDontDestroy<DataManager>
     // 악세사리 데이터 검색
     public AccessoryDataSO GetAccessoryByGradeAndRank(Grade grade, int rank)
     {
+        if (grade == Grade.Ultimate)
+        {
+            rank = 4;
+        }
+
         if (accessoryDataDict.ContainsKey(grade) && accessoryDataDict[grade].ContainsKey(rank))
         {
             return accessoryDataDict[grade][rank];
