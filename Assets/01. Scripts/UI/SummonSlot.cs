@@ -83,7 +83,6 @@ public class SummonSlot : UIBase
 
     public void ClearSlot()
     {
-        Debug.Log("ClearSLot");
         baseItemDataSO = null;
         gradeTxt.text = null;
         rankTxt.text = null;
