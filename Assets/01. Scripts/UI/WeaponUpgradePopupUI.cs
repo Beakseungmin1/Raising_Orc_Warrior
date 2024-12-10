@@ -156,7 +156,7 @@ public class WeaponUpgradePopupUI : UIBase
         EquipManager equipManager = PlayerobjManager.Instance.Player.GetComponent<EquipManager>();
         if (equipManager != null && currentWeapon != null)
         {
-            equipManager.EquipWeapon(currentWeapon.BaseData);
+            equipManager.EquipWeapon(currentWeapon);
             Debug.Log($"[WeaponUpgradePopupUI] 무기 {currentWeapon.BaseData.itemName} 장착 완료.");
         }
     }
