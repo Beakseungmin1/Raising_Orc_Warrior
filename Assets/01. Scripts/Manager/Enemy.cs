@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
@@ -19,9 +20,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Collider2D effectRange; // 스킬 효과 범위
     [SerializeField] private float damagePercent; // 액티브 스킬: 범위 내 적에게 주는 공격력 비율 (%)
 
+    public Action OnEnemyDeath;
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        OnEnemyDeath += RegenManager.Instance.EnemyDeath;
     }
 
     private void Start()

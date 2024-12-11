@@ -11,22 +11,27 @@ public class RegenManager : Singleton<RegenManager>
 
     [SerializeField] private Transform field;
 
+    public int stagesEnemyCount; //해당 스테이지 적 총 개수
     public int curEnemyCount; //적 개수
     //액션으로 몬스터 죽을때마다 값을 받아와서 차감한다.
     //0이 되면 스테이지매니저에 정보 전달한다.
+    
+    public Action OnEnemyCountDown;
+    public Action OnEnemyCountZero;
 
     private void Start()
     {
         //스테이지매니저의 챕터SO를 참조한다.
         curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
         enemySOs = curChapterSO.stageSOs[StageManager.Instance.curStageIndex].enemySOs;
+        stagesEnemyCount = enemySOs.Length;
         curEnemyCount = enemySOs.Length;
         RegenStagesEnemy();
     }
 
     private void RegenStagesEnemy()
     {
-        for (int i = 0; i < curEnemyCount; i++)
+        for (int i = 0; i < stagesEnemyCount; i++)
         {
             Transform enemyRegenPos = enemyRegenPoss[i];
             EnemySO enemySO = enemySOs[i];
@@ -50,5 +55,16 @@ public class RegenManager : Singleton<RegenManager>
         return enemy;
     }
 
+    public void EnemyDeath()
+    {
+        curEnemyCount--;
+        OnEnemyCountDown.Invoke();
+
+        if(curEnemyCount <= 0)
+        {
+            curEnemyCount = 0;
+            OnEnemyCountZero.Invoke();
+        }
+    }
     
 }

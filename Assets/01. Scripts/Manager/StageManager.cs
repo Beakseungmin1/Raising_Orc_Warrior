@@ -31,6 +31,7 @@ public class StageManager : Singleton<StageManager>
 
         onStageChanged += RefreshStage;
         onChapterChanged += RefreshChapter;
+        RegenManager.Instance.OnEnemyCountZero += StageClear;
     }
 
     private void SetChapterList()
@@ -55,22 +56,18 @@ public class StageManager : Singleton<StageManager>
 
     public void StageClear()
     {
-        AddStageCount();
-    }
-
-    public void AddStageCount()
-    {
         curStageIndex++;
+        onStageChanged.Invoke();
     }
 
     public void RefreshChapter()
     {
         bgSprite = chapterSOs[curChapterIndex].bgSprite;
-        chapterName = chapterSOs[curChapterIndex].name;
+        chapterName = chapterSOs[curChapterIndex].chapterName;
     }
 
     public void RefreshStage()
     {
-        stageName = stageSOs[curStageIndex].name;
+        stageName = stageSOs[curStageIndex].stageName;
     }
 }
