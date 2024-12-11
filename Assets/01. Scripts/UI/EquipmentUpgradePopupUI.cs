@@ -181,11 +181,11 @@ public class EquipmentUpgradePopupUI : UIBase
     {
         if (isWeapon)
         {
-            PlayerobjManager.Instance.Player.inventory.NotifyWeaponsChanged();
+            PlayerObjManager.Instance.Player.inventory.NotifyWeaponsChanged();
         }
         else
         {
-            PlayerobjManager.Instance.Player.inventory.NotifyAccessoriesChanged();
+            PlayerObjManager.Instance.Player.inventory.NotifyAccessoriesChanged();
         }
 
         UIManager.Instance.Hide<DimmedUI>();
@@ -204,7 +204,7 @@ public class EquipmentUpgradePopupUI : UIBase
 
     private void SelectPreviousItem()
     {
-        var playerInventory = PlayerobjManager.Instance.Player.inventory;
+        var playerInventory = PlayerObjManager.Instance.Player.inventory;
 
         if (isWeapon)
         {
@@ -232,7 +232,7 @@ public class EquipmentUpgradePopupUI : UIBase
 
     private void SelectNextItem()
     {
-        var playerInventory = PlayerobjManager.Instance.Player.inventory;
+        var playerInventory = PlayerObjManager.Instance.Player.inventory;
 
         if (isWeapon)
         {
@@ -260,7 +260,7 @@ public class EquipmentUpgradePopupUI : UIBase
 
     private void OnEquipWeapon()
     {
-        EquipManager equipManager = PlayerobjManager.Instance.Player.GetComponent<EquipManager>();
+        EquipManager equipManager = PlayerObjManager.Instance.Player.GetComponent<EquipManager>();
         if (equipManager != null && currentItem is Weapon weapon)
         {
             equipManager.EquipWeapon(weapon);

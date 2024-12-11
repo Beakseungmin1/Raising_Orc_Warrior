@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerobjManager : SingletonDontDestroy<PlayerobjManager>
+public class PlayerObjManager : SingletonDontDestroy<PlayerObjManager>
 {
     private Player _player;
 

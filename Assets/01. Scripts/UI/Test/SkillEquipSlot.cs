@@ -61,7 +61,7 @@ public class SkillEquipSlot : UIBase
     {
         if (equippedSkill == null) return;
 
-        var playerSkillHandler = PlayerobjManager.Instance.Player?.GetComponent<PlayerSkillHandler>();
+        var playerSkillHandler = PlayerObjManager.Instance.Player?.GetComponent<PlayerSkillHandler>();
         if (playerSkillHandler != null)
         {
             playerSkillHandler.UseSkill(equippedSkill, transform.position);

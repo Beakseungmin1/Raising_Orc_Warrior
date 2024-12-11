@@ -105,7 +105,7 @@ public class Summon : MonoBehaviour
             Grade grade = GetGradeBySummonRate(ItemType.Weapon);
             int rank = GetRankBySummonRate();
             WeaponDataSO weaponDataSO = DataManager.Instance.GetWeaponByGradeAndRank(grade, rank);
-            PlayerobjManager.Instance.Player.inventory.AddItemToInventory(weaponDataSO);
+            PlayerObjManager.Instance.Player.inventory.AddItemToInventory(weaponDataSO);
             weaponDataSOs.Add(weaponDataSO);
         }
         ReturnRateByDebugLog(ItemType.Weapon); //확률 변환 테스트용
@@ -120,7 +120,7 @@ public class Summon : MonoBehaviour
         {
             Grade grade = GetGradeBySummonRate(ItemType.Skill);
             SkillDataSO skillDataSO = DataManager.Instance.GetRandomSkillByGrade(grade);
-            PlayerobjManager.Instance.Player.inventory.AddItemToInventory(skillDataSO);
+            PlayerObjManager.Instance.Player.inventory.AddItemToInventory(skillDataSO);
             skillDataSOs.Add(skillDataSO);
         }
         ReturnRateByDebugLog(ItemType.Skill); //확률 변환 테스트용
@@ -136,7 +136,7 @@ public class Summon : MonoBehaviour
             Grade grade = GetGradeBySummonRate(ItemType.Accessory);
             int rank = GetRankBySummonRate();
             AccessoryDataSO accessoryDataSO = DataManager.Instance.GetAccessoryByGradeAndRank(grade, rank);
-            PlayerobjManager.Instance.Player.inventory.AddItemToInventory(accessoryDataSO);
+            PlayerObjManager.Instance.Player.inventory.AddItemToInventory(accessoryDataSO);
             accessoryDataSOs.Add(accessoryDataSO);
         }
         ReturnRateByDebugLog(ItemType.Accessory); //확률 변환 테스트용

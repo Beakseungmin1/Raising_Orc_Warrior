@@ -68,7 +68,7 @@ public class Skill : IEnhanceable, IFusable, IStackable
         if (nextSkill != null)
         {
             Skill newSkill = new Skill(nextSkill);
-            PlayerobjManager.Instance.Player.inventory.SkillInventory.AddItem(newSkill);
+            PlayerObjManager.Instance.Player.inventory.SkillInventory.AddItem(newSkill);
 
             return true;
         }

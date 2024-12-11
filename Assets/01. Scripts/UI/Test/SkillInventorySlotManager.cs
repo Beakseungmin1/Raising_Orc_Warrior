@@ -13,7 +13,7 @@ public class SkillInventorySlotManager : UIBase
 
     private void Start()
     {
-        playerInventory = PlayerobjManager.Instance?.Player?.inventory;
+        playerInventory = PlayerObjManager.Instance?.Player?.inventory;
         if (playerInventory == null)
         {
             Debug.LogError("[SkillInventorySlotManager] PlayerInventory를 찾을 수 없습니다.");

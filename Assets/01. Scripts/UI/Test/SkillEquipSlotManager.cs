@@ -21,7 +21,7 @@ public class SkillEquipSlotManager : UIBase
 
     private void Start()
     {
-        equipManager = PlayerobjManager.Instance.Player.GetComponent<EquipManager>();
+        equipManager = PlayerObjManager.Instance.Player.GetComponent<EquipManager>();
         if (equipManager == null)
         {
             Debug.LogError("[SkillEquipSlotManager] EquipManager를 찾을 수 없습니다.");

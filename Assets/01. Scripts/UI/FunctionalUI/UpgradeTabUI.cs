@@ -13,7 +13,7 @@ public class UpgradeTabUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI upgradeValueTxt;
     private void Awake()
     {
-        stat = PlayerobjManager.Instance.Player.stat;
+        stat = PlayerObjManager.Instance.Player.stat;
     }
 
     public void UpdateAttackStatUI()

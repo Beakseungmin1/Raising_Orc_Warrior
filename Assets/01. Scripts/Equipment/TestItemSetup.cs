@@ -20,7 +20,7 @@ public class TestItemSetup : MonoBehaviour
 
     private void Start()
     {
-        playerInventory = PlayerobjManager.Instance.Player.inventory;
+        playerInventory = PlayerObjManager.Instance.Player.inventory;
         if (playerInventory == null)
         {
             Debug.LogError("PlayerInventory를 찾을 수 없습니다.");

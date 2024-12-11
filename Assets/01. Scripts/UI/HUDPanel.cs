@@ -8,7 +8,7 @@ public class HUDPanel : UIBase
 
     private void Start()
     {
-        stat = PlayerobjManager.Instance.Player.stat;
+        stat = PlayerObjManager.Instance.Player.stat;
     }
 
     public void ShowPlayerInfoPopupUI()

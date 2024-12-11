@@ -16,6 +16,6 @@ public class Player : MonoBehaviour
         inventory = GetComponent<PlayerInventory>();
         PlayerBattle = GetComponent<PlayerBattle>();
         EquipManager = GetComponent<EquipManager>();
-        PlayerobjManager.Instance.Player = this;
+        PlayerObjManager.Instance.Player = this;
     }
 }

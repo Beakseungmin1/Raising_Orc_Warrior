@@ -88,7 +88,7 @@ public class Accessory : IEnhanceable, IFusable, IStackable
             if (nextAccessoryData != null)
             {
                 Accessory newAccessory = new Accessory(nextAccessoryData);
-                PlayerobjManager.Instance.Player.inventory.AccessoryInventory.AddItem(newAccessory);
+                PlayerObjManager.Instance.Player.inventory.AccessoryInventory.AddItem(newAccessory);
                 return true;
             }
         }
@@ -99,7 +99,7 @@ public class Accessory : IEnhanceable, IFusable, IStackable
             if (nextAccessoryData != null)
             {
                 Accessory newAccessory = new Accessory(nextAccessoryData);
-                PlayerobjManager.Instance.Player.inventory.AccessoryInventory.AddItem(newAccessory);
+                PlayerObjManager.Instance.Player.inventory.AccessoryInventory.AddItem(newAccessory);
                 return true;
             }
         }

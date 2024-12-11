@@ -67,7 +67,7 @@ public class SkillInventorySlot : UIBase
 
             if (skillDetailUIInstance != null)
             {
-                int currentMaterialCount = PlayerobjManager.Instance.Player.inventory.SkillInventory.GetItemStackCount(skillData);
+                int currentMaterialCount = PlayerObjManager.Instance.Player.inventory.SkillInventory.GetItemStackCount(skillData);
 
                 skillDetailUIInstance.Initialize(equipSlotManager);
                 skillDetailUIInstance.DisplaySkillDetails(skillData, currentMaterialCount);

@@ -17,7 +17,7 @@ public class PlayerLevelInfoUI : MonoBehaviour
 
     private void Start()
     {
-        stat = PlayerobjManager.Instance.Player.stat;
+        stat = PlayerObjManager.Instance.Player.stat;
 
         stat.UpdateLevelStatUI += UpdateLevelUI;
 

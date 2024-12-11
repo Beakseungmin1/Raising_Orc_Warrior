@@ -21,7 +21,7 @@ public class EquipmentInventorySlotManager : UIBase
 
     private void Start()
     {
-        playerInventory = PlayerobjManager.Instance?.Player?.inventory;
+        playerInventory = PlayerObjManager.Instance?.Player?.inventory;
         if (playerInventory == null)
         {
             return;

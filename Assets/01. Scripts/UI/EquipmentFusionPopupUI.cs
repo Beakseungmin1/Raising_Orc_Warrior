@@ -129,7 +129,7 @@ public class EquipmentFusionPopupUI : UIBase
 
     private int GetResultItemCount()
     {
-        var playerInventory = PlayerobjManager.Instance.Player.inventory;
+        var playerInventory = PlayerObjManager.Instance.Player.inventory;
         int currentResultCount = 0;
 
         // currentEquipment가 IEnhanceable을 구현하는지 확인
@@ -189,7 +189,7 @@ public class EquipmentFusionPopupUI : UIBase
 
         if (success)
         {
-            var playerInventory = PlayerobjManager.Instance.Player.inventory;
+            var playerInventory = PlayerObjManager.Instance.Player.inventory;
 
             if (isWeapon)
             {
@@ -226,7 +226,7 @@ public class EquipmentFusionPopupUI : UIBase
 
     private void SelectPreviousItem()
     {
-        var playerInventory = PlayerobjManager.Instance.Player.inventory;
+        var playerInventory = PlayerObjManager.Instance.Player.inventory;
 
         if (isWeapon)
         {
@@ -256,7 +256,7 @@ public class EquipmentFusionPopupUI : UIBase
 
     private void SelectNextItem()
     {
-        var playerInventory = PlayerobjManager.Instance.Player.inventory;
+        var playerInventory = PlayerObjManager.Instance.Player.inventory;
 
         if (isWeapon)
         {
@@ -298,11 +298,11 @@ public class EquipmentFusionPopupUI : UIBase
     {
         if (isWeapon)
         {
-            PlayerobjManager.Instance.Player.inventory.NotifyWeaponsChanged();
+            PlayerObjManager.Instance.Player.inventory.NotifyWeaponsChanged();
         }
         else
         {
-            PlayerobjManager.Instance.Player.inventory.NotifyAccessoriesChanged();
+            PlayerObjManager.Instance.Player.inventory.NotifyAccessoriesChanged();
         }
 
         UIManager.Instance.Hide<DimmedUI>();

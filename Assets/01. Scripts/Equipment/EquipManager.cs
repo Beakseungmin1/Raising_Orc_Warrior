@@ -15,8 +15,8 @@ public class EquipManager : MonoBehaviour
 
     private void Start()
     {
-        playerStat = PlayerobjManager.Instance?.Player.stat;
-        skillHandler = PlayerobjManager.Instance?.Player.GetComponent<PlayerSkillHandler>();
+        playerStat = PlayerObjManager.Instance?.Player.stat;
+        skillHandler = PlayerObjManager.Instance?.Player.GetComponent<PlayerSkillHandler>();
 
         if (playerStat == null || skillHandler == null)
         {

@@ -29,7 +29,7 @@ public class PlayerInfoPanel : MonoBehaviour
 
     private void Awake()
     {
-        stat = PlayerobjManager.Instance.Player.stat;
+        stat = PlayerObjManager.Instance.Player.stat;
 
         stat.UpdateUserInformationUI += UpdatePlayerInfoUI;
     }

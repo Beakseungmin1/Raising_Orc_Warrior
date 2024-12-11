@@ -88,7 +88,7 @@ public class Weapon : IEnhanceable, IFusable, IStackable
             if (nextWeaponData != null)
             {
                 Weapon newWeapon = new Weapon(nextWeaponData);
-                PlayerobjManager.Instance.Player.inventory.WeaponInventory.AddItem(newWeapon);
+                PlayerObjManager.Instance.Player.inventory.WeaponInventory.AddItem(newWeapon);
                 return true;
             }
         }
@@ -99,7 +99,7 @@ public class Weapon : IEnhanceable, IFusable, IStackable
             if (nextWeaponData != null)
             {
                 Weapon newWeapon = new Weapon(nextWeaponData);
-                PlayerobjManager.Instance.Player.inventory.WeaponInventory.AddItem(newWeapon);
+                PlayerObjManager.Instance.Player.inventory.WeaponInventory.AddItem(newWeapon);
                 return true;
             }
         }
