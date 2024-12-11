@@ -21,7 +21,7 @@ public class RegenManager : Singleton<RegenManager>
         {
             //스테이지매니저의 챕터SO를 참조한다.
             curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
-            enemySOs = curChapterSO.stageSOs[StageManager.Instance.curStageNumIndex].enemySOs;
+            enemySOs = curChapterSO.stageSOs[StageManager.Instance.curStageIndex].enemySOs;
             curEnemyCount = enemySOs.Length;
             RegenStagesEnemy();
         }
