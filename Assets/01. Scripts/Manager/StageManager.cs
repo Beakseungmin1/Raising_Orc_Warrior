@@ -23,12 +23,21 @@ public class StageManager : Singleton<StageManager>
 
     private void Awake()
     {
+        SetChapterList();
         SetStageList();
         chapterName = chapterSOs[curChapterNum].name;
         stageName = stageSOs[curStageNum].name;
 
         bgSprite = GetComponent<Sprite>();
         bgSprite = chapterSOs[curChapterNum].bgSprite;
+    }
+
+    private void SetChapterList()
+    {
+        foreach (var chapter in Resources.LoadAll<ChapterSO>("Chapters"))
+        {
+            chapterSOs.Add(chapter);
+        }
     }
 
     private void SetStageList()
@@ -40,9 +49,20 @@ public class StageManager : Singleton<StageManager>
         }
     }
 
-    public void NextStage()
+    public void StageClear()
+    {
+        AddStageCount();
+    }
+
+    public void AddStageCount()
     {
         curStageNum++;
+    }
+
+    public void StageChange()
+    {
+        SetStageList();
+        SetChapterList();
         onStageChanged?.Invoke();
     }
 }

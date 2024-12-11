@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour
         if (RegenManager.Instance.curEnemyCount <= 0)
         {
             RegenManager.Instance.curEnemyCount = 0;
-            StageManager.Instance.NextStage();
+            StageManager.Instance.StageClear();
         }
         ObjectPool.Instance.ReturnObject(gameObject);
     }
