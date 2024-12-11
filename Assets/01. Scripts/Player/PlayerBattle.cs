@@ -70,27 +70,11 @@ public class PlayerBattle : MonoBehaviour, IDamageable
             // animator.SetTrigger("Attack");
             currentMonster.TakeDamage(totalDamage);
 
-            //if (!currentMonster.GetActive())
-            //{
-            //    Debug.Log("몬스터잡음");
-
-            //    currentState = State.Idle;
-
-            //    // 몬스터의 giveexp 값만큼 플레이어가 exp 획득
-            //    playerStat.AddExpFromMonsters(currentMonster);
-
-            //    // 플레이어 레벨 ui 업데이트
-            //    playerStat.UpdateLevelStatUI.Invoke();
-
-            //    currentMonster = null;
-            //}
         }
     }
 
     public void GetMonsterReward()
     {
-
-        Debug.Log("몬스터잡음");
 
         playerStat.AddExpFromMonsters(currentMonster);
 

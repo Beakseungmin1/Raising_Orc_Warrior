@@ -257,4 +257,15 @@ public class EquipmentUpgradePopupUI : UIBase
             }            
         }
     }
+
+    private void OnEquipWeapon()
+    {
+        EquipManager equipManager = PlayerobjManager.Instance.Player.GetComponent<EquipManager>();
+        if (equipManager != null && currentItem is Weapon weapon)
+        {
+            equipManager.EquipWeapon(weapon);
+            Debug.Log($"[WeaponUpgradePopupUI] 무기 {weapon.BaseData.itemName} 장착 완료.");
+        }
+    }
+
 }
