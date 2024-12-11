@@ -6,43 +6,100 @@ public class EquipmentInventorySlotManager : UIBase
 {
     [SerializeField] private GameObject equipmentSlotPrefab;
     [SerializeField] private Transform contentParent;
-    [SerializeField] private int initialSlotCount = 8;
 
     [Header("Tabs")]
     [SerializeField] private Button weaponTabButton;
     [SerializeField] private Button accessoryTabButton;
 
     private List<EquipmentInventorySlot> inventorySlots = new List<EquipmentInventorySlot>();
+    private List<IEnhanceable> weaponItems = new List<IEnhanceable>();
+    private List<IEnhanceable> accessoryItems = new List<IEnhanceable>();
     private PlayerInventory playerInventory;
     private bool isWeaponTabActive = true;
-
-    // 강화 시 필요한 기본 아이템 수량 (항상 1)
-    private const int RequiredItemCountForEnhancement = 1;
 
     private void Start()
     {
         playerInventory = PlayerObjManager.Instance?.Player?.inventory;
         if (playerInventory == null)
         {
+            Debug.LogError("[EquipmentInventorySlotManager] PlayerInventory를 찾을 수 없습니다.");
             return;
         }
 
         weaponTabButton.onClick.AddListener(() => ShowTab(true));
         accessoryTabButton.onClick.AddListener(() => ShowTab(false));
 
-        CreateSlotsIfNeeded(initialSlotCount);
-        playerInventory.OnWeaponsChanged += UpdateWeaponInventory;
-        playerInventory.OnAccessoriesChanged += UpdateAccessoryInventory;
+        // 전체 데이터 기준으로 슬롯 초기화
+        InitializeSlots();
 
-        ShowTab(true);
+        // 인벤토리 변화 이벤트 구독
+        playerInventory.OnWeaponsChanged += UpdateInventorySlots;
+        playerInventory.OnAccessoriesChanged += UpdateInventorySlots;
+
+        ShowTab(true); // 기본 무기 탭 활성화
     }
 
     private void OnDestroy()
     {
         if (playerInventory != null)
         {
-            playerInventory.OnWeaponsChanged -= UpdateWeaponInventory;
-            playerInventory.OnAccessoriesChanged -= UpdateAccessoryInventory;
+            playerInventory.OnWeaponsChanged -= UpdateInventorySlots;
+            playerInventory.OnAccessoriesChanged -= UpdateInventorySlots;
+        }
+    }
+
+    private void InitializeSlots()
+    {
+        // DataManager에서 데이터 가져오기
+        var weaponDataList = DataManager.Instance.GetAllWeapons();
+        var accessoryDataList = DataManager.Instance.GetAllAccessories();
+
+        // 무기와 악세사리 데이터를 등급과 랭크 순서에 맞게 정렬
+        weaponDataList.Sort((a, b) =>
+        {
+            int gradeComparison = a.grade.CompareTo(b.grade); // 등급 기준 오름차순
+            if (gradeComparison == 0)
+            {
+                return b.rank.CompareTo(a.rank); // 같은 등급이면 랭크 내림차순 (4 -> 3 -> 2 -> 1)
+            }
+            return gradeComparison;
+        });
+
+        accessoryDataList.Sort((a, b) =>
+        {
+            int gradeComparison = a.grade.CompareTo(b.grade); // 등급 기준 오름차순
+            if (gradeComparison == 0)
+            {
+                return b.rank.CompareTo(a.rank); // 같은 등급이면 랭크 내림차순 (4 -> 3 -> 2 -> 1)
+            }
+            return gradeComparison;
+        });
+
+        int totalSlots = weaponDataList.Count + accessoryDataList.Count;
+
+        // 슬롯 생성
+        CreateSlotsIfNeeded(totalSlots);
+
+        int slotIndex = 0;
+
+        // 무기 데이터 슬롯 할당
+        foreach (var weaponData in weaponDataList)
+        {
+            inventorySlots[slotIndex].AssignItem(new Weapon(weaponData), true); // 무기 슬롯 초기화
+            slotIndex++;
+        }
+
+        // 악세사리 데이터 슬롯 할당
+        foreach (var accessoryData in accessoryDataList)
+        {
+            inventorySlots[slotIndex].AssignItem(new Accessory(accessoryData), false); // 액세서리 슬롯 초기화
+            slotIndex++;
+        }
+
+        // 남은 슬롯 초기화
+        for (int i = slotIndex; i < inventorySlots.Count; i++)
+        {
+            inventorySlots[i].ClearSlot();
         }
     }
 
@@ -50,21 +107,14 @@ public class EquipmentInventorySlotManager : UIBase
     {
         int currentSlotCount = inventorySlots.Count;
 
-        // 부족한 슬롯 생성
         for (int i = currentSlotCount; i < requiredSlotCount; i++)
         {
             GameObject slotObj = Instantiate(equipmentSlotPrefab, contentParent);
-            EquipmentInventorySlot slot = slotObj.GetComponent<EquipmentInventorySlot>();
+            var slot = slotObj.GetComponent<EquipmentInventorySlot>();
             if (slot != null)
             {
                 inventorySlots.Add(slot);
             }
-        }
-
-        // 초과 슬롯 비활성화
-        for (int i = requiredSlotCount; i < inventorySlots.Count; i++)
-        {
-            inventorySlots[i].gameObject.SetActive(false);
         }
     }
 
@@ -76,74 +126,25 @@ public class EquipmentInventorySlotManager : UIBase
 
     public void UpdateInventorySlots()
     {
-        if (isWeaponTabActive)
+        foreach (var slot in inventorySlots)
         {
-            UpdateWeaponInventory();
-        }
-        else
-        {
-            UpdateAccessoryInventory();
-        }
-    }
-
-    private void UpdateWeaponInventory()
-    {
-        if (playerInventory == null) return;
-
-        List<Weapon> weaponList = playerInventory.WeaponInventory.GetAllItems();
-        CreateSlotsIfNeeded(weaponList.Count);
-
-        for (int i = 0; i < inventorySlots.Count; i++)
-        {
-            if (i < weaponList.Count)
+            if (isWeaponTabActive && slot.IsWeaponSlot)
             {
-                var weapon = weaponList[i];
-                int currentAmount = playerInventory.WeaponInventory.GetItemStackCount(weapon);
-                inventorySlots[i].gameObject.SetActive(true); // 슬롯 활성화
-
-                // 슬롯 초기화
-                inventorySlots[i].InitializeSlot(
-                    weapon,
-                    currentAmount,
-                    RequiredItemCountForEnhancement, // 강화에 필요한 기본 수량
-                    this,
-                    true
-                );
+                // 실제 StackCount를 가져와서 업데이트
+                int stackCount = playerInventory.GetItemStackCount(slot.Item as Weapon);
+                slot.UpdateSlotState(stackCount);
+                slot.gameObject.SetActive(true);
+            }
+            else if (!isWeaponTabActive && !slot.IsWeaponSlot)
+            {
+                // 실제 StackCount를 가져와서 업데이트
+                int stackCount = playerInventory.GetItemStackCount(slot.Item as Accessory);
+                slot.UpdateSlotState(stackCount);
+                slot.gameObject.SetActive(true);
             }
             else
             {
-                inventorySlots[i].gameObject.SetActive(false); // 슬롯 비활성화
-            }
-        }
-    }
-
-    private void UpdateAccessoryInventory()
-    {
-        if (playerInventory == null) return;
-
-        List<Accessory> accessoryList = playerInventory.AccessoryInventory.GetAllItems();
-        CreateSlotsIfNeeded(accessoryList.Count);
-
-        for (int i = 0; i < inventorySlots.Count; i++)
-        {
-            if (i < accessoryList.Count)
-            {
-                var accessory = accessoryList[i];
-                int currentAmount = playerInventory.AccessoryInventory.GetItemStackCount(accessory);
-                inventorySlots[i].gameObject.SetActive(true); // 슬롯 활성화
-
-                // 슬롯 초기화
-                inventorySlots[i].InitializeSlot(
-                    accessory,
-                    currentAmount,
-                    RequiredItemCountForEnhancement, // 강화에 필요한 기본 수량
-                    this,
-                    false
-                );
-            }
-            else
-            {
-                inventorySlots[i].gameObject.SetActive(false); // 슬롯 비활성화
+                slot.gameObject.SetActive(false); // 현재 탭과 관련 없는 슬롯 비활성화
             }
         }
     }

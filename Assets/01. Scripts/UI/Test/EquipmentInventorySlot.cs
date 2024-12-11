@@ -5,59 +5,34 @@ using TMPro;
 public class EquipmentInventorySlot : UIBase
 {
     [SerializeField] private Image equipmentIcon;
-    [SerializeField] private TextMeshProUGUI currentLevelTxt;
-    [SerializeField] private TextMeshProUGUI rankTxt;
-    [SerializeField] private Slider expGauge;
-    [SerializeField] private TextMeshProUGUI requiredItemCountTxt;
-    [SerializeField] private TextMeshProUGUI currentItemCountTxt;
+    [SerializeField] private TextMeshProUGUI currentLevelTxt; // 강화 레벨 텍스트
+    [SerializeField] private TextMeshProUGUI rankTxt; // 랭크 텍스트
+    [SerializeField] private Slider expGauge; // 경험치 게이지
+    [SerializeField] private TextMeshProUGUI requiredItemCountTxt; // 필요한 아이템 수량 텍스트
+    [SerializeField] private TextMeshProUGUI currentItemCountTxt; // 현재 아이템 수량 텍스트
     [SerializeField] private Button slotButton;
 
-    private IEnhanceable equipmentData;
-    private EquipmentInventorySlotManager slotManager;
-    private bool isWeapon;
-
-    private int requiredItemCount = 1; // 기본 필요 수량
+    private IEnhanceable item;
+    private bool isWeaponSlot;
 
     private Color defaultColor = Color.white;
     private Color emptyColor = new Color32(80, 80, 80, 255);
 
-    public void InitializeSlot(IEnhanceable equipment, int currentItemCount, int requiredItemCount, EquipmentInventorySlotManager manager, bool isWeaponType)
+    public IEnhanceable Item => item;
+    public bool IsWeaponSlot => isWeaponSlot;
+
+    public void AssignItem(IEnhanceable newItem, bool isWeapon)
     {
-        equipmentData = equipment;
-        slotManager = manager;
-        isWeapon = isWeaponType;
+        item = newItem;
+        isWeaponSlot = isWeapon;
 
-        if (equipmentData != null)
+        if (item != null)
         {
-            equipmentIcon.sprite = equipment.BaseData.icon;
+            equipmentIcon.sprite = item.BaseData.icon;
+            rankTxt.text = item.BaseData is WeaponDataSO weapon ? weapon.rank.ToString() :
+                           item.BaseData is AccessoryDataSO accessory ? accessory.rank.ToString() : string.Empty;
 
-            // 현재 보유 수량 표시
-            currentItemCountTxt.text = currentItemCount.ToString();
-
-            // 필요 수량 설정
-            requiredItemCountTxt.text = requiredItemCount.ToString();
-
-            // 강화 레벨 표시
-            currentLevelTxt.text = $"+{equipment.EnhancementLevel}";
-
-            // 랭크 표시 (무기 또는 악세서리만 해당)
-            if (isWeaponType || equipment is Accessory)
-            {
-                rankTxt.text = (equipment.BaseData as WeaponDataSO)?.rank.ToString() ??
-                               (equipment.BaseData as AccessoryDataSO)?.rank.ToString();
-            }
-            else
-            {
-                rankTxt.text = string.Empty; // 스킬에는 rank 없음
-            }
-
-            // 경험치 게이지 업데이트
-            expGauge.value = Mathf.Clamp01((float)currentItemCount / requiredItemCount);
-
-            UpdateSlotColor(true);
-
-            slotButton.onClick.RemoveAllListeners();
-            slotButton.onClick.AddListener(() => OpenUpgradePopup());
+            UpdateSlotState(0); // 초기화 시 스택 0 상태로 설정
         }
         else
         {
@@ -65,33 +40,48 @@ public class EquipmentInventorySlot : UIBase
         }
     }
 
-    private void ClearSlot()
+    public void ClearSlot()
     {
-        equipmentData = null;
+        item = null;
         equipmentIcon.sprite = null;
-        currentLevelTxt.text = string.Empty;
         rankTxt.text = string.Empty;
-        currentItemCountTxt.text = "0";
+        currentLevelTxt.text = string.Empty;
         requiredItemCountTxt.text = "0";
+        currentItemCountTxt.text = "0";
         expGauge.value = 0;
 
         UpdateSlotColor(false);
-
         slotButton.onClick.RemoveAllListeners();
     }
 
-    private void OpenUpgradePopup()
+    public void UpdateSlotState(int stackCount)
     {
-        if (equipmentData != null)
+        // 스택 수량 및 강화 레벨 업데이트
+        currentItemCountTxt.text = stackCount.ToString();
+        currentLevelTxt.text = $"+{item.EnhancementLevel}";
+        requiredItemCountTxt.text = "5"; // 필요 수량(예시로 설정)
+        expGauge.value = Mathf.Clamp01((float)stackCount / 5f); // 필요 수량 기준으로 게이지 설정
+        UpdateSlotColor(stackCount > 0);
+
+        slotButton.onClick.RemoveAllListeners();
+        if (stackCount > 0)
         {
-            UIManager.Instance.Show<DimmedUI>();
-            var upgradePopup = UIManager.Instance.Show<EquipmentUpgradePopupUI>();
-            upgradePopup.SetEquipmentData(equipmentData, isWeapon);
+            slotButton.onClick.AddListener(() => OpenItemDetails());
         }
     }
 
-    private void UpdateSlotColor(bool hasEquipment)
+    private void OpenItemDetails()
     {
-        equipmentIcon.color = hasEquipment ? defaultColor : emptyColor;
+        if (item == null) return;
+
+        // 팝업 표시 로직
+        UIManager.Instance.Show<DimmedUI>();
+        var upgradePopup = UIManager.Instance.Show<EquipmentUpgradePopupUI>();
+        upgradePopup.SetEquipmentData(item, isWeaponSlot);
+    }
+
+    private void UpdateSlotColor(bool hasItem)
+    {
+        equipmentIcon.color = hasItem ? defaultColor : emptyColor;
     }
 }
