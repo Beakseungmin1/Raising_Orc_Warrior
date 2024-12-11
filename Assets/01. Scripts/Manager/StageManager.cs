@@ -22,7 +22,7 @@ public class StageManager : Singleton<StageManager>
     public Action onStageChanged;
     public Action onChapterChanged;
 
-    private void Start()
+    private void Awake()
     {
         bgSprite = GetComponent<Sprite>();
 

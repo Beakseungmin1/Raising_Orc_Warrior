@@ -23,6 +23,6 @@ public class StageInfoUI : UIBase
     private void RefreshUI()
     {
         stageTxt.text = StageManager.Instance.stageName;
-        stageNumTxt.text = StageManager.Instance.curStageNumIndex.ToString();
+        stageNumTxt.text = StageManager.Instance.curStageIndex.ToString();
     }
 }
