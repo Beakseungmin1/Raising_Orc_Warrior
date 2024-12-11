@@ -1,52 +1,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GenericInventory<T> : IInventory<T> where T : class
+public class GenericInventory<T> : IInventory<T> where T : class, IEnhanceable
 {
-    private Dictionary<T, int> items = new Dictionary<T, int>(); // 아이템과 스택 카운트 관리
+    private List<T> items;
+
+    public GenericInventory()
+    {
+        items = new List<T>();
+    }
 
     public void AddItem(T item)
     {
-        if (items.ContainsKey(item))
+        var existingItem = items.Find(i => i.BaseData.itemName == item.BaseData.itemName);
+        if (existingItem != null)
         {
-            items[item]++;
+            (existingItem as IStackable)?.AddStack(1);
         }
         else
         {
-            items[item] = 1;
+            items.Add(item);
         }
     }
 
     public void RemoveItem(T item)
     {
-        if (items.ContainsKey(item))
+        var existingItem = items.Find(i => i.BaseData.itemName == item.BaseData.itemName);
+        if (existingItem != null)
         {
-            items[item] = Mathf.Max(items[item] - 1, 0); // 스택 감소
-            if (items[item] <= 0)
+            (existingItem as IStackable)?.RemoveStack(1);
+            if ((existingItem as IStackable)?.StackCount <= 0)
             {
-                items.Remove(item); // 스택이 0이면 제거
+                items.Remove(existingItem);
             }
         }
     }
 
     public T GetItem(string itemName)
     {
-        foreach (var item in items.Keys)
-        {
-            if ((item as IEnhanceable)?.BaseData.itemName == itemName) // IEnhanceable 인터페이스 사용
-                return item;
-        }
-        return null;
+        return items.Find(i => i.BaseData.itemName == itemName);
     }
 
     public int GetItemStackCount(T item)
     {
-        return items.TryGetValue(item, out int count) ? count : 0;
+        var existingItem = items.Find(i => i.BaseData.itemName == item.BaseData.itemName);
+        return (existingItem as IStackable)?.StackCount ?? 0;
     }
 
     public List<T> GetAllItems()
     {
-        return new List<T>(items.Keys);
+        return new List<T>(items);
     }
 
     public int GetTotalItemCount()
@@ -56,6 +59,6 @@ public class GenericInventory<T> : IInventory<T> where T : class
 
     public bool CanAddItem(T item)
     {
-        return true; // 항상 아이템 추가 가능
+        return true;
     }
 }

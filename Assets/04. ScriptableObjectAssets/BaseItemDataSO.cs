@@ -13,4 +13,18 @@ public abstract class BaseItemDataSO : ScriptableObject
     public Sprite currencyIcon; // 강화에 필요한 재화 아이콘
     public int requiredCurrencyForUpgrade; // 강화에 필요한 재화 수량
     public int currentLevel; // 현재 레벨
+
+    public override bool Equals(object obj)
+    {
+        if (obj is BaseItemDataSO other)
+        {
+            return ReferenceEquals(this, other) || itemName == other.itemName;
+        }
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return itemName != null ? itemName.GetHashCode() : base.GetHashCode();
+    }
 }

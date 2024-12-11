@@ -19,6 +19,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     private float attackSpeed; // 공격 속도 퍼센트 게이지로 만들어 딜레이 에서 빼줄예정
     private float attackDelay = 1f; // 공격 딜레이
     public List<Skill> activeBuffSkills = new List<Skill>(); // 현재 활성화된 버프 스킬 리스트
+    public Animator animator;
 
     private Enemy currentMonster; // 현재 공격 중인 몬스터
 
@@ -26,6 +27,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     {
         PlayerDamageCalculator = GetComponent<PlayerDamageCalculator>();
         playerStat = GetComponent<PlayerStat>();
+        animator = GetComponentInChildren<Animator>();
         currentState = State.Idle;
     }
 
@@ -66,6 +68,8 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         if (currentMonster != null && currentMonster.GetActive())
         {
             totalDamage = PlayerDamageCalculator.GetTotalDamage();
+
+            animator.SetTrigger("2_Attack");
             // 공격 애니메이션 재생예정
             // animator.SetTrigger("Attack");
             currentMonster.TakeDamage(totalDamage);

@@ -145,4 +145,36 @@ public class DataManager : SingletonDontDestroy<DataManager>
         int randomIndex = Random.Range(0, skillDataDict[nextGrade].Count);
         return skillDataDict[nextGrade][randomIndex];
     }
+
+    public List<WeaponDataSO> GetAllWeapons()
+    {
+        List<WeaponDataSO> allWeapons = new List<WeaponDataSO>();
+        foreach (var gradeDict in weaponDataDict.Values)
+        {
+            allWeapons.AddRange(gradeDict.Values);
+        }
+        return allWeapons;
+    }
+
+    public List<AccessoryDataSO> GetAllAccessories()
+    {
+        List<AccessoryDataSO> allAccessories = new List<AccessoryDataSO>();
+        foreach (var gradeDict in accessoryDataDict.Values)
+        {
+            allAccessories.AddRange(gradeDict.Values);
+        }
+        return allAccessories;
+    }
+
+    public List<SkillDataSO> GetAllSkills()
+    {
+        List<SkillDataSO> allSkills = new List<SkillDataSO>();
+
+        foreach (var skillList in skillDataDict.Values)
+        {
+            allSkills.AddRange(skillList);
+        }
+
+        return allSkills;
+    }
 }

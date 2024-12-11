@@ -72,6 +72,15 @@ public class EquipmentFusionPopupUI : UIBase
     {
         maxMaterials = (currentEquipment as IStackable)?.StackCount ?? 0;
 
+        // 최대 합성 횟수를 계산
+        int maxFusionCount = Mathf.Min(maxMaterials / RequiredMaterialsPerFusion, 10);
+
+        // materialCount가 0이거나 초기화되지 않은 경우만 최대값으로 설정
+        if (materialCount == 0)
+        {
+            materialCount = maxFusionCount;
+        }
+
         currentEquipmentAmountTxt.text = $"{maxMaterials} (-{materialCount * RequiredMaterialsPerFusion})";
         materialCountTxt.text = materialCount.ToString();
 
@@ -84,14 +93,9 @@ public class EquipmentFusionPopupUI : UIBase
         resultEquipmentData = GetNextEquipmentData();
         UpdateResultEquipmentUI();
 
-        int maxFusionCount = Mathf.Min(maxMaterials / RequiredMaterialsPerFusion, 10);
-        materialCount = Mathf.Clamp(materialCount, 1, maxFusionCount);
-        materialCountTxt.text = materialCount.ToString();
-
         curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Cube).ToString();
 
         currentEquipmentAmountTxt.text = $"{maxMaterials} (-{materialCount * RequiredMaterialsPerFusion})";
-
         UpdateResultEquipmentUI();
     }
 
