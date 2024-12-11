@@ -5,36 +5,40 @@ using UnityEngine;
 
 public class StageManager : Singleton<StageManager>
 {
-    [Header("ChapterSO")]
+    [Header("ChapterSOList")]
     public List<ChapterSO> chapterSOs;
 
-    [Header("StageSO")]
+    [Header("Current Chapter StageSO")]
     public List<StageSO> stageSOs; //이 스테이지의 스테이지SO
 
     [Header("Info")]
     public string chapterName;
     public string stageName;
-    [SerializeField] private Sprite bgSprite;
+    public Sprite bgSprite;
 
-    public int curChapterNum = 0;
-    public int curStageNum = 0;
+    public int curChapterIndex = 0;
+    public int curStageIndex = 0;
 
-    public Action onStageChanged; 
+    public Action onStageChanged;
+    public Action onChapterChanged;
 
-    private void Awake()
+    private void Start()
     {
+        bgSprite = GetComponent<Sprite>();
+
         SetChapterList();
         SetStageList();
-        chapterName = chapterSOs[curChapterNum].name;
-        stageName = stageSOs[curStageNum].name;
 
-        bgSprite = GetComponent<Sprite>();
-        bgSprite = chapterSOs[curChapterNum].bgSprite;
+        onStageChanged += RefreshStage;
+        onChapterChanged += RefreshChapter;
     }
 
     private void SetChapterList()
     {
-        foreach (var chapter in Resources.LoadAll<ChapterSO>("Chapters"))
+        // Resources.LoadAll로 로드된 배열
+        var loadedChapters = Resources.LoadAll<ChapterSO>("Chapters");
+
+        foreach (var chapter in loadedChapters)
         {
             chapterSOs.Add(chapter);
         }
@@ -43,9 +47,9 @@ public class StageManager : Singleton<StageManager>
     private void SetStageList()
     {
         //해당 챕터에 해당하는 스테이지 리스트를 쫙 뽑아서 받아온다.
-        for (int i = 0; i < chapterSOs[curChapterNum].stageSOs.Length; i++)
+        for (int i = 0; i < chapterSOs[curChapterIndex].stageSOs.Length; i++)
         {
-            stageSOs.Add(chapterSOs[curChapterNum].stageSOs[i]);
+            stageSOs.Add(chapterSOs[curChapterIndex].stageSOs[i]);
         }
     }
 
@@ -56,13 +60,17 @@ public class StageManager : Singleton<StageManager>
 
     public void AddStageCount()
     {
-        curStageNum++;
+        curStageIndex++;
     }
 
-    public void StageChange()
+    public void RefreshChapter()
     {
-        SetStageList();
-        SetChapterList();
-        onStageChanged?.Invoke();
+        bgSprite = chapterSOs[curChapterIndex].bgSprite;
+        chapterName = chapterSOs[curChapterIndex].name;
+    }
+
+    public void RefreshStage()
+    {
+        stageName = stageSOs[curStageIndex].name;
     }
 }

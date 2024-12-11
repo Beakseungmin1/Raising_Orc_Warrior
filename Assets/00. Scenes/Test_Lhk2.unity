@@ -856,6 +856,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4520383135767064401, guid: bcb60ee84447f6a4e921670e0a9428e2, type: 3}
+      propertyPath: chapterSOs.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4520383135767064401, guid: bcb60ee84447f6a4e921670e0a9428e2, type: 3}
+      propertyPath: chapterSOs.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4520383135767064401, guid: bcb60ee84447f6a4e921670e0a9428e2, type: 3}
+      propertyPath: chapterSOs.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5372603423987100375, guid: bcb60ee84447f6a4e921670e0a9428e2, type: 3}
       propertyPath: m_Name
       value: StageManager

@@ -17,12 +17,14 @@ public class RegenManager : Singleton<RegenManager>
 
     private void Start()
     {
-        //스테이지매니저의 챕터SO를 참조한다.
-        curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterNum];
-
-        enemySOs = curChapterSO.stageSOs[StageManager.Instance.curStageNum].enemySOs;
-        curEnemyCount = enemySOs.Length;
-        RegenStagesEnemy();
+        if (curChapterSO != null)
+        {
+            //스테이지매니저의 챕터SO를 참조한다.
+            curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
+            enemySOs = curChapterSO.stageSOs[StageManager.Instance.curStageNumIndex].enemySOs;
+            curEnemyCount = enemySOs.Length;
+            RegenStagesEnemy();
+        }
     }
 
     private void RegenStagesEnemy()
