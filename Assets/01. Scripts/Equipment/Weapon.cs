@@ -69,14 +69,21 @@ public class Weapon : IEnhanceable, IFusable, IStackable
 
         if (StackCount < totalRequiredMaterials)
         {
-            return false;
+            return false; // 필요한 재료가 부족한 경우
         }
 
+        // 스택 차감
         RemoveStack(totalRequiredMaterials); // 필요한 재료 수만큼 차감
+
+        // `StackCount`가 정상적으로 줄어들도록 명시적으로 갱신
+        if (StackCount <= 0)
+        {
+            StackCount = 0; // 스택 수가 0 이하로 내려가지 않도록 처리
+        }
 
         if (BaseData.grade == Grade.Ultimate && BaseData.rank == 4)
         {
-            return false;
+            return false; // 더 이상 합성할 수 없는 아이템
         }
 
         // rank가 1인 경우, 다음 등급으로 넘어가고 rank 4로 설정
@@ -89,6 +96,7 @@ public class Weapon : IEnhanceable, IFusable, IStackable
             {
                 Weapon newWeapon = new Weapon(nextWeaponData);
                 PlayerObjManager.Instance.Player.inventory.WeaponInventory.AddItem(newWeapon);
+                PlayerObjManager.Instance.Player.inventory.NotifyWeaponsChanged(); // 변경 사항 알리기
                 return true;
             }
         }
@@ -100,6 +108,7 @@ public class Weapon : IEnhanceable, IFusable, IStackable
             {
                 Weapon newWeapon = new Weapon(nextWeaponData);
                 PlayerObjManager.Instance.Player.inventory.WeaponInventory.AddItem(newWeapon);
+                PlayerObjManager.Instance.Player.inventory.NotifyWeaponsChanged(); // 변경 사항 알리기
                 return true;
             }
         }
@@ -115,5 +124,19 @@ public class Weapon : IEnhanceable, IFusable, IStackable
     public void RemoveStack(int count)
     {
         StackCount = Mathf.Max(StackCount - count, 0);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is Weapon other)
+        {
+            return BaseData == other.BaseData; // BaseData 참조 기준
+        }
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return BaseData != null ? BaseData.GetHashCode() : 0;
     }
 }
