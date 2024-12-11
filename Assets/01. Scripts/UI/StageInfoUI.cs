@@ -15,6 +15,11 @@ public class StageInfoUI : UIBase
         StageManager.Instance.onStageChanged += RefreshUI;
     }
 
+    private void Start()
+    {
+        RefreshUI();
+    }
+
     private void RefreshUI()
     {
         stageTxt.text = StageManager.Instance.stageName;
