@@ -1427,6 +1427,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a808ab5f6737d842920be6d3c5a75ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  playerNameTxt: {fileID: 0}
+  playerlevelTxt: {fileID: 683134682230835071}
+  expTxt: {fileID: 2479287220512029732}
+  expBar: {fileID: 165880422994487863}
+  emeraldTxt: {fileID: 0}
+  diamondTxt: {fileID: 0}
 --- !u!1 &8402482807219185359
 GameObject:
   m_ObjectHideFlags: 0

@@ -258,7 +258,7 @@ public class EquipmentUpgradePopupUI : UIBase
         }
     }
 
-    private void OnEquipWeapon()
+    public void OnEquipWeapon()
     {
         EquipManager equipManager = PlayerObjManager.Instance.Player.GetComponent<EquipManager>();
         if (equipManager != null && currentItem is Weapon weapon)
