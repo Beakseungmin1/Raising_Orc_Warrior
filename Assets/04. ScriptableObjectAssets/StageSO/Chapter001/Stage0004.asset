@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c8de651b269a284fb16532bcc548063, type: 3}
-  m_Name: Stage004
+  m_Name: Stage0004
   m_EditorClassIdentifier: 
   enemySOs:
   - {fileID: 11400000, guid: f4bd227021db74845bc17f61a8f9b701, type: 2}
   - {fileID: 11400000, guid: f4bd227021db74845bc17f61a8f9b701, type: 2}
   - {fileID: 11400000, guid: f4bd227021db74845bc17f61a8f9b701, type: 2}
   - {fileID: 11400000, guid: f4bd227021db74845bc17f61a8f9b701, type: 2}
+  - {fileID: 11400000, guid: f4bd227021db74845bc17f61a8f9b701, type: 2}
   - {fileID: 11400000, guid: aab18786d9a44bd43be1e2b3336c04d9, type: 2}
   - {fileID: 11400000, guid: aab18786d9a44bd43be1e2b3336c04d9, type: 2}
-  - {fileID: 11400000, guid: f3b26c85834e32e48adbc7170b3a18e9, type: 2}
-  - {fileID: 11400000, guid: f3b26c85834e32e48adbc7170b3a18e9, type: 2}
-  - {fileID: 11400000, guid: f3b26c85834e32e48adbc7170b3a18e9, type: 2}
-  - {fileID: 11400000, guid: f3b26c85834e32e48adbc7170b3a18e9, type: 2}
-  stageName: "\uCD08\uAE09\uC790 \uC0AC\uB0E5\uD130 IV"
+  - {fileID: 11400000, guid: aab18786d9a44bd43be1e2b3336c04d9, type: 2}
+  - {fileID: 11400000, guid: aab18786d9a44bd43be1e2b3336c04d9, type: 2}
+  stageName: "\uC911\uAE09\uC790 \uC0AC\uB0E5\uD130 I"
