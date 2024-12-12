@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        OnEnemyDeath += RegenManager.Instance.EnemyDeath;
+        OnEnemyDeath += RegenManager.Instance.EnemyKilled;
     }
 
     private void Start()
@@ -67,14 +67,8 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
-        RegenManager.Instance.curEnemyCount--;
-
-        if (RegenManager.Instance.curEnemyCount <= 0)
-        {
-            RegenManager.Instance.curEnemyCount = 0;
-            StageManager.Instance.StageClear();
-        }
         ObjectPool.Instance.ReturnObject(gameObject);
+        RegenManager.Instance.EnemyKilled();
     }
 
     public bool GetActive()

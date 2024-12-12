@@ -1171,6 +1171,7 @@ MonoBehaviour:
   canvas: {fileID: 0}
   stageTxt: {fileID: 6014481357204965287}
   stageNumTxt: {fileID: 4107117829822603067}
+  stageProgressSlider: {fileID: 5319831399048388658}
 --- !u!1 &7039997715797313844
 GameObject:
   m_ObjectHideFlags: 0

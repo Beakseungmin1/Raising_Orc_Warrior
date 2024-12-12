@@ -41,14 +41,14 @@ public class SummonDataManager : Singleton<SummonDataManager>
 
         var progress = summonLevelProgressDictionary[type];
         progress.Exp += experience;
-        OnExpChanged.Invoke();
+        OnExpChanged?.Invoke();
 
         while (progress.Exp >= progress.ExpToNextLevel)
         {
             progress.Exp -= progress.ExpToNextLevel;
             progress.Level++;
             progress.ExpToNextLevel *= 1.2f; // 레벨 업 경험치 증가 (예제)
-            OnLevelChanged.Invoke();
+            OnLevelChanged?.Invoke();
         }
     }
 

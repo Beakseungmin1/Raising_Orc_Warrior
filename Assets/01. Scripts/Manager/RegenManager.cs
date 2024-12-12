@@ -11,8 +11,8 @@ public class RegenManager : Singleton<RegenManager>
 
     [SerializeField] private Transform field;
 
-    public int stagesEnemyCount; //해당 스테이지 적 총 개수
-    public int curEnemyCount; //적 개수
+    public int totalEnemies = 0; //해당 스테이지 적 총 개수
+    public int killedEnemies = 0; //죽인 적 개수
     //액션으로 몬스터 죽을때마다 값을 받아와서 차감한다.
     //0이 되면 스테이지매니저에 정보 전달한다.
     
@@ -22,16 +22,18 @@ public class RegenManager : Singleton<RegenManager>
     private void Start()
     {
         //스테이지매니저의 챕터SO를 참조한다.
-        curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
-        enemySOs = curChapterSO.stageSOs[StageManager.Instance.curStageIndex].enemySOs;
-        stagesEnemyCount = enemySOs.Length;
-        curEnemyCount = enemySOs.Length;
         RegenStagesEnemy();
     }
 
-    private void RegenStagesEnemy()
+    public void RegenStagesEnemy()
     {
-        for (int i = 0; i < stagesEnemyCount; i++)
+        Debug.LogError("RegenStageEnemy");
+        killedEnemies = 0; //초기화
+        curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
+        enemySOs = curChapterSO.stageSOs[StageManager.Instance.curStageIndexInThisChapter].enemySOs;
+        totalEnemies = curChapterSO.stageSOs[StageManager.Instance.curStageIndexInThisChapter].enemySOs.Length;
+
+        for (int i = 0; i < enemySOs.Length; i++)
         {
             Transform enemyRegenPos = enemyRegenPoss[i];
             EnemySO enemySO = enemySOs[i];
@@ -55,16 +57,15 @@ public class RegenManager : Singleton<RegenManager>
         return enemy;
     }
 
-    public void EnemyDeath()
+    public void EnemyKilled()
     {
-        curEnemyCount--;
-        OnEnemyCountDown.Invoke();
+        killedEnemies++;
+        OnEnemyCountDown?.Invoke();
 
-        if(curEnemyCount <= 0)
+        if (killedEnemies >= totalEnemies)
         {
-            curEnemyCount = 0;
-            OnEnemyCountZero.Invoke();
+            StageManager.Instance.StageClear();
         }
     }
-    
+
 }

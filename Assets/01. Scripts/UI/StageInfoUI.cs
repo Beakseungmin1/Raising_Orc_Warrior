@@ -12,7 +12,7 @@ public class StageInfoUI : UIBase
 
     private void Awake()
     {
-        StageManager.Instance.onStageChanged += RefreshUI;
+        StageManager.Instance.OnStageChanged += RefreshUI;
         RegenManager.Instance.OnEnemyCountDown += RefreshUI;
         RegenManager.Instance.OnEnemyCountZero += RefreshUI;
     }
@@ -20,14 +20,14 @@ public class StageInfoUI : UIBase
     private void Start()
     {
         RefreshUI();
-        StageManager.Instance.onChapterChanged.Invoke();
-        StageManager.Instance.onStageChanged.Invoke();
+        StageManager.Instance.OnChapterChanged?.Invoke();
+        StageManager.Instance.OnStageChanged?.Invoke();
     }
 
     private void RefreshUI()
     {
         stageTxt.text = StageManager.Instance.stageName;
         stageNumTxt.text = StageManager.Instance.curStageIndex + 1.ToString();
-        stageProgressSlider.value = RegenManager.Instance.curEnemyCount / RegenManager.Instance.stagesEnemyCount;
+        stageProgressSlider.value = (float)RegenManager.Instance.killedEnemies / RegenManager.Instance.totalEnemies;
     }
 }

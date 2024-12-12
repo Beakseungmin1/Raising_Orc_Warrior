@@ -16,11 +16,15 @@ public class StageManager : Singleton<StageManager>
     public string stageName;
     public Sprite bgSprite;
 
-    public int curChapterIndex = 0;
-    public int curStageIndex = 0;
+    public int curChapterIndex = 0; //전체 챕터로서의 순번 ex) 99999챕터까지 가능
+    public int curStageIndex = 0; //전체 스테이지로서의 순번 ex) 99999스테이지 까지 가능
 
-    public Action onStageChanged;
-    public Action onChapterChanged;
+    public int curStageIndexInThisChapter = 0; //현재 챕터에서의 스테이지 인덱스정보값 ex) 챕터5의 10번째 스테이지
+    public int MaxStageIndexInThisChapter = 0; //현 챕터의 스테이지 인덱스 최대치 ex) 챕터 5에는 최대 20스테이지가 있음.
+
+
+    public Action OnStageChanged;
+    public Action OnChapterChanged;
 
     private void Awake()
     {
@@ -29,9 +33,8 @@ public class StageManager : Singleton<StageManager>
         SetChapterList();
         SetStageList();
 
-        onStageChanged += RefreshStage;
-        onChapterChanged += RefreshChapter;
-        RegenManager.Instance.OnEnemyCountZero += StageClear;
+        OnStageChanged += RefreshStage;
+        OnChapterChanged += RefreshChapter;
     }
 
     private void SetChapterList()
@@ -51,12 +54,20 @@ public class StageManager : Singleton<StageManager>
         {
             stageSOs.Add(chapterSOs[curChapterIndex].stageSOs[i]);
         }
+        MaxStageIndexInThisChapter = chapterSOs[curChapterIndex].stageSOs.Length; //최대 스테이지 값 세팅.
     }
 
     public void StageClear()
     {
-        curStageIndex++;
-        onStageChanged.Invoke();
+        Debug.LogWarning("StageClear");
+        GoToNextStage();
+        OnStageChanged?.Invoke();
+
+        if (curStageIndexInThisChapter > MaxStageIndexInThisChapter)
+        {
+            curChapterIndex++;
+            GoToNextChapter();
+        }
     }
 
     public void RefreshChapter()
@@ -67,6 +78,22 @@ public class StageManager : Singleton<StageManager>
 
     public void RefreshStage()
     {
-        stageName = stageSOs[curStageIndex].stageName;
+        stageName = stageSOs[curStageIndexInThisChapter].stageName;
+    }
+
+    private void GoToNextStage()
+    {
+        //챕터내에서 현 스테이지 인덱스 정보 수정
+        //몬스터 리젠 교체
+        curStageIndex++;
+        curStageIndexInThisChapter++;
+        RegenManager.Instance.RegenStagesEnemy();
+    }
+
+    private void GoToNextChapter()
+    {
+        curChapterIndex++;
+        curStageIndexInThisChapter = 0;
+        SetStageList();
     }
 }
