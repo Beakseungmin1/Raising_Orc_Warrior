@@ -11,23 +11,28 @@ public class RegenManager : Singleton<RegenManager>
 
     [SerializeField] private Transform field;
 
-    public int curEnemyCount; //적 개수
+    public int totalEnemies = 0; //해당 스테이지 적 총 개수
+    public int killedEnemies = 0; //죽인 적 개수
     //액션으로 몬스터 죽을때마다 값을 받아와서 차감한다.
     //0이 되면 스테이지매니저에 정보 전달한다.
+    
+    public Action OnEnemyCountDown;
+    public Action OnEnemyCountZero;
 
     private void Start()
     {
         //스테이지매니저의 챕터SO를 참조한다.
-        curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterNum];
-
-        enemySOs = curChapterSO.stageSOs[StageManager.Instance.curStageNum].enemySOs;
-        curEnemyCount = enemySOs.Length;
         RegenStagesEnemy();
     }
 
-    private void RegenStagesEnemy()
+    public void RegenStagesEnemy()
     {
-        for (int i = 0; i < curEnemyCount; i++)
+        killedEnemies = 0; //초기화
+        curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
+        enemySOs = curChapterSO.stageSOs[StageManager.Instance.curStageIndexInThisChapter].enemySOs;
+        totalEnemies = curChapterSO.stageSOs[StageManager.Instance.curStageIndexInThisChapter].enemySOs.Length;
+
+        for (int i = 0; i < enemySOs.Length; i++)
         {
             Transform enemyRegenPos = enemyRegenPoss[i];
             EnemySO enemySO = enemySOs[i];
@@ -40,6 +45,7 @@ public class RegenManager : Singleton<RegenManager>
         GameObject obj = ObjectPool.Instance.GetObject("Enemy");
         Enemy enemy = SetUnitObject(obj);
         enemy.enemySO = enemySO;
+        enemy.SetupEnemy();
         enemy.transform.position = enemyRegenPos.position;
         enemy.transform.SetParent(field, true);
     }
@@ -51,5 +57,15 @@ public class RegenManager : Singleton<RegenManager>
         return enemy;
     }
 
-    
+    public void EnemyKilled()
+    {
+        killedEnemies++;
+        OnEnemyCountDown?.Invoke();
+
+        if (killedEnemies >= totalEnemies)
+        {
+            StageManager.Instance.StageClear();
+        }
+    }
+
 }

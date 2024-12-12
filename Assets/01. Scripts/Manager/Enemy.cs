@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
@@ -19,24 +20,18 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Collider2D effectRange; // 스킬 효과 범위
     [SerializeField] private float damagePercent; // 액티브 스킬: 범위 내 적에게 주는 공격력 비율 (%)
 
+    public Action OnEnemyDeath;
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        OnEnemyDeath += RegenManager.Instance.EnemyKilled;
     }
 
     private void Start()
     {
-        enemyCode = enemySO.enemyCode;
-        hp = enemySO.hp;
-        maxHp = enemySO.maxHp;
-        giveExp = enemySO.giveExp;
-        spriteRenderer.sprite = enemySO.sprite;
-
-        cooldown = enemySO.cooldown;
-
-        skillEffectPrefab = enemySO.skillEffectPrefab;
-        effectRange = enemySO.effectRange;
-        damagePercent = enemySO.damagePercent;
+        SetupEnemy();
     }
 
     public void TakeDamage(float Damage)
@@ -62,18 +57,27 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
-        RegenManager.Instance.curEnemyCount--;
-
-        if (RegenManager.Instance.curEnemyCount <= 0)
-        {
-            RegenManager.Instance.curEnemyCount = 0;
-            StageManager.Instance.NextStage();
-        }
         ObjectPool.Instance.ReturnObject(gameObject);
+        RegenManager.Instance.EnemyKilled();
     }
 
     public bool GetActive()
     {
         return gameObject.activeInHierarchy;
+    }
+
+    public void SetupEnemy()
+    {
+        enemyCode = enemySO.enemyCode;
+        hp = enemySO.hp;
+        maxHp = enemySO.maxHp;
+        giveExp = enemySO.giveExp;
+        spriteRenderer.sprite = enemySO.sprite;
+
+        cooldown = enemySO.cooldown;
+
+        skillEffectPrefab = enemySO.skillEffectPrefab;
+        effectRange = enemySO.effectRange;
+        damagePercent = enemySO.damagePercent;
     }
 }
