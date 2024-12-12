@@ -6,7 +6,7 @@ public class Skill : IEnhanceable, IFusable, IStackable
     public SkillDataSO BaseData { get; private set; }
     BaseItemDataSO IEnhanceable.BaseData => BaseData;
     public int EnhancementLevel { get; private set; }
-    public int StackCount { get; private set; }
+    public int StackCount { get; internal set; }
     public float Cooldown { get; private set; }
     public float DamagePercent { get; private set; }
     public float BuffDuration { get; private set; }
