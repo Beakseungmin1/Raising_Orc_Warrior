@@ -27,7 +27,6 @@ public class RegenManager : Singleton<RegenManager>
 
     public void RegenStagesEnemy()
     {
-        Debug.LogError("RegenStageEnemy");
         killedEnemies = 0; //√ ±‚»≠
         curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
         enemySOs = curChapterSO.stageSOs[StageManager.Instance.curStageIndexInThisChapter].enemySOs;
