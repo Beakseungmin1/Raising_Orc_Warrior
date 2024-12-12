@@ -39,8 +39,7 @@ public class StageManager : Singleton<StageManager>
 
     private void SetChapterList()
     {
-        // Resources.LoadAll로 로드된 배열
-
+        chapterSOs.Clear();
         foreach (var chapter in Resources.LoadAll<ChapterSO>("Chapters")) //최초에 한번만 LoadAll 하더라도 리소스 측면에서 좋지않다.
         {
             chapterSOs.Add(chapter);
@@ -49,23 +48,30 @@ public class StageManager : Singleton<StageManager>
 
     private void SetStageList()
     {
+        stageSOs.Clear();
         //해당 챕터에 해당하는 스테이지 리스트를 쫙 뽑아서 받아온다.
         for (int i = 0; i < chapterSOs[curChapterIndex].stageSOs.Length; i++)
         {
             stageSOs.Add(chapterSOs[curChapterIndex].stageSOs[i]);
         }
-        MaxStageIndexInThisChapter = chapterSOs[curChapterIndex].stageSOs.Length; //최대 스테이지 값 세팅.
+        MaxStageIndexInThisChapter = chapterSOs[curChapterIndex].stageSOs.Length - 1; //최대 스테이지 값 세팅. //Length는 1부터 시작. index는 0부터 시작이므로 -1.
     }
 
     public void StageClear()
     {
         Debug.LogWarning("StageClear");
-        GoToNextStage();
-        OnStageChanged?.Invoke();
 
-        if (curStageIndexInThisChapter > MaxStageIndexInThisChapter)
+        curStageIndex++;
+        curStageIndexInThisChapter++;
+
+        if (curStageIndexInThisChapter <= MaxStageIndexInThisChapter)
         {
-            curChapterIndex++;
+            GoToNextStage();
+            OnStageChanged?.Invoke();
+        }
+        else
+        {
+            curStageIndexInThisChapter = 0;
             GoToNextChapter();
         }
     }
@@ -85,15 +91,16 @@ public class StageManager : Singleton<StageManager>
     {
         //챕터내에서 현 스테이지 인덱스 정보 수정
         //몬스터 리젠 교체
-        curStageIndex++;
-        curStageIndexInThisChapter++;
         RegenManager.Instance.RegenStagesEnemy();
     }
 
     private void GoToNextChapter()
     {
         curChapterIndex++;
-        curStageIndexInThisChapter = 0;
         SetStageList();
+        RefreshChapter();
+        RefreshStage();
+
+        RegenManager.Instance.RegenStagesEnemy();
     }
 }
