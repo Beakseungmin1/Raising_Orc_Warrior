@@ -37,9 +37,8 @@ public class StageManager : Singleton<StageManager>
     private void SetChapterList()
     {
         // Resources.LoadAll로 로드된 배열
-        var loadedChapters = Resources.LoadAll<ChapterSO>("Chapters");
 
-        foreach (var chapter in loadedChapters)
+        foreach (var chapter in Resources.LoadAll<ChapterSO>("Chapters")) //최초에 한번만 LoadAll 하더라도 리소스 측면에서 좋지않다.
         {
             chapterSOs.Add(chapter);
         }
