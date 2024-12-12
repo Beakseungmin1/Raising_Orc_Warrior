@@ -67,7 +67,6 @@ public class StageManager : Singleton<StageManager>
         if (curStageIndexInThisChapter <= MaxStageIndexInThisChapter)
         {
             GoToNextStage();
-            OnStageChanged?.Invoke();
         }
         else
         {
@@ -89,9 +88,8 @@ public class StageManager : Singleton<StageManager>
 
     private void GoToNextStage()
     {
-        //챕터내에서 현 스테이지 인덱스 정보 수정
-        //몬스터 리젠 교체
         RegenManager.Instance.RegenStagesEnemy();
+        OnStageChanged?.Invoke();
     }
 
     private void GoToNextChapter()
