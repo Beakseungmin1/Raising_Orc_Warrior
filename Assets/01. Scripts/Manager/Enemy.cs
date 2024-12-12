@@ -31,17 +31,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        enemyCode = enemySO.enemyCode;
-        hp = enemySO.hp;
-        maxHp = enemySO.maxHp;
-        giveExp = enemySO.giveExp;
-        spriteRenderer.sprite = enemySO.sprite;
-
-        cooldown = enemySO.cooldown;
-
-        skillEffectPrefab = enemySO.skillEffectPrefab;
-        effectRange = enemySO.effectRange;
-        damagePercent = enemySO.damagePercent;
+        SetupEnemy();
     }
 
     public void TakeDamage(float Damage)
@@ -74,5 +64,20 @@ public class Enemy : MonoBehaviour
     public bool GetActive()
     {
         return gameObject.activeInHierarchy;
+    }
+
+    public void SetupEnemy()
+    {
+        enemyCode = enemySO.enemyCode;
+        hp = enemySO.hp;
+        maxHp = enemySO.maxHp;
+        giveExp = enemySO.giveExp;
+        spriteRenderer.sprite = enemySO.sprite;
+
+        cooldown = enemySO.cooldown;
+
+        skillEffectPrefab = enemySO.skillEffectPrefab;
+        effectRange = enemySO.effectRange;
+        damagePercent = enemySO.damagePercent;
     }
 }

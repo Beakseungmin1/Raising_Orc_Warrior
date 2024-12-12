@@ -46,6 +46,7 @@ public class RegenManager : Singleton<RegenManager>
         GameObject obj = ObjectPool.Instance.GetObject("Enemy");
         Enemy enemy = SetUnitObject(obj);
         enemy.enemySO = enemySO;
+        enemy.SetupEnemy();
         enemy.transform.position = enemyRegenPos.position;
         enemy.transform.SetParent(field, true);
     }
