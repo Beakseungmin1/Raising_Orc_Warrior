@@ -55,26 +55,44 @@ public class EquipmentUpgradePopupUI : UIBase
     {
         if (equipment == null)
         {
+            Debug.LogError("SetEquipmentData: equipment is null!");
             return;
         }
 
+        Debug.Log($"SetEquipmentData called. Equipment: {equipment.BaseData.itemName}, StackCount: {(equipment as IStackable)?.StackCount}");
+
         currentItem = equipment;
         isWeapon = isWeaponType;
+
+        int updatedStackCount = PlayerObjManager.Instance.Player.inventory.GetItemStackCount(currentItem);
 
         InitializeUI();
     }
 
     private void InitializeUI()
     {
+        if (currentItem == null)
+        {
+            Debug.LogError("InitializeUI: currentItem is null!");
+            return;
+        }
+
+        // 최신 StackCount 확인
+        int stackCount = PlayerObjManager.Instance.Player.inventory.GetItemStackCount(currentItem);
+        Debug.Log($"InitializeUI: Item = {currentItem.BaseData.itemName}, Updated StackCount = {stackCount}");
+
+        // UI 업데이트
         equipmentIcon.sprite = currentItem.BaseData.icon;
         nameTxt.text = currentItem.BaseData.itemName;
         gradeTxt.text = $"[{currentItem.BaseData.grade}]";
 
-        currentAmountTxt.text = (currentItem as IStackable)?.StackCount.ToString() ?? "1";
+        currentAmountTxt.text = stackCount.ToString();
         neededAmountTxt.text = "1";
 
-        progressSlider.value = Mathf.Clamp01((float)((currentItem as IStackable)?.StackCount ?? 0) / int.Parse(neededAmountTxt.text));
+        // 진행 게이지 업데이트
+        progressSlider.value = Mathf.Clamp01((float)stackCount / int.Parse(neededAmountTxt.text));
 
+        // 장비 효과 업데이트
         if (isWeapon && currentItem is Weapon weapon)
         {
             equipEffectTypeTxt.text = "공격력 증가";

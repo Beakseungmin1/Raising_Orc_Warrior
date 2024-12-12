@@ -72,12 +72,19 @@ public class EquipmentInventorySlot : UIBase
 
     private void OpenItemDetails()
     {
-        if (item == null) return;
+        if (item == null)
+        {
+            Debug.LogError("OpenItemDetails: item is null!");
+            return;
+        }
 
-        // 팝업 표시 로직
         UIManager.Instance.Show<DimmedUI>();
+
         var upgradePopup = UIManager.Instance.Show<EquipmentUpgradePopupUI>();
-        upgradePopup.SetEquipmentData(item, isWeaponSlot);
+        if (upgradePopup != null)
+        {
+            upgradePopup.SetEquipmentData(item, isWeaponSlot);
+        }
     }
 
     private void UpdateSlotColor(bool hasItem)
