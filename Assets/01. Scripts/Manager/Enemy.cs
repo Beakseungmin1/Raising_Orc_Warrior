@@ -26,20 +26,17 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
         OnEnemyDeath += RegenManager.Instance.EnemyKilled;
     }
 
-    private void Start()
-    {
-        SetupEnemy();
-    }
+    //private void Start()
+    //{
+    //    SetupEnemy();
+    //}
 
     public void TakeDamage(float Damage)
     {
-        // 피격 애니메이션 재생 추가예정
-
+        animator.SetTrigger("2_Damaged");
 
         if (hp - Damage > 0)
         {
@@ -60,6 +57,7 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        animator.SetTrigger("4_Death");
         ObjectPool.Instance.ReturnObject(gameObject);
         RegenManager.Instance.EnemyKilled();
     }
@@ -75,7 +73,9 @@ public class Enemy : MonoBehaviour
         hp = enemySO.hp;
         maxHp = enemySO.maxHp;
         giveExp = enemySO.giveExp;
-        spriteRenderer.sprite = enemySO.sprite;
+        model = enemySO.model;
+        model = Instantiate(model, transform);
+        animator = GetComponentInChildren<Animator>();
 
         cooldown = enemySO.cooldown;
 
