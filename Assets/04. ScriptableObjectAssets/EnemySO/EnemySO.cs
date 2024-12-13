@@ -9,7 +9,7 @@ public class EnemySO : ScriptableObject
     public float hp; // 체력
     public float maxHp; // 최대체력
     public int giveExp; // 주는 경험치
-    public Sprite sprite; //적 이미지
+    public GameObject sprite; //적 모델
 
     [Header("Skill Properties")]
     public float cooldown; // 쿨다운 시간 (보스가 스킬을 지니고 있을시 사용)

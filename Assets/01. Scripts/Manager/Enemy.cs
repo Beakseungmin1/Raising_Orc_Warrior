@@ -9,7 +9,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float hp; // 체력
     [SerializeField] private float maxHp; // 최대체력
     [SerializeField] private int giveExp; // 주는 경험치
-    SpriteRenderer spriteRenderer;
+    [SerializeField] private GameObject model; //적 모델
+    [SerializeField] private Animator animator;
+
 
     [Header("Skill Properties")]
     [SerializeField] private float cooldown; // 쿨다운 시간 (보스가 스킬을 지니고 있을시 사용)
@@ -19,18 +21,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Collider2D effectRange; // 스킬 효과 범위
     [SerializeField] private float damagePercent; // 액티브 스킬: 범위 내 적에게 주는 공격력 비율 (%)
 
-    private void Awake()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
     private void Start()
     {
         enemyCode = enemySO.enemyCode;
         hp = enemySO.hp;
         maxHp = enemySO.maxHp;
         giveExp = enemySO.giveExp;
-        spriteRenderer.sprite = enemySO.sprite;
+        model = enemySO.model;
+        model = Instantiate(model, transform);
+        animator = GetComponentInChildren<Animator>();
 
         cooldown = enemySO.cooldown;
 
@@ -42,6 +41,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float Damage)
     {
         // 피격 애니메이션 재생 추가예정
+
 
         if (hp - Damage > 0)
         {
