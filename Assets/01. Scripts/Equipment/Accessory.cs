@@ -5,6 +5,7 @@ public class Accessory : IEnhanceable, IFusable, IStackable
 {
     public AccessoryDataSO BaseData { get; private set; }
     BaseItemDataSO IEnhanceable.BaseData => BaseData;
+    BaseItemDataSO IFusable.BaseData => BaseData;
     public int Rank => BaseData.rank;
     public int EnhancementLevel { get; private set; }
     public int StackCount { get; internal set; }
@@ -14,11 +15,11 @@ public class Accessory : IEnhanceable, IFusable, IStackable
     public float PassiveMpAndMpRecoveryIncreaseRate { get; private set; }
     public float PassiveAddEXPRate { get; private set; }
 
-    public Accessory(AccessoryDataSO baseData)
+    public Accessory(AccessoryDataSO baseData, int initialStackCount = 1)
     {
         BaseData = baseData;
         EnhancementLevel = 0;
-        StackCount = 1; // 기본 스택 수
+        StackCount = initialStackCount;
         RequiredCurrencyForUpgrade = baseData.requiredCurrencyForUpgrade;
         EquipHpAndHpRecoveryIncreaseRate = baseData.equipHpAndHpRecoveryIncreaseRate;
         PassiveHpAndHpRecoveryIncreaseRate = Mathf.RoundToInt(baseData.equipHpAndHpRecoveryIncreaseRate / 3f);
@@ -46,6 +47,7 @@ public class Accessory : IEnhanceable, IFusable, IStackable
         RequiredCurrencyForUpgrade = Mathf.RoundToInt(RequiredCurrencyForUpgrade * 1.5f);
         UpdateAccessoryEffects();
 
+        PlayerObjManager.Instance.Player.inventory.NotifyInventoryChanged(false);
         return true;
     }
 
@@ -67,46 +69,30 @@ public class Accessory : IEnhanceable, IFusable, IStackable
 
     public bool Fuse(int materialCount)
     {
-        int totalRequiredMaterials = materialCount; // 합성 횟수만큼 필요한 재료 수
+        var inventory = PlayerObjManager.Instance.Player.inventory;
+        var existingItem = inventory.AccessoryInventory.GetItem(BaseData.itemName);
 
-        if (StackCount < totalRequiredMaterials)
+        if (existingItem == null || existingItem.StackCount < materialCount)
         {
             return false;
         }
 
-        RemoveStack(totalRequiredMaterials); // 필요한 재료 수만큼 차감
+        existingItem.RemoveStack(materialCount);
 
-        if (BaseData.grade == Grade.Ultimate && BaseData.rank == 4)
-        {
-            return false;
-        }
+        bool fusionSuccess = false;
 
-        // rank가 1인 경우, 다음 등급으로 넘어가고 rank 4로 설정
-        if (BaseData.rank == 1)
+        for (int i = 0; i < materialCount; i++)
         {
-            Grade nextGrade = BaseData.grade + 1;
-            AccessoryDataSO nextAccessoryData = DataManager.Instance.GetAccessoryByGradeAndRank(nextGrade, 4);
+            var nextAccessoryData = DataManager.Instance.GetNextAccessory(BaseData.grade, BaseData.rank);
 
             if (nextAccessoryData != null)
             {
-                Accessory newAccessory = new Accessory(nextAccessoryData);
-                PlayerObjManager.Instance.Player.inventory.AccessoryInventory.AddItem(newAccessory);
-                return true;
-            }
-        }
-        else
-        {
-            AccessoryDataSO nextAccessoryData = DataManager.Instance.GetNextAccessory(BaseData.grade, BaseData.rank);
-
-            if (nextAccessoryData != null)
-            {
-                Accessory newAccessory = new Accessory(nextAccessoryData);
-                PlayerObjManager.Instance.Player.inventory.AccessoryInventory.AddItem(newAccessory);
-                return true;
+                inventory.AddItemToInventory(nextAccessoryData);
+                fusionSuccess = true;
             }
         }
 
-        return false;
+        return fusionSuccess;
     }
 
     public void AddStack(int count)

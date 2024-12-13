@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TestItemSetup : MonoBehaviour
 {
-    public SkillDataSO skill1; // Unity 인스펙터에서 설정
+    public SkillDataSO skill1;
     public SkillDataSO skill2;
     public SkillDataSO skill3;
     public WeaponDataSO weapon1;

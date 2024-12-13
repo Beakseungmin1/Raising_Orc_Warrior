@@ -7,9 +7,8 @@ public class PlayerInventory : MonoBehaviour
     public GenericInventory<Weapon> WeaponInventory { get; private set; }
     public GenericInventory<Accessory> AccessoryInventory { get; private set; }
 
+    public event Action<bool> OnInventoryChanged;
     public event Action OnSkillsChanged;
-    public event Action OnWeaponsChanged;
-    public event Action OnAccessoriesChanged;
 
     private void Awake()
     {
@@ -20,20 +19,21 @@ public class PlayerInventory : MonoBehaviour
 
     public void AddItemToInventory(BaseItemDataSO item)
     {
-        Debug.LogWarning($"[PlayerInventory] AddItemToInventory 호출: {item.itemName}");
-
         switch (item)
         {
             case SkillDataSO skillData:
-                AddItem(SkillInventory, new Skill(skillData), OnSkillsChanged);
+                AddItem(SkillInventory, new Skill(skillData));
+                OnSkillsChanged?.Invoke();
                 break;
 
             case WeaponDataSO weaponData:
-                AddItem(WeaponInventory, new Weapon(weaponData), OnWeaponsChanged);
+                AddItem(WeaponInventory, new Weapon(weaponData));
+                OnInventoryChanged?.Invoke(true);
                 break;
 
             case AccessoryDataSO accessoryData:
-                AddItem(AccessoryInventory, new Accessory(accessoryData), OnAccessoriesChanged);
+                AddItem(AccessoryInventory, new Accessory(accessoryData));
+                OnInventoryChanged?.Invoke(false);
                 break;
 
             default:
@@ -47,15 +47,17 @@ public class PlayerInventory : MonoBehaviour
         switch (item)
         {
             case SkillDataSO skillData:
-                RemoveItem(SkillInventory, skillData.itemName, OnSkillsChanged);
+                RemoveItem(SkillInventory, skillData.itemName);
                 break;
 
             case WeaponDataSO weaponData:
-                RemoveItem(WeaponInventory, weaponData.itemName, OnWeaponsChanged);
+                RemoveItem(WeaponInventory, weaponData.itemName);
+                OnInventoryChanged?.Invoke(true);
                 break;
 
             case AccessoryDataSO accessoryData:
-                RemoveItem(AccessoryInventory, accessoryData.itemName, OnAccessoriesChanged);
+                RemoveItem(AccessoryInventory, accessoryData.itemName);
+                OnInventoryChanged?.Invoke(false);
                 break;
 
             default:
@@ -64,7 +66,6 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    // 추가된 메서드: 특정 아이템의 스택 수량 가져오기
     public int GetItemStackCount<T>(T item) where T : class, IEnhanceable
     {
         if (item is Skill)
@@ -84,47 +85,38 @@ public class PlayerInventory : MonoBehaviour
         return 0;
     }
 
-    private void AddItem<T>(GenericInventory<T> inventory, T item, Action onChanged) where T : class, IEnhanceable
+    private void AddItem<T>(GenericInventory<T> inventory, T item) where T : class, IEnhanceable
     {
         if (inventory.GetItem(item.BaseData.itemName) is T existingItem)
         {
-            (existingItem as IStackable)?.AddStack(1); // 스택 증가
-            onChanged?.Invoke();
+            (existingItem as IStackable)?.AddStack(1);
         }
         else
         {
             inventory.AddItem(item);
-            onChanged?.Invoke();
         }
     }
 
-    private void RemoveItem<T>(GenericInventory<T> inventory, string itemName, Action onChanged) where T : class, IEnhanceable
+    private void RemoveItem<T>(GenericInventory<T> inventory, string itemName) where T : class, IEnhanceable
     {
         T item = inventory.GetItem(itemName);
         if (item != null)
         {
-            (item as IStackable)?.RemoveStack(1); // 스택 감소
+            (item as IStackable)?.RemoveStack(1);
             if ((item as IStackable)?.StackCount <= 0)
             {
-                inventory.RemoveItem(item); // 스택 0이면 제거
+                inventory.RemoveItem(item);
             }
-            onChanged?.Invoke();
         }
     }
 
-    public void NotifyWeaponsChanged() => OnWeaponsChanged?.Invoke();
-    public void NotifyAccessoriesChanged() => OnAccessoriesChanged?.Invoke();
-    public void NotifySkillsChanged() => OnSkillsChanged?.Invoke();
-
     public void NotifyInventoryChanged(bool isWeapon)
     {
-        if (isWeapon)
-        {
-            NotifyWeaponsChanged();
-        }
-        else
-        {
-            NotifyAccessoriesChanged();
-        }
+        OnInventoryChanged?.Invoke(isWeapon);
+    }
+
+    public void NotifySkillsChanged()
+    {
+        OnSkillsChanged?.Invoke();
     }
 }

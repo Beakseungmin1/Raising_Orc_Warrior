@@ -2040,11 +2040,13 @@ MonoBehaviour:
   possessEffectTypeTxt2: {fileID: 2398411002587735066}
   possessEffectValueTxt2: {fileID: 3391876653641797918}
   upgradeBtn: {fileID: 8887737831814000324}
+  equipBtn: {fileID: 8541578261380294318}
+  equipBtnTxt: {fileID: 8719463507585140064}
   upgradeCostTxt: {fileID: 2372828401270943514}
   curCubeAmountTxt: {fileID: 1202861498809843763}
   curCubeIcon: {fileID: 7988808063009745700}
+  fusionBtn: {fileID: 392460958152943511}
   exitBtn: {fileID: 6876223895582085829}
-  fusionReturnBtn: {fileID: 392460958152943511}
   leftArrowBtn: {fileID: 3201560823754880327}
   rightArrowBtn: {fileID: 458751929017733797}
 --- !u!1 &3465507143273916721

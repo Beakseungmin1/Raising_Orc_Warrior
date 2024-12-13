@@ -5,18 +5,18 @@ using TMPro;
 public class EquipmentInventorySlot : UIBase
 {
     [SerializeField] private Image equipmentIcon;
-    [SerializeField] private TextMeshProUGUI currentLevelTxt; // 강화 레벨 텍스트
-    [SerializeField] private TextMeshProUGUI rankTxt; // 랭크 텍스트
-    [SerializeField] private Slider expGauge; // 경험치 게이지
-    [SerializeField] private TextMeshProUGUI requiredItemCountTxt; // 필요한 아이템 수량 텍스트
-    [SerializeField] private TextMeshProUGUI currentItemCountTxt; // 현재 아이템 수량 텍스트
+    [SerializeField] private TextMeshProUGUI currentLevelTxt;
+    [SerializeField] private TextMeshProUGUI rankTxt;
+    [SerializeField] private Slider itemCountGauge;
+    [SerializeField] private TextMeshProUGUI requiredItemCountTxt;
+    [SerializeField] private TextMeshProUGUI currentItemCountTxt;
     [SerializeField] private Button slotButton;
 
     private IEnhanceable item;
     private bool isWeaponSlot;
 
     private Color defaultColor = Color.white;
-    private Color emptyColor = new Color32(80, 80, 80, 255);
+    private Color emptyColor = new Color32(50, 50, 50, 255);
 
     public IEnhanceable Item => item;
     public bool IsWeaponSlot => isWeaponSlot;
@@ -26,18 +26,7 @@ public class EquipmentInventorySlot : UIBase
         item = newItem;
         isWeaponSlot = isWeapon;
 
-        if (item != null)
-        {
-            equipmentIcon.sprite = item.BaseData.icon;
-            rankTxt.text = item.BaseData is WeaponDataSO weapon ? weapon.rank.ToString() :
-                           item.BaseData is AccessoryDataSO accessory ? accessory.rank.ToString() : string.Empty;
-
-            UpdateSlotState(0); // 초기화 시 스택 0 상태로 설정
-        }
-        else
-        {
-            ClearSlot();
-        }
+        UpdateSlotState(0);
     }
 
     public void ClearSlot()
@@ -48,36 +37,60 @@ public class EquipmentInventorySlot : UIBase
         currentLevelTxt.text = string.Empty;
         requiredItemCountTxt.text = "0";
         currentItemCountTxt.text = "0";
-        expGauge.value = 0;
+        itemCountGauge.value = 0;
 
-        UpdateSlotColor(false);
+        UpdateSlotColor(0);
         slotButton.onClick.RemoveAllListeners();
     }
 
-    public void UpdateSlotState(int stackCount)
+    public void UpdateSlotState(int totalItemCount)
     {
-        // 스택 수량 및 강화 레벨 업데이트
-        currentItemCountTxt.text = stackCount.ToString();
-        currentLevelTxt.text = $"+{item.EnhancementLevel}";
-        requiredItemCountTxt.text = "5"; // 필요 수량(예시로 설정)
-        expGauge.value = Mathf.Clamp01((float)stackCount / 5f); // 필요 수량 기준으로 게이지 설정
-        UpdateSlotColor(stackCount > 0);
+        int requiredItemCount = GetRequiredFuseItemCount();
 
-        slotButton.onClick.RemoveAllListeners();
-        if (stackCount > 0)
+        int displayedItemCount = Mathf.Max(0, totalItemCount - 1);
+
+        if (item != null)
         {
-            slotButton.onClick.AddListener(() => OpenItemDetails());
+            equipmentIcon.sprite = item.BaseData.icon;
+            rankTxt.text = item.BaseData is WeaponDataSO weapon ? weapon.rank.ToString() :
+                           item.BaseData is AccessoryDataSO accessory ? accessory.rank.ToString() : string.Empty;
+            currentLevelTxt.text = $"+{item.EnhancementLevel}";
         }
+        else
+        {
+            equipmentIcon.sprite = null;
+            rankTxt.text = "N/A";
+            currentLevelTxt.text = "N/A";
+        }
+
+        currentItemCountTxt.text = displayedItemCount.ToString();
+        requiredItemCountTxt.text = requiredItemCount.ToString();
+        itemCountGauge.value = Mathf.Clamp01((float)displayedItemCount / requiredItemCount);
+
+        UpdateSlotColor(totalItemCount);
+        slotButton.onClick.RemoveAllListeners();
+        slotButton.onClick.AddListener(() => OpenItemDetails());
+    }
+
+    private int GetRequiredFuseItemCount()
+    {
+        if (item != null)
+        {
+            if (item.BaseData is WeaponDataSO weapon)
+            {
+                return weapon.requireFuseItemCount;
+            }
+            else if (item.BaseData is AccessoryDataSO accessory)
+            {
+                return accessory.requireFuseItemCount;
+            }
+        }
+
+        return 5;
     }
 
     private void OpenItemDetails()
     {
-        if (item == null)
-        {
-            Debug.LogError("OpenItemDetails: item is null!");
-            return;
-        }
-
         UIManager.Instance.Show<DimmedUI>();
 
         var upgradePopup = UIManager.Instance.Show<EquipmentUpgradePopupUI>();
@@ -87,8 +100,15 @@ public class EquipmentInventorySlot : UIBase
         }
     }
 
-    private void UpdateSlotColor(bool hasItem)
+    private void UpdateSlotColor(int totalItemCount)
     {
-        equipmentIcon.color = hasItem ? defaultColor : emptyColor;
+        if (totalItemCount == 0)
+        {
+            equipmentIcon.color = emptyColor;
+        }
+        else
+        {
+            equipmentIcon.color = defaultColor;
+        }
     }
 }

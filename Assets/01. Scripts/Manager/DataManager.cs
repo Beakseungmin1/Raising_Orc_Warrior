@@ -20,7 +20,6 @@ public class DataManager : SingletonDontDestroy<DataManager>
 
     private void LoadAllData()
     {
-        // 무기 데이터 로드
         foreach (var weapon in Resources.LoadAll<WeaponDataSO>("Weapons"))
         {
             if (!weaponDataDict.ContainsKey(weapon.grade))
@@ -30,7 +29,6 @@ public class DataManager : SingletonDontDestroy<DataManager>
             weaponDataDict[weapon.grade][weapon.rank] = weapon;
         }
 
-        // 악세사리 데이터 로드
         foreach (var accessory in Resources.LoadAll<AccessoryDataSO>("Accessories"))
         {
             if (!accessoryDataDict.ContainsKey(accessory.grade))
@@ -51,7 +49,6 @@ public class DataManager : SingletonDontDestroy<DataManager>
 
     }
 
-    // 무기 데이터 검색
     public WeaponDataSO GetWeaponByGradeAndRank(Grade grade, int rank)
     {
         if (grade == Grade.Ultimate)
@@ -67,7 +64,6 @@ public class DataManager : SingletonDontDestroy<DataManager>
         return null;
     }
 
-    // 악세사리 데이터 검색
     public AccessoryDataSO GetAccessoryByGradeAndRank(Grade grade, int rank)
     {
         if (grade == Grade.Ultimate)
@@ -83,7 +79,6 @@ public class DataManager : SingletonDontDestroy<DataManager>
         return null;
     }
 
-    // 스킬 데이터 무작위 검색
     public SkillDataSO GetRandomSkillByGrade(Grade grade)
     {
         if (skillDataDict.ContainsKey(grade) && skillDataDict[grade].Count > 0)
@@ -95,10 +90,8 @@ public class DataManager : SingletonDontDestroy<DataManager>
         return null;
     }
 
-    // 무기 다음 단계 데이터 반환
     public WeaponDataSO GetNextWeapon(Grade grade, int rank)
     {
-        // Rank가 1이면 다음 등급으로 이동
         if (rank == 1)
         {
             Grade nextGrade = grade + 1;
@@ -108,13 +101,12 @@ public class DataManager : SingletonDontDestroy<DataManager>
                 return null;
             }
 
-            return GetWeaponByGradeAndRank(nextGrade, 4); // 다음 등급의 최고 랭크 무기
+            return GetWeaponByGradeAndRank(nextGrade, 4);
         }
 
-        return GetWeaponByGradeAndRank(grade, rank - 1); // 동일 등급의 다음 랭크
+        return GetWeaponByGradeAndRank(grade, rank - 1);
     }
 
-    // 악세사리 다음 단계 데이터 반환
     public AccessoryDataSO GetNextAccessory(Grade grade, int rank)
     {
         if (rank == 1)
@@ -126,13 +118,12 @@ public class DataManager : SingletonDontDestroy<DataManager>
                 return null;
             }
 
-            return GetAccessoryByGradeAndRank(nextGrade, 4); // 다음 등급의 최고 랭크 악세사리
+            return GetAccessoryByGradeAndRank(nextGrade, 4);
         }
 
-        return GetAccessoryByGradeAndRank(grade, rank - 1); // 동일 등급의 다음 랭크
+        return GetAccessoryByGradeAndRank(grade, rank - 1);
     }
 
-    // 스킬 다음 단계 데이터 반환
     public SkillDataSO GetNextSkill(Grade grade)
     {
         Grade nextGrade = grade + 1;

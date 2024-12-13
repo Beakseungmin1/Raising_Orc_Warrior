@@ -13,4 +13,7 @@ public class WeaponDataSO : BaseItemDataSO
 
     [Header("General Info")]
     public int rank;
+
+    [Header("Fuse Info")]
+    public int requireFuseItemCount = 5;
 }
