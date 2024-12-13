@@ -224,7 +224,7 @@ MonoBehaviour:
   equipmentIcon: {fileID: 2744052189059793600}
   currentLevelTxt: {fileID: 1764998348509896857}
   rankTxt: {fileID: 2128941667432946684}
-  expGauge: {fileID: 5688559177304303821}
+  itemCountGauge: {fileID: 5688559177304303821}
   requiredItemCountTxt: {fileID: 8284737105540995986}
   currentItemCountTxt: {fileID: 7034116109320039876}
   slotButton: {fileID: 2995499691970211903}
