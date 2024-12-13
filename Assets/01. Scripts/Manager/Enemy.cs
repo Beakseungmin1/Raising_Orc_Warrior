@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour
         if (hp - Damage > 0)
         {
             hp -= Damage;
-            Debug.Log($"피해를 받음: {Damage}. 현재 HP: {hp}");
+            //Debug.Log($"피해를 받음: {Damage}. 현재 HP: {hp}");
         }
         else
         {
