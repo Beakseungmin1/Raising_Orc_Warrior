@@ -28,7 +28,9 @@ public class Weapon : IEnhanceable, IFusable, IStackable
 
     public bool CanEnhance()
     {
-        return CurrencyManager.Instance.GetCurrency(CurrencyType.Cube) >= RequiredCurrencyForUpgrade
+        float cubes = CurrencyManager.Instance.GetCurrency<float>(CurrencyType.Cube);
+
+        return cubes >= RequiredCurrencyForUpgrade
                && EnhancementLevel < 100; // 최대 레벨 100으로 설정
     }
 

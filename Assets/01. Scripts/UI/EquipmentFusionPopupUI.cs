@@ -96,7 +96,7 @@ public class EquipmentFusionPopupUI : UIBase
         UpdateCurrentEquipmentUI();
         UpdateResultEquipmentUI();
 
-        curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Cube).ToString();
+        curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency<float>(CurrencyType.Cube).ToString();
     }
 
     private void UpdateCurrentEquipmentUI()

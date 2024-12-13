@@ -25,7 +25,9 @@ public class Skill : IEnhanceable, IFusable, IStackable
 
     public bool CanEnhance()
     {
-        return CurrencyManager.Instance.GetCurrency(CurrencyType.Emerald) >= RequiredCurrencyForUpgrade
+        float emeralds = CurrencyManager.Instance.GetCurrency<float>(CurrencyType.Emerald);
+
+        return emeralds >= RequiredCurrencyForUpgrade
                && StackCount >= BaseData.requireSkillCardsForUpgrade
                && EnhancementLevel < 100;
     }

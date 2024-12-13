@@ -1,72 +1,79 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Numerics; // BigInteger 사용
 
 public class CurrencyManager : Singleton<CurrencyManager>
 {
-    public int curGold = 100000000; // 능력치 강화용
-    public int curEmerald = 100000000; // 스킬, 동료 강화용
-    public int curCube = 100000000; // 장비 강화용
-    public int curDiamond = 100000000; // 뽑기용
-
-    private Dictionary<CurrencyType, int> currencies;
+    private Dictionary<CurrencyType, object> currencies;
 
     private void Awake()
     {
-        // 딕셔너리 초기화 및 기존 변수와 동기화
-        currencies = new Dictionary<CurrencyType, int>
+        // 딕셔너리 초기화
+        currencies = new Dictionary<CurrencyType, object>
         {
-            { CurrencyType.Gold, curGold },
-            { CurrencyType.Emerald, curEmerald },
-            { CurrencyType.Cube, curCube },
-            { CurrencyType.Diamond, curDiamond }
+            { CurrencyType.Gold, new BigInteger(100000000f) },
+            { CurrencyType.Emerald, 100000000f }, // float
+            { CurrencyType.Cube, 100000000f },    // float
+            { CurrencyType.Diamond, 100000000f } // float
         };
     }
 
-    public void AddCurrency(CurrencyType type, int amount)
+    public void AddCurrency<T>(CurrencyType type, T amount) where T : struct
     {
-        if (currencies.ContainsKey(type))
+        if (currencies.ContainsKey(type) && currencies[type] is T currentAmount)
         {
-            currencies[type] += amount;
-            SyncToVariables(type);
+            currencies[type] = AddValues(currentAmount, amount);
         }
     }
 
-    public void SubtractCurrency(CurrencyType type, int amount)
+    public void SubtractCurrency<T>(CurrencyType type, T amount) where T : struct
     {
-        if (currencies.ContainsKey(type))
+        if (currencies.ContainsKey(type) && currencies[type] is T currentAmount)
         {
-            currencies[type] -= amount;
-            if (currencies[type] < 0) currencies[type] = 0; // 재화가 0 이하로 내려가지 않도록 보정
-            SyncToVariables(type);
+            currencies[type] = SubtractValues(currentAmount, amount);
+
+            // 0 이하로 내려가지 않도록 보정
+            if (Comparer<T>.Default.Compare((T)currencies[type], default(T)) < 0)
+            {
+                currencies[type] = default(T);
+            }
         }
     }
 
-    //재화 타입에 따라 값을 반환;
-    public int GetCurrency(CurrencyType type)
+    public T GetCurrency<T>(CurrencyType type) where T : struct
     {
-        return currencies.ContainsKey(type) ? currencies[type] : 0;
-    }
-
-    private void SyncToVariables(CurrencyType type)
-    {
-        // 딕셔너리 값 변경 시 기존 변수에 동기화
-        switch (type)
+        if (currencies.ContainsKey(type) && currencies[type] is T value)
         {
-            case CurrencyType.Gold:
-                curGold = currencies[CurrencyType.Gold];
-                break;
-            case CurrencyType.Emerald:
-                curEmerald = currencies[CurrencyType.Emerald];
-                break;
-            case CurrencyType.Cube:
-                curCube = currencies[CurrencyType.Cube];
-                break;
-            case CurrencyType.Diamond:
-                curDiamond = currencies[CurrencyType.Diamond];
-                break;
+            return value;
         }
+        throw new System.InvalidCastException($"{type} 타입을 {typeof(T)}타입으로 변환할 수 없습니다.");
     }
 
+    private T AddValues<T>(T a, T b) where T : struct
+    {
+        if (typeof(T) == typeof(float))
+        {
+            return (T)(object)((float)(object)a + (float)(object)b);
+        }
+        if (typeof(T) == typeof(BigInteger))
+        {
+            return (T)(object)((BigInteger)(object)a + (BigInteger)(object)b);
+        }
 
+        throw new InvalidOperationException($"AddValues does not support type {typeof(T)}");
+    }
+
+    private T SubtractValues<T>(T a, T b) where T : struct
+    {
+        if (typeof(T) == typeof(float))
+        {
+            return (T)(object)((float)(object)a - (float)(object)b);
+        }
+        if (typeof(T) == typeof(BigInteger))
+        {
+            return (T)(object)((BigInteger)(object)a - (BigInteger)(object)b);
+        }
+
+        throw new InvalidOperationException($"SubtractValues does not support type {typeof(T)}");
+    }
 }

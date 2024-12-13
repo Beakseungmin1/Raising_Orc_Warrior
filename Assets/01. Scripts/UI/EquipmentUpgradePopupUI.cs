@@ -107,7 +107,7 @@ public class EquipmentUpgradePopupUI : UIBase
         UpdatePossessEffects();
 
         upgradeCostTxt.text = currentItem.RequiredCurrencyForUpgrade.ToString();
-        curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Cube).ToString();
+        curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency<float>(CurrencyType.Cube).ToString();
         curCubeIcon.sprite = currentItem.BaseData.currencyIcon;
     }
 
