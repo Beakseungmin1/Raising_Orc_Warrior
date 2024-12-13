@@ -45,6 +45,8 @@ public class TestItemSetup : MonoBehaviour
         playerInventory.AddItemToInventory(weapon3);
         playerInventory.AddItemToInventory(weapon4);
         playerInventory.AddItemToInventory(weapon5);
+        playerInventory.AddItemToInventory(weapon5);
+        playerInventory.AddItemToInventory(weapon5);
 
         // 악세사리 추가
         playerInventory.AddItemToInventory(accessory1);

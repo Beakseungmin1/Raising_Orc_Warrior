@@ -7,7 +7,7 @@ public class Weapon : IEnhanceable, IFusable, IStackable
     BaseItemDataSO IEnhanceable.BaseData => BaseData;
     public int Rank => BaseData.rank;
     public int EnhancementLevel { get; private set; }
-    public int StackCount { get; private set; }
+    public int StackCount { get; internal set; }
     public int RequiredCurrencyForUpgrade { get; private set; }
     public float EquipAtkIncreaseRate { get; private set; }
     public float PassiveEquipAtkIncreaseRate { get; private set; }

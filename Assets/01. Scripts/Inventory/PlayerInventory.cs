@@ -115,4 +115,16 @@ public class PlayerInventory : MonoBehaviour
     public void NotifyWeaponsChanged() => OnWeaponsChanged?.Invoke();
     public void NotifyAccessoriesChanged() => OnAccessoriesChanged?.Invoke();
     public void NotifySkillsChanged() => OnSkillsChanged?.Invoke();
+
+    public void NotifyInventoryChanged(bool isWeapon)
+    {
+        if (isWeapon)
+        {
+            NotifyWeaponsChanged();
+        }
+        else
+        {
+            NotifyAccessoriesChanged();
+        }
+    }
 }
