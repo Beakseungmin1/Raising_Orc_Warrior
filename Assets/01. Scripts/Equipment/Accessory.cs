@@ -29,9 +29,7 @@ public class Accessory : IEnhanceable, IFusable, IStackable
 
     public bool CanEnhance()
     {
-        float cubes = CurrencyManager.Instance.GetCurrency<float>(CurrencyType.Cube);
-
-        return cubes >= RequiredCurrencyForUpgrade
+        return CurrencyManager.Instance.GetCurrency<float>(CurrencyType.Cube) >= RequiredCurrencyForUpgrade
                && EnhancementLevel < 100;
     }
 
