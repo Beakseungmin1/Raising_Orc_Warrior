@@ -30,6 +30,7 @@ public class HUDPanel : UIBase
     {
         UIManager.Instance.Show<DimmedUI>();
         UIManager.Instance.Show<PlayerInfoPopupUI>();
+        stat.UpdateUserInformationUI.Invoke();
     }
 
     public void UpdateTopInformatinBar()

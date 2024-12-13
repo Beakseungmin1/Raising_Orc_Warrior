@@ -10,7 +10,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float hp; // 체력
     [SerializeField] private float maxHp; // 최대체력
     [SerializeField] private int giveExp; // 주는 경험치
-    SpriteRenderer spriteRenderer;
+    [SerializeField] private GameObject model; //적 모델
+    [SerializeField] private Animator animator;
+
 
     [Header("Skill Properties")]
     [SerializeField] private float cooldown; // 쿨다운 시간 (보스가 스킬을 지니고 있을시 사용)
@@ -24,24 +26,22 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
         OnEnemyDeath += RegenManager.Instance.EnemyKilled;
     }
 
-    private void Start()
-    {
-        SetupEnemy();
-    }
+    //private void Start()
+    //{
+    //    SetupEnemy();
+    //}
 
     public void TakeDamage(float Damage)
     {
-        // 피격 애니메이션 재생 추가예정
+        animator.SetTrigger("2_Damaged");
 
         if (hp - Damage > 0)
         {
             hp -= Damage;
-            Debug.Log($"피해를 받음: {Damage}. 현재 HP: {hp}");
+            //Debug.Log($"피해를 받음: {Damage}. 현재 HP: {hp}");
         }
         else
         {
@@ -57,6 +57,7 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        animator.SetTrigger("4_Death");
         ObjectPool.Instance.ReturnObject(gameObject);
         RegenManager.Instance.EnemyKilled();
     }
@@ -72,7 +73,9 @@ public class Enemy : MonoBehaviour
         hp = enemySO.hp;
         maxHp = enemySO.maxHp;
         giveExp = enemySO.giveExp;
-        spriteRenderer.sprite = enemySO.sprite;
+        model = enemySO.model;
+        model = Instantiate(model, transform);
+        animator = GetComponentInChildren<Animator>();
 
         cooldown = enemySO.cooldown;
 
