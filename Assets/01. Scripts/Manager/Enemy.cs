@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour
 
     public Action OnEnemyDeath;
 
+    private PlayerBattle player;
+
     private void Awake()
     {
         OnEnemyDeath += RegenManager.Instance.EnemyKilled;
@@ -39,7 +41,7 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log($"몬스터 체력: {hp}");
         Debug.Log($"데미지: {Damage}");
-        //animator.SetTrigger("2_Damaged");
+        animator.SetTrigger("3_Damaged");
 
         if (hp - Damage > 0)
         {
@@ -87,27 +89,19 @@ public class Enemy : MonoBehaviour
         damagePercent = enemySO.damagePercent;
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("Monster"))
-    //    {
-    //        currentMonster = collision.gameObject.GetComponent<PlayerBattle>();
-    //        currentState = State.Attacking;
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            player = collision.gameObject.GetComponent<PlayerBattle>();
+        }
+    }
 
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("Monster"))
-    //    {
-    //        if (!currentMonster.GetActive())
-    //        {
-    //            GetMonsterReward();
-    //        }
-    //        else
-    //        {
-    //            currentState = State.Idle;
-    //        }
-    //    }
-    //}
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            player = null;
+        }
+    }
 }
