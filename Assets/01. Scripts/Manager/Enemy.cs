@@ -86,4 +86,28 @@ public class Enemy : MonoBehaviour
         effectRange = enemySO.effectRange;
         damagePercent = enemySO.damagePercent;
     }
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Monster"))
+    //    {
+    //        currentMonster = collision.gameObject.GetComponent<PlayerBattle>();
+    //        currentState = State.Attacking;
+    //    }
+    //}
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Monster"))
+    //    {
+    //        if (!currentMonster.GetActive())
+    //        {
+    //            GetMonsterReward();
+    //        }
+    //        else
+    //        {
+    //            currentState = State.Idle;
+    //        }
+    //    }
+    //}
 }
