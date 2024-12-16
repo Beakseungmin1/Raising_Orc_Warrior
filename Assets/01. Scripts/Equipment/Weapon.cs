@@ -74,7 +74,6 @@ public class Weapon : IFusable
         var existingItem = inventory.WeaponInventory.GetItem(BaseData.itemName);
         if (existingItem == null || existingItem.StackCount < totalRequiredMaterials)
         {
-            Debug.LogWarning("[Fuse] 무기 재료가 부족합니다.");
             return false;
         }
 
@@ -86,12 +85,10 @@ public class Weapon : IFusable
 
             if (nextWeaponData is WeaponDataSO weaponDataSO)
             {
-                // AddItemToInventory에 BaseItemDataSO만 전달
                 inventory.AddItemToInventory(weaponDataSO);
             }
         }
 
-        Debug.Log($"[Fuse] 무기 {materialCount}회 합성 완료");
         return true;
     }
 

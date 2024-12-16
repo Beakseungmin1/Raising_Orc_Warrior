@@ -23,7 +23,6 @@ public class EquipmentInventorySlotManager : UIBase
         playerInventory = PlayerObjManager.Instance?.Player?.inventory;
         if (playerInventory == null)
         {
-            Debug.LogError("[EquipmentInventorySlotManager] PlayerInventory를 찾을 수 없습니다.");
             return;
         }
 
@@ -146,44 +145,27 @@ public class EquipmentInventorySlotManager : UIBase
         {
             if (item == null || item.StackCount <= 1)
             {
-                Debug.LogWarning($"[PerformBatchFusion] 재료 부족 또는 조건 불충족: {item?.BaseData.itemName ?? "Unknown"}");
                 continue;
             }
 
             int requiredCount = GetRequiredFuseItemCount(item);
-            int usableStackCount = item.StackCount - 1; // **남길 재료 1개 제외**
-            int maxFusionCount = usableStackCount / requiredCount; // 합성 가능한 최대 횟수
+            int usableStackCount = item.StackCount - 1;
+            int maxFusionCount = usableStackCount / requiredCount;
 
             if (maxFusionCount > 0)
             {
-                Debug.Log($"[PerformBatchFusion] Attempting Fusion: {item.BaseData.itemName}, MaxFusionCount: {maxFusionCount}");
-
-                bool success = item.Fuse(maxFusionCount); // **재료 개수를 정확히 전달**
+                bool success = item.Fuse(maxFusionCount);
                 if (success)
                 {
-                    Debug.Log($"[PerformBatchFusion] 합성 성공: {item.BaseData.itemName}, 합성 횟수: {maxFusionCount}");
                     anyFusionPerformed = true;
-                }
-                else
-                {
-                    Debug.LogWarning($"[PerformBatchFusion] 합성 실패: {item.BaseData.itemName}");
-                }
-            }
-            else
-            {
-                Debug.LogWarning($"[PerformBatchFusion] 재료 부족 또는 조건 불충족: {item.BaseData.itemName}");
+                }                
             }
         }
 
         if (anyFusionPerformed)
         {
-            Debug.Log("일괄 합성 완료!");
-            UpdateInventorySlots(isWeaponTabActive); // UI 갱신
-        }
-        else
-        {
-            Debug.Log("합성 가능한 아이템이 없습니다.");
-        }
+            UpdateInventorySlots(isWeaponTabActive);
+        }        
     }
 
     private int GetRequiredFuseItemCount(IFusable item)

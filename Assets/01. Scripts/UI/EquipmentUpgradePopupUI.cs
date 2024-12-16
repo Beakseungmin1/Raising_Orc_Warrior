@@ -62,30 +62,28 @@ public class EquipmentUpgradePopupUI : UIBase
         {
             Debug.LogError("SetEquipmentData: equipment is null!");
             DisableEnhanceAndEquipButtons();
-            fusionBtn.gameObject.SetActive(false); // 합성 버튼 비활성화
+            fusionBtn.gameObject.SetActive(false);
             return;
         }
 
-        // 인벤토리에서 최신 데이터 가져오기
         var inventory = PlayerObjManager.Instance.Player.inventory;
         if (isWeaponType)
         {
             var weapon = inventory.WeaponInventory.GetAllItems().FirstOrDefault(item => item.BaseData == equipment.BaseData);
-            currentItem = weapon ?? equipment; // 최신 데이터가 있으면 갱신
+            currentItem = weapon ?? equipment;
         }
         else
         {
             var accessory = inventory.AccessoryInventory.GetAllItems().FirstOrDefault(item => item.BaseData == equipment.BaseData);
-            currentItem = accessory ?? equipment; // 최신 데이터가 있으면 갱신
+            currentItem = accessory ?? equipment;
         }
 
         isWeapon = isWeaponType;
 
-        InitializeUI(); // UI 업데이트
-        UpdateEquipButtonState(); // 장착 상태 동기화
-        UpdateNavigationButtons(); // 화살표 상태 업데이트
+        InitializeUI();
+        UpdateEquipButtonState();
+        UpdateNavigationButtons();
 
-        // 마지막 등급 여부 확인 → 합성 버튼 숨기기
         var nextEquipment = GetNextEquipmentData(currentItem as IFusable);
         fusionBtn.gameObject.SetActive(nextEquipment != null);
     }
@@ -97,12 +95,12 @@ public class EquipmentUpgradePopupUI : UIBase
         if (equipment is Weapon weapon)
         {
             var nextWeapon = DataManager.Instance.GetNextWeapon(weapon.BaseData.grade, weapon.BaseData.rank);
-            return nextWeapon != weapon.BaseData ? nextWeapon : null; // 자기 자신 반환 방지
+            return nextWeapon != weapon.BaseData ? nextWeapon : null;
         }
         else if (equipment is Accessory accessory)
         {
             var nextAccessory = DataManager.Instance.GetNextAccessory(accessory.BaseData.grade, accessory.BaseData.rank);
-            return nextAccessory != accessory.BaseData ? nextAccessory : null; // 자기 자신 반환 방지
+            return nextAccessory != accessory.BaseData ? nextAccessory : null;
         }
 
         return null;
@@ -127,14 +125,13 @@ public class EquipmentUpgradePopupUI : UIBase
             equipEffectValueTxt.text = $"{accessory.EquipHpAndHpRecoveryIncreaseRate}%";
         }
 
-        // 현재 아이템 스택 개수 확인
         int actualStackCount = PlayerObjManager.Instance.Player.inventory.GetItemStackCount(currentItem);
-        bool isItemAvailable = actualStackCount > 0; // 인벤토리에 아이템이 있는지 확인
+        bool isItemAvailable = actualStackCount > 0;
 
         int requiredAmount = GetRequiredFuseItemCount();
 
         equipmentIcon.sprite = currentItem.BaseData.icon;
-        equipmentIcon.color = isItemAvailable ? Color.white : new Color(0.2f, 0.2f, 0.2f, 1f); // 검은색 처리
+        equipmentIcon.color = isItemAvailable ? Color.white : new Color(0.2f, 0.2f, 0.2f, 1f);
         nameTxt.text = currentItem.BaseData.itemName;
         gradeTxt.text = $"[{currentItem.BaseData.grade}]";
 
@@ -175,16 +172,16 @@ public class EquipmentUpgradePopupUI : UIBase
             return accessory.BaseData.requireFuseItemCount;
         }
 
-        return 5; // 기본값
+        return 5;
     }
 
     private void UpdateUpgradeButtonState(bool isItemAvailable)
     {
         bool canEnhance = currentItem != null && currentItem.CanEnhance();
-        bool canEquip = isItemAvailable; // 인벤토리에 아이템이 있을 때만 장착 가능
+        bool canEquip = isItemAvailable;
 
-        upgradeBtn.gameObject.SetActive(isItemAvailable && canEnhance); // 아이템이 없으면 버튼 자체 숨김
-        equipBtn.gameObject.SetActive(isItemAvailable && canEquip);    // 아이템이 없으면 버튼 자체 숨김
+        upgradeBtn.gameObject.SetActive(isItemAvailable && canEnhance);
+        equipBtn.gameObject.SetActive(isItemAvailable && canEquip);
     }
 
     private void UpdateEquipButtonState()
@@ -197,14 +194,13 @@ public class EquipmentUpgradePopupUI : UIBase
 
         var equipManager = PlayerObjManager.Instance.Player.GetComponent<EquipManager>();
 
-        // 현재 아이템이 장착 상태인지 확인
         if (isWeapon && currentItem is Weapon weapon)
         {
             if (equipManager.EquippedWeapon == weapon)
             {
                 equipBtn.GetComponentInChildren<TextMeshProUGUI>().text = "장착중";
                 equipBtn.interactable = false;
-                return; // 상태 유지
+                return;
             }
         }
         else if (!isWeapon && currentItem is Accessory accessory)
@@ -213,11 +209,10 @@ public class EquipmentUpgradePopupUI : UIBase
             {
                 equipBtn.GetComponentInChildren<TextMeshProUGUI>().text = "장착중";
                 equipBtn.interactable = false;
-                return; // 상태 유지
+                return;
             }
         }
 
-        // 현재 아이템이 장착 상태가 아닐 경우 기본 값
         equipBtn.GetComponentInChildren<TextMeshProUGUI>().text = "장착";
         equipBtn.interactable = true;
     }
@@ -294,7 +289,6 @@ public class EquipmentUpgradePopupUI : UIBase
     {
         if (currentItem == null || !currentItem.CanEnhance())
         {
-            Debug.LogError("강화할 아이템이 없거나 조건을 만족하지 않습니다.");
             return;
         }
 
@@ -309,7 +303,7 @@ public class EquipmentUpgradePopupUI : UIBase
 
             if (weapon != null && weapon.Enhance())
             {
-                currentItem = weapon; // 강화된 아이템을 다시 currentItem에 반영
+                currentItem = weapon;
                 success = true;
             }
         }
@@ -320,14 +314,14 @@ public class EquipmentUpgradePopupUI : UIBase
 
             if (accessory != null && accessory.Enhance())
             {
-                currentItem = accessory; // 강화된 아이템을 다시 currentItem에 반영
+                currentItem = accessory;
                 success = true;
             }
         }
 
         if (success)
         {
-            SetEquipmentData(currentItem, isWeapon); // UI 갱신
+            SetEquipmentData(currentItem, isWeapon);
         }
     }
 
@@ -335,11 +329,9 @@ public class EquipmentUpgradePopupUI : UIBase
     {
         if (currentItem == null)
         {
-            Debug.LogError("EquipItem: currentItem is null!");
             return;
         }
 
-        // 이전 장착 상태 복구
         if (currentlyEquippedButton != null)
         {
             currentlyEquippedButton.interactable = true;
@@ -355,7 +347,6 @@ public class EquipmentUpgradePopupUI : UIBase
             PlayerObjManager.Instance.Player.GetComponent<EquipManager>()?.EquipAccessory(accessory);
         }
 
-        // 현재 버튼 상태 업데이트
         equipBtn.interactable = false;
         equipBtn.GetComponentInChildren<TextMeshProUGUI>().text = "장착중";
         currentlyEquippedButton = equipBtn;
@@ -383,10 +374,8 @@ public class EquipmentUpgradePopupUI : UIBase
     {
         var dataList = GetSortedItemList();
 
-        // 현재 아이템의 인덱스 찾기
         int currentIndex = dataList.IndexOf(currentItem.BaseData);
 
-        // 이전 아이템 설정
         if (currentIndex > 0)
         {
             var newBaseData = dataList[currentIndex - 1];
@@ -401,10 +390,8 @@ public class EquipmentUpgradePopupUI : UIBase
     {
         var dataList = GetSortedItemList();
 
-        // 현재 아이템의 인덱스 찾기
         int currentIndex = dataList.IndexOf(currentItem.BaseData);
 
-        // 다음 아이템 설정
         if (currentIndex < dataList.Count - 1)
         {
             var newBaseData = dataList[currentIndex + 1];
@@ -417,13 +404,10 @@ public class EquipmentUpgradePopupUI : UIBase
 
     private void UpdateNavigationButtons()
     {
-        // DataManager에서 모든 아이템 데이터 가져오기
         var dataList = GetSortedItemList();
 
-        // 현재 아이템의 인덱스 찾기
         int currentIndex = dataList.IndexOf(currentItem.BaseData);
 
-        // 버튼 상태 업데이트
         leftArrowBtn.gameObject.SetActive(currentIndex > 0);
         rightArrowBtn.gameObject.SetActive(currentIndex < dataList.Count - 1);
     }
@@ -432,7 +416,6 @@ public class EquipmentUpgradePopupUI : UIBase
     {
         var inventory = PlayerObjManager.Instance.Player.inventory;
 
-        // 인벤토리에서 실제 객체 찾기
         if (isWeapon)
         {
             var weapon = inventory.WeaponInventory.GetAllItems()
