@@ -15,7 +15,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     private State currentState;
     private PlayerDamageCalculator PlayerDamageCalculator;
     private PlayerStat playerStat;
-    private Rigidbody rigidbody;
+    private Rigidbody2D rigidbody;
 
     private BigInteger totalDamage; // 계산기에서 받아온 최종데미지
     private float attackSpeed; // 공격 속도 퍼센트 게이지로 만들어 딜레이 에서 빼줄예정
@@ -31,7 +31,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     {
         PlayerDamageCalculator = GetComponent<PlayerDamageCalculator>();
         playerStat = GetComponent<PlayerStat>();
-        rigidbody = GetComponent<Rigidbody>();
+        rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
         currentState = State.Idle;
     }
@@ -74,6 +74,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         playerStat.decreaseHp(damage);
 
         TakeHit(Knockback);
+
 
         if (playerStat.health <= 0)
         {
