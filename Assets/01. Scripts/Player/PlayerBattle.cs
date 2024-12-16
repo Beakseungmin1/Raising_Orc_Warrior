@@ -15,7 +15,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     private State currentState;
     private PlayerDamageCalculator PlayerDamageCalculator;
     private PlayerStat playerStat;
-    private Rigidbody2D rigidbody;
+    [SerializeField] private ParallaxBackground background; 
 
     private BigInteger totalDamage; // 계산기에서 받아온 최종데미지
     private float attackSpeed; // 공격 속도 퍼센트 게이지로 만들어 딜레이 에서 빼줄예정
@@ -25,13 +25,10 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private Enemy currentMonster; // 현재 공격 중인 몬스터
 
-    private bool isSliding = false;
-
     private void Start()
     {
         PlayerDamageCalculator = GetComponent<PlayerDamageCalculator>();
         playerStat = GetComponent<PlayerStat>();
-        rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
         currentState = State.Idle;
     }
@@ -69,11 +66,15 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         }
     }
 
+
+    // 데미지 만큼 데미지를 주고 Knockback의 시간만큼 밀어냄
     public void TakeKnockbackDamage(BigInteger damage, float Knockback)
     {
+        BattleManager.Instance.EndBattle();
+
         playerStat.decreaseHp(damage);
 
-        TakeHit(Knockback);
+        background.StartScrollingRight(Knockback);
 
 
         if (playerStat.health <= 0)
@@ -83,29 +84,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         }
     }
 
-    public void TakeHit(float power)
-    {
-        if (!isSliding)
-        {
-            StartCoroutine(SlideLeft(power));
-        }
-    }
-
-    private IEnumerator SlideLeft(float power)
-    {
-        isSliding = true;
-
-        // 왼쪽으로 미끄러지기 위해 velocity 설정
-        rigidbody.velocity = new UnityEngine.Vector2(-power, rigidbody.velocity.y);
-
-        // 지정된 시간 후에 velocity를 원래대로 되돌립니다.
-        yield return new WaitForSeconds(1);
-
-        // 슬라이드 후 velocity를 0으로 설정 (또는 원하는 값으로 조정)
-        rigidbody.velocity = UnityEngine.Vector2.zero;
-
-        isSliding = false;
-    }
 
     private void PlayerAttack()
     {
@@ -134,7 +112,10 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         currentState = State.Idle;
     }
 
-
+    public bool GetActive()
+    {
+        return gameObject.activeInHierarchy;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
