@@ -135,38 +135,94 @@ public class EquipmentInventorySlotManager : UIBase
 
     private void PerformBatchFusion()
     {
-        var itemList = isWeaponTabActive
-            ? playerInventory.WeaponInventory.GetAllItems().Cast<IFusable>().ToList()
-            : playerInventory.AccessoryInventory.GetAllItems().Cast<IFusable>().ToList();
+        bool anyFusionPerformed;
 
-        bool anyFusionPerformed = false;
-
-        foreach (var item in itemList)
+        do
         {
-            if (item == null || item.StackCount <= 1)
-            {
-                continue;
-            }
+            anyFusionPerformed = false;
 
-            int requiredCount = GetRequiredFuseItemCount(item);
-            int usableStackCount = item.StackCount - 1;
-            int maxFusionCount = usableStackCount / requiredCount;
+            var itemList = isWeaponTabActive
+                ? playerInventory.WeaponInventory.GetAllItems().Cast<IFusable>().ToList()
+                : playerInventory.AccessoryInventory.GetAllItems().Cast<IFusable>().ToList();
 
-            if (maxFusionCount > 0)
+            foreach (var item in itemList)
             {
-                bool success = item.Fuse(maxFusionCount);
-                if (success)
+                if (item == null || item.StackCount <= 1)
                 {
-                    anyFusionPerformed = true;
-                }                
+                    continue;
+                }
+
+                // 전설 1등급 이상의 합성은 제한
+                if (!CanFuseItem(item))
+                {
+                    continue;
+                }
+
+                int requiredCount = GetRequiredFuseItemCount(item);
+                int usableStackCount = item.StackCount - 1;
+                int maxFusionCount = usableStackCount / requiredCount;
+
+                if (maxFusionCount > 0)
+                {
+                    for (int i = 0; i < maxFusionCount; i++)
+                    {
+                        bool success = item.Fuse(1); // 한 번씩 합성
+                        if (success)
+                        {
+                            anyFusionPerformed = true;
+                        }
+                    }
+                }
             }
+        } while (anyFusionPerformed);
+
+        UpdateInventorySlots(isWeaponTabActive);
+    }
+
+    private bool CanFuseItem(IFusable item)
+    {
+        const Grade MaxGradeToAllowFusion = Grade.Legendary; // 전설까지 허용
+        const int MinWeaponRankToAllowFusion = 2;            // 무기: 전설 2등급까지 허용
+        const int MinAccessoryRankToAllowFusion = 2;         // 악세사리: 전설 2등급까지 허용
+
+        var baseData = item.BaseData; // IFusable에서 BaseData 가져옴
+        if (baseData == null) return false;
+
+        // 그레이드가 전설보다 높은 경우 합성 불가
+        if (baseData.grade > MaxGradeToAllowFusion)
+        {
+            return false;
         }
 
-        if (anyFusionPerformed)
+        // WeaponDataSO인 경우
+        if (baseData is WeaponDataSO weaponData)
         {
-            UpdateInventorySlots(isWeaponTabActive);
-        }        
+            // 전설 등급인 경우에만 랭크 제한 적용
+            if (baseData.grade == Grade.Legendary)
+            {
+                return weaponData.rank >= MinWeaponRankToAllowFusion; // 전설 2등급 이상만 허용
+            }
+
+            // 전설 이하 등급은 랭크와 관계없이 합성 가능
+            return true;
+        }
+        // AccessoryDataSO인 경우
+        else if (baseData is AccessoryDataSO accessoryData)
+        {
+            // 전설 등급인 경우에만 랭크 제한 적용
+            if (baseData.grade == Grade.Legendary)
+            {
+                return accessoryData.rank >= MinAccessoryRankToAllowFusion; // 전설 2등급 이상만 허용
+            }
+
+            // 전설 이하 등급은 랭크와 관계없이 합성 가능
+            return true;
+        }
+
+        // 무기나 악세사리 SO가 아니면 합성 불가
+        return false;
     }
+
 
     private int GetRequiredFuseItemCount(IFusable item)
     {

@@ -39,8 +39,8 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(BigInteger Damage)
     {
-        Debug.Log($"몬스터 체력: {hp}");
-        Debug.Log($"데미지: {Damage}");
+        //Debug.Log($"몬스터 체력: {hp}");
+        //Debug.Log($"데미지: {Damage}");
         animator.SetTrigger("3_Damaged");
 
         if (hp - Damage > 0)
