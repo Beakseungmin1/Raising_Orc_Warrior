@@ -1,3 +1,4 @@
+using System.Numerics;
 using UnityEngine;
 
 public class SkillEffectManager : MonoBehaviour
@@ -14,7 +15,7 @@ public class SkillEffectManager : MonoBehaviour
         }
     }
 
-    public void TriggerEffect(Skill skill, Vector3 targetPosition)
+    public void TriggerEffect(Skill skill, UnityEngine.Vector3 targetPosition)
     {
         if (skill == null || skill.BaseData == null)
         {
@@ -58,7 +59,7 @@ public class SkillEffectManager : MonoBehaviour
             return;
         }
 
-        GameObject effect = Instantiate(skillData.effectPrefab, playerPosition.position, Quaternion.identity);
+        GameObject effect = Instantiate(skillData.effectPrefab, playerPosition.position, UnityEngine.Quaternion.identity);
         if (effect == null)
         {
             Debug.LogError($"SkillEffectManager: 스킬 {skillData.itemName}의 이펙트 생성 실패!");
@@ -74,7 +75,7 @@ public class SkillEffectManager : MonoBehaviour
         }
     }
 
-    private void SpawnProjectile(SkillDataSO skillData, Vector3 targetPosition)
+    private void SpawnProjectile(SkillDataSO skillData, UnityEngine.Vector3 targetPosition)
     {
         if (projectileSpawnPoint == null)
         {
@@ -82,7 +83,7 @@ public class SkillEffectManager : MonoBehaviour
             return;
         }
 
-        GameObject projectile = Instantiate(skillData.effectPrefab, projectileSpawnPoint.position, Quaternion.identity);
+        GameObject projectile = Instantiate(skillData.effectPrefab, projectileSpawnPoint.position, UnityEngine.Quaternion.identity);
         if (projectile == null)
         {
             Debug.LogError($"SkillEffectManager: 스킬 {skillData.itemName}의 투사체 생성 실패!");
@@ -92,7 +93,7 @@ public class SkillEffectManager : MonoBehaviour
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            Vector3 direction = (targetPosition - projectileSpawnPoint.position).normalized;
+            UnityEngine.Vector3 direction = (targetPosition - projectileSpawnPoint.position).normalized;
             rb.velocity = direction * skillData.effectRange; // 투사체 속도 설정
         }
 
@@ -100,9 +101,9 @@ public class SkillEffectManager : MonoBehaviour
         Destroy(projectile, 5f); // 투사체 자동 제거
     }
 
-    private void ApplyMapEffect(SkillDataSO skillData, Vector3 targetPosition)
+    private void ApplyMapEffect(SkillDataSO skillData, UnityEngine.Vector3 targetPosition)
     {
-        GameObject effect = Instantiate(skillData.effectPrefab, targetPosition, Quaternion.identity);
+        GameObject effect = Instantiate(skillData.effectPrefab, targetPosition, UnityEngine.Quaternion.identity);
         if (effect == null)
         {
             Debug.LogError($"SkillEffectManager: 스킬 {skillData.itemName}의 맵 중심 이펙트 생성 실패!");
@@ -123,7 +124,7 @@ public class SkillEffectManager : MonoBehaviour
         Debug.Log($"SkillEffectManager: 버프 효과 적용 - 공격력 {skillData.attackIncreasePercent}% 증가.");
     }
 
-    private void DealAreaDamage(SkillDataSO skillData, Vector3 targetPosition)
+    private void DealAreaDamage(SkillDataSO skillData, UnityEngine.Vector3 targetPosition)
     {
         Collider[] hitEnemies = Physics.OverlapSphere(targetPosition, skillData.effectRange);
 
@@ -132,7 +133,7 @@ public class SkillEffectManager : MonoBehaviour
             IDamageable damageable = enemy.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                float damage = skillData.damagePercent; // 데미지 계산
+                BigInteger damage = (BigInteger)skillData.damagePercent; // 데미지 계산
                 damageable.TakeDamage(damage);
                 Debug.Log($"SkillEffectManager: {enemy.name}에게 {damage} 데미지 적용.");
             }

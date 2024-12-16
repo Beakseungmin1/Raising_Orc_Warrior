@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -7,9 +8,9 @@ public class Enemy : MonoBehaviour
 
     [Header("Enemy information")]
     [SerializeField] private string enemyCode; // 적식별코드
-    [SerializeField] private float hp; // 체력
-    [SerializeField] private float maxHp; // 최대체력
-    [SerializeField] private int giveExp; // 주는 경험치
+    [SerializeField] private BigInteger hp; // 체력
+    [SerializeField] private BigInteger maxHp; // 최대체력
+    [SerializeField] private BigInteger giveExp; // 주는 경험치
     [SerializeField] private GameObject model; //적 모델
     [SerializeField] private Animator animator;
 
@@ -34,8 +35,10 @@ public class Enemy : MonoBehaviour
     //    SetupEnemy();
     //}
 
-    public void TakeDamage(float Damage)
+    public void TakeDamage(BigInteger Damage)
     {
+        Debug.Log($"몬스터 체력: {hp}");
+        Debug.Log($"데미지: {Damage}");
         animator.SetTrigger("2_Damaged");
 
         if (hp - Damage > 0)
@@ -50,7 +53,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public int GiveExp()
+    public BigInteger GiveExp()
     {
         return giveExp;
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public class PlayerDamageCalculator : MonoBehaviour
@@ -10,10 +11,10 @@ public class PlayerDamageCalculator : MonoBehaviour
 
 
 
-    public float TotalDamage;
-    public float basicDamage;
-    public float WeaponIncreaseDamage;
-    public float SkillIncreaseDamage;
+    public BigInteger TotalDamage;
+    public float basicDamage; 
+    public BigInteger WeaponIncreaseDamage;
+    public BigInteger SkillIncreaseDamage;
 
 
 
@@ -29,22 +30,23 @@ public class PlayerDamageCalculator : MonoBehaviour
 
         if (equipManager.EquippedWeapon != null)
         {
-            WeaponIncreaseDamage = basicDamage * (equipManager.EquippedWeapon.BaseData.equipAtkIncreaseRate / 100);
+            WeaponIncreaseDamage = (BigInteger)(basicDamage * (equipManager.EquippedWeapon.BaseData.equipAtkIncreaseRate / 100));
         }
+        
         
 
         foreach (var skill in PlayerObjManager.Instance.Player.PlayerBattle.activeBuffSkills)
         {
-            SkillIncreaseDamage += basicDamage * (skill.BaseData.attackIncreasePercent / 100);
+            SkillIncreaseDamage += (BigInteger)(basicDamage * (skill.BaseData.attackIncreasePercent / 100));
         }
 
     }
 
 
-    public float GetTotalDamage()
+    public BigInteger GetTotalDamage()
     {
         UpdateValue();
-        TotalDamage = basicDamage + WeaponIncreaseDamage + SkillIncreaseDamage;
+        TotalDamage = ((BigInteger)basicDamage + WeaponIncreaseDamage + SkillIncreaseDamage);
 
         return TotalDamage;
 

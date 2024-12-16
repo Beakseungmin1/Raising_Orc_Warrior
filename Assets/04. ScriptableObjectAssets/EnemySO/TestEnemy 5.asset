@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: TestEnemy 5
   m_EditorClassIdentifier: 
   enemyCode: 1
-  hp: 100
-  maxHp: 100
-  giveExp: 50
+  hpString: 100
+  maxHpString: 100
+  giveExpString: 20
   model: {fileID: 1210817250785749426, guid: 2b434b09afde1294994206c9d058e9a8, type: 3}
   cooldown: 10
   skillEffectPrefab: {fileID: 0}
