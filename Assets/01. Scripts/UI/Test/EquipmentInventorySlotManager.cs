@@ -144,34 +144,34 @@ public class EquipmentInventorySlotManager : UIBase
 
         foreach (var item in itemList)
         {
-            if (item == null)
+            if (item == null || item.StackCount <= 1)
+            {
+                Debug.LogWarning($"[PerformBatchFusion] 재료 부족 또는 조건 불충족: {item?.BaseData.itemName ?? "Unknown"}");
                 continue;
-
-            int stackCount = item.StackCount;
-            int requiredCount = 0;
-
-            // BaseDataSO에서 필요한 Fuse 카운트 가져오기
-            if (item.BaseData is WeaponDataSO weaponData)
-            {
-                requiredCount = weaponData.requireFuseItemCount;
-            }
-            else if (item.BaseData is AccessoryDataSO accessoryData)
-            {
-                requiredCount = accessoryData.requireFuseItemCount;
             }
 
-            // 최대 합성 가능 횟수 계산
-            int maxFusionCount = stackCount / requiredCount;
+            int requiredCount = GetRequiredFuseItemCount(item);
+            int usableStackCount = item.StackCount - 1; // **남길 재료 1개 제외**
+            int maxFusionCount = usableStackCount / requiredCount; // 합성 가능한 최대 횟수
 
             if (maxFusionCount > 0)
             {
-                // 합성 실행
-                bool success = item.Fuse(maxFusionCount * requiredCount);
+                Debug.Log($"[PerformBatchFusion] Attempting Fusion: {item.BaseData.itemName}, MaxFusionCount: {maxFusionCount}");
+
+                bool success = item.Fuse(maxFusionCount); // **재료 개수를 정확히 전달**
                 if (success)
                 {
-                    Debug.Log($"{item.BaseData.itemName}: {maxFusionCount}회 합성 완료");
+                    Debug.Log($"[PerformBatchFusion] 합성 성공: {item.BaseData.itemName}, 합성 횟수: {maxFusionCount}");
                     anyFusionPerformed = true;
                 }
+                else
+                {
+                    Debug.LogWarning($"[PerformBatchFusion] 합성 실패: {item.BaseData.itemName}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"[PerformBatchFusion] 재료 부족 또는 조건 불충족: {item.BaseData.itemName}");
             }
         }
 
@@ -184,5 +184,26 @@ public class EquipmentInventorySlotManager : UIBase
         {
             Debug.Log("합성 가능한 아이템이 없습니다.");
         }
+    }
+
+    private int GetRequiredFuseItemCount(IFusable item)
+    {
+        return item.BaseData is WeaponDataSO weaponData
+            ? weaponData.requireFuseItemCount
+            : (item.BaseData as AccessoryDataSO)?.requireFuseItemCount ?? 0;
+    }
+
+    private BaseItemDataSO GetNextEquipmentData(IFusable equipment)
+    {
+        if (equipment is Weapon weapon)
+        {
+            return DataManager.Instance.GetNextWeapon(weapon.BaseData.grade, weapon.BaseData.rank);
+        }
+        else if (equipment is Accessory accessory)
+        {
+            return DataManager.Instance.GetNextAccessory(accessory.BaseData.grade, accessory.BaseData.rank);
+        }
+
+        return null;
     }
 }

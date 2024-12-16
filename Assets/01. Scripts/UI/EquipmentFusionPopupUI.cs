@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using System.Collections.Generic;
 
 public class EquipmentFusionPopupUI : UIBase
 {
@@ -34,10 +35,9 @@ public class EquipmentFusionPopupUI : UIBase
     private BaseItemDataSO resultEquipmentData;
     private int materialCount;
     private int maxMaterials;
+    private int maxFusionCount;
 
     private bool isWeapon;
-
-    private const int RequiredMaterialsPerFusion = 1;
 
     private void Start()
     {
@@ -52,68 +52,91 @@ public class EquipmentFusionPopupUI : UIBase
 
     public void SetEquipmentData(IFusable equipment, BaseItemDataSO resultData = null)
     {
-        if (equipment == null)
-        {
-            return;
-        }
+        if (equipment == null) return;
 
         currentEquipment = equipment;
-
-        // 결과 데이터 설정: 기본값은 GetNextEquipmentData로 설정
-        resultEquipmentData = resultData ?? GetNextEquipmentData(equipment);
-
-        // 결과 데이터가 없을 경우 예외 처리
-        if (resultEquipmentData == null)
-        {
-            Debug.LogWarning("[SetEquipmentData] resultEquipmentData가 설정되지 않았습니다.");
-            return;
-        }
-
         isWeapon = equipment is Weapon;
 
-        // UI 초기화
-        InitializeUI();
-        UpdateNavigationButtons();
+        // 강제로 resultEquipmentData를 최신화
+        resultEquipmentData = GetNextEquipmentData(currentEquipment);
+
+        if (resultEquipmentData == null)
+        {
+            Debug.LogWarning("[SetEquipmentData] 다음 장비 데이터가 없습니다. 결과 없음으로 표시됩니다.");
+        }
+
+        InitializeUI(); // UI 초기화
+        UpdateNavigationButtons(); // 화살표 버튼 상태 업데이트
+    }
+
+    private void ClearUI()
+    {
+        // 모든 UI 요소를 초기화 상태로 설정
+        currentEquipmentIcon.sprite = null;
+        currentEquipmentNameTxt.text = "없음";
+        currentEquipmentAmountTxt.text = "0 (-0)";
+
+        resultEquipmentIcon.sprite = null;
+        resultEquipmentNameTxt.text = "결과 없음";
+        resultEquipmentAmountTxt.text = "0 (+0)";
+
+        materialCountTxt.text = "0";
+        fusionBtn.gameObject.SetActive(false);
+        leftArrowBtn.gameObject.SetActive(false);
+        rightArrowBtn.gameObject.SetActive(false);
     }
 
     private void InitializeUI()
     {
-        // 현재 아이템 스택 카운트 가져오기 (최소 1개는 남김)
-        maxMaterials = Mathf.Max(0, PlayerObjManager.Instance.Player.inventory.GetItemStackCount(currentEquipment as IEnhanceable) - 1);
-        materialCount = Mathf.Clamp(maxMaterials / RequiredMaterialsPerFusion, 1, maxMaterials);
+        if (currentEquipment == null)
+        {
+            ClearUI();
+            return;
+        }
 
-        // 결과 아이템 최신화 (항상 최신 상태 유지)
-        resultEquipmentData = GetNextEquipmentData(currentEquipment);
+        // 필요 재료 개수와 최대 합성 가능 횟수 계산
+        int requiredCount = GetRequiredFuseItemCount();
+        maxMaterials = currentEquipment.StackCount - 1;
+        maxFusionCount = requiredCount > 0 ? maxMaterials / requiredCount : 0;
 
-        // UI 초기화
+        // 최대 합성 횟수로 materialCount 초기화
+        materialCount = maxFusionCount;
+
+        // UI 갱신
         UpdateMaterialCount();
         UpdateCurrentEquipmentUI();
         UpdateResultEquipmentUI();
         UpdateFusionButtonState();
 
-        // 현재 재화 표시
+        // 재화 표시
         curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Cube).ToString();
+    }
+
+    private int GetRequiredFuseItemCount()
+    {
+        return currentEquipment.BaseData is WeaponDataSO weaponData
+            ? weaponData.requireFuseItemCount
+            : (currentEquipment.BaseData as AccessoryDataSO)?.requireFuseItemCount ?? 0;
     }
 
     private void UpdateMaterialCount()
     {
-        // MaterialCount와 관련된 UI를 업데이트
         materialCountTxt.text = materialCount.ToString();
     }
 
     private void UpdateCurrentEquipmentUI()
     {
-        if (currentEquipment is IEnhanceable enhanceable)
-        {
-            currentEquipmentIcon.sprite = enhanceable.BaseData.icon;
-            currentEquipmentIcon.color = maxMaterials > 0 ? Color.white : new Color(0.2f, 0.2f, 0.2f, 1f); // 검은색 처리
-            currentEquipmentNameTxt.text = enhanceable.BaseData.itemName;
-            currentEquipmentAmountTxt.text = $"{maxMaterials} (-{materialCount})"; // 총 스택에서 1개를 더해서 표시
-        }
-        else
-        {
-            Debug.LogError("UpdateCurrentEquipmentUI: currentEquipment is not IEnhanceable!");
-        }
+        currentEquipmentIcon.sprite = currentEquipment.BaseData.icon;
+        currentEquipmentNameTxt.text = currentEquipment.BaseData.itemName;
+
+        int requiredCount = GetRequiredFuseItemCount();
+        int usedMaterials = materialCount * requiredCount;
+
+        // 인벤토리에 존재하는 장비인지 확인
+        bool hasItem = currentEquipment.StackCount > 0;
+        currentEquipmentIcon.color = hasItem ? Color.white : new Color(0.2f, 0.2f, 0.2f, 1f); // 없으면 검은색 처리
+
+        currentEquipmentAmountTxt.text = $"{currentEquipment.StackCount - 1} (-{usedMaterials})";
     }
 
     private void UpdateResultEquipmentUI()
@@ -121,56 +144,56 @@ public class EquipmentFusionPopupUI : UIBase
         if (resultEquipmentData == null)
         {
             resultEquipmentIcon.sprite = null;
-            resultEquipmentIcon.color = new Color(0.2f, 0.2f, 0.2f, 1f); // 검은색 처리
-            resultEquipmentNameTxt.text = "결합 결과 없음";
+            resultEquipmentIcon.color = Color.white; // 기본 색상
+            resultEquipmentNameTxt.text = "결과 없음";
             resultEquipmentAmountTxt.text = "0 (+0)";
         }
         else
         {
-            int currentResultCount = GetResultItemCount();
             resultEquipmentIcon.sprite = resultEquipmentData.icon;
-            resultEquipmentIcon.color = currentResultCount > 0 ? Color.white : new Color(0.2f, 0.2f, 0.2f, 1f); // 검은색 처리
             resultEquipmentNameTxt.text = resultEquipmentData.itemName;
-            resultEquipmentAmountTxt.text = $"{currentResultCount} (+{materialCount})";
+
+            // 인벤토리에 존재하는지 확인
+            int resultCount = GetResultItemCount();
+            bool hasResultItem = resultCount > 0;
+            resultEquipmentIcon.color = hasResultItem ? Color.white : new Color(0.2f, 0.2f, 0.2f, 1f); // 없으면 검은색 처리
+
+            resultEquipmentAmountTxt.text = $"{resultCount} (+{materialCount})";
         }
     }
 
     private void UpdateFusionButtonState()
     {
-        bool canFuse = CanPerformFusion();
-        fusionBtn.gameObject.SetActive(canFuse); // 조건에 따라 버튼 숨김 처리
+        bool canFuse = materialCount > 0 && maxFusionCount > 0;
+        fusionBtn.gameObject.SetActive(canFuse);
+
+        if (!canFuse)
+        {
+            materialCount = 0;
+            UpdateMaterialCount();
+        }
     }
 
     private void AdjustMaterialCount(int amount)
     {
-        // 재료 카운트 계산 (0까지 허용)
-        materialCount = Mathf.Clamp(materialCount + amount, 0, maxMaterials);
-
-        // 텍스트 업데이트
-        materialCountTxt.text = materialCount.ToString();
-
+        materialCount = Mathf.Clamp(materialCount + amount, 0, maxFusionCount);
+        UpdateMaterialCount();
         UpdateCurrentEquipmentUI();
         UpdateResultEquipmentUI();
-        // Fusion 버튼의 상태를 항상 유지
+        UpdateFusionButtonState();
     }
 
     private void SelectPreviousItem()
     {
-        var dataList = isWeapon
-            ? DataManager.Instance.GetAllWeapons().OrderBy(item => item.grade).ThenByDescending(item => item.rank).Cast<BaseItemDataSO>().ToList()
-            : DataManager.Instance.GetAllAccessories().OrderBy(item => item.grade).ThenByDescending(item => item.rank).Cast<BaseItemDataSO>().ToList();
+        var dataList = GetSortedItemList();
 
-        int currentIndex = dataList.FindIndex(item => item == (currentEquipment as IEnhanceable)?.BaseData);
-        if (currentIndex == -1)
-        {
-            Debug.LogWarning("[SelectPreviousItem] 현재 장비가 데이터 리스트에 없습니다.");
-            return;
-        }
+        int currentIndex = dataList.IndexOf(currentEquipment.BaseData);
 
-        if (currentIndex > 0) // 왼쪽으로 이동 가능한 경우
+        if (currentIndex > 0)
         {
-            var previousItem = dataList[currentIndex - 1];
-            SetEquipmentData(CreateFusableItem(previousItem), GetNextEquipmentData(CreateFusableItem(previousItem)));
+            var newBaseData = dataList[currentIndex - 1];
+            currentEquipment = FindFusableItemInInventoryOrDefault(newBaseData);
+            SetEquipmentData(currentEquipment);
         }
 
         UpdateNavigationButtons();
@@ -178,30 +201,51 @@ public class EquipmentFusionPopupUI : UIBase
 
     private void SelectNextItem()
     {
-        var dataList = isWeapon
-            ? DataManager.Instance.GetAllWeapons().OrderBy(item => item.grade).ThenByDescending(item => item.rank).Cast<BaseItemDataSO>().ToList()
-            : DataManager.Instance.GetAllAccessories().OrderBy(item => item.grade).ThenByDescending(item => item.rank).Cast<BaseItemDataSO>().ToList();
+        var dataList = GetSortedItemList();
 
-        int currentIndex = dataList.FindIndex(item => item == (currentEquipment as IEnhanceable)?.BaseData);
-        if (currentIndex == -1)
+        int currentIndex = dataList.IndexOf(currentEquipment.BaseData);
+
+        if (currentIndex < dataList.Count - 1)
         {
-            Debug.LogWarning("[SelectNextItem] 현재 장비가 데이터 리스트에 없습니다.");
-            return;
+            var newBaseData = dataList[currentIndex + 1];
+            currentEquipment = FindFusableItemInInventoryOrDefault(newBaseData);
+            SetEquipmentData(currentEquipment);
         }
 
-        if (currentIndex < dataList.Count - 2) // 끝에서 하나 앞까지만 이동 가능
-        {
-            var nextItem = dataList[currentIndex + 1];
-            SetEquipmentData(CreateFusableItem(nextItem), GetNextEquipmentData(CreateFusableItem(nextItem)));
-        }
-
-        UpdateNavigationButtons(); // 버튼 상태 업데이트
+        UpdateNavigationButtons();
     }
 
     private void UpdateNavigationButtons()
     {
-        // 데이터 리스트 가져오기
-        var dataList = isWeapon
+        var dataList = GetSortedItemList();
+        int currentIndex = dataList.IndexOf(currentEquipment.BaseData);
+
+        // 화살표 버튼 상태 업데이트
+        leftArrowBtn.gameObject.SetActive(currentIndex > 0); // 첫 번째 아이템이 아니면 왼쪽 버튼 표시
+        rightArrowBtn.gameObject.SetActive(currentIndex < dataList.Count - 2); // 마지막에서 -1까지만 이동 가능
+    }
+
+    private IFusable FindFusableItemInInventoryOrDefault(BaseItemDataSO baseData)
+    {
+        var inventory = PlayerObjManager.Instance.Player.inventory;
+
+        if (isWeapon)
+        {
+            var weapon = inventory.WeaponInventory.GetAllItems()
+                .FirstOrDefault(item => item.BaseData == baseData);
+            return weapon ?? new Weapon((WeaponDataSO)baseData);
+        }
+        else
+        {
+            var accessory = inventory.AccessoryInventory.GetAllItems()
+                .FirstOrDefault(item => item.BaseData == baseData);
+            return accessory ?? new Accessory((AccessoryDataSO)baseData);
+        }
+    }
+
+    private List<BaseItemDataSO> GetSortedItemList()
+    {
+        return isWeapon
             ? DataManager.Instance.GetAllWeapons()
                 .OrderBy(item => item.grade)
                 .ThenByDescending(item => item.rank)
@@ -212,26 +256,6 @@ public class EquipmentFusionPopupUI : UIBase
                 .ThenByDescending(item => item.rank)
                 .Cast<BaseItemDataSO>()
                 .ToList();
-
-        // 현재 아이템의 인덱스 계산
-        int currentIndex = dataList.FindIndex(item => item == (currentEquipment as IEnhanceable)?.BaseData);
-
-        // 양쪽 끝에서 버튼을 숨기거나 표시
-        leftArrowBtn.gameObject.SetActive(currentIndex > 0);               // 첫 번째 아이템에서는 왼쪽 버튼 숨김
-        rightArrowBtn.gameObject.SetActive(currentIndex < dataList.Count - 2); // 마지막에서 하나 앞까지만 오른쪽 버튼 표시
-    }
-
-    private IFusable CreateFusableItem(BaseItemDataSO baseItemData)
-    {
-        if (baseItemData is WeaponDataSO weaponData)
-        {
-            return new Weapon(weaponData);
-        }
-        else if (baseItemData is AccessoryDataSO accessoryData)
-        {
-            return new Accessory(accessoryData);
-        }
-        return null;
     }
 
     private BaseItemDataSO GetNextEquipmentData(IFusable equipment)
@@ -240,27 +264,21 @@ public class EquipmentFusionPopupUI : UIBase
 
         if (equipment is Weapon weapon)
         {
-            return DataManager.Instance.GetNextWeapon(weapon.BaseData.grade, weapon.BaseData.rank);
+            var nextWeapon = DataManager.Instance.GetNextWeapon(weapon.BaseData.grade, weapon.BaseData.rank);
+            return nextWeapon != weapon.BaseData ? nextWeapon : null; // 자기 자신 반환 방지
         }
         else if (equipment is Accessory accessory)
         {
-            return DataManager.Instance.GetNextAccessory(accessory.BaseData.grade, accessory.BaseData.rank);
+            var nextAccessory = DataManager.Instance.GetNextAccessory(accessory.BaseData.grade, accessory.BaseData.rank);
+            return nextAccessory != accessory.BaseData ? nextAccessory : null; // 자기 자신 반환 방지
         }
 
         return null;
     }
 
-    private bool CanPerformFusion()
-    {
-        return maxMaterials >= materialCount * RequiredMaterialsPerFusion;
-    }
-
     private int GetResultItemCount()
     {
         var inventory = PlayerObjManager.Instance.Player.inventory;
-
-        if (resultEquipmentData == null) return 0;
-
         return isWeapon
             ? inventory.WeaponInventory.GetAllItems().Find(x => x.BaseData == resultEquipmentData)?.StackCount ?? 0
             : inventory.AccessoryInventory.GetAllItems().Find(x => x.BaseData == resultEquipmentData)?.StackCount ?? 0;
@@ -268,22 +286,15 @@ public class EquipmentFusionPopupUI : UIBase
 
     private void PerformFusion()
     {
-        if (materialCount <= 0 || !CanPerformFusion())
+        if (materialCount <= 0)
         {
             Debug.LogWarning("[PerformFusion] 합성 조건을 충족하지 않음.");
             return;
         }
 
-        bool success = false;
-
-        if (currentEquipment is Weapon weapon)
-        {
-            success = weapon.Fuse(materialCount);
-        }
-        else if (currentEquipment is Accessory accessory)
-        {
-            success = accessory.Fuse(materialCount);
-        }
+        bool success = currentEquipment is Weapon weapon
+            ? weapon.Fuse(materialCount)
+            : (currentEquipment as Accessory)?.Fuse(materialCount) ?? false;
 
         if (success)
         {

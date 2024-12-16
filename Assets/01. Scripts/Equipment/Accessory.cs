@@ -67,29 +67,32 @@ public class Accessory : IFusable
     public bool Fuse(int materialCount)
     {
         var inventory = PlayerObjManager.Instance.Player.inventory;
-        var existingItem = inventory.AccessoryInventory.GetItem(BaseData.itemName);
 
-        if (existingItem == null || existingItem.StackCount < materialCount)
+        int requiredCount = BaseData.requireFuseItemCount;
+        int totalRequiredMaterials = materialCount * requiredCount;
+
+        var existingItem = inventory.AccessoryInventory.GetItem(BaseData.itemName);
+        if (existingItem == null || existingItem.StackCount < totalRequiredMaterials)
         {
+            Debug.LogWarning("[Fuse] 악세사리 재료가 부족합니다.");
             return false;
         }
 
-        existingItem.RemoveStack(materialCount);
-
-        bool fusionSuccess = false;
+        existingItem.RemoveStack(totalRequiredMaterials);
 
         for (int i = 0; i < materialCount; i++)
         {
             var nextAccessoryData = DataManager.Instance.GetNextAccessory(BaseData.grade, BaseData.rank);
 
-            if (nextAccessoryData != null)
+            if (nextAccessoryData is AccessoryDataSO accessoryDataSO)
             {
-                inventory.AddItemToInventory(nextAccessoryData);
-                fusionSuccess = true;
+                // AddItemToInventory에 BaseItemDataSO만 전달
+                inventory.AddItemToInventory(accessoryDataSO);
             }
         }
 
-        return fusionSuccess;
+        Debug.Log($"[Fuse] 악세사리 {materialCount}회 합성 완료");
+        return true;
     }
 
     public void AddStack(int count)
