@@ -14,7 +14,7 @@ public class BattleManager : Singleton<BattleManager>
 
         isBattleActive = true;
         if (OnBattleStart != null)
-            OnBattleStart.Invoke();
+            OnBattleStart?.Invoke();
     }
 
     public void EndBattle()
@@ -23,7 +23,7 @@ public class BattleManager : Singleton<BattleManager>
 
         isBattleActive = false;
         if (OnBattleEnd != null)
-            OnBattleEnd.Invoke();
+            OnBattleEnd?.Invoke();
     }
 
     public bool IsBattleActive => isBattleActive;
