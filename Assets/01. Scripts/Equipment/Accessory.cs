@@ -74,7 +74,6 @@ public class Accessory : IFusable
         var existingItem = inventory.AccessoryInventory.GetItem(BaseData.itemName);
         if (existingItem == null || existingItem.StackCount < totalRequiredMaterials)
         {
-            Debug.LogWarning("[Fuse] 악세사리 재료가 부족합니다.");
             return false;
         }
 
@@ -86,12 +85,10 @@ public class Accessory : IFusable
 
             if (nextAccessoryData is AccessoryDataSO accessoryDataSO)
             {
-                // AddItemToInventory에 BaseItemDataSO만 전달
                 inventory.AddItemToInventory(accessoryDataSO);
             }
         }
 
-        Debug.Log($"[Fuse] 악세사리 {materialCount}회 합성 완료");
         return true;
     }
 
