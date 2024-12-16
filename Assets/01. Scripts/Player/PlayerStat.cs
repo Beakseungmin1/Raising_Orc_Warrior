@@ -1,17 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
     public int level { get; private set; }
-    public int exp { get; private set; }
-    public int needExp { get; private set; }
+    public BigInteger exp { get; private set; }
+    public BigInteger needExp { get; private set; }
     public float attackPower { get; private set; }
-    public float health { get; private set; }
-    public float maxHealth { get; private set; }
-    public float healthRegeneration { get; private set; }
+    public BigInteger health { get; private set; }
+    public BigInteger maxHealth { get; private set; }
+    public BigInteger healthRegeneration { get; private set; }
     public float criticalProbability { get; private set; }
     public float criticalIncreaseDamage { get; private set; }
     public float bluecriticalIncreaseDamage { get; private set; }
@@ -33,13 +34,13 @@ public class PlayerStat : MonoBehaviour
     public int criticalProbabilityLevel { get; private set; }
     public int bluecriticalIncreaseDamageLevel { get; private set; }
     public int bluecriticalProbabilityLevel { get; private set; }
-    public float needAttackUpgradeMoney { get; private set; }
-    public float needHealthUpgradeMoney { get; private set; }
-    public float needHealthRegenerationUpgradeMoney { get; private set; }
-    public float needCriticalIncreaseDamageUpgradeMoney { get; private set; }
-    public float needCriticalProbabilityUpgradeMoney { get; private set; }
-    public float needBlueCriticalIncreaseDamageUpgradeMoney { get; private set; }
-    public float needBlueCriticalProbabilityUpgradeMoney { get; private set; }
+    public BigInteger needAttackUpgradeMoney { get; private set; }
+    public BigInteger needHealthUpgradeMoney { get; private set; }
+    public BigInteger needHealthRegenerationUpgradeMoney { get; private set; }
+    public BigInteger needCriticalIncreaseDamageUpgradeMoney { get; private set; }
+    public BigInteger needCriticalProbabilityUpgradeMoney { get; private set; }
+    public BigInteger needBlueCriticalIncreaseDamageUpgradeMoney { get; private set; }
+    public BigInteger needBlueCriticalProbabilityUpgradeMoney { get; private set; }
 
     public Action UpdateLevelStatUI;
 
@@ -56,7 +57,7 @@ public class PlayerStat : MonoBehaviour
         exp += enemy.GiveExp();
     }
 
-    public void decreaseHp(float damage)
+    public void decreaseHp(BigInteger damage)
     {
         health -= damage;
     }
@@ -67,7 +68,7 @@ public class PlayerStat : MonoBehaviour
         if (exp >= needExp)
         {
             level++;
-            int curNeedExp = needExp;
+            BigInteger curNeedExp = needExp;
             exp -= curNeedExp;
             needExp = needExp * 2;
             UpdateLevelStatUI.Invoke();
@@ -214,9 +215,9 @@ public class PlayerStat : MonoBehaviour
 
     public void UseHealSkill(Skill skill)
     {
-        float skillValue = skill.BaseData.attackIncreasePercent;
+        BigInteger skillValue = (BigInteger)skill.BaseData.attackIncreasePercent;
 
-        float Healhealth = maxHealth * (skillValue / 100);
+        BigInteger Healhealth = maxHealth * (skillValue / 100);
 
         if (health + Healhealth <= maxHealth)
         {
