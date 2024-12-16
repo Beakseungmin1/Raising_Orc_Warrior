@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2347243177176839514}
   - component: {fileID: 8475437059289194908}
+  - component: {fileID: 7364274605266295409}
   m_Layer: 5
   m_Name: EXPDungeonUI_ConfirmEnterBtnPopUpUI
   m_TagString: Untagged
@@ -49,6 +50,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 91953527001898977}
   m_CullTransparentMesh: 1
+--- !u!114 &7364274605266295409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91953527001898977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8eb627c5de2fe41b4dab182d601579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
 --- !u!1 &4420812215561778743
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,7 +183,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7813556188922217863}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7364274605266295409}
+        m_TargetAssemblyTypeName: EXPDungeonUI_ConfirmEnterBtnPopUpUI, Assembly-CSharp
+        m_MethodName: ExitBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4751421584376022213
 GameObject:
   m_ObjectHideFlags: 0
