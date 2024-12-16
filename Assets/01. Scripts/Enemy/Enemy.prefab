@@ -42,14 +42,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 822938190782927294}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 608167d172d1dc544ba2d6bf68f36a92, type: 3}
+  m_Script: {fileID: 11500000, guid: c77cdaddd8a9f514b831060057055643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemySO: {fileID: 0}
   enemyCode: 
-  hp: 0
-  maxHp: 0
-  giveExp: 0
   model: {fileID: 0}
   animator: {fileID: 0}
   cooldown: 0

@@ -27,6 +27,8 @@ public class Enemy : MonoBehaviour
 
     private PlayerBattle player;
 
+    private int Hitcounter = 0;
+
     private void Awake()
     {
         OnEnemyDeath += RegenManager.Instance.EnemyKilled;
@@ -55,6 +57,28 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void MonsterAttack()
+    {
+        if (player != null && player.GetActive())
+        {
+            animator.SetTrigger("2_Attack");
+
+            if (Hitcounter >= 2)
+            {
+                player.TakeKnockbackDamage(10, 0.5f); //안에 넣은 값은 임시값
+                Hitcounter = 0;
+                Debug.Log("강력한 공격발동 현재 히트 : " + Hitcounter);
+            }
+            else
+            {
+                player.TakeDamage(10);
+                Hitcounter++;
+                Debug.Log("일반공격 현재 히트 : " + Hitcounter);
+            }
+
+        }
+    }
+
     public BigInteger GiveExp()
     {
         return giveExp;
@@ -78,8 +102,11 @@ public class Enemy : MonoBehaviour
         hp = enemySO.hp;
         maxHp = enemySO.maxHp;
         giveExp = enemySO.giveExp;
-        model = enemySO.model;
-        model = Instantiate(model, transform);
+        if (model == null)
+        {
+            model = enemySO.model;
+            model = Instantiate(model, transform);
+        }
         animator = GetComponentInChildren<Animator>();
 
         cooldown = enemySO.cooldown;
@@ -93,7 +120,8 @@ public class Enemy : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            player = collision.gameObject.GetComponent<PlayerBattle>();
+            player = collision.GetComponent<PlayerBattle>();
+            InvokeRepeating("MonsterAttack", 0f, 1.5f);
         }
     }
 
@@ -101,6 +129,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            CancelInvoke("MonsterAttack");
             player = null;
         }
     }
