@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log($"몬스터 체력: {hp}");
         Debug.Log($"데미지: {Damage}");
-        animator.SetTrigger("2_Damaged");
+        //animator.SetTrigger("2_Damaged");
 
         if (hp - Damage > 0)
         {
