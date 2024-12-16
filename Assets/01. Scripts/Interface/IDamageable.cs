@@ -6,4 +6,6 @@ using UnityEngine;
 public interface IDamageable
 {
     void TakeDamage(BigInteger Damage);
+
+    
 }

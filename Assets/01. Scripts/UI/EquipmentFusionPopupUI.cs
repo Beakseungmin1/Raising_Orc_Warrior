@@ -57,21 +57,14 @@ public class EquipmentFusionPopupUI : UIBase
         currentEquipment = equipment;
         isWeapon = equipment is Weapon;
 
-        // 강제로 resultEquipmentData를 최신화
         resultEquipmentData = GetNextEquipmentData(currentEquipment);
 
-        if (resultEquipmentData == null)
-        {
-            Debug.LogWarning("[SetEquipmentData] 다음 장비 데이터가 없습니다. 결과 없음으로 표시됩니다.");
-        }
-
-        InitializeUI(); // UI 초기화
-        UpdateNavigationButtons(); // 화살표 버튼 상태 업데이트
+        InitializeUI();
+        UpdateNavigationButtons();
     }
 
     private void ClearUI()
     {
-        // 모든 UI 요소를 초기화 상태로 설정
         currentEquipmentIcon.sprite = null;
         currentEquipmentNameTxt.text = "없음";
         currentEquipmentAmountTxt.text = "0 (-0)";
@@ -94,21 +87,17 @@ public class EquipmentFusionPopupUI : UIBase
             return;
         }
 
-        // 필요 재료 개수와 최대 합성 가능 횟수 계산
         int requiredCount = GetRequiredFuseItemCount();
         maxMaterials = currentEquipment.StackCount - 1;
         maxFusionCount = requiredCount > 0 ? maxMaterials / requiredCount : 0;
 
-        // 최대 합성 횟수로 materialCount 초기화
         materialCount = maxFusionCount;
 
-        // UI 갱신
         UpdateMaterialCount();
         UpdateCurrentEquipmentUI();
         UpdateResultEquipmentUI();
         UpdateFusionButtonState();
 
-        // 재화 표시
         curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Cube).ToString();
     }
 
@@ -132,9 +121,8 @@ public class EquipmentFusionPopupUI : UIBase
         int requiredCount = GetRequiredFuseItemCount();
         int usedMaterials = materialCount * requiredCount;
 
-        // 인벤토리에 존재하는 장비인지 확인
         bool hasItem = currentEquipment.StackCount > 0;
-        currentEquipmentIcon.color = hasItem ? Color.white : new Color(0.2f, 0.2f, 0.2f, 1f); // 없으면 검은색 처리
+        currentEquipmentIcon.color = hasItem ? Color.white : new Color(0.2f, 0.2f, 0.2f, 1f);
 
         currentEquipmentAmountTxt.text = $"{currentEquipment.StackCount - 1} (-{usedMaterials})";
     }
@@ -144,7 +132,7 @@ public class EquipmentFusionPopupUI : UIBase
         if (resultEquipmentData == null)
         {
             resultEquipmentIcon.sprite = null;
-            resultEquipmentIcon.color = Color.white; // 기본 색상
+            resultEquipmentIcon.color = Color.white;
             resultEquipmentNameTxt.text = "결과 없음";
             resultEquipmentAmountTxt.text = "0 (+0)";
         }
@@ -153,10 +141,9 @@ public class EquipmentFusionPopupUI : UIBase
             resultEquipmentIcon.sprite = resultEquipmentData.icon;
             resultEquipmentNameTxt.text = resultEquipmentData.itemName;
 
-            // 인벤토리에 존재하는지 확인
             int resultCount = GetResultItemCount();
             bool hasResultItem = resultCount > 0;
-            resultEquipmentIcon.color = hasResultItem ? Color.white : new Color(0.2f, 0.2f, 0.2f, 1f); // 없으면 검은색 처리
+            resultEquipmentIcon.color = hasResultItem ? Color.white : new Color(0.2f, 0.2f, 0.2f, 1f);
 
             resultEquipmentAmountTxt.text = $"{resultCount} (+{materialCount})";
         }
@@ -220,9 +207,8 @@ public class EquipmentFusionPopupUI : UIBase
         var dataList = GetSortedItemList();
         int currentIndex = dataList.IndexOf(currentEquipment.BaseData);
 
-        // 화살표 버튼 상태 업데이트
-        leftArrowBtn.gameObject.SetActive(currentIndex > 0); // 첫 번째 아이템이 아니면 왼쪽 버튼 표시
-        rightArrowBtn.gameObject.SetActive(currentIndex < dataList.Count - 2); // 마지막에서 -1까지만 이동 가능
+        leftArrowBtn.gameObject.SetActive(currentIndex > 0);
+        rightArrowBtn.gameObject.SetActive(currentIndex < dataList.Count - 2);
     }
 
     private IFusable FindFusableItemInInventoryOrDefault(BaseItemDataSO baseData)
@@ -246,16 +232,8 @@ public class EquipmentFusionPopupUI : UIBase
     private List<BaseItemDataSO> GetSortedItemList()
     {
         return isWeapon
-            ? DataManager.Instance.GetAllWeapons()
-                .OrderBy(item => item.grade)
-                .ThenByDescending(item => item.rank)
-                .Cast<BaseItemDataSO>()
-                .ToList()
-            : DataManager.Instance.GetAllAccessories()
-                .OrderBy(item => item.grade)
-                .ThenByDescending(item => item.rank)
-                .Cast<BaseItemDataSO>()
-                .ToList();
+            ? DataManager.Instance.GetAllWeapons().OrderBy(item => item.grade).ThenByDescending(item => item.rank).Cast<BaseItemDataSO>().ToList()
+            : DataManager.Instance.GetAllAccessories().OrderBy(item => item.grade).ThenByDescending(item => item.rank).Cast<BaseItemDataSO>().ToList();
     }
 
     private BaseItemDataSO GetNextEquipmentData(IFusable equipment)
@@ -265,12 +243,12 @@ public class EquipmentFusionPopupUI : UIBase
         if (equipment is Weapon weapon)
         {
             var nextWeapon = DataManager.Instance.GetNextWeapon(weapon.BaseData.grade, weapon.BaseData.rank);
-            return nextWeapon != weapon.BaseData ? nextWeapon : null; // 자기 자신 반환 방지
+            return nextWeapon != weapon.BaseData ? nextWeapon : null;
         }
         else if (equipment is Accessory accessory)
         {
             var nextAccessory = DataManager.Instance.GetNextAccessory(accessory.BaseData.grade, accessory.BaseData.rank);
-            return nextAccessory != accessory.BaseData ? nextAccessory : null; // 자기 자신 반환 방지
+            return nextAccessory != accessory.BaseData ? nextAccessory : null;
         }
 
         return null;
@@ -288,7 +266,6 @@ public class EquipmentFusionPopupUI : UIBase
     {
         if (materialCount <= 0)
         {
-            Debug.LogWarning("[PerformFusion] 합성 조건을 충족하지 않음.");
             return;
         }
 
@@ -298,13 +275,8 @@ public class EquipmentFusionPopupUI : UIBase
 
         if (success)
         {
-            Debug.Log("[PerformFusion] 합성 성공!");
             InitializeUI();
-        }
-        else
-        {
-            Debug.LogWarning("[PerformFusion] 합성 실패!");
-        }
+        }        
     }
 
     private void ClosePopup()

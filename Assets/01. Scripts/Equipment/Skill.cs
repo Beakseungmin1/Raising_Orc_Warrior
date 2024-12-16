@@ -16,7 +16,7 @@ public class Skill : IFusable
     {
         BaseData = baseData;
         EnhancementLevel = 0;
-        StackCount = 1; // 기본 스택 수
+        StackCount = 1;
         Cooldown = baseData.cooldown;
         DamagePercent = baseData.damagePercent;
         BuffDuration = baseData.buffDuration;
@@ -47,7 +47,7 @@ public class Skill : IFusable
 
     private void UpdateSkillEffects()
     {
-        Cooldown = Mathf.Max(0.5f, BaseData.cooldown - EnhancementLevel * 0.1f); // 최소 쿨타임 0.5초
+        Cooldown = Mathf.Max(0.5f, BaseData.cooldown - EnhancementLevel * 0.1f);
         DamagePercent = BaseData.damagePercent + EnhancementLevel * 0.05f;
         BuffDuration = BaseData.buffDuration + EnhancementLevel * 0.2f;
     }

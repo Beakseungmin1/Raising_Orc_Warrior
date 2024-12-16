@@ -303,6 +303,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1314510443955223869, guid: c04e37576c7eebe478462b9b0788215f, type: 3}
   m_PrefabInstance: {fileID: 57816613}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &479796627 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 951958769847937792, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
+  m_PrefabInstance: {fileID: 791613968}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &480310107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -646,15 +651,15 @@ PrefabInstance:
     - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: mapCenter
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 479796627}
     - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: playerPosition
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 479796627}
     - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: projectileSpawnPoint
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 479796627}
     - target: {fileID: 2886391991821839703, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: m_Name
       value: SkillEffectManager
