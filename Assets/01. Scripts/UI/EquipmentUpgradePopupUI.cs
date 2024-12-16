@@ -120,7 +120,7 @@ public class EquipmentUpgradePopupUI : UIBase
         progressSlider.value = Mathf.Clamp01((float)(actualStackCount - 1) / requiredAmount);
 
         upgradeCostTxt.text = currentItem.RequiredCurrencyForUpgrade.ToString();
-        curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency<float>(CurrencyType.Cube).ToString();
+        curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Cube).ToString();
         curCubeIcon.sprite = currentItem.BaseData.currencyIcon;
 
         UpdateEquipButtonState();
