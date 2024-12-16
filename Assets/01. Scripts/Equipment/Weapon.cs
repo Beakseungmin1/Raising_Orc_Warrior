@@ -67,29 +67,32 @@ public class Weapon : IFusable
     public bool Fuse(int materialCount)
     {
         var inventory = PlayerObjManager.Instance.Player.inventory;
-        var existingItem = inventory.WeaponInventory.GetItem(BaseData.itemName);
 
-        if (existingItem == null || existingItem.StackCount < materialCount)
+        int requiredCount = BaseData.requireFuseItemCount;
+        int totalRequiredMaterials = materialCount * requiredCount;
+
+        var existingItem = inventory.WeaponInventory.GetItem(BaseData.itemName);
+        if (existingItem == null || existingItem.StackCount < totalRequiredMaterials)
         {
+            Debug.LogWarning("[Fuse] 무기 재료가 부족합니다.");
             return false;
         }
 
-        existingItem.RemoveStack(materialCount);
-
-        bool fusionSuccess = false;
+        existingItem.RemoveStack(totalRequiredMaterials);
 
         for (int i = 0; i < materialCount; i++)
         {
             var nextWeaponData = DataManager.Instance.GetNextWeapon(BaseData.grade, BaseData.rank);
 
-            if (nextWeaponData != null)
+            if (nextWeaponData is WeaponDataSO weaponDataSO)
             {
-                inventory.AddItemToInventory(nextWeaponData);
-                fusionSuccess = true;
+                // AddItemToInventory에 BaseItemDataSO만 전달
+                inventory.AddItemToInventory(weaponDataSO);
             }
         }
 
-        return fusionSuccess;
+        Debug.Log($"[Fuse] 무기 {materialCount}회 합성 완료");
+        return true;
     }
 
     public void AddStack(int count)

@@ -41,18 +41,33 @@ public class TestItemSetup : MonoBehaviour
         playerInventory.AddItemToInventory(weapon1);
         playerInventory.AddItemToInventory(weapon1);
         playerInventory.AddItemToInventory(weapon1);
+        playerInventory.AddItemToInventory(weapon1);
+        playerInventory.AddItemToInventory(weapon1);
+        playerInventory.AddItemToInventory(weapon1);
         playerInventory.AddItemToInventory(weapon2);
         playerInventory.AddItemToInventory(weapon3);
         playerInventory.AddItemToInventory(weapon4);
         playerInventory.AddItemToInventory(weapon5);
         playerInventory.AddItemToInventory(weapon5);
         playerInventory.AddItemToInventory(weapon5);
+        playerInventory.AddItemToInventory(weapon5);
+        playerInventory.AddItemToInventory(weapon5);
 
         // 악세사리 추가
+        playerInventory.AddItemToInventory(accessory1);
+        playerInventory.AddItemToInventory(accessory1);
+        playerInventory.AddItemToInventory(accessory1);
+        playerInventory.AddItemToInventory(accessory1);
+        playerInventory.AddItemToInventory(accessory1);
         playerInventory.AddItemToInventory(accessory1);
         playerInventory.AddItemToInventory(accessory2);
         playerInventory.AddItemToInventory(accessory3);
         playerInventory.AddItemToInventory(accessory4);
+        playerInventory.AddItemToInventory(accessory5);
+        playerInventory.AddItemToInventory(accessory5);
+        playerInventory.AddItemToInventory(accessory5);
+        playerInventory.AddItemToInventory(accessory5);
+        playerInventory.AddItemToInventory(accessory5);
         playerInventory.AddItemToInventory(accessory5);
 
         Debug.Log("테스트 아이템이 인벤토리에 추가되었습니다.");

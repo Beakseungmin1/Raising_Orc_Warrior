@@ -62,6 +62,7 @@ public class EquipmentUpgradePopupUI : UIBase
         {
             Debug.LogError("SetEquipmentData: equipment is null!");
             DisableEnhanceAndEquipButtons();
+            fusionBtn.gameObject.SetActive(false); // 합성 버튼 비활성화
             return;
         }
 
@@ -83,6 +84,28 @@ public class EquipmentUpgradePopupUI : UIBase
         InitializeUI(); // UI 업데이트
         UpdateEquipButtonState(); // 장착 상태 동기화
         UpdateNavigationButtons(); // 화살표 상태 업데이트
+
+        // 마지막 등급 여부 확인 → 합성 버튼 숨기기
+        var nextEquipment = GetNextEquipmentData(currentItem as IFusable);
+        fusionBtn.gameObject.SetActive(nextEquipment != null);
+    }
+
+    private BaseItemDataSO GetNextEquipmentData(IFusable equipment)
+    {
+        if (equipment == null) return null;
+
+        if (equipment is Weapon weapon)
+        {
+            var nextWeapon = DataManager.Instance.GetNextWeapon(weapon.BaseData.grade, weapon.BaseData.rank);
+            return nextWeapon != weapon.BaseData ? nextWeapon : null; // 자기 자신 반환 방지
+        }
+        else if (equipment is Accessory accessory)
+        {
+            var nextAccessory = DataManager.Instance.GetNextAccessory(accessory.BaseData.grade, accessory.BaseData.rank);
+            return nextAccessory != accessory.BaseData ? nextAccessory : null; // 자기 자신 반환 방지
+        }
+
+        return null;
     }
 
     private void InitializeUI()
