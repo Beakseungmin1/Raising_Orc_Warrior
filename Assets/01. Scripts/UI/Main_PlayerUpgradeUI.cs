@@ -21,7 +21,7 @@ public class Main_PlayerUpgradeUI : UIBase
                 Debug.Log("동료캔버스열기");
                 break;
             case 4:
-                Debug.Log("모험캔버스열기");
+                UIManager.Instance.Show<Main_DungeonUI>();
                 break;
             case 5:
                 UIManager.Instance.Show<Main_ShopUI>();
