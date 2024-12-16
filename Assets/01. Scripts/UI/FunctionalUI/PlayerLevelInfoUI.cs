@@ -37,7 +37,7 @@ public class PlayerLevelInfoUI : MonoBehaviour
             BigInteger needExp = stat.needExp;
 
             //현재 경험치가 총경험치의 몇% 인지 계산
-            float percentage = needExp > 0 ? (float)(currentExp / needExp) * 100 : 0;
+            float percentage = needExp > 0 ? (float)((double)currentExp / (double)needExp) * 100 : 0;
 
             //경험치 표시가 100% 을 넘어가지 못하게함
             float ExppercentTxt = percentage >= 100 ? 100 : percentage;
