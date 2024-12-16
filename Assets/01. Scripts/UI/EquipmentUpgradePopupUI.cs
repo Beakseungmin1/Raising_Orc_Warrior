@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using System.Collections.Generic;
 
 public class EquipmentUpgradePopupUI : UIBase
 {
@@ -64,7 +65,19 @@ public class EquipmentUpgradePopupUI : UIBase
             return;
         }
 
-        currentItem = equipment; // 현재 아이템 설정
+        // 인벤토리에서 최신 데이터 가져오기
+        var inventory = PlayerObjManager.Instance.Player.inventory;
+        if (isWeaponType)
+        {
+            var weapon = inventory.WeaponInventory.GetAllItems().FirstOrDefault(item => item.BaseData == equipment.BaseData);
+            currentItem = weapon ?? equipment; // 최신 데이터가 있으면 갱신
+        }
+        else
+        {
+            var accessory = inventory.AccessoryInventory.GetAllItems().FirstOrDefault(item => item.BaseData == equipment.BaseData);
+            currentItem = accessory ?? equipment; // 최신 데이터가 있으면 갱신
+        }
+
         isWeapon = isWeaponType;
 
         InitializeUI(); // UI 업데이트
@@ -107,7 +120,7 @@ public class EquipmentUpgradePopupUI : UIBase
         progressSlider.value = Mathf.Clamp01((float)(actualStackCount - 1) / requiredAmount);
 
         upgradeCostTxt.text = currentItem.RequiredCurrencyForUpgrade.ToString();
-        curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency<float>(CurrencyType.Cube).ToString();
+        curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Cube).ToString();
         curCubeIcon.sprite = currentItem.BaseData.currencyIcon;
 
         UpdateEquipButtonState();
@@ -258,14 +271,40 @@ public class EquipmentUpgradePopupUI : UIBase
     {
         if (currentItem == null || !currentItem.CanEnhance())
         {
+            Debug.LogError("강화할 아이템이 없거나 조건을 만족하지 않습니다.");
             return;
         }
 
-        bool success = currentItem.Enhance();
+        var inventory = PlayerObjManager.Instance.Player.inventory;
+
+        bool success = false;
+
+        if (isWeapon)
+        {
+            var weapon = inventory.WeaponInventory.GetAllItems()
+                .FirstOrDefault(item => item.BaseData == currentItem.BaseData);
+
+            if (weapon != null && weapon.Enhance())
+            {
+                currentItem = weapon; // 강화된 아이템을 다시 currentItem에 반영
+                success = true;
+            }
+        }
+        else
+        {
+            var accessory = inventory.AccessoryInventory.GetAllItems()
+                .FirstOrDefault(item => item.BaseData == currentItem.BaseData);
+
+            if (accessory != null && accessory.Enhance())
+            {
+                currentItem = accessory; // 강화된 아이템을 다시 currentItem에 반영
+                success = true;
+            }
+        }
 
         if (success)
         {
-            InitializeUI();
+            SetEquipmentData(currentItem, isWeapon); // UI 갱신
         }
     }
 
@@ -319,87 +358,70 @@ public class EquipmentUpgradePopupUI : UIBase
 
     private void SelectPreviousItem()
     {
-        var inventory = PlayerObjManager.Instance.Player.inventory;
+        var dataList = GetSortedItemList();
 
-        if (isWeapon)
+        // 현재 아이템의 인덱스 찾기
+        int currentIndex = dataList.IndexOf(currentItem.BaseData);
+
+        // 이전 아이템 설정
+        if (currentIndex > 0)
         {
-            var weaponList = inventory.WeaponInventory.GetAllItems(); // 실제 무기 데이터 가져오기
-            int currentIndex = weaponList.IndexOf((Weapon)currentItem);
-
-            if (currentIndex > 0)
-            {
-                currentItem = weaponList[currentIndex - 1]; // 이전 무기로 이동
-                SetEquipmentData(currentItem, true);
-            }
-        }
-        else
-        {
-            var accessoryList = inventory.AccessoryInventory.GetAllItems(); // 실제 악세사리 데이터 가져오기
-            int currentIndex = accessoryList.IndexOf((Accessory)currentItem);
-
-            if (currentIndex > 0)
-            {
-                currentItem = accessoryList[currentIndex - 1]; // 이전 악세사리로 이동
-                SetEquipmentData(currentItem, false);
-            }
+            var newBaseData = dataList[currentIndex - 1];
+            currentItem = FindItemInInventoryOrDefault(newBaseData);
+            SetEquipmentData(currentItem, isWeapon);
         }
 
         UpdateNavigationButtons();
-        UpdateEquipButtonState();
     }
 
     private void SelectNextItem()
     {
-        var inventory = PlayerObjManager.Instance.Player.inventory;
+        var dataList = GetSortedItemList();
 
-        if (isWeapon)
+        // 현재 아이템의 인덱스 찾기
+        int currentIndex = dataList.IndexOf(currentItem.BaseData);
+
+        // 다음 아이템 설정
+        if (currentIndex < dataList.Count - 1)
         {
-            var weaponList = inventory.WeaponInventory.GetAllItems(); // 실제 무기 데이터 가져오기
-            int currentIndex = weaponList.IndexOf((Weapon)currentItem);
-
-            if (currentIndex < weaponList.Count - 1)
-            {
-                currentItem = weaponList[currentIndex + 1]; // 다음 무기로 이동
-                SetEquipmentData(currentItem, true);
-            }
-        }
-        else
-        {
-            var accessoryList = inventory.AccessoryInventory.GetAllItems(); // 실제 악세사리 데이터 가져오기
-            int currentIndex = accessoryList.IndexOf((Accessory)currentItem);
-
-            if (currentIndex < accessoryList.Count - 1)
-            {
-                currentItem = accessoryList[currentIndex + 1]; // 다음 악세사리로 이동
-                SetEquipmentData(currentItem, false);
-            }
+            var newBaseData = dataList[currentIndex + 1];
+            currentItem = FindItemInInventoryOrDefault(newBaseData);
+            SetEquipmentData(currentItem, isWeapon);
         }
 
         UpdateNavigationButtons();
-        UpdateEquipButtonState();
     }
 
     private void UpdateNavigationButtons()
     {
-        // 데이터 리스트 가져오기
-        var dataList = isWeapon
-            ? DataManager.Instance.GetAllWeapons()
-                .OrderBy(item => item.grade)
-                .ThenByDescending(item => item.rank)
-                .Cast<BaseItemDataSO>()
-                .ToList()
-            : DataManager.Instance.GetAllAccessories()
-                .OrderBy(item => item.grade)
-                .ThenByDescending(item => item.rank)
-                .Cast<BaseItemDataSO>()
-                .ToList();
+        // DataManager에서 모든 아이템 데이터 가져오기
+        var dataList = GetSortedItemList();
 
-        // 현재 아이템의 인덱스 계산
-        int currentIndex = dataList.FindIndex(item => item == currentItem.BaseData);
+        // 현재 아이템의 인덱스 찾기
+        int currentIndex = dataList.IndexOf(currentItem.BaseData);
 
         // 버튼 상태 업데이트
-        leftArrowBtn.gameObject.SetActive(currentIndex > 0);               // 첫 번째 아이템에서 왼쪽 버튼 숨김
-        rightArrowBtn.gameObject.SetActive(currentIndex < dataList.Count - 1); // 마지막 아이템에서 오른쪽 버튼 숨김
+        leftArrowBtn.gameObject.SetActive(currentIndex > 0);
+        rightArrowBtn.gameObject.SetActive(currentIndex < dataList.Count - 1);
+    }
+
+    private IEnhanceable FindItemInInventoryOrDefault(BaseItemDataSO baseData)
+    {
+        var inventory = PlayerObjManager.Instance.Player.inventory;
+
+        // 인벤토리에서 실제 객체 찾기
+        if (isWeapon)
+        {
+            var weapon = inventory.WeaponInventory.GetAllItems()
+                .FirstOrDefault(item => item.BaseData == baseData);
+            return weapon ?? new Weapon((WeaponDataSO)baseData);
+        }
+        else
+        {
+            var accessory = inventory.AccessoryInventory.GetAllItems()
+                .FirstOrDefault(item => item.BaseData == baseData);
+            return accessory ?? new Accessory((AccessoryDataSO)baseData);
+        }
     }
 
     private IEnhanceable CreateEnhanceableItem(BaseItemDataSO baseItemData)
@@ -413,5 +435,12 @@ public class EquipmentUpgradePopupUI : UIBase
             return new Accessory(accessoryData);
         }
         return null;
+    }
+
+    private List<BaseItemDataSO> GetSortedItemList()
+    {
+        return isWeapon
+            ? DataManager.Instance.GetAllWeapons().OrderBy(item => item.grade).ThenByDescending(item => item.rank).Cast<BaseItemDataSO>().ToList()
+            : DataManager.Instance.GetAllAccessories().OrderBy(item => item.grade).ThenByDescending(item => item.rank).Cast<BaseItemDataSO>().ToList();
     }
 }

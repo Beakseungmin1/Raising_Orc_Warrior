@@ -1,5 +1,4 @@
-public interface IFusable
+public interface IFusable : IEnhanceable
 {
-    BaseItemDataSO BaseData { get; }
     bool Fuse(int materialCount);
 }

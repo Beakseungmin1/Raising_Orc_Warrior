@@ -1,11 +1,10 @@
 using UnityEngine;
 
 [System.Serializable]
-public class Weapon : IEnhanceable, IFusable, IStackable
+public class Weapon : IFusable
 {
     public WeaponDataSO BaseData { get; private set; }
     BaseItemDataSO IEnhanceable.BaseData => BaseData;
-    BaseItemDataSO IFusable.BaseData => BaseData;
     public int Rank => BaseData.rank;
     public int EnhancementLevel { get; private set; }
     public int StackCount { get; internal set; }
@@ -29,7 +28,7 @@ public class Weapon : IEnhanceable, IFusable, IStackable
 
     public bool CanEnhance()
     {
-        return CurrencyManager.Instance.GetCurrency<float>(CurrencyType.Cube) >= RequiredCurrencyForUpgrade
+        return CurrencyManager.Instance.GetCurrency(CurrencyType.Cube) >= RequiredCurrencyForUpgrade
                && EnhancementLevel < 100;
     }
 

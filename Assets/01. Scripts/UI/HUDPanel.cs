@@ -24,14 +24,14 @@ public class HUDPanel : UIBase
         stat = PlayerObjManager.Instance.Player.stat;
 
         stat.UpdateLevelStatUI += UpdateTopInformatinBar;
-        stat.UpdateLevelStatUI.Invoke();
+        stat.UpdateLevelStatUI?.Invoke();
     }
 
     public void ShowPlayerInfoPopupUI()
     {
         UIManager.Instance.Show<DimmedUI>();
         UIManager.Instance.Show<PlayerInfoPopupUI>();
-        stat.UpdateUserInformationUI.Invoke();
+        stat.UpdateUserInformationUI?.Invoke();
     }
 
     public void UpdateTopInformatinBar()

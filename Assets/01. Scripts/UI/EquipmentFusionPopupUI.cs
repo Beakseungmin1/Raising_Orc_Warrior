@@ -92,7 +92,7 @@ public class EquipmentFusionPopupUI : UIBase
         UpdateFusionButtonState();
 
         // 현재 재화 표시
-        curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency<float>(CurrencyType.Cube).ToString();
+        curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Cube).ToString();
     }
 
     private void UpdateMaterialCount()

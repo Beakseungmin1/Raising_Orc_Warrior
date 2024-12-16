@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ public class EquipmentInventorySlotManager : UIBase
     [Header("Tabs")]
     [SerializeField] private Button weaponTabButton;
     [SerializeField] private Button accessoryTabButton;
+
+    [SerializeField] private Button batchFusionBtn;
 
     private List<EquipmentInventorySlot> inventorySlots = new List<EquipmentInventorySlot>();
     private PlayerInventory playerInventory;
@@ -26,6 +29,7 @@ public class EquipmentInventorySlotManager : UIBase
 
         weaponTabButton.onClick.AddListener(() => ShowTab(true));
         accessoryTabButton.onClick.AddListener(() => ShowTab(false));
+        batchFusionBtn.onClick.AddListener(PerformBatchFusion);
 
         InitializeSlots();
         playerInventory.OnInventoryChanged += UpdateInventorySlots;
@@ -127,6 +131,58 @@ public class EquipmentInventorySlotManager : UIBase
             {
                 slot.gameObject.SetActive(false);
             }
+        }
+    }
+
+    private void PerformBatchFusion()
+    {
+        var itemList = isWeaponTabActive
+            ? playerInventory.WeaponInventory.GetAllItems().Cast<IFusable>().ToList()
+            : playerInventory.AccessoryInventory.GetAllItems().Cast<IFusable>().ToList();
+
+        bool anyFusionPerformed = false;
+
+        foreach (var item in itemList)
+        {
+            if (item == null)
+                continue;
+
+            int stackCount = item.StackCount;
+            int requiredCount = 0;
+
+            // BaseDataSO에서 필요한 Fuse 카운트 가져오기
+            if (item.BaseData is WeaponDataSO weaponData)
+            {
+                requiredCount = weaponData.requireFuseItemCount;
+            }
+            else if (item.BaseData is AccessoryDataSO accessoryData)
+            {
+                requiredCount = accessoryData.requireFuseItemCount;
+            }
+
+            // 최대 합성 가능 횟수 계산
+            int maxFusionCount = stackCount / requiredCount;
+
+            if (maxFusionCount > 0)
+            {
+                // 합성 실행
+                bool success = item.Fuse(maxFusionCount * requiredCount);
+                if (success)
+                {
+                    Debug.Log($"{item.BaseData.itemName}: {maxFusionCount}회 합성 완료");
+                    anyFusionPerformed = true;
+                }
+            }
+        }
+
+        if (anyFusionPerformed)
+        {
+            Debug.Log("일괄 합성 완료!");
+            UpdateInventorySlots(isWeaponTabActive); // UI 갱신
+        }
+        else
+        {
+            Debug.Log("합성 가능한 아이템이 없습니다.");
         }
     }
 }

@@ -1,11 +1,10 @@
 using UnityEngine;
 
 [System.Serializable]
-public class Skill : IEnhanceable, IFusable, IStackable
+public class Skill : IFusable
 {
     public SkillDataSO BaseData { get; private set; }
     BaseItemDataSO IEnhanceable.BaseData => BaseData;
-    BaseItemDataSO IFusable.BaseData => BaseData;
     public int EnhancementLevel { get; private set; }
     public int StackCount { get; internal set; }
     public float Cooldown { get; private set; }
@@ -26,7 +25,7 @@ public class Skill : IEnhanceable, IFusable, IStackable
 
     public bool CanEnhance()
     {
-        return CurrencyManager.Instance.GetCurrency<float>(CurrencyType.Emerald) >= RequiredCurrencyForUpgrade
+        return CurrencyManager.Instance.GetCurrency(CurrencyType.Emerald) >= RequiredCurrencyForUpgrade
                && StackCount >= BaseData.requireSkillCardsForUpgrade
                && EnhancementLevel < 100;
     }
