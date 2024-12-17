@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class QuestPopupUI : UIBase
 {
-    // Start is called before the first frame update
-    void Start()
+    public void ExitBtn()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        UIManager.Instance.Hide<DimmedUI>();
+        Hide();
     }
 }
