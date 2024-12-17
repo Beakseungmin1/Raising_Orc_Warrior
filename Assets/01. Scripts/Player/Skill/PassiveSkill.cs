@@ -4,8 +4,6 @@ public class PassiveSkill : BaseSkill
 {
     private float periodicTimer = 0f;
 
-    public PassiveSkill(SkillDataSO data, PlayerStat stat) : base(data, stat) { }
-
     public override void Update()
     {
         base.Update();
