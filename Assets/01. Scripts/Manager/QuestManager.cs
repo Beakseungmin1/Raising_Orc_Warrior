@@ -33,6 +33,13 @@ public class QuestManager : Singleton<QuestManager>
         }
     }
 
+    private void ChangeQuestState(string id, QuestState state)
+    {
+        Quest quest = GetQuestById(id);
+        quest.state = state;
+        GameEventsManager.Instance.questEvents.QuestStateChange(quest);
+    }
+
 
     private void StartQuest(string id)
     {
