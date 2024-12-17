@@ -1065,6 +1065,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1823932295}
     - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
+      propertyPath: playerWeaponPosition
+      value: 
+      objectReference: {fileID: 1823932295}
+    - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: projectileSpawnPoint
       value: 
       objectReference: {fileID: 1823932295}

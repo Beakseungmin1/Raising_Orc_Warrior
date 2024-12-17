@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class SkillEffectManager : Singleton<SkillEffectManager>
 {
-    public Transform playerWeaponPosition;
-    public Transform mapCenter;
+    public Transform playerWeaponPosition; // 플레이어 무기 위치
+    public Transform mapCenter; // 맵 중심 위치
 
     private void Awake()
     {
@@ -47,16 +47,18 @@ public class SkillEffectManager : Singleton<SkillEffectManager>
             return;
         }
 
+        // 무기 위치에 이펙트 생성
         GameObject effectObj = Instantiate(effect.SkillPrefab, playerWeaponPosition.position, Quaternion.identity);
-        Debug.Log($"SkillEffectManager: 플레이어 무기 이펙트 생성 완료.");
+        Debug.Log($"SkillEffectManager: 플레이어 무기 이펙트 생성 완료 - 버프 지속시간: {effect.BuffDuration}초");
 
         Destroy(effectObj, effect.BuffDuration);
     }
 
     private void ApplyAreaEffect(SkillEffect effect)
     {
+        // 번개처럼 떨어지는 이펙트 생성
         GameObject effectObj = Instantiate(effect.SkillPrefab, effect.TargetPosition, Quaternion.identity);
-        Debug.Log($"SkillEffectManager: 번개처럼 떨어지는 이펙트 생성 완료 - 범위: {effect.EffectRange}");
+        Debug.Log($"SkillEffectManager: 번개 이펙트 생성 완료 - 범위: {effect.EffectRange}, 지속시간: {effect.BuffDuration}초");
 
         Destroy(effectObj, effect.BuffDuration);
     }

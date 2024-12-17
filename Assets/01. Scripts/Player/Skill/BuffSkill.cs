@@ -5,8 +5,6 @@ public class BuffSkill : BaseSkill
 {
     private bool isBuffActive = false;
 
-    public BuffSkill(SkillDataSO data, PlayerStat stat) : base(data, stat) { }
-
     public override void Activate(Vector3 targetPosition)
     {
         if (!IsReadyToActivate() || isBuffActive || !ConsumeMana()) return;
