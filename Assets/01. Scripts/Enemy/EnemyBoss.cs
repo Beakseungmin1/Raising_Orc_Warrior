@@ -25,6 +25,8 @@ public class EnemyBoss : MonoBehaviour , IDamageable , IEnemy
 
     public Action OnEnemyDeath;
 
+    public Action OnEnemyAttack;
+
     private PlayerBattle player;
 
     private int Hitcounter = 0;
@@ -34,10 +36,10 @@ public class EnemyBoss : MonoBehaviour , IDamageable , IEnemy
         OnEnemyDeath += RegenManager.Instance.EnemyKilled;
     }
 
-    //private void Start()
-    //{
-    //    SetupEnemy();
-    //}
+    private void Start()
+    {
+        OnEnemyAttack += EnemyAttack;
+    }
 
     public void TakeDamage(BigInteger Damage)
     {
@@ -57,7 +59,7 @@ public class EnemyBoss : MonoBehaviour , IDamageable , IEnemy
         }
     }
 
-    public void MonsterAttack()
+    public void EnemyAttack()
     {
         if (player != null && player.GetActive())
         {
