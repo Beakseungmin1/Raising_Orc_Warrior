@@ -35,6 +35,8 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         playerStat = GetComponent<PlayerStat>();
         animator = GetComponentInChildren<Animator>();
         currentState = State.Idle;
+
+        OnPlayerAttack += GiveDamageToEnemy;
     }
 
     private void Update()
@@ -53,6 +55,8 @@ public class PlayerBattle : MonoBehaviour, IDamageable
                 }
                 break;
             case State.Dead:
+                animator.SetBool("isDeath", true);
+                animator.SetTrigger("4_Death");
                 BattleManager.Instance.StartBattle();
                 break;
         }
@@ -66,7 +70,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         if (playerStat.health <= 0)
         {
             currentState = State.Dead;
-            //animator.SetTrigger("Die"); // 사망 애니메이션 재생
         }
     }
 
@@ -84,7 +87,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         if (playerStat.health <= 0)
         {
             currentState = State.Dead;
-            //animator.SetTrigger("Die"); // 사망 애니메이션 재생
         }
     }
 
@@ -93,15 +95,18 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     {
         if (currentMonster != null && currentMonster.GetActive())
         {
-            totalDamage = PlayerDamageCalculator.GetTotalDamage();
-
             animator.SetTrigger("2_Attack");
-            // 공격 애니메이션 재생예정
-            // animator.SetTrigger("Attack");
-            currentMonster.TakeDamage(totalDamage);
-
         }
     }
+
+    public void GiveDamageToEnemy()
+    {
+        totalDamage = PlayerDamageCalculator.GetTotalDamage();
+
+        currentMonster.TakeDamage(totalDamage);
+    }
+
+
 
     public void GetMonsterReward()
     {

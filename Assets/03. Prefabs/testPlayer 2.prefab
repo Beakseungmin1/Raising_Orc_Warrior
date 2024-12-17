@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d3a3a27b79e3e4a87abd26e2c26bb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  background: {fileID: 0}
   activeBuffSkills: []
   animator: {fileID: 0}
 --- !u!114 &1201181367610977052
@@ -165,10 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d43556e2f144da4aafc412f9f8952af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TotalDamage: 0
   basicDamage: 10
-  WeaponIncreaseDamage: 0
-  SkillIncreaseDamage: 0
 --- !u!50 &4312387512106555360
 Rigidbody2D:
   serializedVersion: 4
@@ -209,7 +207,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equippedSkills: []
-  skillEffectManager: {fileID: 0}
 --- !u!114 &1563228336020366224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,10 +354,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6454175588761340481, guid: c0bda75594cb6584e94d98eed8b3d60d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8874002599582539378}
   m_SourcePrefab: {fileID: 100100000, guid: c0bda75594cb6584e94d98eed8b3d60d, type: 3}
 --- !u!224 &901335709359848653 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5029199488942323556, guid: c0bda75594cb6584e94d98eed8b3d60d, type: 3}
   m_PrefabInstance: {fileID: 5280890882705263529}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1213905675971789288 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6454175588761340481, guid: c0bda75594cb6584e94d98eed8b3d60d, type: 3}
+  m_PrefabInstance: {fileID: 5280890882705263529}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8874002599582539378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213905675971789288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52e78875473be2458efb2ec868d7881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 3124620342091247500}
+  enemy: {fileID: 0}
