@@ -9,10 +9,44 @@ public class QuestManager : Singleton<QuestManager>
     private void Awake()
     {
         questMap = CreateQuestMap();
+    }
 
-        Quest quest = GetQuestById("KillEnemiesQuest");
-        Debug.Log(quest.info.displayName);
-        Debug.Log(quest.state);
+    private void OnEnable()
+    {
+        GameEventsManager.Instance.questEvents.onStartQuest += StartQuest;
+        GameEventsManager.Instance.questEvents.onAdvanceQuest += AdvanceQuest;
+        GameEventsManager.Instance.questEvents.onFinishQuest += FinishQuest;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.questEvents.onStartQuest -= StartQuest;
+        GameEventsManager.Instance.questEvents.onAdvanceQuest -= AdvanceQuest;
+        GameEventsManager.Instance.questEvents.onFinishQuest -= FinishQuest;
+    }
+
+    private void Start()
+    {
+        foreach (Quest quest in questMap.Values)
+        {
+            GameEventsManager.Instance.questEvents.QuestStateChange(quest);
+        }
+    }
+
+
+    private void StartQuest(string id)
+    {
+        Debug.Log("Start Quest: " + id);
+    }
+
+    private void AdvanceQuest(string id)
+    {
+        Debug.Log("Advance Quest: " + id);
+    }
+
+    private void FinishQuest(string id)
+    {
+        Debug.Log("Finish Quest: " + id);
     }
 
     private Dictionary<string, Quest> CreateQuestMap()
