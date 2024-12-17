@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
@@ -23,7 +24,10 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     public List<Skill> activeBuffSkills = new List<Skill>(); // 현재 활성화된 버프 스킬 리스트
     public Animator animator;
 
-    private Enemy currentMonster; // 현재 공격 중인 몬스터
+    public Action onPlayerAttack;
+
+
+    private IEnemy currentMonster; // 현재 공격 중인 몬스터
 
     private void Start()
     {
@@ -121,7 +125,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     {
         if (collision.CompareTag("Monster"))
         {
-            currentMonster = collision.GetComponent<Enemy>();
+            currentMonster = collision.GetComponent<IEnemy>();
             currentState = State.Attacking;
         }
     }

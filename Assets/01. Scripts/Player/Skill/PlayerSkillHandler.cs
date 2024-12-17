@@ -3,12 +3,7 @@ using UnityEngine;
 
 public class PlayerSkillHandler : MonoBehaviour
 {
-    public List<Skill> equippedSkills;
-    private float[] cooldownTimers;
-    private int[] hitCounters; // 누락된 hitCounters 추가
-
-    public SkillEffectManager skillEffectManager;
-
+    public List<BaseSkill> equippedSkills; // 장착된 스킬 목록
     private EquipManager equipManager;
     private PlayerStat playerStat;
 
@@ -19,90 +14,53 @@ public class PlayerSkillHandler : MonoBehaviour
 
         if (equipManager == null || playerStat == null)
         {
+            Debug.LogError("PlayerSkillHandler: EquipManager나 PlayerStat을 찾을 수 없습니다.");
             return;
         }
 
-        InitializeSkillHandler();
         SyncWithEquipManager();
     }
 
-    private void InitializeSkillHandler()
+    private void Update()
     {
-        equippedSkills = new List<Skill>();
-        cooldownTimers = new float[0];
-        hitCounters = new int[0]; // hitCounters 초기화
+        UpdateSkills();
     }
 
     public void SyncWithEquipManager()
     {
         equippedSkills = equipManager.GetAllEquippedSkills();
 
-        cooldownTimers = new float[equippedSkills.Count];
-        hitCounters = new int[equippedSkills.Count]; // hitCounters 배열 동기화
-
-        for (int i = 0; i < equippedSkills.Count; i++)
+        foreach (var skill in equippedSkills)
         {
-            cooldownTimers[i] = 0f;
-            hitCounters[i] = 0; // 각 스킬의 hitCounters 초기화
+            if (skill != null)
+                skill.Initialize(skill.SkillData, playerStat);
         }
     }
 
-    private void Update()
+    private void UpdateSkills()
     {
-        UpdateCooldowns();
-    }
-
-    private void UpdateCooldowns()
-    {
-        for (int i = 0; i < cooldownTimers.Length; i++)
+        foreach (var skill in equippedSkills)
         {
-            if (cooldownTimers[i] > 0)
-                cooldownTimers[i] -= Time.deltaTime;
+            if (skill != null)
+                skill.Update();
         }
     }
 
-    public void UseSkill(Skill skill, Vector3 targetPosition)
+    public void UseSkill(BaseSkill skill, Vector3 targetPosition)
     {
-        if (skill == null)
+        if (skill == null || !skill.IsReadyToActivate())
         {
+            Debug.Log($"{skill?.SkillData.itemName} 스킬은 아직 준비되지 않았습니다.");
             return;
         }
 
-        int skillIndex = equippedSkills.IndexOf(skill);
-        if (skillIndex < 0 || cooldownTimers[skillIndex] > 0)
-        {
-            return;
-        }
-
-        if (skill.BaseData.manaCost > playerStat.GetMana())
-        {
-            return;
-        }
-
-        skillEffectManager.TriggerEffect(skill, targetPosition);
-
-        hitCounters[skillIndex]++;
-
-        cooldownTimers[skillIndex] = skill.BaseData.cooldown;
-        playerStat.reduceMana(skill.BaseData.manaCost);
+        skill.Activate(targetPosition);
     }
 
-    public int GetHitCount(Skill skill)
+    public void RegisterHit(BaseSkill skill)
     {
-        int skillIndex = equippedSkills.IndexOf(skill);
-        if (skillIndex < 0)
-        {
-            return 0;
-        }
-        return hitCounters[skillIndex];
-    }
+        if (skill == null) return;
 
-    public void ResetHitCounter(Skill skill)
-    {
-        int skillIndex = equippedSkills.IndexOf(skill);
-        if (skillIndex >= 0)
-        {
-            hitCounters[skillIndex] = 0;
-        }
+        skill.RegisterHit();
     }
 }

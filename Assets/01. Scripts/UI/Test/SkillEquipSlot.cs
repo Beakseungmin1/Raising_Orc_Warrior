@@ -6,7 +6,7 @@ public class SkillEquipSlot : UIBase
     [SerializeField] private Image skillIcon;
     [SerializeField] private Button slotButton;
 
-    private Skill equippedSkill;
+    private BaseSkill equippedSkill; // Skill → BaseSkill
     private int slotIndex;
     private SkillEquipSlotManager slotManager;
 
@@ -24,17 +24,17 @@ public class SkillEquipSlot : UIBase
         slotButton.onClick.AddListener(OnClickSlot);
     }
 
-    public void EquipSkill(Skill skill)
+    public void EquipSkill(BaseSkill skill) // Skill → BaseSkill
     {
         equippedSkill = skill;
-        skillIcon.sprite = skill?.BaseData.icon;
+        skillIcon.sprite = skill?.SkillData.icon;
 
         UpdateSlotColor(equipped: skill != null);
 
-        Debug.Log($"[SkillEquipSlot] 슬롯 {slotIndex}에 {equippedSkill?.BaseData.itemName ?? "스킬 없음"}이 장착되었습니다.");
+        Debug.Log($"[SkillEquipSlot] 슬롯 {slotIndex}에 {equippedSkill?.SkillData.itemName ?? "스킬 없음"}이 장착되었습니다.");
     }
 
-    public Skill GetEquippedSkill()
+    public BaseSkill GetEquippedSkill() // 반환 타입 수정
     {
         return equippedSkill;
     }
@@ -48,7 +48,7 @@ public class SkillEquipSlot : UIBase
         }
         else if (equippedSkill != null)
         {
-            Debug.Log($"[SkillEquipSlot] {equippedSkill.BaseData.itemName} 스킬 발동!");
+            Debug.Log($"[SkillEquipSlot] {equippedSkill.SkillData.itemName} 스킬 발동!");
             ActivateSkill();
         }
         else

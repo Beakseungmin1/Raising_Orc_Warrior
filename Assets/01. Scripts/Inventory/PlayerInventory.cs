@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public GenericInventory<Skill> SkillInventory { get; private set; }
+    public GenericInventory<BaseSkill> SkillInventory { get; private set; } // Skill → BaseSkill
     public GenericInventory<Weapon> WeaponInventory { get; private set; }
     public GenericInventory<Accessory> AccessoryInventory { get; private set; }
 
@@ -12,7 +12,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void Awake()
     {
-        SkillInventory = new GenericInventory<Skill>();
+        SkillInventory = new GenericInventory<BaseSkill>(); // Skill → BaseSkill
         WeaponInventory = new GenericInventory<Weapon>();
         AccessoryInventory = new GenericInventory<Accessory>();
     }
@@ -22,7 +22,7 @@ public class PlayerInventory : MonoBehaviour
         switch (item)
         {
             case SkillDataSO skillData:
-                AddItem(SkillInventory, new Skill(skillData));
+                AddItem(SkillInventory, CreateSkillInstance(skillData));
                 OnSkillsChanged?.Invoke();
                 break;
 
@@ -68,9 +68,9 @@ public class PlayerInventory : MonoBehaviour
 
     public int GetItemStackCount<T>(T item) where T : class, IEnhanceable
     {
-        if (item is Skill)
+        if (item is BaseSkill) // Skill → BaseSkill
         {
-            return SkillInventory.GetItemStackCount(item as Skill);
+            return SkillInventory.GetItemStackCount(item as BaseSkill);
         }
         else if (item is Weapon)
         {
@@ -108,6 +108,19 @@ public class PlayerInventory : MonoBehaviour
                 inventory.RemoveItem(item);
             }
         }
+    }
+
+    private BaseSkill CreateSkillInstance(SkillDataSO skillData)
+    {
+        var playerStat = PlayerObjManager.Instance.Player?.GetComponent<PlayerStat>();
+
+        return skillData.skillType switch
+        {
+            SkillType.Active => new ActiveSkill(skillData, playerStat),
+            SkillType.Buff => new BuffSkill(skillData, playerStat),
+            SkillType.Passive => new PassiveSkill(skillData, playerStat),
+            _ => throw new ArgumentException("알 수 없는 스킬 타입입니다.")
+        };
     }
 
     public void NotifyInventoryChanged(bool isWeapon)

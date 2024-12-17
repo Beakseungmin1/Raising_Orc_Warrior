@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 
-public interface IDamageable
+public interface IEnemy
 {
+    BigInteger GiveExp();
+    void Die();
+    bool GetActive();
     void TakeDamage(BigInteger Damage);
+
 }
