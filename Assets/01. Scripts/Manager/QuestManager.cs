@@ -16,6 +16,8 @@ public class QuestManager : Singleton<QuestManager>
         GameEventsManager.Instance.questEvents.onStartQuest += StartQuest;
         GameEventsManager.Instance.questEvents.onAdvanceQuest += AdvanceQuest;
         GameEventsManager.Instance.questEvents.onFinishQuest += FinishQuest;
+
+        GameEventsManager.Instance.playerEvents.onPlayerStatChange += PlayerStatChange;
     }
 
     private void OnDisable()
@@ -23,6 +25,8 @@ public class QuestManager : Singleton<QuestManager>
         GameEventsManager.Instance.questEvents.onStartQuest -= StartQuest;
         GameEventsManager.Instance.questEvents.onAdvanceQuest -= AdvanceQuest;
         GameEventsManager.Instance.questEvents.onFinishQuest -= FinishQuest;
+
+        GameEventsManager.Instance.playerEvents.onPlayerStatChange -= PlayerStatChange;
     }
 
     private void Start()
@@ -40,10 +44,27 @@ public class QuestManager : Singleton<QuestManager>
         GameEventsManager.Instance.questEvents.QuestStateChange(quest);
     }
 
+    private void PlayerStatChange()
+    {
+
+    }
+
+    private void Update()
+    {
+        foreach (Quest quest in questMap.Values)
+        {
+            if (quest.state == QuestState.REQUIREMENTS_NOT_MET)
+            {
+                ChangeQuestState(quest.info.id, QuestState.CAN_START);
+            }
+        }
+    }
 
     private void StartQuest(string id)
     {
-        Debug.Log("Start Quest: " + id);
+        Quest quest = GetQuestById(id);
+        quest.InstantiateCurrentQuestStep(this.transform);
+        ChangeQuestState(quest.info.id, QuestState.IN_PROGRESS);
     }
 
     private void AdvanceQuest(string id)
