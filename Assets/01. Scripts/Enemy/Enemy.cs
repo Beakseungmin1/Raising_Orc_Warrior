@@ -23,16 +23,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Collider2D effectRange; // 스킬 효과 범위
     [SerializeField] private float damagePercent; // 액티브 스킬: 범위 내 적에게 주는 공격력 비율 (%)
 
-    public Action OnEnemyDeath;
-
     private PlayerBattle player;
 
     private int Hitcounter = 0;
-
-    private void Awake()
-    {
-        OnEnemyDeath += RegenManager.Instance.EnemyKilled;
-    }
 
     //private void Start()
     //{
@@ -88,7 +81,7 @@ public class Enemy : MonoBehaviour
     {
         animator.SetTrigger("4_Death");
         ObjectPool.Instance.ReturnObject(gameObject);
-        RegenManager.Instance.EnemyKilled();
+        GameEventsManager.Instance.enemyEvents.EnemyKilled();
     }
 
     public bool GetActive()

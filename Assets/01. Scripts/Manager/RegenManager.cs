@@ -23,6 +23,7 @@ public class RegenManager : Singleton<RegenManager>
     {
         //스테이지매니저의 챕터SO를 참조한다.
         RegenStagesEnemy();
+        GameEventsManager.Instance.enemyEvents.onEnemyKilled += EnemyKilled;
     }
 
     public void RegenStagesEnemy()

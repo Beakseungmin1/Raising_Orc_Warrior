@@ -60,6 +60,7 @@ public class StarterManager : Singleton<StarterManager>
         UIManager.Instance.Show<HUDPanel>();
         UIManager.Instance.Show<StageInfoUI>();
         UIManager.Instance.Show<Main_PlayerUpgradeUI>();
+        UIManager.Instance.Show<RightSideBtnsAreaUI>();
     }
 
     private void CreateEventSystem()
