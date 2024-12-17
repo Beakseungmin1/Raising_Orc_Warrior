@@ -6,7 +6,7 @@ public class EquipManager : MonoBehaviour
 {
     public Weapon EquippedWeapon { get; private set; }
     public Accessory EquippedAccessory { get; private set; }
-    public List<Skill> EquippedSkills { get; private set; } = new List<Skill>();
+    public List<BaseSkill> EquippedSkills { get; private set; } = new List<BaseSkill>();
 
     public event Action OnEquippedChanged;
 
@@ -21,6 +21,7 @@ public class EquipManager : MonoBehaviour
         if (playerStat == null || skillHandler == null)
         {
             Debug.LogError("[EquipManager] PlayerStat 또는 PlayerSkillHandler를 찾을 수 없습니다.");
+            return;
         }
 
         InitializeSkillSlots(0); // 초기화 메서드 호출
@@ -38,7 +39,7 @@ public class EquipManager : MonoBehaviour
 
     public void InitializeSkillSlots(int slotCount)
     {
-        EquippedSkills = new List<Skill>();
+        EquippedSkills = new List<BaseSkill>();
         for (int i = 0; i < slotCount; i++)
         {
             EquippedSkills.Add(null);
@@ -117,7 +118,7 @@ public class EquipManager : MonoBehaviour
         OnEquippedChanged?.Invoke();
     }
 
-    public void EquipSkill(Skill skill, int slotIndex)
+    public void EquipSkill(BaseSkill skill, int slotIndex)
     {
         if (slotIndex < 0 || slotIndex >= EquippedSkills.Count)
         {
@@ -132,9 +133,10 @@ public class EquipManager : MonoBehaviour
 
         EquippedSkills[slotIndex] = skill;
 
+        // PlayerSkillHandler와 동기화
         skillHandler.SyncWithEquipManager();
 
-        Debug.Log($"[EquipManager] 스킬 {skill.BaseData.itemName}이(가) 슬롯 {slotIndex}에 장착되었습니다.");
+        Debug.Log($"[EquipManager] 스킬 {skill.SkillData.itemName}이(가) 슬롯 {slotIndex}에 장착되었습니다.");
         OnEquippedChanged?.Invoke();
     }
 
@@ -146,18 +148,19 @@ public class EquipManager : MonoBehaviour
             return;
         }
 
-        Skill skill = EquippedSkills[slotIndex];
+        BaseSkill skill = EquippedSkills[slotIndex];
         if (skill == null) return;
 
         EquippedSkills[slotIndex] = null;
 
+        // PlayerSkillHandler와 동기화
         skillHandler.SyncWithEquipManager();
 
-        Debug.Log($"[EquipManager] 스킬 {skill.BaseData.itemName}이(가) 슬롯 {slotIndex}에서 해제되었습니다.");
+        Debug.Log($"[EquipManager] 스킬 {skill.SkillData.itemName}이(가) 슬롯 {slotIndex}에서 해제되었습니다.");
         OnEquippedChanged?.Invoke();
     }
 
-    public List<Skill> GetAllEquippedSkills()
+    public List<BaseSkill> GetAllEquippedSkills()
     {
         return EquippedSkills.FindAll(skill => skill != null);
     }

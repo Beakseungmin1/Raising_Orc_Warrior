@@ -44,10 +44,8 @@ public class SkillInventorySlotManager : UIBase
 
     private void CreateSlotsIfNeeded(int requiredSlotCount)
     {
-        // 현재 슬롯 개수 확인
         int currentSlotCount = inventorySlots.Count;
 
-        // 부족한 슬롯만 추가 생성
         for (int i = currentSlotCount; i < requiredSlotCount; i++)
         {
             GameObject slotObj = Instantiate(skillSlotPrefab, contentParent);
@@ -72,9 +70,8 @@ public class SkillInventorySlotManager : UIBase
 
     private void UpdateSkillInventory()
     {
-        List<Skill> skillList = playerInventory.SkillInventory.GetAllItems();
+        List<BaseSkill> skillList = playerInventory.SkillInventory.GetAllItems(); // Skill → BaseSkill
 
-        // 필요한 만큼 슬롯을 동적으로 생성
         CreateSlotsIfNeeded(skillList.Count);
 
         for (int i = 0; i < inventorySlots.Count; i++)
@@ -83,9 +80,9 @@ public class SkillInventorySlotManager : UIBase
             {
                 var skill = skillList[i];
                 int currentAmount = playerInventory.SkillInventory.GetItemStackCount(skill);
-                int requiredAmount = skill.BaseData.requireSkillCardsForUpgrade;
+                int requiredAmount = skill.SkillData.requireSkillCardsForUpgrade;
 
-                bool isEquipped = skillEquipSlotManager.IsSkillEquipped(skill.BaseData);
+                bool isEquipped = skillEquipSlotManager.IsSkillEquipped(skill.SkillData);
 
                 inventorySlots[i].InitializeSlot(skill, currentAmount, requiredAmount, isEquipped, skillEquipSlotManager);
             }
@@ -96,15 +93,15 @@ public class SkillInventorySlotManager : UIBase
         }
     }
 
-    private void UpdateSkillSlotState(Skill skill)
+    private void UpdateSkillSlotState(BaseSkill skill) // Skill → BaseSkill
     {
         foreach (var slot in inventorySlots)
         {
-            if (slot.MatchesSkill(skill.BaseData))
+            if (slot.MatchesSkill(skill.SkillData))
             {
-                bool isEquipped = skillEquipSlotManager.IsSkillEquipped(skill.BaseData);
+                bool isEquipped = skillEquipSlotManager.IsSkillEquipped(skill.SkillData);
                 slot.SetEquippedState(isEquipped);
-                Debug.Log($"[SkillInventorySlotManager] 스킬 {skill.BaseData.itemName} 상태 업데이트: 장착 여부 - {isEquipped}");
+                Debug.Log($"[SkillInventorySlotManager] 스킬 {skill.SkillData.itemName} 상태 업데이트: 장착 여부 - {isEquipped}");
                 return;
             }
         }

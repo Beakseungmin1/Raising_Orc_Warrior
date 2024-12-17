@@ -9,11 +9,11 @@ public class SkillEquipSlotManager : UIBase
     [SerializeField] private int initialSlotCount = 8;
 
     private List<SkillEquipSlot> equipSlots = new List<SkillEquipSlot>();
-    private Skill skillToEquip;
+    private BaseSkill skillToEquip; // Skill ¡æ BaseSkill·Î º¯°æ
 
-    public event Action<Skill> OnSkillEquipped;
-    public event Action<Skill> OnSkillUnequipped;
-    public event Action<List<Skill>> OnSlotsUpdated;
+    public event Action<BaseSkill> OnSkillEquipped;   // Skill ¡æ BaseSkill
+    public event Action<BaseSkill> OnSkillUnequipped; // Skill ¡æ BaseSkill
+    public event Action<List<BaseSkill>> OnSlotsUpdated;
 
     private EquipManager equipManager;
 
@@ -55,7 +55,7 @@ public class SkillEquipSlotManager : UIBase
         equipManager?.UpdateSkillSlotCount(SlotCount);
     }
 
-    public void PrepareSkillForEquip(Skill skill)
+    public void PrepareSkillForEquip(BaseSkill skill) // Skill ¡æ BaseSkill
     {
         skillToEquip = skill;
     }
@@ -64,13 +64,13 @@ public class SkillEquipSlotManager : UIBase
     {
         if (skillToEquip != null && slotIndex >= 0 && slotIndex < equipSlots.Count)
         {
-            Skill previouslyEquippedSkill = equipSlots[slotIndex].GetEquippedSkill();
+            BaseSkill previouslyEquippedSkill = equipSlots[slotIndex].GetEquippedSkill();
             if (previouslyEquippedSkill != null)
             {
                 RemoveSkillFromPreviousSlot(previouslyEquippedSkill);
             }
 
-            if (IsSkillEquipped(skillToEquip.BaseData))
+            if (IsSkillEquipped(skillToEquip.SkillData))
             {
                 RemoveSkillFromPreviousSlot(skillToEquip);
             }
@@ -86,7 +86,7 @@ public class SkillEquipSlotManager : UIBase
         }
     }
 
-    private void RemoveSkillFromPreviousSlot(Skill skill)
+    private void RemoveSkillFromPreviousSlot(BaseSkill skill)
     {
         foreach (var slot in equipSlots)
         {
@@ -113,7 +113,7 @@ public class SkillEquipSlotManager : UIBase
     {
         foreach (var slot in equipSlots)
         {
-            if (slot.GetEquippedSkill()?.BaseData == skillData)
+            if (slot.GetEquippedSkill()?.SkillData == skillData)
                 return true;
         }
         return false;
@@ -121,7 +121,7 @@ public class SkillEquipSlotManager : UIBase
 
     private void NotifySlotsUpdated()
     {
-        List<Skill> updatedSkills = new List<Skill>();
+        List<BaseSkill> updatedSkills = new List<BaseSkill>();
         foreach (var slot in equipSlots)
         {
             if (slot.GetEquippedSkill() != null)
@@ -146,9 +146,9 @@ public class SkillEquipSlotManager : UIBase
         }
     }
 
-    public List<Skill> GetAllEquippedSkills()
+    public List<BaseSkill> GetAllEquippedSkills()
     {
-        List<Skill> equippedSkills = new List<Skill>();
+        List<BaseSkill> equippedSkills = new List<BaseSkill>();
         foreach (var slot in equipSlots)
         {
             var skill = slot.GetEquippedSkill();
