@@ -52,7 +52,7 @@ public class PlayerStat : MonoBehaviour
         SetDefaultStat();
     }
 
-    public void AddExpFromMonsters(Enemy enemy)
+    public void AddExpFromMonsters(IEnemy enemy)
     {
         exp += enemy.GiveExp();
     }
