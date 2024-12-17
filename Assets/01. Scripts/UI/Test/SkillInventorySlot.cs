@@ -12,21 +12,21 @@ public class SkillInventorySlot : UIBase
     [SerializeField] private TextMeshProUGUI equippedTxt;
     [SerializeField] private Button slotButton;
 
-    private Skill skillData;
+    private BaseSkill skillData; // Skill → BaseSkill
     private SkillEquipSlotManager equipSlotManager;
 
-    private Color defaultColor = Color.white; // 흰색 (스킬 추가 시)
-    private Color emptyColor = new Color32(80, 80, 80, 255); // 슬롯 비어있을 때 회색
+    private Color defaultColor = Color.white;
+    private Color emptyColor = new Color32(80, 80, 80, 255);
 
-    public void InitializeSlot(Skill skill, int currentAmount, int requiredAmount, bool isEquipped, SkillEquipSlotManager equipManager)
+    public void InitializeSlot(BaseSkill skill, int currentAmount, int requiredAmount, bool isEquipped, SkillEquipSlotManager equipManager)
     {
         skillData = skill;
         equipSlotManager = equipManager;
 
         if (skillData != null)
         {
-            skillIcon.sprite = skillData.BaseData.icon;
-            nameTxt.text = skillData.BaseData.itemName;
+            skillIcon.sprite = skillData.SkillData.icon;
+            nameTxt.text = skillData.SkillData.itemName;
             curAmountTxt.text = currentAmount.ToString();
             maxAmountTxt.text = requiredAmount.ToString();
             amountSlider.value = (float)currentAmount / requiredAmount;
@@ -78,7 +78,6 @@ public class SkillInventorySlot : UIBase
     public void SetEquippedState(bool isEquipped)
     {
         equippedTxt.gameObject.SetActive(isEquipped);
-
         UpdateSlotColor(!isEquipped);
     }
 
@@ -89,6 +88,6 @@ public class SkillInventorySlot : UIBase
 
     public bool MatchesSkill(SkillDataSO skill)
     {
-        return skillData?.BaseData == skill;
+        return skillData?.SkillData == skill; // BaseSkill에 맞게 수정
     }
 }

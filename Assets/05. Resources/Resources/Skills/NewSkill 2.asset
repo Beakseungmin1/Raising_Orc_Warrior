@@ -16,7 +16,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 2fc732779b691bf48bc8899a2b44d408, type: 3}
   inGameImage: {fileID: 0}
   grade: 1
-  gradeColor: {r: 0.44779414, g: 0.8301887, b: 0.043075833, a: 1}
+  gradeColor: {r: 0.83137256, g: 0.04313736, b: 0.04313726, a: 1}
   currencyIcon: {fileID: 21300000, guid: 27dd9ee893a5df146bf63f9eac175270, type: 3}
   requiredCurrencyForUpgrade: 100
   currentLevel: 1
