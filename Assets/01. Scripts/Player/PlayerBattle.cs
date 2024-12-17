@@ -145,6 +145,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
             }
             else
             {
+                if (currentState != State.Dead)
                 currentState = State.Idle;
             }
         }

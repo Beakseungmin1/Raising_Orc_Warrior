@@ -308,17 +308,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 951958769847937792, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
   m_PrefabInstance: {fileID: 791613968}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &479796635 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3124620342091247500, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
-  m_PrefabInstance: {fileID: 791613968}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6d3a3a27b79e3e4a87abd26e2c26bb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &480310107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -455,10 +444,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1213905675971789288, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1535298601}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
 --- !u!1001 &825622841
 PrefabInstance:
@@ -677,7 +663,7 @@ PrefabInstance:
     - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: playerWeaponPosition
       value: 
-      objectReference: {fileID: 479796627}
+      objectReference: {fileID: 0}
     - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: projectileSpawnPoint
       value: 
@@ -788,25 +774,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1535298597 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1213905675971789288, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
-  m_PrefabInstance: {fileID: 791613968}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1535298601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1535298597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52e78875473be2458efb2ec868d7881, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 479796635}
-  enemy: {fileID: 0}
 --- !u!4 &1564418529 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2325496887421134653, guid: c04e37576c7eebe478462b9b0788215f, type: 3}
