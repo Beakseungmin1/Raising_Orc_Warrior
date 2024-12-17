@@ -62,3 +62,19 @@ public enum ItemType
     Accessory,
     Skill
 }
+
+public enum QuestType
+{
+    Daily, //일일 퀘스트
+    Repeat, //반복 퀘스트
+    Achievement //업적
+}
+
+public enum QuestState
+{
+    REQUIREMENTS_NOT_MET, //요구조건 불충족
+    CAN_START, //시작 가능
+    IN_PROGRESS, //진행 중 
+    CAN_FINISH, //완료 가능
+    FINISHED //완료
+}
