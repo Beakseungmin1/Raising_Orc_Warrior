@@ -70,7 +70,7 @@ public class PlayerSkillHandler : MonoBehaviour
             Debug.LogWarning($"{skill.SkillData.itemName} 스킬은 아직 준비되지 않았습니다.");
             return;
         }
-
+        Debug.Log($"[UseSkill] {skill.SkillData.itemName} 발동!");
         // 스킬 발동
         skill.Activate(targetPosition);
     }
@@ -92,8 +92,9 @@ public class PlayerSkillHandler : MonoBehaviour
     /// <summary>
     /// 해당 스킬이 장착되었는지 확인
     /// </summary>
-    private bool IsSkillEquipped(BaseSkill skill)
+    public bool IsSkillEquipped(BaseSkill skill)
     {
-        return equippedSkills.Contains(skill);
+        // equippedSkills에 해당 스킬이 존재하는지 확인
+        return equippedSkills.Exists(s => s.SkillData == skill.SkillData);
     }
 }
