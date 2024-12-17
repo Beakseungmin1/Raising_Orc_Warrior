@@ -147,7 +147,7 @@ public class PlayerStat : MonoBehaviour
         healthRegeneration = 0;
         criticalProbability = 0;
         criticalIncreaseDamage = 100;
-        maxMana = 20;
+        maxMana = 10000;
         mana = maxMana;
         manaRegeneration = 10;
         hitLate = 0;

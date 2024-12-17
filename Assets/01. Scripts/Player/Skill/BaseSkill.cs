@@ -13,6 +13,7 @@ public abstract class BaseSkill : MonoBehaviour, IFusable
     protected float cooldownTimer = 0f;
     protected int currentHits = 0;
     protected PlayerStat playerStat;
+    protected bool isActivated = false;
 
     public virtual void Initialize(SkillDataSO data, PlayerStat stat)
     {
