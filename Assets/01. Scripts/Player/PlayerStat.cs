@@ -195,10 +195,10 @@ public class PlayerStat : MonoBehaviour
         //extraGoldGainRate += holdIncreaseGoldGain;
     }
 
-    public void UseTimelimitBuffSkill(Skill skill)
+    public void UseTimelimitBuffSkill(BaseSkill skill)
     {
-        float skillValue = skill.BaseData.attackIncreasePercent;
-        float skillTime = skill.BaseData.buffDuration;
+        float skillValue = skill.SkillData.attackIncreasePercent;
+        float skillTime = skill.SkillData.buffDuration;
 
         StartCoroutine(BuffCoroutine(skillValue, skillTime));
     }
@@ -213,9 +213,9 @@ public class PlayerStat : MonoBehaviour
         attackPower -= attackPower * (skillValue / 100);
     }
 
-    public void UseHealSkill(Skill skill)
+    public void UseHealSkill(BaseSkill skill)
     {
-        BigInteger skillValue = (BigInteger)skill.BaseData.attackIncreasePercent;
+        BigInteger skillValue = (BigInteger)skill.SkillData.attackIncreasePercent;
 
         BigInteger Healhealth = maxHealth * (skillValue / 100);
 

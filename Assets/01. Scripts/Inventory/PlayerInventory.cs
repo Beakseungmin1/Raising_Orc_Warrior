@@ -114,13 +114,35 @@ public class PlayerInventory : MonoBehaviour
     {
         var playerStat = PlayerObjManager.Instance.Player?.GetComponent<PlayerStat>();
 
-        return skillData.skillType switch
+        if (playerStat == null)
         {
-            SkillType.Active => new ActiveSkill(skillData, playerStat),
-            SkillType.Buff => new BuffSkill(skillData, playerStat),
-            SkillType.Passive => new PassiveSkill(skillData, playerStat),
-            _ => throw new ArgumentException("알 수 없는 스킬 타입입니다.")
-        };
+            Debug.LogError("PlayerStat을 찾을 수 없습니다.");
+            return null;
+        }
+
+        GameObject skillObject = new GameObject(skillData.itemName);
+        skillObject.transform.SetParent(PlayerObjManager.Instance.Player.transform);
+
+        BaseSkill skillInstance = null;
+
+        switch (skillData.skillType)
+        {
+            case SkillType.Active:
+                skillInstance = skillObject.AddComponent<ActiveSkill>();
+                break;
+            case SkillType.Buff:
+                skillInstance = skillObject.AddComponent<BuffSkill>();
+                break;
+            case SkillType.Passive:
+                skillInstance = skillObject.AddComponent<PassiveSkill>();
+                break;
+            default:
+                Debug.LogError("알 수 없는 스킬 타입입니다.");
+                return null;
+        }
+
+        skillInstance.Initialize(skillData, playerStat);
+        return skillInstance;
     }
 
     public void NotifyInventoryChanged(bool isWeapon)
