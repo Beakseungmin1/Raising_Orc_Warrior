@@ -19,12 +19,12 @@ public class BurningSwordSkill : PassiveSkill
 
     private void OnBattleStart()
     {
-        lastActivationTime = Time.time;
+        lastActivationTime = Time.time; // 전투 시작 시 타이머 초기화
     }
 
     private void OnBattleEnd()
     {
-        lastActivationTime = 0f;
+        lastActivationTime = 0f; // 전투 종료 시 타이머 리셋
     }
 
     public override void Update()
@@ -34,7 +34,7 @@ public class BurningSwordSkill : PassiveSkill
         if (BattleManager.Instance.IsBattleActive && Time.time - lastActivationTime >= periodicInterval)
         {
             Activate(Vector3.zero);
-            lastActivationTime = Time.time;
+            lastActivationTime = Time.time; // 발동 후 타이머 갱신
         }
     }
 

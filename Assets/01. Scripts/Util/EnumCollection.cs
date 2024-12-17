@@ -78,3 +78,14 @@ public enum QuestState
     CAN_FINISH, //완료 가능
     FINISHED //완료
 }
+
+public enum StatType
+{
+    Attack,
+    Health,
+    HealthRegeneration,
+    CriticalIncreaseDamage,
+    CriticalProbability,
+    BluecriticalIncreaseDamage, //회심의 일격
+    BluecriticalProbability
+}

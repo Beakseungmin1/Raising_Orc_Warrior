@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class OverpowerSkill : PassiveSkill
 {
-    private bool isActivated = false;
-
     private void OnEnable()
     {
         BattleManager.Instance.OnBattleStart += OnBattleStart;
@@ -18,12 +16,12 @@ public class OverpowerSkill : PassiveSkill
 
     private void OnBattleStart()
     {
-        isActivated = false; // 전투 시작 시 초기화
+        isActivated = false; // 전투 시작 시 상태 초기화
     }
 
     private void OnBattleEnd()
     {
-        isActivated = false; // 전투 종료 시 초기화
+        isActivated = false; // 전투 종료 시 상태 초기화
     }
 
     public override void Update()
@@ -33,7 +31,7 @@ public class OverpowerSkill : PassiveSkill
         if (!isActivated && BattleManager.Instance.IsBattleActive && Time.timeSinceLevelLoad >= 20f)
         {
             Activate(Vector3.zero);
-            isActivated = true;
+            isActivated = true; // 발동 상태로 설정
         }
     }
 
