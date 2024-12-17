@@ -21,10 +21,10 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     private BigInteger totalDamage; // 계산기에서 받아온 최종데미지
     private float attackSpeed; // 공격 속도 퍼센트 게이지로 만들어 딜레이 에서 빼줄예정
     private float attackDelay = 1f; // 공격 딜레이
-    public List<Skill> activeBuffSkills = new List<Skill>(); // 현재 활성화된 버프 스킬 리스트
+    public List<BaseSkill> activeBuffSkills = new List<BaseSkill>(); // 현재 활성화된 버프 스킬 리스트
     public Animator animator;
 
-    public Action onPlayerAttack;
+    public Action OnPlayerAttack;
 
 
     private IEnemy currentMonster; // 현재 공격 중인 몬스터
@@ -145,14 +145,14 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         }
     }
 
-    public void UseBuffSkill(Skill skill)
+    public void UseBuffSkill(BaseSkill skill)
     {
         // 버프 정보를 저장
         activeBuffSkills.Add(skill);
-        StartCoroutine(BuffCoroutine(skill, skill.BaseData.buffDuration));
+        StartCoroutine(BuffCoroutine(skill, skill.SkillData.buffDuration));
     }
 
-    private IEnumerator BuffCoroutine(Skill skill, float skillTime)
+    private IEnumerator BuffCoroutine(BaseSkill skill, float skillTime)
     {
         // 지정된 시간 동안 대기
         yield return new WaitForSeconds(skillTime);
