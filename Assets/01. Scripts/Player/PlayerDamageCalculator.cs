@@ -35,10 +35,10 @@ public class PlayerDamageCalculator : MonoBehaviour
         
         
 
-        foreach (var skill in PlayerObjManager.Instance.Player.PlayerBattle.activeBuffSkills)
-        {
-            SkillIncreaseDamage += (BigInteger)(basicDamage * (skill.BaseData.attackIncreasePercent / 100));
-        }
+        //foreach (var skill in PlayerObjManager.Instance.Player.PlayerBattle.activeBuffSkills)
+        //{
+        //    SkillIncreaseDamage += (BigInteger)(basicDamage * (skill.BaseData.attackIncreasePercent / 100));
+        //}
 
     }
 
