@@ -63,19 +63,6 @@ public class Enemy : MonoBehaviour, IEnemy
         {
             animator.SetTrigger("2_Attack");
 
-            //임시
-            if (Hitcounter >= 2)
-            {
-                player.TakeKnockbackDamage(10, 0.5f); //안에 넣은 값은 임시값 이후 (몬스터고유데미지, 몬스터고유넉백시간) 으로 조정예정
-                Hitcounter = 0;
-                //Debug.Log("강력한 공격발동 현재 히트 : " + Hitcounter);
-            }
-            else
-            {
-                player.TakeDamage(10); // 안에 넣은 값은 임시값
-                Hitcounter++;
-                //Debug.Log("일반공격 현재 히트 : " + Hitcounter);
-            }
         }
     }
 
