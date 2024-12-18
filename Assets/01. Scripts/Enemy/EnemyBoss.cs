@@ -129,7 +129,7 @@ public class EnemyBoss : MonoBehaviour , IDamageable , IEnemy
         if (collision.CompareTag("Player"))
         {
             player = collision.GetComponent<PlayerBattle>();
-            InvokeRepeating("MonsterAttack", 0f, 1.5f);
+            InvokeRepeating("EnemyAttack", 0f, 1.5f);
         }
     }
 
@@ -137,7 +137,7 @@ public class EnemyBoss : MonoBehaviour , IDamageable , IEnemy
     {
         if (collision.CompareTag("Player"))
         {
-            CancelInvoke("MonsterAttack");
+            CancelInvoke("EnemyAttack");
             player = null;
         }
     }
