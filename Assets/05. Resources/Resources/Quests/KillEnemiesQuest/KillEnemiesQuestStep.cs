@@ -22,6 +22,7 @@ public class KillEnemiesQuestStep : QuestStep
         if (enemiesKilled < killsToComplete)
         {
             enemiesKilled++;
+            UpdateState();
             Debug.Log($"죽인 몬스터수: {enemiesKilled}");
         }
 
@@ -30,5 +31,11 @@ public class KillEnemiesQuestStep : QuestStep
             Debug.Log("퀘스트 완료");
             FinishQuestStep();
         }
+    }
+
+    private void UpdateState()
+    {
+        string state = enemiesKilled.ToString();
+        ChangeState(state);
     }
 }
