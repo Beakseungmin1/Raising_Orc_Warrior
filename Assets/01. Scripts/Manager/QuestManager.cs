@@ -17,6 +17,8 @@ public class QuestManager : Singleton<QuestManager>
         GameEventsManager.Instance.questEvents.onAdvanceQuest += AdvanceQuest;
         GameEventsManager.Instance.questEvents.onFinishQuest += FinishQuest;
 
+        GameEventsManager.Instance.questEvents.onQuestStepStateChange += QuestStepStateChange;
+
         GameEventsManager.Instance.playerEvents.onPlayerStatChange += PlayerStatChange;
     }
 
@@ -25,6 +27,8 @@ public class QuestManager : Singleton<QuestManager>
         GameEventsManager.Instance.questEvents.onStartQuest -= StartQuest;
         GameEventsManager.Instance.questEvents.onAdvanceQuest -= AdvanceQuest;
         GameEventsManager.Instance.questEvents.onFinishQuest -= FinishQuest;
+
+        GameEventsManager.Instance.questEvents.onQuestStepStateChange -= QuestStepStateChange;
 
         GameEventsManager.Instance.playerEvents.onPlayerStatChange -= PlayerStatChange;
     }
@@ -69,12 +73,39 @@ public class QuestManager : Singleton<QuestManager>
 
     private void AdvanceQuest(string id)
     {
-        Debug.Log("Advance Quest: " + id);
+        Quest quest = GetQuestById(id);
+
+        quest.MoveToNextStep();
+
+        ChangeQuestState(quest.info.id, QuestState.CAN_FINISH);
     }
 
     private void FinishQuest(string id)
     {
-        Debug.Log("Finish Quest: " + id);
+        Quest quest = GetQuestById(id);
+        ClaimRewards(quest);
+        ChangeQuestState(quest.info.id, QuestState.FINISHED);
+    }
+
+    private void ClaimRewards(Quest quest)
+    {
+        // GameEventsManager.Instance.goldEvent.GoldGained(quest.info.goldReward); //원래 강의에 나오는 코드
+
+        if (quest.info.rewardType != CurrencyType.Gold)
+        {
+            CurrencyManager.Instance.AddCurrency(quest.info.rewardType, quest.info.rewardAmount);
+        }
+        else
+        {
+            CurrencyManager.Instance.AddGold(quest.info.rewardAmount);
+        }
+    }
+
+    private void QuestStepStateChange(string id, int stepIndex, QuestStepState questStepState)
+    {
+        Quest quest = GetQuestById(id);
+        quest.StoreQuestStepState(questStepState, stepIndex);
+        ChangeQuestState(id, quest.state);
     }
 
     private Dictionary<string, Quest> CreateQuestMap()
@@ -101,5 +132,20 @@ public class QuestManager : Singleton<QuestManager>
             Debug.LogError("Quest Map에서 ID를 찾을 수 없습니다:" + id);
         }
         return quest;
+    }
+
+    private void OnApplicationQuit()
+    {
+        foreach (Quest quest in questMap.Values)
+        {
+            QuestData questData = quest.GetQuestData();
+            Debug.Log(quest.info.id);
+            Debug.Log("state = " + questData.state);
+            Debug.Log("index = " + questData.questStepIndex);
+            foreach(QuestStepState stepState in questData.questStepStates)
+            {
+                Debug.Log("step state = " + stepState.state);
+            }
+        }
     }
 }
