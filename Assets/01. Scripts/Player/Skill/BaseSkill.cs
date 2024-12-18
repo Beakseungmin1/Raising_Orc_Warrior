@@ -1,12 +1,11 @@
 using UnityEngine;
 
-public abstract class BaseSkill : MonoBehaviour, IFusable
+public abstract class BaseSkill : MonoBehaviour, IEnhanceable
 {
     protected SkillDataSO skillData;
     public SkillDataSO SkillData => skillData;
-
     public BaseItemDataSO BaseData => skillData;
-    public int EnhancementLevel { get; protected set; } = 0;
+    public int EnhancementLevel { get; protected set; } = 1;
     public int RequiredCurrencyForUpgrade => skillData.requiredCurrencyForUpgrade;
     public int StackCount { get; private set; } = 1;
 
@@ -14,11 +13,14 @@ public abstract class BaseSkill : MonoBehaviour, IFusable
     protected int currentHits = 0;
     protected PlayerStat playerStat;
     protected bool isActivated = false;
+    private int requireSkillCardsForUpgrade;
 
     public virtual void Initialize(SkillDataSO data, PlayerStat stat)
     {
         skillData = data;
         playerStat = stat;
+
+        requireSkillCardsForUpgrade = skillData.requireSkillCardsForUpgrade;
     }
 
     public virtual void Update()
@@ -68,8 +70,8 @@ public abstract class BaseSkill : MonoBehaviour, IFusable
     {
         return new SkillEffect(
             skillData.effectPrefab,
-            skillData.damagePercent + EnhancementLevel * 0.05f,
-            skillData.buffDuration + EnhancementLevel * 0.2f,
+            skillData.damagePercent, // 강화 시 피해 비율 고정
+            skillData.buffDuration, // 강화 시 버프 지속 시간 고정
             skillData.effectRange,
             skillData.effectType,
             targetPosition
@@ -80,7 +82,11 @@ public abstract class BaseSkill : MonoBehaviour, IFusable
 
     public bool CanEnhance()
     {
-        return CurrencyManager.Instance.GetCurrency(CurrencyType.Emerald) >= RequiredCurrencyForUpgrade && StackCount > 0;
+        int requiredSkillCount = requireSkillCardsForUpgrade;
+        int availableSkillCount = PlayerObjManager.Instance.Player.inventory.GetItemStackCount(this);
+
+        return CurrencyManager.Instance.GetCurrency(CurrencyType.Emerald) >= RequiredCurrencyForUpgrade
+               && availableSkillCount >= requiredSkillCount + 1;
     }
 
     public bool Enhance()
@@ -92,10 +98,21 @@ public abstract class BaseSkill : MonoBehaviour, IFusable
         }
 
         CurrencyManager.Instance.SubtractCurrency(CurrencyType.Emerald, RequiredCurrencyForUpgrade);
+        PlayerObjManager.Instance.Player.inventory.RemoveItemFromInventory(skillData, requireSkillCardsForUpgrade);
+
         EnhancementLevel++;
-        Debug.Log($"스킬 {skillData.itemName}이(가) {EnhancementLevel}레벨로 강화되었습니다.");
+        requireSkillCardsForUpgrade++;
+
+        Debug.Log($"강화 완료! 현재 레벨: {EnhancementLevel}, 다음 강화 필요 카드: {requireSkillCardsForUpgrade}");
+
+        EnhanceSkill();
+
+        PlayerObjManager.Instance.Player.inventory.NotifySkillsChanged();
+
         return true;
     }
+
+    protected abstract void EnhanceSkill();
 
     public void AddStack(int count)
     {
@@ -107,16 +124,8 @@ public abstract class BaseSkill : MonoBehaviour, IFusable
         StackCount = Mathf.Max(0, StackCount - count);
     }
 
-    public bool Fuse(int materialCount)
+    public int GetRuntimeRequiredSkillCards()
     {
-        if (StackCount < materialCount)
-        {
-            Debug.LogWarning("스택이 부족하여 합성할 수 없습니다.");
-            return false;
-        }
-
-        StackCount -= materialCount;
-        Debug.Log($"스킬 {skillData.itemName}이(가) 합성되었습니다. 남은 스택: {StackCount}");
-        return true;
+        return requireSkillCardsForUpgrade;
     }
 }

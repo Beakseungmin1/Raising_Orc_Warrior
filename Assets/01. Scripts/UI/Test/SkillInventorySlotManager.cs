@@ -79,8 +79,8 @@ public class SkillInventorySlotManager : UIBase
             if (i < skillList.Count)
             {
                 var skill = skillList[i];
-                int currentAmount = playerInventory.SkillInventory.GetItemStackCount(skill);
-                int requiredAmount = skill.SkillData.requireSkillCardsForUpgrade;
+                int currentAmount = Mathf.Max(0, playerInventory.SkillInventory.GetItemStackCount(skill) - 1);
+                int requiredAmount = skill.GetRuntimeRequiredSkillCards();
 
                 bool isEquipped = skillEquipSlotManager.IsSkillEquipped(skill.SkillData);
 

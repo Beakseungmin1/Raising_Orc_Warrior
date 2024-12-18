@@ -29,7 +29,6 @@ MonoBehaviour:
   activationCondition: 1
   cooldown: -0.3
   requiredHits: 12
-  periodicInterval: 0
   damagePercent: 400.14996
   manaCost: 0
   effectRange: 3

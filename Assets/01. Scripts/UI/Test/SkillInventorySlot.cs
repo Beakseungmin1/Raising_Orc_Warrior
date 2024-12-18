@@ -6,7 +6,6 @@ public class SkillInventorySlot : UIBase
 {
     [SerializeField] private Image skillIcon;
     [SerializeField] private TextMeshProUGUI curAmountTxt;
-    [SerializeField] private TextMeshProUGUI maxAmountTxt;
     [SerializeField] private TextMeshProUGUI nameTxt;
     [SerializeField] private Slider amountSlider;
     [SerializeField] private TextMeshProUGUI equippedTxt;
@@ -27,8 +26,8 @@ public class SkillInventorySlot : UIBase
         {
             skillIcon.sprite = skillData.SkillData.icon;
             nameTxt.text = skillData.SkillData.itemName;
-            curAmountTxt.text = currentAmount.ToString();
-            maxAmountTxt.text = requiredAmount.ToString();
+
+            curAmountTxt.text = $"{currentAmount} / {requiredAmount}";
             amountSlider.value = (float)currentAmount / requiredAmount;
 
             UpdateSlotColor(true);
@@ -49,7 +48,6 @@ public class SkillInventorySlot : UIBase
         skillIcon.sprite = null;
         nameTxt.text = "";
         curAmountTxt.text = "0";
-        maxAmountTxt.text = "0";
         amountSlider.value = 0;
 
         UpdateSlotColor(false);
@@ -70,7 +68,7 @@ public class SkillInventorySlot : UIBase
                 int currentMaterialCount = PlayerObjManager.Instance.Player.inventory.SkillInventory.GetItemStackCount(skillData);
 
                 skillDetailUIInstance.Initialize(equipSlotManager);
-                skillDetailUIInstance.DisplaySkillDetails(skillData, currentMaterialCount);
+                skillDetailUIInstance.DisplaySkillDetails(skillData, currentMaterialCount, skillData.GetRuntimeRequiredSkillCards());
             }
         }
     }
