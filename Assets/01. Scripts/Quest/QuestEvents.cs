@@ -12,7 +12,7 @@ public class QuestEvents
         }
     }
 
-
+    /*
     public event Action<string> onAdvanceQuest;
 
     public void AdvanceQuest(string id)
@@ -22,7 +22,7 @@ public class QuestEvents
             onAdvanceQuest(id);
         }
     }
-
+    */
 
     public event Action<string> onFinishQuest;
 

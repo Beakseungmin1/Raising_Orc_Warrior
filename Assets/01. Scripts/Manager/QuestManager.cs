@@ -14,7 +14,7 @@ public class QuestManager : Singleton<QuestManager>
     private void OnEnable()
     {
         GameEventsManager.Instance.questEvents.onStartQuest += StartQuest;
-        GameEventsManager.Instance.questEvents.onAdvanceQuest += AdvanceQuest;
+        //GameEventsManager.Instance.questEvents.onAdvanceQuest += AdvanceQuest;
         GameEventsManager.Instance.questEvents.onFinishQuest += FinishQuest;
 
         GameEventsManager.Instance.questEvents.onQuestStepStateChange += QuestStepStateChange;
@@ -23,7 +23,7 @@ public class QuestManager : Singleton<QuestManager>
     private void OnDisable()
     {
         GameEventsManager.Instance.questEvents.onStartQuest -= StartQuest;
-        GameEventsManager.Instance.questEvents.onAdvanceQuest -= AdvanceQuest;
+        //GameEventsManager.Instance.questEvents.onAdvanceQuest -= AdvanceQuest;
         GameEventsManager.Instance.questEvents.onFinishQuest -= FinishQuest;
 
         GameEventsManager.Instance.questEvents.onQuestStepStateChange -= QuestStepStateChange;
@@ -62,12 +62,14 @@ public class QuestManager : Singleton<QuestManager>
         ChangeQuestState(quest.info.id, QuestState.IN_PROGRESS);
     }
 
+    /*
     private void AdvanceQuest(string id)
     {
         Quest quest = GetQuestById(id);
         quest.MoveToNextStep();
         ChangeQuestState(quest.info.id, QuestState.CAN_FINISH);
     }
+    */
 
     private void FinishQuest(string id)
     {
