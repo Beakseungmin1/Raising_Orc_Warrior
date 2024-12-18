@@ -34,14 +34,18 @@ public class Enemy : MonoBehaviour, IEnemy
 
     public void TakeDamage(BigInteger Damage)
     {
-        //Debug.Log($"몬스터 체력: {hp}");
-        //Debug.Log($"데미지: {Damage}");
-        animator.SetTrigger("3_Damaged");
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0); // 기본 레이어
+
+        // IDLE 애니메이션이 재생 중이지 않을 때의 로직
+        if (stateInfo.IsName("IDLE") || stateInfo.IsName("DAMAGED"))
+        {
+            animator.SetTrigger("3_Damaged");
+        }
 
         if (hp - Damage > 0)
         {
             hp -= Damage;
-            //Debug.Log($"피해를 받음: {Damage}. 현재 HP: {hp}");
         }
         else
         {

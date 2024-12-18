@@ -43,14 +43,18 @@ public class EnemyBoss : MonoBehaviour , IDamageable , IEnemy
 
     public void TakeDamage(BigInteger Damage)
     {
-        //Debug.Log($"몬스터 체력: {hp}");
-        //Debug.Log($"데미지: {Damage}");
-        animator.SetTrigger("3_Damaged");
+        // 기본 레이어
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        // IDLE 애니메이션이 재생 중이지 않을 때의 로직
+        if (stateInfo.IsName("IDLE"))
+        {
+            animator.SetTrigger("3_Damaged");
+        }
 
         if (hp - Damage > 0)
         {
             hp -= Damage;
-            //Debug.Log($"피해를 받음: {Damage}. 현재 HP: {hp}");
         }
         else
         {
@@ -90,7 +94,7 @@ public class EnemyBoss : MonoBehaviour , IDamageable , IEnemy
     {
         animator.SetTrigger("4_Death");
         ObjectPool.Instance.ReturnObject(gameObject);
-        RegenManager.Instance.EnemyKilled();
+        GameEventsManager.Instance.enemyEvents.EnemyKilled();
     }
 
     public bool GetActive()
