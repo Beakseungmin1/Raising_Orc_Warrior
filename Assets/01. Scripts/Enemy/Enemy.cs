@@ -25,12 +25,15 @@ public class Enemy : MonoBehaviour, IEnemy
 
     private PlayerBattle player;
 
+    public Action OnEnemyAttack;
+
     private int Hitcounter = 0;
 
-    //private void Start()
-    //{
-    //    SetupEnemy();
-    //}
+    private void Start()
+    {
+        //SetupEnemy();
+        OnEnemyAttack = GiveDamageToPlayer;
+    }
 
     public void TakeDamage(BigInteger Damage)
     {
@@ -54,12 +57,13 @@ public class Enemy : MonoBehaviour, IEnemy
         }
     }
 
-    private void MonsterAttack()
+    private void EnemyAttack()
     {
         if (player != null && player.GetActive())
         {
             animator.SetTrigger("2_Attack");
 
+            //임시
             if (Hitcounter >= 2)
             {
                 player.TakeKnockbackDamage(10, 0.5f); //안에 넣은 값은 임시값 이후 (몬스터고유데미지, 몬스터고유넉백시간) 으로 조정예정
@@ -68,11 +72,26 @@ public class Enemy : MonoBehaviour, IEnemy
             }
             else
             {
-                player.TakeDamage(10); //
+                player.TakeDamage(10); // 안에 넣은 값은 임시값
                 Hitcounter++;
                 //Debug.Log("일반공격 현재 히트 : " + Hitcounter);
             }
+        }
+    }
 
+    public void GiveDamageToPlayer()
+    {
+        if (Hitcounter >= 2)
+        {
+            player.TakeKnockbackDamage(10, 0.5f); //안에 넣은 값은 임시값 이후 (몬스터고유데미지, 몬스터고유넉백시간) 으로 조정예정
+            Hitcounter = 0;
+            //Debug.Log("강력한 공격발동 현재 히트 : " + Hitcounter);
+        }
+        else
+        {
+            player.TakeDamage(10); // 안에 넣은 값은 임시값
+            Hitcounter++;
+            //Debug.Log("일반공격 현재 히트 : " + Hitcounter);
         }
     }
 

@@ -38,7 +38,7 @@ public class EnemyBoss : MonoBehaviour , IDamageable , IEnemy
 
     private void Start()
     {
-        OnEnemyAttack += EnemyAttack;
+        OnEnemyAttack = GiveDamageToPlayer;
     }
 
     public void TakeDamage(BigInteger Damage)
@@ -63,25 +63,27 @@ public class EnemyBoss : MonoBehaviour , IDamageable , IEnemy
         }
     }
 
-    public void EnemyAttack()
+    private void EnemyAttack()
     {
         if (player != null && player.GetActive())
         {
             animator.SetTrigger("2_Attack");
+        }
+    }
 
-            if (Hitcounter >= 2)
-            {
-                player.TakeKnockbackDamage(10, 0.5f); //안에 넣은 값은 임시값 이후 (몬스터고유데미지, 몬스터고유넉백시간) 으로 조정예정
-                Hitcounter = 0;
-                //Debug.Log("강력한 공격발동 현재 히트 : " + Hitcounter);
-            }
-            else
-            {
-                player.TakeDamage(10); //
-                Hitcounter++;
-                //Debug.Log("일반공격 현재 히트 : " + Hitcounter);
-            }
-
+    public void GiveDamageToPlayer()
+    {
+        if (Hitcounter >= 2)
+        {
+            player.TakeKnockbackDamage(10, 0.5f); //안에 넣은 값은 임시값 이후 (몬스터고유데미지, 몬스터고유넉백시간) 으로 조정예정
+            Hitcounter = 0;
+            //Debug.Log("강력한 공격발동 현재 히트 : " + Hitcounter);
+        }
+        else
+        {
+            player.TakeDamage(10); // 안에 넣은 값은 임시값
+            Hitcounter++;
+            //Debug.Log("일반공격 현재 히트 : " + Hitcounter);
         }
     }
 
