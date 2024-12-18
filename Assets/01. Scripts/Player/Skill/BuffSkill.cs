@@ -21,4 +21,6 @@ public class BuffSkill : BaseSkill
         yield return new WaitForSeconds(duration);
         isBuffActive = false;
     }
+
+    protected override void EnhanceSkill(){}
 }

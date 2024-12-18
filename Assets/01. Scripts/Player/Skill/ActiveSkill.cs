@@ -9,4 +9,6 @@ public class ActiveSkill : BaseSkill
         SkillEffectManager.Instance.TriggerEffect(this, targetPosition);
         ResetCondition();
     }
+
+    protected override void EnhanceSkill() { }
 }
