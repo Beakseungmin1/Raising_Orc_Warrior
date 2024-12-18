@@ -65,9 +65,7 @@ public class QuestManager : Singleton<QuestManager>
     private void AdvanceQuest(string id)
     {
         Quest quest = GetQuestById(id);
-
         quest.MoveToNextStep();
-
         ChangeQuestState(quest.info.id, QuestState.CAN_FINISH);
     }
 
