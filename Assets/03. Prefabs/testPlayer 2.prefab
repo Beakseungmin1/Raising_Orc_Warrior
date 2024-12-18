@@ -206,7 +206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3079c926bd076cf45a317ae92035d1c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equippedSkills: []
 --- !u!114 &1563228336020366224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,6 +270,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerModel
       objectReference: {fileID: 0}
+    - target: {fileID: 4920477416689064690, guid: c0bda75594cb6584e94d98eed8b3d60d, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 99aefe4debf2bc148a296b58fec9353d, type: 2}
     - target: {fileID: 5029199488942323556, guid: c0bda75594cb6584e94d98eed8b3d60d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

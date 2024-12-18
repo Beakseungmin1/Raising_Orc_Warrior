@@ -16,13 +16,14 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     private State currentState;
     private PlayerDamageCalculator PlayerDamageCalculator;
     private PlayerStat playerStat;
-    [SerializeField] private ParallaxBackground background; 
+    [SerializeField] private ParallaxBackground background;
+    public Animator animator;
 
     private BigInteger totalDamage; // 계산기에서 받아온 최종데미지
     private float attackSpeed; // 공격 속도 퍼센트 게이지로 만들어 딜레이 에서 빼줄예정
     private float attackDelay = 1f; // 공격 딜레이
+    private bool isDead;
     public List<BaseSkill> activeBuffSkills = new List<BaseSkill>(); // 현재 활성화된 버프 스킬 리스트
-    public Animator animator;
 
     public Action OnPlayerAttack;
 
@@ -45,6 +46,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         {
             case State.Idle:
                 CancelInvoke("PlayerAttack");
+                animator.SetBool("2_Attack", false);
                 BattleManager.Instance.EndBattle();
                 break;
             case State.Attacking:
@@ -55,8 +57,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
                 }
                 break;
             case State.Dead:
-                animator.SetBool("isDeath", true);
-                animator.SetTrigger("4_Death");
                 BattleManager.Instance.StartBattle();
                 break;
         }
@@ -67,9 +67,9 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     {
         playerStat.decreaseHp(damage);
 
-        if (playerStat.health <= 0)
+        if (playerStat.health <= 0 && !isDead)
         {
-            currentState = State.Dead;
+            Die();
         }
     }
 
@@ -77,25 +77,36 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     // 데미지 만큼 데미지를 주고 Knockback의 시간만큼 밀어냄
     public void TakeKnockbackDamage(BigInteger damage, float Knockback)
     {
-        BattleManager.Instance.EndBattle();
+        if (currentState != State.Dead)
+        {
+            BattleManager.Instance.EndBattle();
+            background.StartScrollingRight(Knockback);
+        }
 
+        animator.SetBool("2_Attack", false);
+        animator.SetTrigger("3_Damaged");
         playerStat.decreaseHp(damage);
 
-        background.StartScrollingRight(Knockback);
 
-
-        if (playerStat.health <= 0)
+        if (playerStat.health <= 0 && !isDead)
         {
-            currentState = State.Dead;
+            Die();
         }
     }
 
+    public void Die()
+    {
+        isDead = true;
+        animator.SetTrigger("4_Death");
+        animator.SetBool("isDeath", true);
+        currentState = State.Dead;
+    }
 
     private void PlayerAttack()
     {
         if (currentMonster != null && currentMonster.GetActive())
         {
-            animator.SetTrigger("2_Attack");
+            animator.SetBool("2_Attack", true);
         }
     }
 
@@ -146,24 +157,26 @@ public class PlayerBattle : MonoBehaviour, IDamageable
             else
             {
                 if (currentState != State.Dead)
-                currentState = State.Idle;
+                {
+                    currentState = State.Idle;
+                }
             }
         }
     }
 
-    public void UseBuffSkill(BaseSkill skill)
-    {
-        // 버프 정보를 저장
-        activeBuffSkills.Add(skill);
-        StartCoroutine(BuffCoroutine(skill, skill.SkillData.buffDuration));
-    }
+    //public void UseBuffSkill(BaseSkill skill)
+    //{
+    //    // 버프 정보를 저장
+    //    activeBuffSkills.Add(skill);
+    //    StartCoroutine(BuffCoroutine(skill, skill.SkillData.buffDuration));
+    //}
 
-    private IEnumerator BuffCoroutine(BaseSkill skill, float skillTime)
-    {
-        // 지정된 시간 동안 대기
-        yield return new WaitForSeconds(skillTime);
+    //private IEnumerator BuffCoroutine(BaseSkill skill, float skillTime)
+    //{
+    //    // 지정된 시간 동안 대기
+    //    yield return new WaitForSeconds(skillTime);
 
-        // 버프 해제
-        activeBuffSkills.Remove(skill);
-    }
+    //    // 버프 해제
+    //    activeBuffSkills.Remove(skill);
+    //}
 }
