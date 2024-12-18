@@ -10,6 +10,7 @@ public class QuestInfoSO : ScriptableObject
     [Header("General")]
     public string displayName;
     public QuestType questType;
+    public int questLevel;
 
     [Header("Rewards")]
     public CurrencyType rewardType;
