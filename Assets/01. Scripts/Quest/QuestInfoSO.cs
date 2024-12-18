@@ -15,9 +15,6 @@ public class QuestInfoSO : ScriptableObject
     public CurrencyType rewardType;
     public int rewardAmount;
 
-    [Header("Requirements")]
-    public QuestInfoSO questSO;
-
     [Header("Steps")]
     public GameObject questStepPrefab;
 
