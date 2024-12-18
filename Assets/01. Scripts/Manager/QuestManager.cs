@@ -18,8 +18,6 @@ public class QuestManager : Singleton<QuestManager>
         GameEventsManager.Instance.questEvents.onFinishQuest += FinishQuest;
 
         GameEventsManager.Instance.questEvents.onQuestStepStateChange += QuestStepStateChange;
-
-        GameEventsManager.Instance.playerEvents.onPlayerStatChange += PlayerStatChange;
     }
 
     private void OnDisable()
@@ -29,8 +27,6 @@ public class QuestManager : Singleton<QuestManager>
         GameEventsManager.Instance.questEvents.onFinishQuest -= FinishQuest;
 
         GameEventsManager.Instance.questEvents.onQuestStepStateChange -= QuestStepStateChange;
-
-        GameEventsManager.Instance.playerEvents.onPlayerStatChange -= PlayerStatChange;
     }
 
     private void Start()
@@ -46,11 +42,6 @@ public class QuestManager : Singleton<QuestManager>
         Quest quest = GetQuestById(id);
         quest.state = state;
         GameEventsManager.Instance.questEvents.QuestStateChange(quest);
-    }
-
-    private void PlayerStatChange()
-    {
-
     }
 
     private void Update()
@@ -134,6 +125,7 @@ public class QuestManager : Singleton<QuestManager>
         return quest;
     }
 
+    /*
     private void OnApplicationQuit()
     {
         foreach (Quest quest in questMap.Values)
@@ -148,4 +140,5 @@ public class QuestManager : Singleton<QuestManager>
             }
         }
     }
+    */
 }
