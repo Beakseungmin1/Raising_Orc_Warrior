@@ -107,7 +107,7 @@ public class SummonDataManager : Singleton<SummonDataManager>
             { Grade.Mythic, mythicRate },
             { Grade.Ultimate, ultimateRate }
         };
-
+    
         /*
         50레벨 최종값
         등급 확률

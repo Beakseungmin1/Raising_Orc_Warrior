@@ -22,7 +22,7 @@ public class QuestEvents
             onAdvanceQuest(id);
         }
     }
-    */
+
 
     public event Action<string> onFinishQuest;
 
@@ -54,4 +54,5 @@ public class QuestEvents
             onQuestStepStateChange(id, stepIndex, questStepState);
         }
     }
+        */
 }
