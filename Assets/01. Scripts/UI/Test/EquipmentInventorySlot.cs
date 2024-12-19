@@ -1,9 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine.UI;
 
 public class EquipmentInventorySlot : UIBase
 {
+    [SerializeField] private TextMeshProUGUI equipTxt; // ÀåÂø »óÅÂ Ç¥½Ã ÅØ½ºÆ®
     [SerializeField] private Image equipmentIcon;
     [SerializeField] private TextMeshProUGUI currentLevelTxt;
     [SerializeField] private TextMeshProUGUI rankTxt;
@@ -27,6 +28,7 @@ public class EquipmentInventorySlot : UIBase
         isWeaponSlot = isWeapon;
 
         UpdateSlotState(0);
+        UpdateEquipState(false); // ÃÊ±â »óÅÂ: ºñÀåÂø
     }
 
     public void ClearSlot()
@@ -40,13 +42,13 @@ public class EquipmentInventorySlot : UIBase
         itemCountGauge.value = 0;
 
         UpdateSlotColor(0);
+        equipTxt.gameObject.SetActive(false); // ÀåÂø »óÅÂ ¼û±è
         slotButton.onClick.RemoveAllListeners();
     }
 
     public void UpdateSlotState(int totalItemCount)
     {
         int requiredItemCount = GetRequiredFuseItemCount();
-
         int displayedItemCount = Mathf.Max(0, totalItemCount - 1);
 
         if (item != null)
@@ -70,6 +72,11 @@ public class EquipmentInventorySlot : UIBase
         UpdateSlotColor(totalItemCount);
         slotButton.onClick.RemoveAllListeners();
         slotButton.onClick.AddListener(() => OpenItemDetails());
+    }
+
+    public void UpdateEquipState(bool isEquipped)
+    {
+        equipTxt.gameObject.SetActive(isEquipped);
     }
 
     private int GetRequiredFuseItemCount()
