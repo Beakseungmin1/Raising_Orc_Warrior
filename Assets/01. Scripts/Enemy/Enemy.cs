@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour, IEnemy
 
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0); // 기본 레이어
 
-        // IDLE 애니메이션이 재생 중이지 않을 때의 로직
+        // IDLE 애니메이션이 재생 중 일때의 로직
         if (stateInfo.IsName("IDLE") || stateInfo.IsName("DAMAGED"))
         {
             animator.SetTrigger("3_Damaged");
@@ -59,15 +59,15 @@ public class Enemy : MonoBehaviour, IEnemy
 
     private void EnemyAttack()
     {
-        if (player != null && player.GetActive())
+        if (player != null && !player.GetActive())
         {
             animator.SetTrigger("2_Attack");
-
         }
     }
 
     public void GiveDamageToPlayer()
     {
+        Debug.Log("작동됌");
         if (Hitcounter >= 2)
         {
             player.TakeKnockbackDamage(10, 0.5f); //안에 넣은 값은 임시값 이후 (몬스터고유데미지, 몬스터고유넉백시간) 으로 조정예정
