@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 456f28f5541ebd04681de1f21879ac32, type: 3}
   m_Name: NewSkill 5
   m_EditorClassIdentifier: 
-  itemName: "\uACE0\uC18D\uC774\uB3D9"
-  icon: {fileID: 21300000, guid: 842f738ba823a0c4282537087692df90, type: 3}
+  itemName: "\uB9C8\uB098\uC758 \uCD95\uBCF5"
+  icon: {fileID: 21300000, guid: b9e2196342992a0469902c05a29afed7, type: 3}
   inGameImage: {fileID: 0}
-  grade: 4
-  gradeColor: {r: 0.029804826, g: 1, b: 0, a: 1}
+  grade: 3
+  gradeColor: {r: 1, g: 0.92309815, b: 0, a: 1}
   currencyIcon: {fileID: 21300000, guid: 27dd9ee893a5df146bf63f9eac175270, type: 3}
-  requiredCurrencyForUpgrade: 10000
+  requiredCurrencyForUpgrade: 1000
   currentLevel: 1
   description: 
-  effectDescription: "10\uCD08\uAC04 \uC774\uB3D9\uC18D\uB3C4 +n%"
+  effectDescription: "\uB9C8\uB098 \uD68C\uBCF5 +n%"
   skillType: 1
   effectType: 0
   activationCondition: 0

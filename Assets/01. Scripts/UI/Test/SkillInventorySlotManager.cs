@@ -5,105 +5,94 @@ public class SkillInventorySlotManager : UIBase
 {
     [SerializeField] private GameObject skillSlotPrefab;
     [SerializeField] private Transform contentParent;
-    [SerializeField] private int initialSlotCount = 8;
+    [SerializeField] private SkillEquipSlotManager skillEquipSlotManager;
 
     private List<SkillInventorySlot> inventorySlots = new List<SkillInventorySlot>();
-    [SerializeField] private SkillEquipSlotManager skillEquipSlotManager;
     private PlayerInventory playerInventory;
 
     private void Start()
     {
-        playerInventory = PlayerObjManager.Instance?.Player?.inventory;
-        if (playerInventory == null)
+        var player = PlayerObjManager.Instance.Player;
+        playerInventory = player?.inventory;
+
+        if (playerInventory == null || skillEquipSlotManager == null)
         {
-            Debug.LogError("[SkillInventorySlotManager] PlayerInventory를 찾을 수 없습니다.");
             return;
         }
 
-        CreateSlotsIfNeeded(initialSlotCount);
+        InitializeSlots();
+        UpdateSkillSlots();
 
-        Initialize(playerInventory, skillEquipSlotManager);
-
-        skillEquipSlotManager.OnSkillEquipped += UpdateSkillSlotState;
-        skillEquipSlotManager.OnSkillUnequipped += UpdateSkillSlotState;
+        playerInventory.OnSkillsChanged += UpdateSkillSlots;
+        skillEquipSlotManager.OnSkillEquipped += UpdateEquipStates;
+        skillEquipSlotManager.OnSkillUnequipped += UpdateEquipStates;
     }
 
     private void OnDestroy()
     {
         if (playerInventory != null)
         {
-            playerInventory.OnSkillsChanged -= UpdateSkillInventory;
+            playerInventory.OnSkillsChanged -= UpdateSkillSlots;
         }
 
         if (skillEquipSlotManager != null)
         {
-            skillEquipSlotManager.OnSkillEquipped -= UpdateSkillSlotState;
-            skillEquipSlotManager.OnSkillUnequipped -= UpdateSkillSlotState;
+            skillEquipSlotManager.OnSkillEquipped -= UpdateEquipStates;
+            skillEquipSlotManager.OnSkillUnequipped -= UpdateEquipStates;
         }
     }
 
-    private void CreateSlotsIfNeeded(int requiredSlotCount)
+    private void InitializeSlots()
     {
-        int currentSlotCount = inventorySlots.Count;
+        List<SkillDataSO> allSkills = DataManager.Instance.GetAllSkills();
+        allSkills.Sort((a, b) => a.grade.CompareTo(b.grade));
 
-        for (int i = currentSlotCount; i < requiredSlotCount; i++)
+        foreach (var slot in inventorySlots)
+        {
+            Destroy(slot.gameObject);
+        }
+        inventorySlots.Clear();
+
+        foreach (var skillDataSO in allSkills)
         {
             GameObject slotObj = Instantiate(skillSlotPrefab, contentParent);
             SkillInventorySlot slot = slotObj.GetComponent<SkillInventorySlot>();
             if (slot != null)
             {
+                BaseSkill ownedSkill = playerInventory.SkillInventory.GetItem(skillDataSO.itemName);
+                int currentAmount = ownedSkill != null ? Mathf.Max(0, playerInventory.GetItemStackCount(ownedSkill) - 1) : 0;
+                int requiredAmount = ownedSkill != null ? ownedSkill.GetRuntimeRequiredSkillCards() : 1;
+                bool isEquipped = ownedSkill != null && skillEquipSlotManager.IsSkillEquipped(skillDataSO);
+
+                slot.InitializeSlot(ownedSkill, skillDataSO, currentAmount, requiredAmount, isEquipped, skillEquipSlotManager);
                 inventorySlots.Add(slot);
             }
         }
-
-        Debug.Log($"[SkillInventorySlotManager] {requiredSlotCount - currentSlotCount}개의 슬롯이 추가로 생성되었습니다.");
     }
 
-    public void Initialize(PlayerInventory inventory, SkillEquipSlotManager equipSlotManager)
-    {
-        playerInventory = inventory;
-        skillEquipSlotManager = equipSlotManager;
-
-        playerInventory.OnSkillsChanged += UpdateSkillInventory;
-        UpdateSkillInventory();
-    }
-
-    private void UpdateSkillInventory()
-    {
-        List<BaseSkill> skillList = playerInventory.SkillInventory.GetAllItems(); // Skill → BaseSkill
-
-        CreateSlotsIfNeeded(skillList.Count);
-
-        for (int i = 0; i < inventorySlots.Count; i++)
-        {
-            if (i < skillList.Count)
-            {
-                var skill = skillList[i];
-                int currentAmount = Mathf.Max(0, playerInventory.SkillInventory.GetItemStackCount(skill) - 1);
-                int requiredAmount = skill.GetRuntimeRequiredSkillCards();
-
-                bool isEquipped = skillEquipSlotManager.IsSkillEquipped(skill.SkillData);
-
-                inventorySlots[i].InitializeSlot(skill, currentAmount, requiredAmount, isEquipped, skillEquipSlotManager);
-            }
-            else
-            {
-                inventorySlots[i].InitializeSlot(null, 0, 0, false, skillEquipSlotManager);
-            }
-        }
-    }
-
-    private void UpdateSkillSlotState(BaseSkill skill) // Skill → BaseSkill
+    private void UpdateSkillSlots()
     {
         foreach (var slot in inventorySlots)
         {
-            if (slot.MatchesSkill(skill.SkillData))
-            {
-                bool isEquipped = skillEquipSlotManager.IsSkillEquipped(skill.SkillData);
-                slot.SetEquippedState(isEquipped);
-                Debug.Log($"[SkillInventorySlotManager] 스킬 {skill.SkillData.itemName} 상태 업데이트: 장착 여부 - {isEquipped}");
-                return;
-            }
+            SkillDataSO skillDataSO = slot.GetSkillDataSO();
+            BaseSkill ownedSkill = playerInventory.SkillInventory.GetItem(skillDataSO?.itemName);
+
+            int currentAmount = ownedSkill != null ? Mathf.Max(0, playerInventory.GetItemStackCount(ownedSkill) - 1) : 0;
+            int requiredAmount = ownedSkill != null ? ownedSkill.GetRuntimeRequiredSkillCards() : 1;
+            bool isEquipped = ownedSkill != null && skillEquipSlotManager.IsSkillEquipped(skillDataSO);
+
+            slot.InitializeSlot(ownedSkill, skillDataSO, currentAmount, requiredAmount, isEquipped, skillEquipSlotManager);
+        }
+    }
+
+    private void UpdateEquipStates(BaseSkill skill)
+    {
+        foreach (var slot in inventorySlots)
+        {
+            if (slot.SkillData == null) continue;
+
+            bool isEquipped = skillEquipSlotManager.IsSkillEquipped(slot.SkillData.SkillData);
+            slot.SetEquippedState(isEquipped);
         }
     }
 }
