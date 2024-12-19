@@ -2,7 +2,7 @@
 using System.Numerics;
 using UnityEngine;
 
-public class EnemyBoss : MonoBehaviour , IEnemy
+public class EnemyBoss : MonoBehaviour, IEnemy
 {
     public EnemySO enemySO;
 
@@ -38,6 +38,7 @@ public class EnemyBoss : MonoBehaviour , IEnemy
 
     private void Start()
     {
+        SetupEnemy();
         OnEnemyAttack = GiveDamageToPlayer;
     }
 
@@ -46,7 +47,7 @@ public class EnemyBoss : MonoBehaviour , IEnemy
         // 기본 레이어
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        // IDLE 애니메이션이 재생 중이지 않을 때의 로직
+        // IDLE 애니메이션이 재생 중 일때의 로직
         if (stateInfo.IsName("IDLE"))
         {
             animator.SetTrigger("3_Damaged");
@@ -65,7 +66,7 @@ public class EnemyBoss : MonoBehaviour , IEnemy
 
     private void EnemyAttack()
     {
-        if (player != null && player.GetActive())
+        if (player != null && !player.GetActive())
         {
             animator.SetTrigger("2_Attack");
         }
@@ -110,11 +111,11 @@ public class EnemyBoss : MonoBehaviour , IEnemy
         hp = enemySO.hp;
         maxHp = enemySO.maxHp;
         giveExp = enemySO.giveExp;
-        if (model == null)
-        {
-            model = enemySO.model;
-            model = Instantiate(model, transform);
-        }
+        //if (model == null)
+        //{
+        //    model = enemySO.model;
+        //    model = Instantiate(model, transform);
+        //}
         animator = GetComponentInChildren<Animator>();
 
         cooldown = enemySO.cooldown;
