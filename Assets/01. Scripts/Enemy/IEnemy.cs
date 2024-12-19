@@ -8,6 +8,6 @@ public interface IEnemy
     BigInteger GiveExp();
     void Die();
     bool GetActive();
-    void TakeDamage(BigInteger Damage);
 
+    void TakeDamage(BigInteger Damage);
 }

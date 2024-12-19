@@ -2,7 +2,7 @@
 using System.Numerics;
 using UnityEngine;
 
-public class EnemyBoss : MonoBehaviour , IDamageable , IEnemy
+public class EnemyBoss : MonoBehaviour , IEnemy
 {
     public EnemySO enemySO;
 

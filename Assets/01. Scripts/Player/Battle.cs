@@ -7,7 +7,6 @@ public class Battle : MonoBehaviour
 {
     public PlayerBattle player;
 
-    //юс╫ц
     public Enemy enemy;
 
 
