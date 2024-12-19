@@ -12,23 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 456f28f5541ebd04681de1f21879ac32, type: 3}
   m_Name: NewSkill 6
   m_EditorClassIdentifier: 
-  itemName: "\uAD34\uB825\uB09C\uC2E0"
-  icon: {fileID: 21300000, guid: 8a8bd478a0110a54a819838e041f7582, type: 3}
+  itemName: "\uACE0\uC18D\uC774\uB3D9"
+  icon: {fileID: 21300000, guid: 842f738ba823a0c4282537087692df90, type: 3}
   inGameImage: {fileID: 0}
-  grade: 5
-  gradeColor: {r: 0, g: 0.016850948, b: 1, a: 1}
+  grade: 4
+  gradeColor: {r: 0.029804826, g: 1, b: 0, a: 1}
   currencyIcon: {fileID: 21300000, guid: 27dd9ee893a5df146bf63f9eac175270, type: 3}
-  requiredCurrencyForUpgrade: 100000
+  requiredCurrencyForUpgrade: 10000
   currentLevel: 1
   description: 
-  effectDescription: "\uC804\uD22C \uB3CC\uC785 20\uCD08 \uB4A4 5\uCD08\uAC04 \uC804\uCCB4
-    \uACF5\uACA9\uB825 \uC99D\uAC00 n%"
-  skillType: 2
+  effectDescription: "10\uCD08\uAC04 \uC774\uB3D9\uC18D\uB3C4 +n%"
+  skillType: 1
   effectType: 0
-  activationCondition: 2
+  activationCondition: 0
   cooldown: 5
   requiredHits: 0
-  periodicInterval: 5
+  periodicInterval: 0
   damagePercent: 0
   manaCost: 40
   effectRange: 0

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class EquipmentInventorySlot : UIBase
 {
-    [SerializeField] private TextMeshProUGUI equipTxt; // 장착 상태 표시 텍스트
+    [SerializeField] private TextMeshProUGUI equipTxt;
     [SerializeField] private Image equipmentIcon;
     [SerializeField] private TextMeshProUGUI currentLevelTxt;
     [SerializeField] private TextMeshProUGUI rankTxt;

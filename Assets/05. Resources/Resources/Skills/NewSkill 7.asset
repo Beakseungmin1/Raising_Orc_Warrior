@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 456f28f5541ebd04681de1f21879ac32, type: 3}
   m_Name: NewSkill 7
   m_EditorClassIdentifier: 
-  itemName: "\uC218\uB77C \uBC88\uAC1C \uBCA0\uAE30"
-  icon: {fileID: 21300000, guid: 4c266f1fb3e502647a57e352dcd40acf, type: 3}
+  itemName: "\uAD34\uB825\uB09C\uC2E0"
+  icon: {fileID: 21300000, guid: 8a8bd478a0110a54a819838e041f7582, type: 3}
   inGameImage: {fileID: 0}
-  grade: 6
-  gradeColor: {r: 0.89599895, g: 0, b: 1, a: 1}
+  grade: 5
+  gradeColor: {r: 0, g: 0.016850948, b: 1, a: 1}
   currencyIcon: {fileID: 21300000, guid: 27dd9ee893a5df146bf63f9eac175270, type: 3}
-  requiredCurrencyForUpgrade: 1000000
+  requiredCurrencyForUpgrade: 100000
   currentLevel: 1
   description: 
-  effectDescription: "\uBC94\uC704 10 \uC774\uB0B4\uC758 \uC801 10\uAE30\uC5D0\uAC8C
-    n%\xD73\uC758 \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uB2E4."
-  skillType: 0
-  effectType: 1
-  activationCondition: 0
+  effectDescription: "\uC804\uD22C \uB3CC\uC785 20\uCD08 \uB4A4 5\uCD08\uAC04 \uC804\uCCB4
+    \uACF5\uACA9\uB825 \uC99D\uAC00 n%"
+  skillType: 2
+  effectType: 0
+  activationCondition: 2
   cooldown: 5
   requiredHits: 0
-  periodicInterval: 0
+  periodicInterval: 5
   damagePercent: 0
   manaCost: 40
   effectRange: 0
