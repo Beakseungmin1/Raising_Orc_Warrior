@@ -134,7 +134,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     public bool GetActive()
     {
-        return gameObject.activeInHierarchy;
+        return isDead;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
