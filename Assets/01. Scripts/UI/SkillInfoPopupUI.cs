@@ -21,8 +21,8 @@ public class SkillInfoPopupUI : UIBase
     [SerializeField] private Button exitButton;
     [SerializeField] private Image currencyIcon;
 
-    private BaseSkill currentSkill; // Skill → BaseSkill
-    private SkillEquipSlotManager equipSlotManager;
+    public BaseSkill currentSkill; // Skill → BaseSkill
+    public SkillEquipSlotManager equipSlotManager;
 
     private void Start()
     {
@@ -34,13 +34,14 @@ public class SkillInfoPopupUI : UIBase
         equipSlotManager = manager;
     }
 
-    public void DisplaySkillDetails(BaseSkill skill, int currentMaterialCount) // Skill → BaseSkill
+    public void DisplaySkillDetails(BaseSkill skill, int currentMaterialCount, int requiredMaterials)
     {
         currentSkill = skill;
 
+        // 기본 정보 설정
         skillNameTxt.text = skill.SkillData.itemName;
         descriptionTxt.text = skill.SkillData.description;
-        currentLevelTxt.text = skill.SkillData.currentLevel.ToString();
+        currentLevelTxt.text = skill.EnhancementLevel.ToString();
 
         gradeTxt.text = $"[{TranslateGrade(skill.SkillData.grade)}]";
         gradeTxt.color = skill.SkillData.gradeColor;
@@ -66,10 +67,10 @@ public class SkillInfoPopupUI : UIBase
         // 마나 코스트 표시
         requiredMPTxt.text = skill.SkillData.manaCost > 0 ? skill.SkillData.manaCost.ToString() : "-";
 
-        // 현재/필요한 재료 수 표시 및 슬라이더 설정
-        int requiredMaterials = skill.SkillData.requireSkillCardsForUpgrade;
-        materialCountTxt.text = $"{currentMaterialCount} / {requiredMaterials}";
-        materialSlider.value = (float)currentMaterialCount / requiredMaterials;
+        // 현재 / 필요한 재료 수 표시 (-1 적용)
+        int adjustedCurrentMaterialCount = Mathf.Max(0, currentMaterialCount - 1); // 현재 재료 수에서 1 감소
+        materialCountTxt.text = $"{adjustedCurrentMaterialCount} / {requiredMaterials}";
+        materialSlider.value = (float)adjustedCurrentMaterialCount / requiredMaterials;
 
         // 강화 비용 텍스트
         upgradeCostTxt.text = skill.SkillData.requiredCurrencyForUpgrade.ToString();
@@ -82,6 +83,7 @@ public class SkillInfoPopupUI : UIBase
         equipButton.onClick.AddListener(PrepareSkillForEquip);
     }
 
+
     private string GenerateEffectDescription(BaseSkill skill) // Skill → BaseSkill
     {
         switch (skill.SkillData.skillType)
@@ -91,7 +93,7 @@ public class SkillInfoPopupUI : UIBase
             case SkillType.Buff:
                 return $"{skill.SkillData.buffDuration}초간 전체 공격력 +{skill.SkillData.attackIncreasePercent}%";
             case SkillType.Passive:
-                return $"전투 돌입 후, {skill.SkillData.periodicInterval}초마다 전체 공격력 +{skill.SkillData.attackIncreasePercent}%";
+                return $"전투 돌입 후, {skill.SkillData.buffDuration}초마다 전체 공격력 +{skill.SkillData.attackIncreasePercent}%";
             default:
                 return "알 수 없는 스킬 타입";
         }
@@ -105,12 +107,13 @@ public class SkillInfoPopupUI : UIBase
             return;
         }
 
-        bool success = currentSkill.Enhance();
+        bool success = currentSkill.Enhance();  // 강화 시도
 
         if (success)
         {
-            DisplaySkillDetails(currentSkill, currentSkill.StackCount);
-
+            // 강화된 스킬 정보를 UI에 업데이트
+            DisplaySkillDetails(currentSkill, currentSkill.StackCount, currentSkill.GetRuntimeRequiredSkillCards());  // 현재 재료 수 업데이트
+            Debug.Log($"강화된 레벨: {currentSkill.SkillData.currentLevel}"); // 확인을 위한 로그
             Debug.Log($"스킬 {currentSkill.SkillData.itemName} 강화 완료!");
         }
         else

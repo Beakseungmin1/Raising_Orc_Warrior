@@ -9,13 +9,11 @@ public class PlayerSkillHandler : MonoBehaviour
 
     private void Start()
     {
-        // EquipManager와 PlayerStat 가져오기
         equipManager = PlayerObjManager.Instance?.Player?.GetComponent<EquipManager>();
         playerStat = PlayerObjManager.Instance?.Player?.GetComponent<PlayerStat>();
 
         if (equipManager == null || playerStat == null)
         {
-            Debug.LogError("PlayerSkillHandler: EquipManager나 PlayerStat을 찾을 수 없습니다.");
             return;
         }
 

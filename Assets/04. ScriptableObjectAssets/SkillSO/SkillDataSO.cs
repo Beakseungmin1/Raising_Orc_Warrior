@@ -13,7 +13,6 @@ public class SkillDataSO : BaseItemDataSO
     public ActivationCondition activationCondition;
     public float cooldown;
     public int requiredHits;
-    public float periodicInterval;
 
     [Header("Skill Properties")]
     public float damagePercent;

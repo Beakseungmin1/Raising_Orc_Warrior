@@ -48,6 +48,7 @@ public class PlayerInventory : MonoBehaviour
         {
             case SkillDataSO skillData:
                 RemoveItem(SkillInventory, skillData.itemName);
+                OnSkillsChanged?.Invoke();
                 break;
 
             case WeaponDataSO weaponData:
@@ -57,6 +58,40 @@ public class PlayerInventory : MonoBehaviour
 
             case AccessoryDataSO accessoryData:
                 RemoveItem(AccessoryInventory, accessoryData.itemName);
+                OnInventoryChanged?.Invoke(false);
+                break;
+
+            default:
+                Debug.LogError("지원되지 않는 아이템");
+                break;
+        }
+    }
+
+    public void RemoveItemFromInventory(BaseItemDataSO item, int amount)
+    {
+        switch (item)
+        {
+            case SkillDataSO skillData:
+                for (int i = 0; i < amount; i++)
+                {
+                    RemoveItem(SkillInventory, skillData.itemName);
+                }
+                OnSkillsChanged?.Invoke();
+                break;
+
+            case WeaponDataSO weaponData:
+                for (int i = 0; i < amount; i++)
+                {
+                    RemoveItem(WeaponInventory, weaponData.itemName);
+                }
+                OnInventoryChanged?.Invoke(true);
+                break;
+
+            case AccessoryDataSO accessoryData:
+                for (int i = 0; i < amount; i++)
+                {
+                    RemoveItem(AccessoryInventory, accessoryData.itemName);
+                }
                 OnInventoryChanged?.Invoke(false);
                 break;
 

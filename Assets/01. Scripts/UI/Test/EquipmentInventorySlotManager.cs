@@ -17,10 +17,12 @@ public class EquipmentInventorySlotManager : UIBase
     private List<EquipmentInventorySlot> inventorySlots = new List<EquipmentInventorySlot>();
     private PlayerInventory playerInventory;
     private bool isWeaponTabActive = true;
+    private EquipManager equipManager;
 
     private void Start()
     {
         playerInventory = PlayerObjManager.Instance?.Player?.inventory;
+        equipManager = PlayerObjManager.Instance?.Player.EquipManager;
         if (playerInventory == null)
         {
             return;
@@ -32,6 +34,7 @@ public class EquipmentInventorySlotManager : UIBase
 
         InitializeSlots();
         playerInventory.OnInventoryChanged += UpdateInventorySlots;
+        equipManager.OnEquippedChanged += UpdateEquipStates;
         ShowTab(true);
     }
 
@@ -40,6 +43,11 @@ public class EquipmentInventorySlotManager : UIBase
         if (playerInventory != null)
         {
             playerInventory.OnInventoryChanged -= UpdateInventorySlots;
+        }
+
+        if (equipManager != null)
+        {
+            equipManager.OnEquippedChanged -= UpdateEquipStates;
         }
     }
 
@@ -129,6 +137,25 @@ public class EquipmentInventorySlotManager : UIBase
             else
             {
                 slot.gameObject.SetActive(false);
+            }
+        }
+
+        UpdateEquipStates();
+    }
+
+    private void UpdateEquipStates()
+    {
+        foreach (var slot in inventorySlots)
+        {
+            if (slot.Item is Weapon weapon)
+            {
+                bool isWeaponEquipped = equipManager.EquippedWeapon?.BaseData == weapon.BaseData;
+                slot.UpdateEquipState(isWeaponEquipped);
+            }
+            else if (slot.Item is Accessory accessory)
+            {
+                bool isAccessoryEquipped = equipManager.EquippedAccessory?.BaseData == accessory.BaseData;
+                slot.UpdateEquipState(isAccessoryEquipped);
             }
         }
     }

@@ -6,7 +6,9 @@ using UnityEngine.TextCore.Text;
 public class Battle : MonoBehaviour
 {
     public PlayerBattle player;
-    public EnemyBoss enemy;
+
+    //юс╫ц
+    public Enemy enemy;
 
 
     public void TriggerAttack()

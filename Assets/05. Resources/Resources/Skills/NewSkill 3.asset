@@ -26,9 +26,8 @@ MonoBehaviour:
   skillType: 2
   effectType: 0
   activationCondition: 2
-  cooldown: 5
-  requiredHits: 0
-  periodicInterval: 5
+  cooldown: 0
+  requiredHits: 10
   damagePercent: 0
   manaCost: 40
   effectRange: 0

@@ -11,4 +11,10 @@ public class FlameSlashSkill : ActiveSkill
 
         ResetCondition();
     }
+
+    protected override void EnhanceSkill()
+    {
+        skillData.damagePercent += 10f;
+        Debug.Log("FlameSlashSkill의 damagePercent가 강화되었습니다. 새로운 값: " + skillData.damagePercent);
+    }
 }

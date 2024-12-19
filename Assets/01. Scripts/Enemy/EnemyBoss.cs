@@ -38,19 +38,23 @@ public class EnemyBoss : MonoBehaviour , IDamageable , IEnemy
 
     private void Start()
     {
-        OnEnemyAttack += EnemyAttack;
+        OnEnemyAttack = GiveDamageToPlayer;
     }
 
     public void TakeDamage(BigInteger Damage)
     {
-        //Debug.Log($"몬스터 체력: {hp}");
-        //Debug.Log($"데미지: {Damage}");
-        animator.SetTrigger("3_Damaged");
+        // 기본 레이어
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        // IDLE 애니메이션이 재생 중이지 않을 때의 로직
+        if (stateInfo.IsName("IDLE"))
+        {
+            animator.SetTrigger("3_Damaged");
+        }
 
         if (hp - Damage > 0)
         {
             hp -= Damage;
-            //Debug.Log($"피해를 받음: {Damage}. 현재 HP: {hp}");
         }
         else
         {
@@ -59,25 +63,27 @@ public class EnemyBoss : MonoBehaviour , IDamageable , IEnemy
         }
     }
 
-    public void EnemyAttack()
+    private void EnemyAttack()
     {
         if (player != null && player.GetActive())
         {
             animator.SetTrigger("2_Attack");
+        }
+    }
 
-            if (Hitcounter >= 2)
-            {
-                player.TakeKnockbackDamage(10, 0.5f); //안에 넣은 값은 임시값 이후 (몬스터고유데미지, 몬스터고유넉백시간) 으로 조정예정
-                Hitcounter = 0;
-                //Debug.Log("강력한 공격발동 현재 히트 : " + Hitcounter);
-            }
-            else
-            {
-                player.TakeDamage(10); //
-                Hitcounter++;
-                //Debug.Log("일반공격 현재 히트 : " + Hitcounter);
-            }
-
+    public void GiveDamageToPlayer()
+    {
+        if (Hitcounter >= 2)
+        {
+            player.TakeKnockbackDamage(10, 0.5f); //안에 넣은 값은 임시값 이후 (몬스터고유데미지, 몬스터고유넉백시간) 으로 조정예정
+            Hitcounter = 0;
+            //Debug.Log("강력한 공격발동 현재 히트 : " + Hitcounter);
+        }
+        else
+        {
+            player.TakeDamage(10); // 안에 넣은 값은 임시값
+            Hitcounter++;
+            //Debug.Log("일반공격 현재 히트 : " + Hitcounter);
         }
     }
 
@@ -90,7 +96,7 @@ public class EnemyBoss : MonoBehaviour , IDamageable , IEnemy
     {
         animator.SetTrigger("4_Death");
         ObjectPool.Instance.ReturnObject(gameObject);
-        RegenManager.Instance.EnemyKilled();
+        GameEventsManager.Instance.enemyEvents.EnemyKilled();
     }
 
     public bool GetActive()
@@ -123,7 +129,7 @@ public class EnemyBoss : MonoBehaviour , IDamageable , IEnemy
         if (collision.CompareTag("Player"))
         {
             player = collision.GetComponent<PlayerBattle>();
-            InvokeRepeating("MonsterAttack", 0f, 1.5f);
+            InvokeRepeating("EnemyAttack", 0f, 1.5f);
         }
     }
 
@@ -131,7 +137,7 @@ public class EnemyBoss : MonoBehaviour , IDamageable , IEnemy
     {
         if (collision.CompareTag("Player"))
         {
-            CancelInvoke("MonsterAttack");
+            CancelInvoke("EnemyAttack");
             player = null;
         }
     }
