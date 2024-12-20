@@ -248,18 +248,4 @@ public class EquipmentInventorySlotManager : UIBase
             ? weaponData.requireFuseItemCount
             : (item.BaseData as AccessoryDataSO)?.requireFuseItemCount ?? 0;
     }
-
-    private BaseItemDataSO GetNextEquipmentData(IFusable equipment)
-    {
-        if (equipment is Weapon weapon)
-        {
-            return DataManager.Instance.GetNextWeapon(weapon.BaseData.grade, weapon.BaseData.rank);
-        }
-        else if (equipment is Accessory accessory)
-        {
-            return DataManager.Instance.GetNextAccessory(accessory.BaseData.grade, accessory.BaseData.rank);
-        }
-
-        return null;
-    }
 }

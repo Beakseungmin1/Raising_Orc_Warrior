@@ -217,14 +217,12 @@ public class EquipmentFusionPopupUI : UIBase
 
         if (isWeapon)
         {
-            var weapon = inventory.WeaponInventory.GetAllItems()
-                .FirstOrDefault(item => item.BaseData == baseData);
+            var weapon = inventory.WeaponInventory.GetAllItems().FirstOrDefault(item => item.BaseData == baseData);
             return weapon ?? new Weapon((WeaponDataSO)baseData);
         }
         else
         {
-            var accessory = inventory.AccessoryInventory.GetAllItems()
-                .FirstOrDefault(item => item.BaseData == baseData);
+            var accessory = inventory.AccessoryInventory.GetAllItems().FirstOrDefault(item => item.BaseData == baseData);
             return accessory ?? new Accessory((AccessoryDataSO)baseData);
         }
     }

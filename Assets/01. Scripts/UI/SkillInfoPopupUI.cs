@@ -11,9 +11,9 @@ public class SkillInfoPopupUI : UIBase
     [SerializeField] private TextMeshProUGUI requiredAttackCountLabel;
     [SerializeField] private TextMeshProUGUI requiredAttackCountTxt;
     [SerializeField] private TextMeshProUGUI requiredMPTxt;
-    [SerializeField] private TextMeshProUGUI materialCountTxt; // 현재/필요한 스킬카드 수
+    [SerializeField] private TextMeshProUGUI materialCountTxt;
     [SerializeField] private Image skillImage;
-    [SerializeField] private Slider materialSlider; // 스킬카드 진행도 슬라이더
+    [SerializeField] private Slider materialSlider;
     [SerializeField] private Button upgradeButton;
     [SerializeField] private TextMeshProUGUI upgradeCostTxt;
     [SerializeField] private TextMeshProUGUI currentLevelTxt;
@@ -21,7 +21,9 @@ public class SkillInfoPopupUI : UIBase
     [SerializeField] private Button exitButton;
     [SerializeField] private Image currencyIcon;
 
-    public BaseSkill currentSkill; // Skill → BaseSkill
+    [SerializeField] private GameObject noInventoryTxt;
+
+    public BaseSkill currentSkill;
     public SkillEquipSlotManager equipSlotManager;
 
     private void Start()
@@ -36,9 +38,10 @@ public class SkillInfoPopupUI : UIBase
 
     public void DisplaySkillDetails(BaseSkill skill, int currentMaterialCount, int requiredMaterials)
     {
+        Debug.Log($"Displaying details for skill: {skill.SkillData.itemName}");
+
         currentSkill = skill;
 
-        // 기본 정보 설정
         skillNameTxt.text = skill.SkillData.itemName;
         descriptionTxt.text = skill.SkillData.description;
         currentLevelTxt.text = skill.EnhancementLevel.ToString();
@@ -49,10 +52,8 @@ public class SkillInfoPopupUI : UIBase
         skillImage.sprite = skill.SkillData.icon;
         currencyIcon.sprite = skill.SkillData.currencyIcon;
 
-        // 효과 설명 텍스트 설정
         effectDescriptionTxt.text = GenerateEffectDescription(skill);
 
-        // 필요 공격수 또는 대기 시간 표시
         if (skill.SkillData.activationCondition == ActivationCondition.HitBased)
         {
             requiredAttackCountLabel.text = "필요 공격수";
@@ -64,27 +65,74 @@ public class SkillInfoPopupUI : UIBase
             requiredAttackCountTxt.text = $"{skill.SkillData.cooldown:F1} 초";
         }
 
-        // 마나 코스트 표시
         requiredMPTxt.text = skill.SkillData.manaCost > 0 ? skill.SkillData.manaCost.ToString() : "-";
 
-        // 현재 / 필요한 재료 수 표시 (-1 적용)
-        int adjustedCurrentMaterialCount = Mathf.Max(0, currentMaterialCount - 1); // 현재 재료 수에서 1 감소
+        int adjustedCurrentMaterialCount = Mathf.Max(0, currentMaterialCount - 1);
         materialCountTxt.text = $"{adjustedCurrentMaterialCount} / {requiredMaterials}";
         materialSlider.value = (float)adjustedCurrentMaterialCount / requiredMaterials;
 
-        // 강화 비용 텍스트
         upgradeCostTxt.text = skill.SkillData.requiredCurrencyForUpgrade.ToString();
 
-        // 버튼 리스너 설정
         upgradeButton.onClick.RemoveAllListeners();
         upgradeButton.onClick.AddListener(UpgradeSkill);
 
         equipButton.onClick.RemoveAllListeners();
         equipButton.onClick.AddListener(PrepareSkillForEquip);
+
+        if (skill.SkillData == null)
+        {
+            skillImage.color = new Color(0.2f, 0.2f, 0.2f);
+            noInventoryTxt.SetActive(true);
+        }
+        else
+        {
+            skillImage.color = Color.white;
+            noInventoryTxt.SetActive(false);
+        }
     }
 
+    public void DisplaySkillDetails(SkillDataSO skillDataSO)
+    {
+        Debug.Log($"Displaying details for skill: {skillDataSO.itemName}");
 
-    private string GenerateEffectDescription(BaseSkill skill) // Skill → BaseSkill
+        currentSkill = null;
+
+        skillNameTxt.text = skillDataSO.itemName;
+        descriptionTxt.text = skillDataSO.description;
+        currentLevelTxt.text = "N/A";
+
+        gradeTxt.text = $"[{TranslateGrade(skillDataSO.grade)}]";
+        gradeTxt.color = skillDataSO.gradeColor;
+
+        skillImage.sprite = skillDataSO.icon;
+        currencyIcon.sprite = skillDataSO.currencyIcon;
+
+        effectDescriptionTxt.text = GenerateEffectDescription(skillDataSO);
+
+        if (skillDataSO.activationCondition == ActivationCondition.HitBased)
+        {
+            requiredAttackCountLabel.text = "필요 공격수";
+            requiredAttackCountTxt.text = skillDataSO.requiredHits.ToString();
+        }
+        else
+        {
+            requiredAttackCountLabel.text = "대기 시간";
+            requiredAttackCountTxt.text = $"{skillDataSO.cooldown:F1} 초";
+        }
+
+        requiredMPTxt.text = skillDataSO.manaCost > 0 ? skillDataSO.manaCost.ToString() : "-";
+
+        materialCountTxt.text = $"0 / 1";
+        materialSlider.value = 0f;
+
+        upgradeButton.gameObject.SetActive(false);
+        equipButton.gameObject.SetActive(false);
+
+        skillImage.color = new Color(0.2f, 0.2f, 0.2f);
+        noInventoryTxt.SetActive(true);
+    }
+
+    private string GenerateEffectDescription(BaseSkill skill)
     {
         switch (skill.SkillData.skillType)
         {
@@ -99,6 +147,21 @@ public class SkillInfoPopupUI : UIBase
         }
     }
 
+    private string GenerateEffectDescription(SkillDataSO skillDataSO)
+    {
+        switch (skillDataSO.skillType)
+        {
+            case SkillType.Active:
+                return $"범위 {skillDataSO.effectRange} 이내의 적 모두에게 공격력의 {skillDataSO.damagePercent}%로 {skillDataSO.requiredHits}회 공격";
+            case SkillType.Buff:
+                return $"{skillDataSO.buffDuration}초간 전체 공격력 +{skillDataSO.attackIncreasePercent}%";
+            case SkillType.Passive:
+                return $"전투 돌입 후, {skillDataSO.buffDuration}초마다 전체 공격력 +{skillDataSO.attackIncreasePercent}%";
+            default:
+                return "알 수 없는 스킬 타입";
+        }
+    }
+
     private void UpgradeSkill()
     {
         if (currentSkill == null)
@@ -107,14 +170,11 @@ public class SkillInfoPopupUI : UIBase
             return;
         }
 
-        bool success = currentSkill.Enhance();  // 강화 시도
+        bool success = currentSkill.Enhance();
 
         if (success)
         {
-            // 강화된 스킬 정보를 UI에 업데이트
-            DisplaySkillDetails(currentSkill, currentSkill.StackCount, currentSkill.GetRuntimeRequiredSkillCards());  // 현재 재료 수 업데이트
-            Debug.Log($"강화된 레벨: {currentSkill.SkillData.currentLevel}"); // 확인을 위한 로그
-            Debug.Log($"스킬 {currentSkill.SkillData.itemName} 강화 완료!");
+            DisplaySkillDetails(currentSkill, currentSkill.StackCount, currentSkill.GetRuntimeRequiredSkillCards());
         }
         else
         {

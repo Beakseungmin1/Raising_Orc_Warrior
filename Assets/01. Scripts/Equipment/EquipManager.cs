@@ -11,7 +11,7 @@ public class EquipManager : MonoBehaviour
     public event Action OnEquippedChanged;
 
     private PlayerStat playerStat;
-    private PlayerSkillHandler skillHandler; // PlayerSkillHandler 참조 추가
+    private PlayerSkillHandler skillHandler;
 
     private void Start()
     {
@@ -20,11 +20,10 @@ public class EquipManager : MonoBehaviour
 
         if (playerStat == null || skillHandler == null)
         {
-            Debug.LogError("[EquipManager] PlayerStat 또는 PlayerSkillHandler를 찾을 수 없습니다.");
             return;
         }
 
-        InitializeSkillSlots(0); // 초기화 메서드 호출
+        InitializeSkillSlots(0);
     }
 
     public bool IsWeaponEquipped(Weapon weapon)

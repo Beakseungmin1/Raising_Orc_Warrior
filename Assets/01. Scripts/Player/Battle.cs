@@ -7,26 +7,20 @@ public class Battle : MonoBehaviour
 {
     public PlayerBattle player;
 
-    //юс╫ц
-    public Enemy enemy;
+    public EnemyBoss enemy;
 
 
     public void TriggerAttack()
     {
-        if (player != null)
+        if (player != null && player.OnPlayerAttack != null)
         {
             player.OnPlayerAttack.Invoke();
         }
-        else if (enemy != null)
+
+        if (enemy != null && enemy.OnEnemyAttack != null)
         {
             enemy.OnEnemyAttack.Invoke();
         }
-        else
-        {
-            return;
-        }
     }
-
-
 
 }
