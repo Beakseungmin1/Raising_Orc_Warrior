@@ -146,14 +146,27 @@ public class QuestManager : Singleton<QuestManager>
     {
         foreach (Quest quest in questMap.Values)
         {
+            SaveQuest(quest);
+        }
+    }
+
+    private void SaveQuest(Quest quest)
+    {
+        try
+        {
             QuestData questData = quest.GetQuestData();
-            Debug.Log(quest.info.id);
-            Debug.Log("state = " + questData.state);
-            Debug.Log("Index = " + questData.questStepIndex);
-            foreach (QuestStepState stepState in questData.questStepStates)
-            {
-                Debug.Log("step State = " + stepState.state);
-            }
+
+            // seiralize using JsonUtility, but use whatever you want here (like JSON.NET)
+            string serializedData = JsonUtility.ToJson(questData);
+
+            //PlayerPrefs에 저장하는 것은 이 튜토리얼 비디오의 빠른 예제일 뿐입니다.
+            //이 정보를 장기적으로 PlayerPrefs에 저장하는 것은 적합하지 않을 수 있습니다.
+            //대신, 실제 저장 및 불러오기 시스템을 사용하여 파일, 클라우드 등에 데이터를 저장하세요.
+            PlayerPrefs.SetString(quest.info.id, serializedData);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Failed to save quest with id: " + quest.info.id + ": " + e);
         }
     }
 }
