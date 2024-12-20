@@ -33,9 +33,36 @@ public class QuestManager : Singleton<QuestManager>
         }
     }
 
+    private bool CheckRequirementsMet(Quest quest)
+    {
+        bool meetRequirements = true;
+
+        foreach (QuestInfoSO prerequisiteQuestInfo in quest.info.questPrerequisites)
+        {
+            if (GetQuestById(prerequisiteQuestInfo.id).state != QuestState.FINISHED)
+            {
+                meetRequirements = false;
+            }
+        }
+        return meetRequirements;
+    }
+
+    private void Update()
+    {
+        foreach (Quest quest in questMap.Values)
+        {
+            if (quest.state == QuestState.REQUIREMENTS_NOT_MET && CheckRequirementsMet(quest))
+            {
+                ChangeQuestState(quest.info.id, QuestState.CAN_START);
+            }
+        }
+    }
+
     private void StartQuest(string id)
     {
-        Debug.Log("Start Quest: " + id);
+        Quest quest = GetQuestById(id);
+        quest.InstatiateCurrentQuestStep(this.transform);
+        ChangeQuestState(quest.info.id, QuestState.IN_PROGRESS);
     }
 
 
@@ -47,6 +74,13 @@ public class QuestManager : Singleton<QuestManager>
     private void FinishQuest(string id)
     {
         Debug.Log("Finish Quest: " + id);
+    }
+
+    private void ChangeQuestState(string id, QuestState state)
+    {
+        Quest quest = GetQuestById(id);
+        quest.state = state;
+        GameEventsManager.Instance.questEvents.QuestStateChange(quest);
     }
 
 
