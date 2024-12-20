@@ -743,6 +743,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
+  questInfo: {fileID: 0}
+  displayNameTxt: {fileID: 8244567778800042166}
+  levelTxt: {fileID: 5425605286889234513}
+  progressCountTxt: {fileID: 2736100133786262345}
+  rewardAmountTxt: {fileID: 682833459992667235}
+  rewardImage: {fileID: 7250523484872268296}
+  slider: {fileID: 882975629680228107}
 --- !u!1 &4309884862466383868
 GameObject:
   m_ObjectHideFlags: 0

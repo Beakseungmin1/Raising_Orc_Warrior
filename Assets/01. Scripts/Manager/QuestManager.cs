@@ -1,5 +1,6 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Numerics; // BigInteger 사용
 using UnityEngine;
 
 public class QuestManager : Singleton<QuestManager>
@@ -16,17 +17,12 @@ public class QuestManager : Singleton<QuestManager>
         GameEventsManager.Instance.questEvents.onStartQuest += StartQuest;
         GameEventsManager.Instance.questEvents.onAdvanceQuest += AdvanceQuest;
         GameEventsManager.Instance.questEvents.onFinishQuest += FinishQuest;
-
-        GameEventsManager.Instance.questEvents.onQuestStepStateChange += QuestStepStateChange;
     }
-
     private void OnDisable()
     {
         GameEventsManager.Instance.questEvents.onStartQuest -= StartQuest;
         GameEventsManager.Instance.questEvents.onAdvanceQuest -= AdvanceQuest;
         GameEventsManager.Instance.questEvents.onFinishQuest -= FinishQuest;
-
-        GameEventsManager.Instance.questEvents.onQuestStepStateChange -= QuestStepStateChange;
     }
 
     private void Start()
@@ -37,18 +33,25 @@ public class QuestManager : Singleton<QuestManager>
         }
     }
 
-    private void ChangeQuestState(string id, QuestState state)
+    private bool CheckRequirementsMet(Quest quest)
     {
-        Quest quest = GetQuestById(id);
-        quest.state = state;
-        GameEventsManager.Instance.questEvents.QuestStateChange(quest);
+        bool meetRequirements = true;
+
+        foreach (QuestInfoSO prerequisiteQuestInfo in quest.info.questPrerequisites)
+        {
+            if (GetQuestById(prerequisiteQuestInfo.id).state != QuestState.FINISHED)
+            {
+                meetRequirements = false;
+            }
+        }
+        return meetRequirements;
     }
 
     private void Update()
     {
         foreach (Quest quest in questMap.Values)
         {
-            if (quest.state == QuestState.REQUIREMENTS_NOT_MET)
+            if (quest.state == QuestState.REQUIREMENTS_NOT_MET && CheckRequirementsMet(quest))
             {
                 ChangeQuestState(quest.info.id, QuestState.CAN_START);
             }
@@ -58,15 +61,25 @@ public class QuestManager : Singleton<QuestManager>
     private void StartQuest(string id)
     {
         Quest quest = GetQuestById(id);
-        quest.InstantiateCurrentQuestStep(this.transform);
+        quest.InstatiateCurrentQuestStep(this.transform);
         ChangeQuestState(quest.info.id, QuestState.IN_PROGRESS);
     }
+
 
     private void AdvanceQuest(string id)
     {
         Quest quest = GetQuestById(id);
+
         quest.MoveToNextStep();
-        ChangeQuestState(quest.info.id, QuestState.CAN_FINISH);
+
+        if (quest.CurrentStepExists())
+        {
+            quest.InstatiateCurrentQuestStep(this.transform);
+        }
+        else
+        {
+            ChangeQuestState(quest.info.id, QuestState.CAN_FINISH);
+        }
     }
 
     private void FinishQuest(string id)
@@ -78,35 +91,30 @@ public class QuestManager : Singleton<QuestManager>
 
     private void ClaimRewards(Quest quest)
     {
-        // GameEventsManager.Instance.goldEvent.GoldGained(quest.info.goldReward); //원래 강의에 나오는 코드
-
-        if (quest.info.rewardType != CurrencyType.Gold)
-        {
-            CurrencyManager.Instance.AddCurrency(quest.info.rewardType, quest.info.rewardAmount);
-        }
-        else
-        {
-            CurrencyManager.Instance.AddGold(quest.info.rewardAmount);
-        }
+        Debug.Log($"보상 지급 전 {quest.info.currenyType}의 양:{CurrencyManager.Instance.GetCurrency(quest.info.currenyType)}");
+        //GameEventsManager.Instance.goldEvent.GoldGained(quest.info.goldReward); // 강의 코드
+        CurrencyManager.Instance.AddCurrency(quest.info.currenyType, quest.info.rewardAmount);
+        Debug.Log($"보상 지급 후 {quest.info.currenyType}의 양:{CurrencyManager.Instance.GetCurrency(quest.info.currenyType)}");
     }
 
-    private void QuestStepStateChange(string id, int stepIndex, QuestStepState questStepState)
+    private void ChangeQuestState(string id, QuestState state)
     {
         Quest quest = GetQuestById(id);
-        quest.StoreQuestStepState(questStepState, stepIndex);
-        ChangeQuestState(id, quest.state);
+        quest.state = state;
+        GameEventsManager.Instance.questEvents.QuestStateChange(quest);
     }
+
 
     private Dictionary<string, Quest> CreateQuestMap()
     {
-        QuestInfoSO[] allQuests = Resources.LoadAll<QuestInfoSO>("Quests");
+        QuestInfoSO[] allQuest = Resources.LoadAll<QuestInfoSO>("Quests");
 
         Dictionary<string, Quest> idToQuestMap = new Dictionary<string, Quest>();
-        foreach (QuestInfoSO questInfo in allQuests)
+        foreach (QuestInfoSO questInfo in allQuest)
         {
-            if(idToQuestMap.ContainsKey(questInfo.id))
+            if (idToQuestMap.ContainsKey(questInfo.id))
             {
-                Debug.LogWarning("questMap을 생성하는 과정에서 중복된 ID를 발견했습니다:" + questInfo.id);
+                Debug.LogWarning("퀘스트맵을 생성하던 중 중복된 id를 찾았습니다: " + questInfo.id);
             }
             idToQuestMap.Add(questInfo.id, new Quest(questInfo));
         }
@@ -118,25 +126,16 @@ public class QuestManager : Singleton<QuestManager>
         Quest quest = questMap[id];
         if (quest == null)
         {
-            Debug.LogError("Quest Map에서 ID를 찾을 수 없습니다:" + id);
+            Debug.LogError("퀘스트맵에서 ID를 찾을 수 없습니다: " + id);
         }
         return quest;
     }
 
-    /*
     private void OnApplicationQuit()
     {
         foreach (Quest quest in questMap.Values)
         {
-            QuestData questData = quest.GetQuestData();
-            Debug.Log(quest.info.id);
-            Debug.Log("state = " + questData.state);
-            Debug.Log("index = " + questData.questStepIndex);
-            foreach(QuestStepState stepState in questData.questStepStates)
-            {
-                Debug.Log("step state = " + stepState.state);
-            }
+
         }
     }
-    */
 }
