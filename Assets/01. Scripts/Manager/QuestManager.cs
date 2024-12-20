@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class QuestManager : Singleton<QuestManager>
 {
+    [Header("Config")]
+    [SerializeField] private bool loadQuestState = true;
+
     private Dictionary<string, Quest> questMap;
 
     private void Awake()
@@ -46,13 +49,17 @@ public class QuestManager : Singleton<QuestManager>
     {
         bool meetRequirements = true;
 
+        // check quest prerequisites for completion
         foreach (QuestInfoSO prerequisiteQuestInfo in quest.info.questPrerequisites)
         {
             if (GetQuestById(prerequisiteQuestInfo.id).state != QuestState.FINISHED)
             {
                 meetRequirements = false;
+                // add this break statement here so that we don't continue on to the next quest, since we've proven meetsRequirements to be false at this point.
+                break;
             }
         }
+
         return meetRequirements;
     }
 
@@ -181,7 +188,7 @@ public class QuestManager : Singleton<QuestManager>
         try
         {
             // Load quest from saved data
-            if (PlayerPrefs.HasKey(questInfo.id))
+            if (PlayerPrefs.HasKey(questInfo.id) && loadQuestState)
             {
                 string serializedData = PlayerPrefs.GetString(questInfo.id);
                 QuestData questData = JsonUtility.FromJson<QuestData>(serializedData);
