@@ -33,6 +33,11 @@ public class QuestManager : Singleton<QuestManager>
     {
         foreach (Quest quest in questMap.Values)
         {
+            if(quest.state == QuestState.IN_PROGRESS)
+            {
+                quest.InstatiateCurrentQuestStep(this.transform);
+            }
+
             GameEventsManager.Instance.questEvents.QuestStateChange(quest);
         }
     }
@@ -127,7 +132,7 @@ public class QuestManager : Singleton<QuestManager>
             {
                 Debug.LogWarning("퀘스트맵을 생성하던 중 중복된 id를 찾았습니다: " + questInfo.id);
             }
-            idToQuestMap.Add(questInfo.id, new Quest(questInfo));
+            idToQuestMap.Add(questInfo.id, LoadQuest(questInfo));
         }
         return idToQuestMap;
     }
@@ -169,4 +174,30 @@ public class QuestManager : Singleton<QuestManager>
             Debug.LogError("Failed to save quest with id: " + quest.info.id + ": " + e);
         }
     }
+
+    private Quest LoadQuest(QuestInfoSO questInfo)
+    {
+        Quest quest = null;
+        try
+        {
+            // Load quest from saved data
+            if (PlayerPrefs.HasKey(questInfo.id))
+            {
+                string serializedData = PlayerPrefs.GetString(questInfo.id);
+                QuestData questData = JsonUtility.FromJson<QuestData>(serializedData);
+                quest = new Quest(questInfo, questData.state, questData.questStepIndex, questData.questStepStates);
+            }
+            // Otherwise, initialize a new quest
+            else
+            {
+                quest = new Quest(questInfo);
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Failed to load quest with id " + questInfo.id + ": " + e);
+        }
+        return quest;
+    }
+
 }

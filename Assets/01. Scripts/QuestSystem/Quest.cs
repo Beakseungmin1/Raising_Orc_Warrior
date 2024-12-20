@@ -23,6 +23,21 @@ public class Quest
         }
     }
 
+    public Quest(QuestInfoSO info, QuestState questState, int currentQuestStepIndex, QuestStepState[] questStepStates)
+    {
+        this.info = info;
+        this.state = questState;
+        this.currentQuestStepIndex = currentQuestStepIndex;
+        this.questStepStates = questStepStates;
+
+        if (this.questStepStates.Length != this.info.questStepPrefabs.Length)
+        {
+            Debug.LogWarning("퀘스트 단계 프리팹(Quest Step Prefabs)과 퀘스트 단계 상태(Quest Step States)의 길이가 다릅니다. "
+            + "이는 퀘스트 정보(QuestInfo)와 저장된 데이터가 동기화되지 않았음을 나타냅니다. "
+            + "데이터를 재설정하세요 - 그렇지 않으면 문제가 발생할 수 있습니다. 퀘스트 ID: " + this.info.id);
+        }
+    }
+
     public void MoveToNextStep()
     {
         currentQuestStepIndex++;
@@ -41,7 +56,7 @@ public class Quest
         {
             QuestStep questStep = Object.Instantiate<GameObject>(questStepPrefab, parentTransform)
                 .GetComponent<QuestStep>();
-            questStep.InitializeQuestStep(info.id, currentQuestStepIndex);
+            questStep.InitializeQuestStep(info.id, currentQuestStepIndex, questStepStates[currentQuestStepIndex].state);
         }
     }
 

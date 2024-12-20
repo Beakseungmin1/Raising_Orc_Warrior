@@ -36,4 +36,10 @@ public class SummonSkillQuestStep : QuestStep
         string state = summonCount.ToString();
         ChangeState(state);
     }
+
+    protected override void SetQuestStepState(string state)
+    {
+        this.summonCount = System.Int32.Parse(state);
+        UpdateState();
+    }
 }
