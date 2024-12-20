@@ -68,7 +68,18 @@ public class QuestManager : Singleton<QuestManager>
 
     private void AdvanceQuest(string id)
     {
-        Debug.Log("Advance Quest: " + id);
+        Quest quest = GetQuestById(id);
+
+        quest.MoveToNextStep();
+
+        if (quest.CurrentStepExists())
+        {
+            quest.InstatiateCurrentQuestStep(this.transform);
+        }
+        else
+        {
+            ChangeQuestState(quest.info.id, QuestState.CAN_FINISH);
+        }
     }
 
     private void FinishQuest(string id)
