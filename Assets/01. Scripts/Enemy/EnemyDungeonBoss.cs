@@ -2,7 +2,7 @@
 using System.Numerics;
 using UnityEngine;
 
-public class EnemyBoss : MonoBehaviour, IEnemy
+public class EnemyDungeonBoss : MonoBehaviour, IEnemy
 {
     public EnemySO enemySO;
 
@@ -38,7 +38,7 @@ public class EnemyBoss : MonoBehaviour, IEnemy
 
     private void Start()
     {
-        //SetupEnemy();
+        SetupEnemy();
         OnEnemyAttack = GiveDamageToPlayer;
     }
 
