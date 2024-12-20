@@ -109,6 +109,7 @@ public class Summon : MonoBehaviour
             weaponDataSOs.Add(weaponDataSO);
         }
         ReturnRateByDebugLog(ItemType.Weapon); //확률 변환 테스트용
+        GameEventsManager.Instance.summonEvents.WeaponSummoned(summonCount);
         return weaponDataSOs;
     }
 
@@ -124,6 +125,7 @@ public class Summon : MonoBehaviour
             skillDataSOs.Add(skillDataSO);
         }
         ReturnRateByDebugLog(ItemType.Skill); //확률 변환 테스트용
+        GameEventsManager.Instance.summonEvents.SkillSummoned(summonCount);
         return skillDataSOs;
     }
 
@@ -140,6 +142,7 @@ public class Summon : MonoBehaviour
             accessoryDataSOs.Add(accessoryDataSO);
         }
         ReturnRateByDebugLog(ItemType.Accessory); //확률 변환 테스트용
+        GameEventsManager.Instance.summonEvents.AccessorySummoned(summonCount);
         return accessoryDataSOs;
     }
 }
