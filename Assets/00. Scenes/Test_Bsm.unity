@@ -433,6 +433,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1022425730212816062, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3124620342091247500, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
       propertyPath: background
       value: 
@@ -1240,6 +1244,63 @@ MonoBehaviour:
   skillEffectPrefab: {fileID: 0}
   effectRange: {fileID: 0}
   damagePercent: 0
+--- !u!1001 &7388917431142616903
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3187110840222732715, guid: 190ac41ace9e25e408d830f5c0ba29bd, type: 3}
+      propertyPath: m_Name
+      value: DungeonBoss
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977841909350753749, guid: 190ac41ace9e25e408d830f5c0ba29bd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.209999
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977841909350753749, guid: 190ac41ace9e25e408d830f5c0ba29bd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.7700005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977841909350753749, guid: 190ac41ace9e25e408d830f5c0ba29bd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977841909350753749, guid: 190ac41ace9e25e408d830f5c0ba29bd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977841909350753749, guid: 190ac41ace9e25e408d830f5c0ba29bd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977841909350753749, guid: 190ac41ace9e25e408d830f5c0ba29bd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977841909350753749, guid: 190ac41ace9e25e408d830f5c0ba29bd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977841909350753749, guid: 190ac41ace9e25e408d830f5c0ba29bd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977841909350753749, guid: 190ac41ace9e25e408d830f5c0ba29bd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977841909350753749, guid: 190ac41ace9e25e408d830f5c0ba29bd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 190ac41ace9e25e408d830f5c0ba29bd, type: 3}
 --- !u!4 &9076828494693356343
 Transform:
   m_ObjectHideFlags: 0
@@ -1274,3 +1335,4 @@ SceneRoots:
   - {fileID: 480310107}
   - {fileID: 124355282}
   - {fileID: 9076828494693356343}
+  - {fileID: 7388917431142616903}
