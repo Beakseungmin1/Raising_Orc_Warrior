@@ -17,12 +17,16 @@ public class QuestManager : Singleton<QuestManager>
         GameEventsManager.Instance.questEvents.onStartQuest += StartQuest;
         GameEventsManager.Instance.questEvents.onAdvanceQuest += AdvanceQuest;
         GameEventsManager.Instance.questEvents.onFinishQuest += FinishQuest;
+
+        GameEventsManager.Instance.questEvents.onQuestStepStateChange += QuestStepStateChange;
     }
     private void OnDisable()
     {
         GameEventsManager.Instance.questEvents.onStartQuest -= StartQuest;
         GameEventsManager.Instance.questEvents.onAdvanceQuest -= AdvanceQuest;
         GameEventsManager.Instance.questEvents.onFinishQuest -= FinishQuest;
+
+        GameEventsManager.Instance.questEvents.onQuestStepStateChange -= QuestStepStateChange;
     }
 
     private void Start()
@@ -97,6 +101,13 @@ public class QuestManager : Singleton<QuestManager>
         Debug.Log($"보상 지급 후 {quest.info.currenyType}의 양:{CurrencyManager.Instance.GetCurrency(quest.info.currenyType)}");
     }
 
+    private void QuestStepStateChange(string id, int stepIndex, QuestStepState questStepState)
+    {
+        Quest quest = GetQuestById(id);
+        quest.StoreQuestStepState(questStepState, stepIndex);
+        ChangeQuestState(id, quest.state);
+    }
+
     private void ChangeQuestState(string id, QuestState state)
     {
         Quest quest = GetQuestById(id);
@@ -135,7 +146,14 @@ public class QuestManager : Singleton<QuestManager>
     {
         foreach (Quest quest in questMap.Values)
         {
-
+            QuestData questData = quest.GetQuestData();
+            Debug.Log(quest.info.id);
+            Debug.Log("state = " + questData.state);
+            Debug.Log("Index = " + questData.questStepIndex);
+            foreach (QuestStepState stepState in questData.questStepStates)
+            {
+                Debug.Log("step State = " + stepState.state);
+            }
         }
     }
 }

@@ -72,4 +72,9 @@ public class Quest
                + "Quest Id = " + info.id + ", Step Index = " + stepIndex);
         }
     }
+
+    public QuestData GetQuestData()
+    {
+        return new QuestData(state, currentQuestStepIndex, questStepStates);
+    }
 }
