@@ -67,7 +67,6 @@ public class Enemy : MonoBehaviour, IEnemy
 
     public void GiveDamageToPlayer()
     {
-        Debug.Log("작동됌");
         if (Hitcounter >= 2)
         {
             player.TakeKnockbackDamage(10, 0.5f); //안에 넣은 값은 임시값 이후 (몬스터고유데미지, 몬스터고유넉백시간) 으로 조정예정
@@ -109,6 +108,13 @@ public class Enemy : MonoBehaviour, IEnemy
         {
             model = enemySO.model;
             model = Instantiate(model, transform);
+
+            Battle battle = model.GetComponentInChildren<Battle>();
+            
+            if (battle != null)
+            {
+                battle.SetEnemyScript(this);
+            }
         }
         animator = GetComponentInChildren<Animator>();
 

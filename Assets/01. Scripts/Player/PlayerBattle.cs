@@ -129,7 +129,10 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
         currentMonster = null;
 
-        currentState = State.Idle;
+        if (!isDead)
+        {
+            currentState = State.Idle;
+        }
     }
 
     public bool GetActive()
@@ -156,7 +159,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
             }
             else
             {
-                if (currentState != State.Dead)
+                if (!isDead)
                 {
                     currentState = State.Idle;
                 }
