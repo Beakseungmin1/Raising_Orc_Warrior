@@ -22,12 +22,18 @@ public class SummonSkillQuestStep : QuestStep
         if (summonCount < summonCountToComplete)
         {
             summonCount += count;
+            UpdateState();
         }
 
         if (summonCount >= summonCountToComplete)
         {
             FinishQuestStep();
-        }
-        
+        }   
+    }
+
+    private void UpdateState()
+    {
+        string state = summonCount.ToString();
+        ChangeState(state);
     }
 }

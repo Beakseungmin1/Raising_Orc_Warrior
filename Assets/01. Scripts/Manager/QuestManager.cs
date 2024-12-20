@@ -84,7 +84,17 @@ public class QuestManager : Singleton<QuestManager>
 
     private void FinishQuest(string id)
     {
-        Debug.Log("Finish Quest: " + id);
+        Quest quest = GetQuestById(id);
+        ClaimRewards(quest);
+        ChangeQuestState(quest.info.id, QuestState.FINISHED);
+    }
+
+    private void ClaimRewards(Quest quest)
+    {
+        Debug.Log($"보상 지급 전 {quest.info.currenyType}의 양:{CurrencyManager.Instance.GetCurrency(quest.info.currenyType)}");
+        //GameEventsManager.Instance.goldEvent.GoldGained(quest.info.goldReward); // 강의 코드
+        CurrencyManager.Instance.AddCurrency(quest.info.currenyType, quest.info.rewardAmount);
+        Debug.Log($"보상 지급 후 {quest.info.currenyType}의 양:{CurrencyManager.Instance.GetCurrency(quest.info.currenyType)}");
     }
 
     private void ChangeQuestState(string id, QuestState state)
@@ -121,5 +131,11 @@ public class QuestManager : Singleton<QuestManager>
         return quest;
     }
 
-    
+    private void OnApplicationQuit()
+    {
+        foreach (Quest quest in questMap.Values)
+        {
+
+        }
+    }
 }
