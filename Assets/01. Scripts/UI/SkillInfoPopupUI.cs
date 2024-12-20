@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -134,32 +135,56 @@ public class SkillInfoPopupUI : UIBase
 
     private string GenerateEffectDescription(BaseSkill skill)
     {
-        switch (skill.SkillData.skillType)
+        if (skill.SkillData == null || string.IsNullOrEmpty(skill.SkillData.effectDescription))
+            return "설명 없음";
+
+        string template = skill.SkillData.effectDescription;
+
+        var values = new Dictionary<string, object>
+    {
+        { "range", skill.SkillData.effectRange },
+        { "damagePercent", skill.SkillData.damagePercent },
+        { "requiredHits", skill.SkillData.requiredHits },
+        { "buffDuration", skill.SkillData.buffDuration },
+        { "attackIncreasePercent", skill.SkillData.attackIncreasePercent },
+        { "cooldown", skill.SkillData.cooldown },
+        { "manaRecoveryAmount", skill.SkillData.manaRecoveryAmount },
+        { "moveSpeedIncrease", skill.SkillData.moveSpeedIncrease }
+    };
+
+        foreach (var pair in values)
         {
-            case SkillType.Active:
-                return $"범위 {skill.SkillData.effectRange} 이내의 적 모두에게 공격력의 {skill.SkillData.damagePercent}%로 {skill.SkillData.requiredHits}회 공격";
-            case SkillType.Buff:
-                return $"{skill.SkillData.buffDuration}초간 전체 공격력 +{skill.SkillData.attackIncreasePercent}%";
-            case SkillType.Passive:
-                return $"전투 돌입 후, {skill.SkillData.buffDuration}초마다 전체 공격력 +{skill.SkillData.attackIncreasePercent}%";
-            default:
-                return "알 수 없는 스킬 타입";
+            template = template.Replace($"{{{pair.Key}}}", pair.Value.ToString());
         }
+
+        return template.Replace("\\n", "\n");
     }
 
     private string GenerateEffectDescription(SkillDataSO skillDataSO)
     {
-        switch (skillDataSO.skillType)
+        if (skillDataSO == null || string.IsNullOrEmpty(skillDataSO.effectDescription))
+            return "설명 없음";
+
+        string template = skillDataSO.effectDescription;
+
+        var values = new Dictionary<string, object>
+    {
+        { "range", skillDataSO.effectRange },
+        { "damagePercent", skillDataSO.damagePercent },
+        { "requiredHits", skillDataSO.requiredHits },
+        { "buffDuration", skillDataSO.buffDuration },
+        { "attackIncreasePercent", skillDataSO.attackIncreasePercent },
+        { "cooldown", skillDataSO.cooldown },
+        { "manaRecoveryAmount", skillDataSO.manaRecoveryAmount },
+        { "moveSpeedIncrease", skillDataSO.moveSpeedIncrease }
+    };
+
+        foreach (var pair in values)
         {
-            case SkillType.Active:
-                return $"범위 {skillDataSO.effectRange} 이내의 적 모두에게 공격력의 {skillDataSO.damagePercent}%로 {skillDataSO.requiredHits}회 공격";
-            case SkillType.Buff:
-                return $"{skillDataSO.buffDuration}초간 전체 공격력 +{skillDataSO.attackIncreasePercent}%";
-            case SkillType.Passive:
-                return $"전투 돌입 후, {skillDataSO.buffDuration}초마다 전체 공격력 +{skillDataSO.attackIncreasePercent}%";
-            default:
-                return "알 수 없는 스킬 타입";
+            template = template.Replace($"{{{pair.Key}}}", pair.Value.ToString());
         }
+
+        return template.Replace("\\n", "\n");
     }
 
     private void UpgradeSkill()
@@ -186,7 +211,8 @@ public class SkillInfoPopupUI : UIBase
     {
         if (currentSkill == null) return;
 
-        equipSlotManager.PrepareSkillForEquip(currentSkill);
+        var equipManager = PlayerObjManager.Instance.Player.EquipManager;
+        equipManager.SetWaitingSkillForEquip(currentSkill);
 
         UIManager.Instance.Hide<SkillInfoPopupUI>();
         UIManager.Instance.Hide<DimmedUI>();

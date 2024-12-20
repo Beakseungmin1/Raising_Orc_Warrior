@@ -22,17 +22,22 @@ MonoBehaviour:
   currentLevel: 1
   description: "\uBD88\uC758 \uD798\uC744 \uC2E4\uC5B4 \uACF5\uACA9\uB825\uC744 \uAE09\uACA9\uD788
     \uC62C\uB9AC\uB294 \uAE30\uC220"
-  effectDescription: "10\uCD08\uAC04 \uC804\uCCB4 \uACF5\uACA9\uB825 +n%"
+  effectDescription: "{buffDuration}\uCD08\uAC04 \uC804\uCCB4 \uACF5\uACA9\uB825
+    +{attackIncreasePercent}%"
   skillType: 1
   effectType: 0
   activationCondition: 0
-  cooldown: 0
+  cooldown: 10
   requiredHits: 0
   damagePercent: 0
   manaCost: 30
   effectRange: 0
   buffDuration: 5
   attackIncreasePercent: 50
-  requireSkillCardsForUpgrade: 1
+  manaRecoveryAmount: 0
+  hpRecoveryAmount: 0
+  moveSpeedIncrease: 0
+  requireSkillCardsForUpgrade: 2
   maxLevel: 100
   effectPrefab: {fileID: 4977641869697003404, guid: d38566189dfbe9c469a6ee3f0072008d, type: 3}
+  isEquipped: 0

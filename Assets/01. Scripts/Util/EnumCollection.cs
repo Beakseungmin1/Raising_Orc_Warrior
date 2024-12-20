@@ -45,7 +45,6 @@ public enum ActivationCondition
 {
     Cooldown, // 쿨다운 기반 발동
     HitBased, // 공격 횟수 기반 발동
-    Periodic  // 주기적 발동 (패시브 스킬)
 }
 
 public enum CurrencyType

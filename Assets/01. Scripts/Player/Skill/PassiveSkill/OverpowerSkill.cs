@@ -26,8 +26,6 @@ public class OverpowerSkill : PassiveSkill
 
     public override void Update()
     {
-        base.Update();
-
         if (!isActivated && BattleManager.Instance.IsBattleActive && Time.timeSinceLevelLoad >= 20f)
         {
             Activate(Vector3.zero);
