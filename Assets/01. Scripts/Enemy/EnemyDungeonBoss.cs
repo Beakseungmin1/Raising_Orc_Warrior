@@ -2,7 +2,7 @@
 using System.Numerics;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IEnemy
+public class EnemyDungeonBoss : MonoBehaviour, IEnemy
 {
     public EnemySO enemySO;
 
@@ -23,25 +23,32 @@ public class Enemy : MonoBehaviour, IEnemy
     [SerializeField] private Collider2D effectRange; // 스킬 효과 범위
     [SerializeField] private float damagePercent; // 액티브 스킬: 범위 내 적에게 주는 공격력 비율 (%)
 
-    private PlayerBattle player;
+    public Action OnEnemyDeath;
 
     public Action OnEnemyAttack;
 
+    private PlayerBattle player;
+
     private int Hitcounter = 0;
+
+    private void Awake()
+    {
+        OnEnemyDeath += RegenManager.Instance.EnemyKilled;
+    }
 
     private void Start()
     {
-        //SetupEnemy();
+        SetupEnemy();
         OnEnemyAttack = GiveDamageToPlayer;
     }
 
     public void TakeDamage(BigInteger Damage)
     {
-
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0); // 기본 레이어
+        // 기본 레이어
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         // IDLE 애니메이션이 재생 중 일때의 로직
-        if (stateInfo.IsName("IDLE") || stateInfo.IsName("DAMAGED"))
+        if (stateInfo.IsName("IDLE"))
         {
             animator.SetTrigger("3_Damaged");
         }
@@ -104,18 +111,11 @@ public class Enemy : MonoBehaviour, IEnemy
         hp = enemySO.hp;
         maxHp = enemySO.maxHp;
         giveExp = enemySO.giveExp;
-        if (model == null)
-        {
-            model = enemySO.model;
-            model = Instantiate(model, transform);
-
-            Battle battle = model.GetComponentInChildren<Battle>();
-            
-            if (battle != null)
-            {
-                battle.SetEnemyScript(this);
-            }
-        }
+        //if (model == null)
+        //{
+        //    model = enemySO.model;
+        //    model = Instantiate(model, transform);
+        //}
         animator = GetComponentInChildren<Animator>();
 
         cooldown = enemySO.cooldown;

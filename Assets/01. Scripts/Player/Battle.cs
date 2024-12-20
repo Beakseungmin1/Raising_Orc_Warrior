@@ -7,8 +7,12 @@ public class Battle : MonoBehaviour
 {
     public PlayerBattle player;
 
-    public EnemyBoss enemy;
+    public Enemy enemy;
 
+    public void SetEnemyScript(Enemy enemyboss)
+    {
+        enemy = enemyboss;
+    }
 
     public void TriggerAttack()
     {

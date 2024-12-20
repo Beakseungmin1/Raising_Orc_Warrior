@@ -65,6 +65,7 @@ public class RegenManager : Singleton<RegenManager>
 
         if (killedEnemies >= totalEnemies)
         {
+            //RegenStagesEnemy();
             StageManager.Instance.StageClear();
         }
     }
