@@ -16,7 +16,7 @@ MonoBehaviour:
   hpString: 200
   maxHpString: 200
   giveExpString: 40
-  model: {fileID: 1210817250785749426, guid: 2b434b09afde1294994206c9d058e9a8, type: 3}
+  model: {fileID: 7548139898082791852, guid: 03d10b03e2eb6f143b7ca88c16582be6, type: 3}
   cooldown: 10
   skillEffectPrefab: {fileID: 0}
   effectRange: {fileID: 0}
