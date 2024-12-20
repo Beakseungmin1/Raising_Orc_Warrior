@@ -15,20 +15,40 @@ public class SkillInventorySlot : UIBase
     private BaseSkill skillData;
     private SkillDataSO skillDataSO;
 
-    private SkillEquipSlotManager equipSlotManager;
-
-    public BaseSkill SkillData => skillData;
-    public SkillDataSO GetSkillDataSO() => skillDataSO;
+    private EquipManager equipManager;
 
     private Color defaultColor = Color.white;
     private Color equippedColor = new Color32(50, 50, 50, 255);
     private Color buttonTransparentColor = new Color(1f, 1f, 1f, 0.3f);
 
-    public void InitializeSlot(BaseSkill skill, SkillDataSO skillDataRef, int currentAmount, int requiredAmount, bool isEquipped, SkillEquipSlotManager equipManager)
+    public BaseSkill SkillData => skillData;
+    public SkillDataSO GetSkillDataSO() => skillDataSO;
+
+    private void Start()
+    {
+        equipManager = PlayerObjManager.Instance.Player.EquipManager;
+    }
+
+    private void OnEnable()
+    {
+        if (equipManager != null)
+        {
+            equipManager.OnSkillEquippedChanged += HandleSkillEquipChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (equipManager != null)
+        {
+            equipManager.OnSkillEquippedChanged -= HandleSkillEquipChanged;
+        }
+    }
+
+    public void InitializeSlot(BaseSkill skill, SkillDataSO skillDataRef, int currentAmount, int requiredAmount, bool isEquipped)
     {
         skillData = skill;
         skillDataSO = skillDataRef;
-        equipSlotManager = equipManager;
 
         if (skillData != null)
         {
@@ -37,7 +57,7 @@ public class SkillInventorySlot : UIBase
             curAmountTxt.text = $"{currentAmount} / {requiredAmount}";
             amountSlider.value = (float)currentAmount / requiredAmount;
 
-            SetEquippedState(isEquipped);
+            SetEquippedState(skill.IsEquipped);
             SetSlotOwned(true);
             emptyIcon.SetActive(false);
 
@@ -94,12 +114,10 @@ public class SkillInventorySlot : UIBase
             if (skillData != null)
             {
                 int currentMaterialCount = PlayerObjManager.Instance.Player.inventory.SkillInventory.GetItemStackCount(skillData);
-                skillDetailUIInstance.Initialize(equipSlotManager);
                 skillDetailUIInstance.DisplaySkillDetails(skillData, currentMaterialCount, skillData.GetRuntimeRequiredSkillCards());
             }
             else if (skillDataSO != null)
             {
-                skillDetailUIInstance.Initialize(equipSlotManager);
                 skillDetailUIInstance.DisplaySkillDetails(skillDataSO);
             }
         }
@@ -124,5 +142,13 @@ public class SkillInventorySlot : UIBase
 
         emptyIcon.SetActive(!isOwned);
         slotButton.image.color = isOwned ? Color.white : buttonTransparentColor;
+    }
+
+    private void HandleSkillEquipChanged(BaseSkill changedSkill, int slotIndex, bool isEquipped)
+    {
+        if (skillData != null && skillData == changedSkill)
+        {
+            SetEquippedState(isEquipped);
+        }
     }
 }

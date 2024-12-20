@@ -5,17 +5,18 @@ public class SkillInventorySlotManager : UIBase
 {
     [SerializeField] private GameObject skillSlotPrefab;
     [SerializeField] private Transform contentParent;
-    [SerializeField] private SkillEquipSlotManager skillEquipSlotManager;
 
     private List<SkillInventorySlot> inventorySlots = new List<SkillInventorySlot>();
     private PlayerInventory playerInventory;
+    private EquipManager equipManager;
 
     private void Start()
     {
         var player = PlayerObjManager.Instance.Player;
         playerInventory = player?.inventory;
+        equipManager = player?.EquipManager;
 
-        if (playerInventory == null || skillEquipSlotManager == null)
+        if (playerInventory == null || equipManager == null)
         {
             return;
         }
@@ -24,8 +25,7 @@ public class SkillInventorySlotManager : UIBase
         UpdateSkillSlots();
 
         playerInventory.OnSkillsChanged += UpdateSkillSlots;
-        skillEquipSlotManager.OnSkillEquipped += UpdateEquipStates;
-        skillEquipSlotManager.OnSkillUnequipped += UpdateEquipStates;
+        equipManager.OnSkillEquippedChanged += UpdateEquipStates;
     }
 
     private void OnDestroy()
@@ -35,10 +35,9 @@ public class SkillInventorySlotManager : UIBase
             playerInventory.OnSkillsChanged -= UpdateSkillSlots;
         }
 
-        if (skillEquipSlotManager != null)
+        if (equipManager != null)
         {
-            skillEquipSlotManager.OnSkillEquipped -= UpdateEquipStates;
-            skillEquipSlotManager.OnSkillUnequipped -= UpdateEquipStates;
+            equipManager.OnSkillEquippedChanged -= UpdateEquipStates;
         }
     }
 
@@ -62,9 +61,9 @@ public class SkillInventorySlotManager : UIBase
                 BaseSkill ownedSkill = playerInventory.SkillInventory.GetItem(skillDataSO.itemName);
                 int currentAmount = ownedSkill != null ? Mathf.Max(0, playerInventory.GetItemStackCount(ownedSkill) - 1) : 0;
                 int requiredAmount = ownedSkill != null ? ownedSkill.GetRuntimeRequiredSkillCards() : 1;
-                bool isEquipped = ownedSkill != null && skillEquipSlotManager.IsSkillEquipped(skillDataSO);
+                bool isEquipped = ownedSkill != null && equipManager.EquippedSkills.Contains(ownedSkill);
 
-                slot.InitializeSlot(ownedSkill, skillDataSO, currentAmount, requiredAmount, isEquipped, skillEquipSlotManager);
+                slot.InitializeSlot(ownedSkill, skillDataSO, currentAmount, requiredAmount, isEquipped);
                 inventorySlots.Add(slot);
             }
         }
@@ -79,20 +78,21 @@ public class SkillInventorySlotManager : UIBase
 
             int currentAmount = ownedSkill != null ? Mathf.Max(0, playerInventory.GetItemStackCount(ownedSkill) - 1) : 0;
             int requiredAmount = ownedSkill != null ? ownedSkill.GetRuntimeRequiredSkillCards() : 1;
-            bool isEquipped = ownedSkill != null && skillEquipSlotManager.IsSkillEquipped(skillDataSO);
+            bool isEquipped = ownedSkill != null && equipManager.EquippedSkills.Contains(ownedSkill);
 
-            slot.InitializeSlot(ownedSkill, skillDataSO, currentAmount, requiredAmount, isEquipped, skillEquipSlotManager);
+            slot.InitializeSlot(ownedSkill, skillDataSO, currentAmount, requiredAmount, isEquipped);
         }
     }
 
-    private void UpdateEquipStates(BaseSkill skill)
+    private void UpdateEquipStates(BaseSkill skill, int slotIndex, bool isEquipped)
     {
         foreach (var slot in inventorySlots)
         {
-            if (slot.SkillData == null) continue;
-
-            bool isEquipped = skillEquipSlotManager.IsSkillEquipped(slot.SkillData.SkillData);
-            slot.SetEquippedState(isEquipped);
+            if (slot.SkillData == skill)
+            {
+                slot.SetEquippedState(isEquipped);
+                break;
+            }
         }
     }
 }

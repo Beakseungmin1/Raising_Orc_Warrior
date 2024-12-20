@@ -20,19 +20,23 @@ MonoBehaviour:
   currencyIcon: {fileID: 21300000, guid: 27dd9ee893a5df146bf63f9eac175270, type: 3}
   requiredCurrencyForUpgrade: 1000
   currentLevel: 1
-  description: 
-  effectDescription: "\uB9C8\uB098 \uD68C\uBCF5 +n%"
+  description: "\uBB3C\uC758 \uAE30\uC6B4\uC73C\uB85C \uBE60\uB974\uAC8C \uB9C8\uB098\uB97C
+    \uD68C\uBCF5\uD55C\uB2E4"
+  effectDescription: "\uB9C8\uB098 \uD68C\uBCF5 +{manaRecoveryAmount}%"
   skillType: 1
   effectType: 0
   activationCondition: 0
-  cooldown: 5
+  cooldown: 10
   requiredHits: 0
-  periodicInterval: 0
   damagePercent: 0
   manaCost: 40
   effectRange: 0
   buffDuration: 5
   attackIncreasePercent: 90
-  requireSkillCardsForUpgrade: 1
+  manaRecoveryAmount: 0
+  hpRecoveryAmount: 0
+  moveSpeedIncrease: 0
+  requireSkillCardsForUpgrade: 2
   maxLevel: 100
   effectPrefab: {fileID: 9054041762107104264, guid: 1b3ee55c0649d4c4c8533e6845d68467, type: 3}
+  isEquipped: 0

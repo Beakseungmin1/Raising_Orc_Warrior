@@ -3,24 +3,25 @@ using UnityEngine;
 
 public class BuffSkill : BaseSkill
 {
-    private bool isBuffActive = false;
-
     public override void Activate(Vector3 targetPosition)
     {
-        if (!IsReadyToActivate() || isBuffActive || !ConsumeMana()) return;
+        if (!IsReadyToActivate() || !ConsumeMana()) return;
 
         SkillEffectManager.Instance.TriggerEffect(this, Vector3.zero);
-
-        isBuffActive = true;
-        StartCoroutine(EndBuffAfterDelay(skillData.buffDuration));
         ResetCondition();
+        StartCoroutine(EndBuffAfterDuration());
     }
 
-    private IEnumerator EndBuffAfterDelay(float duration)
+    private IEnumerator EndBuffAfterDuration()
     {
-        yield return new WaitForSeconds(duration);
-        isBuffActive = false;
+        yield return new WaitForSeconds(skillData.buffDuration);
+        EndEffect();
     }
 
-    protected override void EnhanceSkill(){}
+    protected override void EndEffect()
+    {
+        base.EndEffect();
+    }
+
+    protected override void EnhanceSkill() { }
 }

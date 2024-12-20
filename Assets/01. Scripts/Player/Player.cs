@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     public PlayerInventory inventory;
     public PlayerBattle PlayerBattle;
     public EquipManager EquipManager;
+    public PlayerSkillHandler SkillHandler;
+    public PlayerDamageCalculator DamageCalculator;
 
 
     private void Awake()
@@ -16,6 +18,8 @@ public class Player : MonoBehaviour
         inventory = GetComponent<PlayerInventory>();
         PlayerBattle = GetComponent<PlayerBattle>();
         EquipManager = GetComponent<EquipManager>();
+        SkillHandler = GetComponent<PlayerSkillHandler>();
+        DamageCalculator = GetComponent<PlayerDamageCalculator>();
         PlayerObjManager.Instance.Player = this;
     }
 }

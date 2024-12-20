@@ -22,18 +22,22 @@ MonoBehaviour:
   currentLevel: 1
   description: "\uAC80\uC2E0\uC5D0 \uBD88\uAF43\uC744 \uAC10\uC544 \uC801\uB4E4\uC744
     \uBD88\uD0DC\uC6B4\uB2E4"
-  effectDescription: "\uBC94\uC704 3 \uC774\uB0B4\uC758 \uC801 \uBAA8\uB450\uC5D0\uAC8C
-    \uACF5\uACA9\uB825\uC758 n%\xD71.5\uB85C 1 \u2022 2\uD68C \uACF5\uACA9"
+  effectDescription: "\uBC94\uC704 {range} \uC774\uB0B4\uC758 \uC801 \uBAA8\uB450\uC5D0\uAC8C\\n\uACF5\uACA9\uB825\uC758
+    {damagePercent}%\uB85C 1\uD68C \uACF5\uACA9"
   skillType: 0
   effectType: 0
-  activationCondition: 1
-  cooldown: -0.3
-  requiredHits: 12
-  damagePercent: 400.14996
+  activationCondition: 0
+  cooldown: 0
+  requiredHits: 10
+  damagePercent: 10
   manaCost: 0
   effectRange: 3
-  buffDuration: 3.6000001
+  buffDuration: 0
   attackIncreasePercent: 0
-  requireSkillCardsForUpgrade: 1
+  manaRecoveryAmount: 0
+  hpRecoveryAmount: 0
+  moveSpeedIncrease: 0
+  requireSkillCardsForUpgrade: 2
   maxLevel: 100
   effectPrefab: {fileID: 1326881667342604048, guid: 14757eab124831a4ca9b4d9470721cc6, type: 3}
+  isEquipped: 0
