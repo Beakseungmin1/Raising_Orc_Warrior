@@ -21,7 +21,7 @@ public class QuestSlotUI : UIBase
     {
         //퀘스트 프리팹에 있는 스크립트 컴포넌트를 받아온 뒤, QuestStep을 상속받는 클래스를 제네릭으로 받아온 뒤 거기에 있는 값을 뭔줄 알고 넣어준담...?
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged += RefreshUI;
-        GameEventsManager.Instance.questEvents.onFinishQuest += SetCompleteUI;
+        GameEventsManager.Instance.questEvents.onFinishQuest += ShowCompleteUI;
 
         if (questInfo != null)
         {
@@ -29,7 +29,6 @@ public class QuestSlotUI : UIBase
             rewardAmountTxt.text = questInfo.rewardAmount.ToString();
             rewardImage = questInfo.rewardImage;
         }
-        completeImage.SetActive(false);
     }
 
     private void Start()
@@ -68,18 +67,30 @@ public class QuestSlotUI : UIBase
                 levelTxt.text = questStep.level.ToString();
             }
         }
+
+        Quest quest = QuestManager.Instance.GetQuestById(id);
+        if (quest.state.Equals(QuestState.FINISHED))
+        {
+            ShowCompleteUI(id);
+        }
+        else
+        {
+            HideCompleteUI(id);
+        }
     }
 
 
-    public void SetCompleteUI(string id)
+    public void ShowCompleteUI(string id)
     {
-        if (questInfo != null && questInfo.id == id)
+        if (questInfo.id == id && completeImage != null)
         {
             completeImage.SetActive(true);
         }
     }
 
-    //데일리 퀘스트매니저 리스트에 summonSkillQuestStep있음
-    //제네릭으로 받아와서 where T : QuestStep
-    //QuestStep에 있는 count, countToComplete, level 값을 활용한다.
+    public void HideCompleteUI(string id)
+    {
+        completeImage.SetActive(false);
+    }
+
 }

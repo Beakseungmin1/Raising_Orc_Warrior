@@ -12,12 +12,6 @@ public abstract class QuestStep : MonoBehaviour
     public int count = 0;
     public int countToComplete = 10;
 
-    private void Awake()
-    {
-        this.questId = questId;
-        this.stepIndex = stepIndex;
-    }
-
     public void InitializeQuestStep(string questId, int stepIndex, string questStepState)
     {
         this.questId = questId;
