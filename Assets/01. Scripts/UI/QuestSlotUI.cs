@@ -49,7 +49,7 @@ public class QuestSlotUI : UIBase
 
     public void RefreshUI(string id, QuestState state, int currentProgressCount, int countToComplete, int level)
     {
-        if (questInfo.id == id)
+        if (questInfo != null && questInfo.id == id)
         {
             progressCountTxt.text = $"{currentProgressCount} / {countToComplete}";
             slider.value = currentProgressCount / countToComplete;
@@ -59,7 +59,7 @@ public class QuestSlotUI : UIBase
 
     public void SetCompleteUI(string id)
     {
-        if (questInfo.id == id)
+        if (questInfo != null && questInfo.id == id)
         {
             completeImage.SetActive(true);
         }

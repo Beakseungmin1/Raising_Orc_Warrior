@@ -832,7 +832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
-  questInfo: {fileID: 11400000, guid: 1a7555db1ff452f43b987ea45a5133a7, type: 2}
+  questInfo: {fileID: 0}
   displayNameTxt: {fileID: 8244567778800042166}
   levelTxt: {fileID: 5425605286889234513}
   progressCountTxt: {fileID: 2736100133786262345}
