@@ -32,6 +32,14 @@ public class QuestSlotUI : UIBase
         completeImage.SetActive(false);
     }
 
+    private void Start()
+    {
+        if (questInfo != null)
+        {
+            RefreshUI(questInfo.id);
+        }
+    }
+
     public void OnRewardBtnClick()
     {
         switch (questInfo.questType)
@@ -47,15 +55,21 @@ public class QuestSlotUI : UIBase
         }
     }
 
-    public void RefreshUI(string id, QuestState state, int currentProgressCount, int countToComplete, int level)
+    public void RefreshUI(string id)
     {
-        if (questInfo != null && questInfo.id == id)
+        foreach (var obj in QuestManager.Instance.questGameObjs)
         {
-            progressCountTxt.text = $"{currentProgressCount} / {countToComplete}";
-            slider.value = currentProgressCount / countToComplete;
-            levelTxt.text = level.ToString();
+            QuestStep questStep = obj.GetComponent<QuestStep>();
+
+            if (questStep != null && questStep.questId == questInfo.id)
+            {
+                progressCountTxt.text = $"{questStep.count} / {questStep.countToComplete}";
+                slider.value = (float)questStep.count / questStep.countToComplete;
+                levelTxt.text = questStep.level.ToString();
+            }
         }
     }
+
 
     public void SetCompleteUI(string id)
     {
@@ -64,4 +78,8 @@ public class QuestSlotUI : UIBase
             completeImage.SetActive(true);
         }
     }
+
+    //데일리 퀘스트매니저 리스트에 summonSkillQuestStep있음
+    //제네릭으로 받아와서 where T : QuestStep
+    //QuestStep에 있는 count, countToComplete, level 값을 활용한다.
 }

@@ -6,10 +6,6 @@ public class SummonSkillQuestStep : QuestStep
 {
     public QuestInfoSO questInfo;
 
-    private int level = 1;
-    private int summonCount = 0;
-    private int summonCountToComplete = 10;
-
     private void OnEnable()
     {
         GameEventsManager.Instance.summonEvents.onSkillSummoned += SkillSummoned;
@@ -22,13 +18,13 @@ public class SummonSkillQuestStep : QuestStep
 
     public void SkillSummoned(int count)
     {
-        if (summonCount < summonCountToComplete)
+        if (this.count < countToComplete)
         {
-            summonCount += count;
+            this.count += count;
             UpdateState();
         }
 
-        if (summonCount >= summonCountToComplete)
+        if (this.count >= countToComplete)
         {
             FinishQuestStep();
         }
@@ -36,13 +32,13 @@ public class SummonSkillQuestStep : QuestStep
 
     private void UpdateState()
     {
-        string state = summonCount.ToString();
+        string state = count.ToString();
         ChangeState(state);
     }
 
     protected override void SetQuestStepState(string state)
     {
-        this.summonCount = System.Int32.Parse(state);
+        this.count = System.Int32.Parse(state);
         UpdateState();
     }
 }

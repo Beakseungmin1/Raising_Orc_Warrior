@@ -5,8 +5,19 @@ using UnityEngine;
 public abstract class QuestStep : MonoBehaviour
 {
     private bool isFinished = false;
-    private string questId;
+    public string questId;
     private int stepIndex;
+
+    public int level = 1;
+    public int count = 0;
+    public int countToComplete = 10;
+
+    private void Awake()
+    {
+        this.questId = questId;
+        this.stepIndex = stepIndex;
+    }
+
     public void InitializeQuestStep(string questId, int stepIndex, string questStepState)
     {
         this.questId = questId;

@@ -9,6 +9,7 @@ public class Quest
     public QuestState state;
     private int currentQuestStepIndex;
     private QuestStepState[] questStepStates;
+    public QuestType questType;
 
     public Quest(QuestInfoSO questInfo)
     {
@@ -16,6 +17,7 @@ public class Quest
         this.state = QuestState.REQUIREMENTS_NOT_MET;
         this.currentQuestStepIndex = 0;
         this.questStepStates = new QuestStepState[info.questStepPrefabs.Length];
+        this.questType = questInfo.questType;
 
         for (int i = 0; i < questStepStates.Length; i++)
         {
@@ -49,7 +51,7 @@ public class Quest
 
     }
 
-    public void InstatiateCurrentQuestStep(Transform parentTransform)
+    public GameObject InstatiateCurrentQuestStep(Transform parentTransform)
     {
         GameObject questStepPrefab = GetCurrentQuestStepPrefab();
         if (questStepPrefab != null)
@@ -57,7 +59,11 @@ public class Quest
             QuestStep questStep = Object.Instantiate<GameObject>(questStepPrefab, parentTransform)
                 .GetComponent<QuestStep>();
             questStep.InitializeQuestStep(info.id, currentQuestStepIndex, questStepStates[currentQuestStepIndex].state);
+
+            questStepPrefab.name = info.id + "Step";
         }
+
+        return questStepPrefab;
     }
 
     private GameObject GetCurrentQuestStepPrefab()
