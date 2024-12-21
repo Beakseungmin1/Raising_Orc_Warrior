@@ -15,6 +15,8 @@ public class QuestSlotUI : UIBase
     public Image rewardImage;
     public Slider slider;
 
+    public GameObject completeImage;
+
     private void Awake()
     {
         //퀘스트 프리팹에 있는 스크립트 컴포넌트를 받아온 뒤, QuestStep을 상속받는 클래스를 제네릭으로 받아온 뒤 거기에 있는 값을 뭔줄 알고 넣어준담...?
@@ -28,6 +30,7 @@ public class QuestSlotUI : UIBase
             rewardAmountTxt.text = questInfo.rewardAmount.ToString();
             rewardImage = questInfo.rewardImage;
         }
+        completeImage.SetActive(false);
     }
 
     public void OnRewardBtnClick()
