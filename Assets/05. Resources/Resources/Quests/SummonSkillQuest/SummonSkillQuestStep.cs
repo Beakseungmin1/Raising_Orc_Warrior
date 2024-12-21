@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SummonSkillQuestStep : QuestStep
 {
+    public QuestInfoSO questInfo;
+
+    private int level = 1;
     private int summonCount = 0;
     private int summonCountToComplete = 10;
 
@@ -17,18 +20,25 @@ public class SummonSkillQuestStep : QuestStep
         GameEventsManager.Instance.summonEvents.onSkillSummoned -= SkillSummoned;
     }
 
+    private void Start()
+    {
+        ProressCountChanged(); //퀘스트슬롯UI 리프레쉬 시켜주기 위함.
+    }
+
     public void SkillSummoned(int count)
     {
         if (summonCount < summonCountToComplete)
         {
             summonCount += count;
             UpdateState();
+            ProressCountChanged();
         }
 
         if (summonCount >= summonCountToComplete)
         {
             FinishQuestStep();
-        }   
+            ProressCountChanged();
+        }
     }
 
     private void UpdateState()
@@ -41,5 +51,11 @@ public class SummonSkillQuestStep : QuestStep
     {
         this.summonCount = System.Int32.Parse(state);
         UpdateState();
+    }
+
+    public void ProressCountChanged()
+    {
+        Quest quest = QuestManager.Instance.GetQuestById(questInfo.id);
+        GameEventsManager.Instance.questEvents.QuestProgressCountChange(questInfo.id, quest.state, summonCount, summonCountToComplete, level);
     }
 }

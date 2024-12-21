@@ -108,7 +108,7 @@ public class Summon : MonoBehaviour
             PlayerObjManager.Instance.Player.inventory.AddItemToInventory(weaponDataSO);
             weaponDataSOs.Add(weaponDataSO);
         }
-        ReturnRateByDebugLog(ItemType.Weapon); //확률 변환 테스트용
+        //ReturnRateByDebugLog(ItemType.Weapon); //확률 변환 테스트용
         GameEventsManager.Instance.summonEvents.WeaponSummoned(summonCount);
         return weaponDataSOs;
     }
@@ -124,7 +124,7 @@ public class Summon : MonoBehaviour
             PlayerObjManager.Instance.Player.inventory.AddItemToInventory(skillDataSO);
             skillDataSOs.Add(skillDataSO);
         }
-        ReturnRateByDebugLog(ItemType.Skill); //확률 변환 테스트용
+        //ReturnRateByDebugLog(ItemType.Skill); //확률 변환 테스트용
         GameEventsManager.Instance.summonEvents.SkillSummoned(summonCount);
         return skillDataSOs;
     }
@@ -141,7 +141,7 @@ public class Summon : MonoBehaviour
             PlayerObjManager.Instance.Player.inventory.AddItemToInventory(accessoryDataSO);
             accessoryDataSOs.Add(accessoryDataSO);
         }
-        ReturnRateByDebugLog(ItemType.Accessory); //확률 변환 테스트용
+        //ReturnRateByDebugLog(ItemType.Accessory); //확률 변환 테스트용
         GameEventsManager.Instance.summonEvents.AccessorySummoned(summonCount);
         return accessoryDataSOs;
     }

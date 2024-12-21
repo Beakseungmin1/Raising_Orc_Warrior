@@ -127,7 +127,6 @@ public class QuestManager : Singleton<QuestManager>
         GameEventsManager.Instance.questEvents.QuestStateChange(quest);
     }
 
-
     private Dictionary<string, Quest> CreateQuestMap()
     {
         QuestInfoSO[] allQuest = Resources.LoadAll<QuestInfoSO>("Quests");
@@ -144,7 +143,7 @@ public class QuestManager : Singleton<QuestManager>
         return idToQuestMap;
     }
 
-    private Quest GetQuestById(string id)
+    public Quest GetQuestById(string id)
     {
         Quest quest = questMap[id];
         if (quest == null)

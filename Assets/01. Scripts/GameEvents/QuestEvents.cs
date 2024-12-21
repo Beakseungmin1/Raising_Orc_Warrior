@@ -48,4 +48,15 @@ public class QuestEvents
             onQuestStepStateChange(id, stepIndex, questStepState);
         }
     }
+
+    public event Action<string, QuestState, int, int, int> onQuestProgressCountChanged;
+    
+    public void QuestProgressCountChange(string id, QuestState state, int currentProgressCount, int countToComplete, int level)
+    {
+        if (onQuestProgressCountChanged != null)
+        {
+            onQuestProgressCountChanged(id, state, currentProgressCount, countToComplete, level);
+        }
+    }
+
 }
