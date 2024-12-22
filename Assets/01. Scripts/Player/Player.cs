@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public PlayerInformation playerInformation;
     public PlayerStat stat;
     public PlayerInventory inventory;
     public PlayerBattle PlayerBattle;
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        playerInformation = GetComponent<PlayerInformation>();
         stat = GetComponent<PlayerStat>();
         inventory = GetComponent<PlayerInventory>();
         PlayerBattle = GetComponent<PlayerBattle>();
