@@ -2,7 +2,7 @@ using System.Numerics;
 
 public class BigIntegerManager : Singleton<BigIntegerManager>
 {
-    private string FormatBigInteger(BigInteger amount)
+    public string FormatBigInteger(BigInteger amount)
     {
         if (amount < 1000)
             return amount.ToString();

@@ -5,7 +5,7 @@ using System.Numerics; // BigInteger 사용
 
 public class CurrencyManager : Singleton<CurrencyManager>
 {
-    public BigInteger gold = 100000000; // 능력치 강화용 (전역 변수)
+    private BigInteger gold = 99999999999; // 능력치 강화용 (전역 변수)
 
     private Dictionary<CurrencyType, float> currencies; // float 타입만 사용
 
