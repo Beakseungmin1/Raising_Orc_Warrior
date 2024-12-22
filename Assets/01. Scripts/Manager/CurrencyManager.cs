@@ -14,9 +14,9 @@ public class CurrencyManager : Singleton<CurrencyManager>
         // µÒº≈≥ ∏Æ √ ±‚»≠
         currencies = new Dictionary<CurrencyType, float>
         {
-            { CurrencyType.Emerald, 100000000f }, // float
-            { CurrencyType.Cube, 100000000f },    // float
-            { CurrencyType.Diamond, 100000000f } // float
+            { CurrencyType.Emerald, 99999f }, // float
+            { CurrencyType.Cube, 99999f },    // float
+            { CurrencyType.Diamond, 99999f } // float
         };
     }
 
