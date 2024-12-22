@@ -32,25 +32,15 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
 
     private Pattern enemyPattern;
 
-    public Action OnEnemyDeath;
-
-    public Action OnEnemyAttack;
-
     private PlayerBattle player;
 
     float patternTime = 4f; // 패턴 유지시간
     float toTime = 4; // 패턴 시간 계산용 변수
 
-    //private void Awake()
-    //{
-    //    OnEnemyDeath += RegenManager.Instance.EnemyKilled;
-    //}
-
     private void Start()
     {
         SetupEnemy();
         InvokeRepeating("SwitchPattern", 0, patternTime);
-        OnEnemyAttack = GiveDamageToPlayer;
     }
 
     private void Update()
@@ -80,8 +70,6 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
         animator.SetBool("Pattern2", false);
     }
 
-
-
     public void TakeDamage(BigInteger Damage)
     {
         if (hp - Damage > 0)
@@ -92,14 +80,6 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
         {
             hp -= Damage;
             Die();
-        }
-    }
-
-    private void EnemyAttack()
-    {
-        if (player != null && !player.GetActive())
-        {
-            animator.SetTrigger("2_Attack");
         }
     }
 
@@ -135,11 +115,6 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
         hp = enemySO.hp;
         maxHp = enemySO.maxHp;
         giveExp = enemySO.giveExp;
-        //if (model == null)
-        //{
-        //    model = enemySO.model;
-        //    model = Instantiate(model, transform);
-        //}
         animator = GetComponentInChildren<Animator>();
 
         cooldown = enemySO.cooldown;
