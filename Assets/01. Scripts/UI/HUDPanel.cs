@@ -17,14 +17,34 @@ public class HUDPanel : UIBase
     [SerializeField] private TextMeshProUGUI diamondTxt;
 
 
+    private void OnEnable()
+    {
+        GameEventsManager.Instance.currencyEvents.onEmeraldChanged += RefreshUI;
+        GameEventsManager.Instance.currencyEvents.onDiamondChanged += RefreshUI;
+    }
 
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.currencyEvents.onEmeraldChanged -= RefreshUI;
+        GameEventsManager.Instance.currencyEvents.onDiamondChanged -= RefreshUI;
+    }
 
     private void Start()
     {
+        
         stat = PlayerObjManager.Instance.Player.stat;
 
         stat.UpdateLevelStatUI += UpdateTopInformatinBar;
         stat.UpdateLevelStatUI?.Invoke();
+
+        RefreshUI();
+    }
+
+    public void RefreshUI()
+    {
+        playerNameTxt.text = PlayerObjManager.Instance.Player.playerInformation.playerName;
+        emeraldTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Emerald).ToString();
+        diamondTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Diamond).ToString();
     }
 
     public void ShowPlayerInfoPopupUI()

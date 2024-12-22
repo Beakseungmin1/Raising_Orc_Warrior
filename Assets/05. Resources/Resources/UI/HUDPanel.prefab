@@ -672,7 +672,7 @@ GameObject:
   - component: {fileID: 8100978528565376811}
   - component: {fileID: 2168001049283155450}
   m_Layer: 5
-  m_Name: PlayerIDTxt
+  m_Name: DiamondTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1211,7 +1211,7 @@ GameObject:
   - component: {fileID: 2177924332533045793}
   - component: {fileID: 1820697371612300525}
   m_Layer: 5
-  m_Name: PlayerIDTxt
+  m_Name: EmeraldTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1428,12 +1428,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
-  playerNameTxt: {fileID: 0}
+  playerNameTxt: {fileID: 6092768553116757621}
   playerlevelTxt: {fileID: 683134682230835071}
   expTxt: {fileID: 2479287220512029732}
   expBar: {fileID: 165880422994487863}
-  emeraldTxt: {fileID: 0}
-  diamondTxt: {fileID: 0}
+  emeraldTxt: {fileID: 1820697371612300525}
+  diamondTxt: {fileID: 2168001049283155450}
 --- !u!1 &8402482807219185359
 GameObject:
   m_ObjectHideFlags: 0
