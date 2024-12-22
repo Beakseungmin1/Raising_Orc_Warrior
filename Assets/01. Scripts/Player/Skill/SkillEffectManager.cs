@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class SkillEffectManager : Singleton<SkillEffectManager>
 {
@@ -48,16 +49,16 @@ public class SkillEffectManager : Singleton<SkillEffectManager>
         }
 
         GameObject effectObj = Instantiate(effect.SkillPrefab, playerWeaponPosition.position, Quaternion.identity);
-        Debug.Log($"SkillEffectManager: 플레이어 무기 이펙트 생성 완료 - 버프 지속시간: {effect.BuffDuration}초");
+        Debug.Log($"SkillEffectManager: 플레이어 무기 이펙트 생성 완료 - 지속시간: {effect.EffectDuration}초");
 
-        Destroy(effectObj, effect.BuffDuration);
+        Destroy(effectObj, effect.EffectDuration);
     }
 
     private void ApplyAreaEffect(SkillEffect effect)
     {
         GameObject effectObj = Instantiate(effect.SkillPrefab, effect.TargetPosition, Quaternion.identity);
-        Debug.Log($"SkillEffectManager: 번개 이펙트 생성 완료 - 범위: {effect.EffectRange}, 지속시간: {effect.BuffDuration}초");
+        Debug.Log($"SkillEffectManager: 번개 이펙트 생성 완료 - 범위: {effect.EffectRange}, 지속시간: {effect.EffectDuration}초");
 
-        Destroy(effectObj, effect.BuffDuration);
+        Destroy(effectObj, effect.EffectDuration);
     }
 }

@@ -33,6 +33,7 @@ public class SkillDataSO : BaseItemDataSO
 
     [Header("Visual and Effects")]
     public GameObject effectPrefab;
+    public float effectDuration;
 
     [Header("Equipped State")]
     public bool isEquipped;    
