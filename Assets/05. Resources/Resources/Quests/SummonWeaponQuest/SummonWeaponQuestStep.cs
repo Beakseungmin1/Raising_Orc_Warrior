@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SummonSkillQuestStep : QuestStep
+public class SummonWeaponQuestStep : QuestStep
 {
     public QuestInfoSO questInfo;
 
     private void OnEnable()
     {
-        GameEventsManager.Instance.summonEvents.onSkillSummoned += SkillSummoned;
+        GameEventsManager.Instance.summonEvents.onWeaponSummoned += WeaponSummoned;
     }
 
     private void OnDisable()
     {
-        GameEventsManager.Instance.summonEvents.onSkillSummoned -= SkillSummoned;
+        GameEventsManager.Instance.summonEvents.onWeaponSummoned -= WeaponSummoned;
     }
 
-    public void SkillSummoned(int count)
+    public void WeaponSummoned(int count)
     {
         if (this.count < countToComplete)
         {

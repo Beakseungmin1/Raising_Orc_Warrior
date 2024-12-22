@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf8661a607dd8949bc9c9cfa9947b84, type: 3}
+  m_Name: KillEnemieslQuest
+  m_EditorClassIdentifier: 
+  <id>k__BackingField: KillEnemieslQuest
+  displayName: "\uC801 \uCC98\uCE58"
+  questType: 0
+  levelRequirement: 1
+  questPrerequisites: []
+  questStepPrefabs:
+  - {fileID: 3641058592214559329, guid: 356441d1f43e1664e8dd3dba988dee09, type: 3}
+  currenyType: 3
+  rewardAmount: 100
+  rewardImage: {fileID: 0}

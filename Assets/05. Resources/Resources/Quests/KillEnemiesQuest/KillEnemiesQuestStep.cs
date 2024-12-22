@@ -2,31 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SummonSkillQuestStep : QuestStep
+public class KillEnemiesQuestStep : QuestStep
 {
     public QuestInfoSO questInfo;
 
     private void OnEnable()
     {
-        GameEventsManager.Instance.summonEvents.onSkillSummoned += SkillSummoned;
+        GameEventsManager.Instance.enemyEvents.onEnemyKilled += EnemyKilled;
     }
 
     private void OnDisable()
     {
-        GameEventsManager.Instance.summonEvents.onSkillSummoned -= SkillSummoned;
+        GameEventsManager.Instance.enemyEvents.onEnemyKilled -= EnemyKilled;
     }
 
-    public void SkillSummoned(int count)
+    public void EnemyKilled()
     {
+        this.count++;
+
         if (this.count < countToComplete)
         {
-            this.count += count;
             UpdateState();
+
+            GameEventsManager.Instance.questEvents.QuestProgressCountChange(questId);
         }
 
         if (this.count >= countToComplete)
         {
             FinishQuestStep();
+            GameEventsManager.Instance.questEvents.QuestProgressCountChange(questId);
         }
     }
 

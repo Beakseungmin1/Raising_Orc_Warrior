@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class DailyQuestManager : Singleton<DailyQuestManager>
 {
-    //시간이 지나면 questInfo를 전부 실행해준다.
 
     private const string LastQuestResetKey = "LastQuestResetDate";
     private DateTime nextResetTime;

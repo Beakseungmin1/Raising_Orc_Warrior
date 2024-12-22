@@ -5,12 +5,21 @@ using UnityEngine;
 public abstract class QuestStep : MonoBehaviour
 {
     private bool isFinished = false;
-    private string questId;
+    public string questId;
     private int stepIndex;
-    public void InitializeQuestStep(string questId, int stepIndex)
+
+    public int level = 1;
+    public int count = 0;
+    public int countToComplete = 10;
+
+    public void InitializeQuestStep(string questId, int stepIndex, string questStepState)
     {
         this.questId = questId;
         this.stepIndex = stepIndex;
+        if (questStepState != null && questStepState != "")
+        {
+            SetQuestStepState(questStepState);
+        }
     }
 
     protected void FinishQuestStep()
@@ -19,7 +28,7 @@ public abstract class QuestStep : MonoBehaviour
         {
             isFinished = true; 
             GameEventsManager.Instance.questEvents.AdvanceQuest(questId);
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         }
     }
     
@@ -27,4 +36,6 @@ public abstract class QuestStep : MonoBehaviour
     {
         GameEventsManager.Instance.questEvents.QuestStepStateChange(questId, stepIndex, new QuestStepState(newState));
     }
+
+    protected abstract void SetQuestStepState(string state);
 }

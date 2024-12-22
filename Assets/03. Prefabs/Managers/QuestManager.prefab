@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3641058592214559329
+--- !u!1 &3544765790054530863
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5032908984344505822}
-  - component: {fileID: -3082862813959539602}
+  - component: {fileID: 453932158036720901}
+  - component: {fileID: 4190309615909890376}
+  - component: {fileID: 1773905168374146265}
   m_Layer: 0
-  m_Name: SummonSkillQuestStep
+  m_Name: QuestManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5032908984344505822
+--- !u!4 &453932158036720901
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3641058592214559329}
+  m_GameObject: {fileID: 3544765790054530863}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,20 +33,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-3082862813959539602
+--- !u!114 &4190309615909890376
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3641058592214559329}
+  m_GameObject: {fileID: 3544765790054530863}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b85c1f2a2b486c4d9d5244e6d18cab5, type: 3}
+  m_Script: {fileID: 11500000, guid: f20521f91d9accd498e0e278fdbbbafa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questId: 
-  level: 1
-  count: 0
-  countToComplete: 10
-  questInfo: {fileID: 11400000, guid: 1a7555db1ff452f43b987ea45a5133a7, type: 2}
+  loadQuestState: 0
+  questGameObjs: []
+--- !u!114 &1773905168374146265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3544765790054530863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b2500b7e4dfc443b7dc059f56c984d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questInfos:
+  - {fileID: 11400000, guid: 1a7555db1ff452f43b987ea45a5133a7, type: 2}
