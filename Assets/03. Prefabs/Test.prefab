@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skill1: {fileID: 11400000, guid: 7cea4b16773fe114db7a86eb02f4985a, type: 2}
   skill2: {fileID: 11400000, guid: 603afa5e7f58b794a94d391af8c56404, type: 2}
-  skill3: {fileID: 11400000, guid: 6f1272a844fc28c44a4df6a1eb5ec35b, type: 2}
+  skill3: {fileID: 11400000, guid: 608c24c1973c2f34f94c146d88e40443, type: 2}
   weapon1: {fileID: 11400000, guid: debfef814216716488434a970a6d0278, type: 2}
   weapon2: {fileID: 11400000, guid: 85c931af63fe185499df3a7912a9b376, type: 2}
   weapon3: {fileID: 11400000, guid: b38eaa08e43ebc1459d345af86c43d07, type: 2}

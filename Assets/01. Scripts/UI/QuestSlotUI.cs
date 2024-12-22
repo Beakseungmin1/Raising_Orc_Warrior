@@ -32,13 +32,13 @@ public class QuestSlotUI : UIBase
     private void OnEnable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged += RefreshUI;
-        GameEventsManager.Instance.questEvents.onFinishQuest += RefreshUI;
+        GameEventsManager.Instance.questEvents.onFinishQuest += ManageCompleteUI;
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged -= RefreshUI;
-        GameEventsManager.Instance.questEvents.onFinishQuest -= RefreshUI;
+        GameEventsManager.Instance.questEvents.onFinishQuest -= ManageCompleteUI;
     }
 
     private void Start()
@@ -46,6 +46,7 @@ public class QuestSlotUI : UIBase
         if (questInfo != null)
         {
             RefreshUI(questInfo.id);
+            ManageCompleteUI(questInfo.id);
         }
     }
 
@@ -67,7 +68,6 @@ public class QuestSlotUI : UIBase
 
     public void RefreshUI(string id)
     {
-        Debug.Log("RefreshUI의 매개변수 id는" + id);
         foreach (var obj in QuestManager.Instance.questGameObjs)
         {
             QuestStep questStep = obj.GetComponent<QuestStep>();
@@ -82,22 +82,34 @@ public class QuestSlotUI : UIBase
                 }
             }
         }
-        ManageCompleteUI(id);
     }
 
     public void ManageCompleteUI(string id)
     {
-        Quest quest = QuestManager.Instance.GetQuestById(id);
-        if (quest.state.Equals(QuestState.FINISHED))
+        foreach (var obj in QuestManager.Instance.questGameObjs)
         {
-            if (questInfo.id == id)
+            QuestStep questStep = obj.GetComponent<QuestStep>();
+
+            if (questStep != null)
             {
-                completeImage.SetActive(true);
+                if (questStep.questId == questInfo.id)
+                {
+                    Quest quest = QuestManager.Instance.GetQuestById(id);
+                    if (quest.state.Equals(QuestState.FINISHED))
+                    {
+                        if (questInfo.id == id)
+                        {
+                            completeImage.SetActive(true);
+                        }
+                    }
+                    else
+                    {
+                        completeImage.SetActive(false);
+                    }
+                }
             }
         }
-        else if (!quest.state.Equals(QuestState.FINISHED))
-        {
-            completeImage.SetActive(false);
-        }
+
+
     }
 }
