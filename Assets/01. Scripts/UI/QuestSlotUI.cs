@@ -82,7 +82,7 @@ public class QuestSlotUI : UIBase
 
     public void ShowCompleteUI(string id)
     {
-        if (questInfo.id == id && completeImage != null)
+        if (questInfo.id == id)
         {
             completeImage.SetActive(true);
         }
