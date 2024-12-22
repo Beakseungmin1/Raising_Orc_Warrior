@@ -37,6 +37,6 @@ public class StageInfoUI : UIBase
         stageTxt.text = StageManager.Instance.stageName;
         stageNumTxt.text = $"STAGE {StageManager.Instance.curStageIndex + 1}";
         stageProgressSlider.value = (float)RegenManager.Instance.killedEnemies / RegenManager.Instance.totalEnemies;
-        currentGoldTxt.text = GetGoldAmountAsString();
+        currentGoldTxt.text = CurrencyManager.Instance.GetGold().ToString();
     }
 }
