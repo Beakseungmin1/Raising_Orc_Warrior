@@ -96,6 +96,7 @@ public class EquipManager : MonoBehaviour
             EquippedSkills[slotIndex] = skill;
             OnSkillEquippedChanged?.Invoke(skill, slotIndex, true);
 
+            ClearWaitingSkillForEquip();
             return;
         }
 

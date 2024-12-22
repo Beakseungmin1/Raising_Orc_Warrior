@@ -273,3 +273,4 @@ MonoBehaviour:
   slotButton: {fileID: 8217878552311925727}
   cooldownImage: {fileID: 1814116686506481673}
   conditionText: {fileID: 5816704539344075823}
+  defaultSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}

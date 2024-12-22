@@ -9,13 +9,23 @@ public class SkillEquipSlot : UIBase
     [SerializeField] private Button slotButton;
     [SerializeField] private Image cooldownImage;
     [SerializeField] private TextMeshProUGUI conditionText;
+    [SerializeField] private Sprite defaultSprite;
 
+    private Image skillIconImage;
     private BaseSkill equippedSkill;
     private int slotIndex;
     private EquipManager equipManager;
 
     private Color defaultColor = new Color32(50, 50, 50, 255);
     private Color equippedColor = Color.white;
+
+    private void Start()
+    {
+        if (skillIcon != null)
+        {
+            skillIconImage = skillIcon.GetComponent<Image>();
+        }
+    }
 
     private void Update()
     {
@@ -134,5 +144,20 @@ public class SkillEquipSlot : UIBase
         conditionText.text = "";
 
         skillIcon.color = equippedSkill == null ? defaultColor : equippedColor;
+
+        if (skillIcon != null)
+        {
+            if (skillIcon.sprite == null)
+            {
+                skillIcon.sprite = defaultSprite;
+            }
+
+            skillIcon.color = defaultColor;
+
+            if (skillIconImage != null)
+            {
+                skillIconImage.type = Image.Type.Simple;
+            }
+        }
     }
 }
