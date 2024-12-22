@@ -27,9 +27,9 @@ MonoBehaviour:
   skillType: 0
   effectType: 0
   activationCondition: 0
-  cooldown: 0
-  requiredHits: 10
-  damagePercent: 10
+  cooldown: 1
+  requiredHits: 0
+  damagePercent: 100
   manaCost: 0
   effectRange: 3
   buffDuration: 0
@@ -39,5 +39,6 @@ MonoBehaviour:
   moveSpeedIncrease: 0
   requireSkillCardsForUpgrade: 2
   maxLevel: 100
-  effectPrefab: {fileID: 1326881667342604048, guid: 14757eab124831a4ca9b4d9470721cc6, type: 3}
+  effectPrefab: {fileID: 6263782476919498309, guid: 1fd2749f2a4056446881dce86ed70c39, type: 3}
+  effectDuration: 1
   isEquipped: 0

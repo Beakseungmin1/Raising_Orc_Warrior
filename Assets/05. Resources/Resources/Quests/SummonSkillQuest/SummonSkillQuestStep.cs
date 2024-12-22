@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class SummonSkillQuestStep : QuestStep
 {
-    private int summonCount = 0;
-    private int summonCountToComplete = 10;
+    public QuestInfoSO questInfo;
 
     private void OnEnable()
     {
@@ -19,21 +18,27 @@ public class SummonSkillQuestStep : QuestStep
 
     public void SkillSummoned(int count)
     {
-        if (summonCount < summonCountToComplete)
+        if (this.count < countToComplete)
         {
-            summonCount += count;
+            this.count += count;
             UpdateState();
         }
 
-        if (summonCount >= summonCountToComplete)
+        if (this.count >= countToComplete)
         {
             FinishQuestStep();
-        }   
+        }
     }
 
     private void UpdateState()
     {
-        string state = summonCount.ToString();
+        string state = count.ToString();
         ChangeState(state);
+    }
+
+    protected override void SetQuestStepState(string state)
+    {
+        this.count = System.Int32.Parse(state);
+        UpdateState();
     }
 }

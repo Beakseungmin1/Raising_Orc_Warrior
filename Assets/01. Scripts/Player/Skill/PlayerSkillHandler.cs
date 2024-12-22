@@ -23,10 +23,8 @@ public class PlayerSkillHandler : MonoBehaviour
         {
             if (skill == null) continue;
 
-            // 쿨타임 감소
             skill.DecreaseCooldown(Time.deltaTime);
 
-            // 패시브 스킬만 자동 발동
             if (skill is PassiveSkill && skill.IsReadyToActivate())
             {
                 Debug.Log($"[PlayerSkillHandler] 패시브 스킬 자동 발동: {skill.SkillData.itemName}");
@@ -52,7 +50,6 @@ public class PlayerSkillHandler : MonoBehaviour
 
         if (!skill.IsReadyToActivate()) return;
 
-        // 스킬 타입에 따라 동작
         if (skill is BuffSkill)
         {
             ActivateBuffSkill(skill);
@@ -70,7 +67,7 @@ public class PlayerSkillHandler : MonoBehaviour
     private void ActivateBuffSkill(BaseSkill skill)
     {
         Debug.Log($"[PlayerSkillHandler] 버프 스킬 발동: {skill.SkillData.itemName}");
-        skill.Activate(Vector3.zero); // 버프는 타겟 위치 필요 없음
+        skill.Activate(Vector3.zero);
     }
 
     private void ActivateActiveSkill(BaseSkill skill, Vector3 targetPosition)

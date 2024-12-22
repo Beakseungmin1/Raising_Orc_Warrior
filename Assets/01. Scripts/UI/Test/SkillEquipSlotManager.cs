@@ -55,7 +55,6 @@ public class SkillEquipSlotManager : UIBase
             Debug.Log($"[SkillEquipSlotManager] 슬롯 {slotIndex}가 업데이트되었습니다. 장착 상태: {isEquipped}");
         }
 
-        // 기존 슬롯에서 스킬 제거된 경우도 처리
         if (!isEquipped)
         {
             foreach (var slot in equipSlots)

@@ -85,15 +85,21 @@ public class EquipManager : MonoBehaviour
             return;
         }
 
-        // 기존에 스킬이 장착된 슬롯을 찾음
         int existingSlotIndex = EquippedSkills.IndexOf(skill);
-        if (existingSlotIndex != -1)
+        if (existingSlotIndex != -1 && existingSlotIndex != slotIndex)
         {
-            Debug.Log($"[EquipManager] 스킬 {skill.SkillData.itemName}이 슬롯 {existingSlotIndex}에 이미 장착되어 있습니다. 제거 후 다시 장착합니다.");
-            UnequipSkill(existingSlotIndex);
+            Debug.Log($"[EquipManager] 스킬 {skill.SkillData.itemName}이 슬롯 {existingSlotIndex}에서 {slotIndex}로 이동합니다.");
+
+            EquippedSkills[existingSlotIndex] = null;
+            OnSkillEquippedChanged?.Invoke(skill, existingSlotIndex, false);
+
+            EquippedSkills[slotIndex] = skill;
+            OnSkillEquippedChanged?.Invoke(skill, slotIndex, true);
+
+            ClearWaitingSkillForEquip();
+            return;
         }
 
-        // 새로운 슬롯에 스킬 장착
         if (EquippedSkills[slotIndex] != null)
         {
             UnequipSkill(slotIndex);
@@ -101,6 +107,8 @@ public class EquipManager : MonoBehaviour
 
         EquippedSkills[slotIndex] = skill;
         skill.IsEquipped = true;
+
+        skill.ResetCondition();
 
         Debug.Log($"[EquipManager] 슬롯 {slotIndex}에 스킬 {skill.SkillData.itemName} 장착 완료.");
 
@@ -122,6 +130,7 @@ public class EquipManager : MonoBehaviour
         BaseSkill skill = EquippedSkills[slotIndex];
         if (skill == null) return;
 
+        skill.Deactivate();
         EquippedSkills[slotIndex] = null;
         skill.IsEquipped = false;
 

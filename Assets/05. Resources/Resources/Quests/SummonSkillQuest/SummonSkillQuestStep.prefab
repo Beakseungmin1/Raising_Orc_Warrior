@@ -44,3 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b85c1f2a2b486c4d9d5244e6d18cab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  questId: 
+  level: 1
+  count: 0
+  countToComplete: 10
+  questInfo: {fileID: 11400000, guid: 1a7555db1ff452f43b987ea45a5133a7, type: 2}

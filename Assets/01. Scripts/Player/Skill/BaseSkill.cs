@@ -18,7 +18,6 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
             }
             else if (skillData.activationCondition == ActivationCondition.HitBased)
             {
-                // 남은 히트 횟수 반환 (UI 표시용)
                 return skillData.requiredHits - currentHits;
             }
 
@@ -53,19 +52,21 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
         skillData = data;
         playerStat = stat;
 
-        Debug.Log($"[BaseSkill] {skillData.itemName} 초기화, 쿨타임: {skillData.cooldown}");
-
         requireSkillCardsForUpgrade = skillData.requireSkillCardsForUpgrade;
         isEquipped = skillData.isEquipped;
 
         if (skillData.activationCondition == ActivationCondition.HitBased)
         {
             playerBattle = PlayerObjManager.Instance?.Player?.PlayerBattle;
+
             if (playerBattle != null)
+            {
+                playerBattle.OnPlayerAttack -= RegisterHit;
                 playerBattle.OnPlayerAttack += RegisterHit;
+            }
         }
     }
-    private void OnDestroy()
+    public void Deactivate()
     {
         if (playerBattle != null)
             playerBattle.OnPlayerAttack -= RegisterHit;
@@ -103,20 +104,16 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
             currentHits++;
     }
 
-    protected void ResetCondition()
+    public void ResetCondition()
     {
-        Debug.Log($"[BaseSkill] ResetCondition 호출 전, 쿨타임: {cooldownTimer}, 히트: {currentHits}");
-
         if (skillData.activationCondition == ActivationCondition.Cooldown)
         {
-            cooldownTimer = skillData.cooldown; // 쿨타임 초기화
+            cooldownTimer = skillData.cooldown;
         }
         else if (skillData.activationCondition == ActivationCondition.HitBased)
         {
-            currentHits = 0; // 히트 초기화
+            currentHits = 0;
         }
-
-        Debug.Log($"[BaseSkill] ResetCondition 호출 후, 쿨타임: {cooldownTimer}, 히트: {currentHits}");
     }
 
     public virtual SkillEffect GetSkillEffect(Vector3 targetPosition)
@@ -127,7 +124,12 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
             skillData.buffDuration,
             skillData.effectRange,
             skillData.effectType,
-            targetPosition
+            targetPosition,
+            skillData.effectDuration,
+            skillData.attackIncreasePercent,
+            skillData.manaRecoveryAmount,
+            skillData.hpRecoveryAmount,
+            skillData.moveSpeedIncrease
         );
     }
 
