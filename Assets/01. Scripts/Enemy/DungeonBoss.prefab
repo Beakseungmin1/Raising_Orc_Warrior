@@ -95,7 +95,7 @@ Animator:
   m_GameObject: {fileID: 3043883501962652656}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6dfc2227fea5a9e49b4b53d81edc044e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -132,7 +132,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3187110840222732715}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 2.209999, y: 2.7700005, z: 0}
   m_LocalScale: {x: 6.5, y: 6.5, z: 6.5}
   m_ConstrainProportionsScale: 1
@@ -156,7 +156,7 @@ MonoBehaviour:
   enemySO: {fileID: 11400000, guid: 141d795a02777924e81e256d587a2497, type: 2}
   enemyCode: 
   model: {fileID: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 4990691328434815162}
   cooldown: 0
   skillEffectPrefab: {fileID: 0}
   effectRange: {fileID: 0}
