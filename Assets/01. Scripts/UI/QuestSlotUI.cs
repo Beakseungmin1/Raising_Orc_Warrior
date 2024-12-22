@@ -20,8 +20,6 @@ public class QuestSlotUI : UIBase
     private void Awake()
     {
         //퀘스트 프리팹에 있는 스크립트 컴포넌트를 받아온 뒤, QuestStep을 상속받는 클래스를 제네릭으로 받아온 뒤 거기에 있는 값을 뭔줄 알고 넣어준담...?
-        GameEventsManager.Instance.questEvents.onQuestProgressCountChanged += RefreshUI;
-        GameEventsManager.Instance.questEvents.onFinishQuest += ShowCompleteUI;
 
         if (questInfo != null)
         {
@@ -29,6 +27,18 @@ public class QuestSlotUI : UIBase
             rewardAmountTxt.text = questInfo.rewardAmount.ToString();
             rewardImage = questInfo.rewardImage;
         }
+    }
+
+    private void OnEnable()
+    {
+        GameEventsManager.Instance.questEvents.onQuestProgressCountChanged += RefreshUI;
+        GameEventsManager.Instance.questEvents.onFinishQuest += ShowCompleteUI;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.questEvents.onQuestProgressCountChanged -= RefreshUI;
+        GameEventsManager.Instance.questEvents.onFinishQuest -= ShowCompleteUI;
     }
 
     private void Start()
