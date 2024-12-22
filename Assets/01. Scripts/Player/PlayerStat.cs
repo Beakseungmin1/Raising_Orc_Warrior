@@ -84,7 +84,7 @@ public class PlayerStat : MonoBehaviour
         attackLevel++;
         //현재 돈에서 니드머니 빼기 기능 추가
         needAttackUpgradeMoney = attackLevel * 1000; //필요가격 수정예정
-        attackPower = attackLevel * 4;
+        attackPower = 20 + (attackLevel * 4);
     }
 
     public void HealthLevelUp()
@@ -92,7 +92,7 @@ public class PlayerStat : MonoBehaviour
         healthLevel++;
         //현재 돈에서 니드머니 빼기 기능 추가
         needHealthUpgradeMoney = healthLevel * 1000;
-        maxHealth = healthLevel * 40;
+        maxHealth = 200 + (healthLevel * 40);
         health += 40;
     }
 

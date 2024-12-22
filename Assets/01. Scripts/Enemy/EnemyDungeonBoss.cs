@@ -38,8 +38,8 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
 
     private PlayerBattle player;
 
-    float patternTime = 10f; // 패턴 유지시간
-    float toTime; // 패턴 시간 계산용 변수
+    float patternTime = 4f; // 패턴 유지시간
+    float toTime = 4; // 패턴 시간 계산용 변수
 
     //private void Awake()
     //{
@@ -49,6 +49,7 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
     private void Start()
     {
         SetupEnemy();
+        InvokeRepeating("SwitchPattern", 0, patternTime);
         OnEnemyAttack = GiveDamageToPlayer;
     }
 
@@ -68,18 +69,15 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
                 break;
             case Pattern.Pattern3:
                 SetfalseAnimation();
-                animator.SetBool("Pattern3", true);
+                animator.SetTrigger("Pattern3");
                 break;
         }
-
-        SwitchPattern();
     }
 
     public void SetfalseAnimation()
     {
         animator.SetBool("Pattern1", false);
         animator.SetBool("Pattern2", false);
-        animator.SetBool("Pattern3", false);
     }
 
 
@@ -174,7 +172,6 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
         if (collision.CompareTag("Player"))
         {
             player = collision.GetComponent<PlayerBattle>();
-            InvokeRepeating("EnemyAttack", 0f, 1.5f);
         }
     }
 
@@ -182,7 +179,6 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
     {
         if (collision.CompareTag("Player"))
         {
-            CancelInvoke("EnemyAttack");
             player = null;
         }
     }

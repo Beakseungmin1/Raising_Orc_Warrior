@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BossBtn : MonoBehaviour
 {
-    public void OnBossButton()
-    {
-        StageManager.Instance.StageClear();
-    }
+    //public void OnBossButton()
+    //{
+    //    StageManager.Instance.StageClear();
+    //}
 }
