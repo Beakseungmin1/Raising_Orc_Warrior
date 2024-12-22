@@ -11,11 +11,14 @@ public class GameEventsManager : Singleton<GameEventsManager>
     public SummonEvents summonEvents;
 
     public QuestEvents questEvents;
+
+    public CurrencyEvents currencyEvents;
     private void Awake()
     {
         enemyEvents = new EnemyEvents();
         playerEvents = new PlayerEvents();
         summonEvents = new SummonEvents();
         questEvents = new QuestEvents();
+        currencyEvents = new CurrencyEvents();
     }
 }
