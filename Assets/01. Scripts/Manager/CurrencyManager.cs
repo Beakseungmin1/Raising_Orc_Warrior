@@ -24,6 +24,7 @@ public class CurrencyManager : Singleton<CurrencyManager>
     public void AddGold(BigInteger amount)
     {
         gold += amount;
+        GameEventsManager.Instance.currencyEvents.GoldChanged();
     }
 
     // Gold 차감
@@ -31,6 +32,7 @@ public class CurrencyManager : Singleton<CurrencyManager>
     {
         gold -= amount;
         if (gold < 0) gold = BigInteger.Zero;
+        GameEventsManager.Instance.currencyEvents.GoldChanged();
     }
 
     // Gold 조회
@@ -46,6 +48,7 @@ public class CurrencyManager : Singleton<CurrencyManager>
         {
             currencies[type] += amount;
         }
+        GameEventsManager.Instance.currencyEvents.CallCurrencyAsFloatChangedMathod(type);
     }
 
     // 재화 차감 (float 타입만)
@@ -56,6 +59,7 @@ public class CurrencyManager : Singleton<CurrencyManager>
             currencies[type] -= amount;
             if (currencies[type] < 0) currencies[type] = 0f;
         }
+        GameEventsManager.Instance.currencyEvents.CallCurrencyAsFloatChangedMathod(type);
     }
 
     // 재화 조회
