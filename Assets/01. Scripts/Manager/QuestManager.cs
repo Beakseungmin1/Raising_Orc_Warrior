@@ -41,6 +41,14 @@ public class QuestManager : Singleton<QuestManager>
             if(quest.state == QuestState.IN_PROGRESS)
             {
                 quest.InstatiateCurrentQuestStep(this.transform);
+
+                foreach (Transform child in this.transform)
+                {
+                    if (child.name == quest.info.id + "Step(Clone)")
+                    {
+                        questGameObjs.Add(child.gameObject);
+                    }
+                }
             }
 
             GameEventsManager.Instance.questEvents.QuestStateChange(quest);
@@ -79,16 +87,7 @@ public class QuestManager : Singleton<QuestManager>
     private void StartQuest(string id)
     {
         Quest quest = GetQuestById(id);
-        GameObject questGameObj = quest.InstatiateCurrentQuestStep(this.transform);
-        //questGameObj.name = questGameObj.name.Replace("(Clone)",""); //왜 클론이 안지워지냐 ㅜㅜ
-
-        foreach (Transform child in this.transform)
-        {
-            if (child.name == id + "Step(Clone)")
-            {
-                questGameObjs.Add(child.gameObject);
-            }
-        }
+        //quest.InstatiateCurrentQuestStep(this.transform);
         ChangeQuestState(quest.info.id, QuestState.IN_PROGRESS);
     }
 

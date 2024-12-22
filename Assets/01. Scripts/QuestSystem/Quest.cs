@@ -51,7 +51,7 @@ public class Quest
 
     }
 
-    public GameObject InstatiateCurrentQuestStep(Transform parentTransform)
+    public void InstatiateCurrentQuestStep(Transform parentTransform)
     {
         GameObject questStepPrefab = GetCurrentQuestStepPrefab();
         if (questStepPrefab != null)
@@ -62,8 +62,6 @@ public class Quest
 
             questStepPrefab.name = info.id + "Step";
         }
-
-        return questStepPrefab;
     }
 
     private GameObject GetCurrentQuestStepPrefab()
