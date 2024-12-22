@@ -120,8 +120,6 @@ public class QuestManager : Singleton<QuestManager>
         //GameEventsManager.Instance.goldEvent.GoldGained(quest.info.goldReward); // 강의 코드
         CurrencyManager.Instance.AddCurrency(quest.info.currenyType, quest.info.rewardAmount);
         Debug.Log($"보상 지급 후 {quest.info.currenyType}의 양:{CurrencyManager.Instance.GetCurrency(quest.info.currenyType)}");
-        
-        GameEventsManager.Instance.currencyEvents.CallCurrencyChangedMathod(quest.info.currenyType);
     }
 
     private void QuestStepStateChange(string id, int stepIndex, QuestStepState questStepState)
