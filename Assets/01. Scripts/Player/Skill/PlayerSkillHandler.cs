@@ -3,36 +3,40 @@ using UnityEngine;
 
 public class PlayerSkillHandler : MonoBehaviour
 {
-    private List<BaseSkill> equippedSkills; // 장착된 스킬 목록
+    private List<BaseSkill> equippedSkills;
     private EquipManager equipManager;
     private PlayerStat playerStat;
 
     private void Start()
     {
-        equipManager = PlayerObjManager.Instance?.Player?.GetComponent<EquipManager>();
-        playerStat = PlayerObjManager.Instance?.Player?.GetComponent<PlayerStat>();
+        equipManager = PlayerObjManager.Instance?.Player?.EquipManager;
+        playerStat = PlayerObjManager.Instance?.Player?.stat;
 
-        if (equipManager == null || playerStat == null)
-        {
-            return;
-        }
+        if (equipManager == null || playerStat == null) return;
 
         SyncWithEquipManager();
     }
 
     private void Update()
     {
-        UpdateSkills();
+        foreach (var skill in equippedSkills)
+        {
+            if (skill == null) continue;
+
+            skill.DecreaseCooldown(Time.deltaTime);
+
+            if (skill is PassiveSkill && skill.IsReadyToActivate())
+            {
+                Debug.Log($"[PlayerSkillHandler] 패시브 스킬 자동 발동: {skill.SkillData.itemName}");
+                skill.Activate(Vector3.zero);
+            }
+        }
     }
 
-    /// <summary>
-    /// EquipManager와 동기화하여 장착된 스킬 목록 초기화
-    /// </summary>
     public void SyncWithEquipManager()
     {
         equippedSkills = equipManager.GetAllEquippedSkills();
 
-        // 각 스킬 초기화
         foreach (var skill in equippedSkills)
         {
             if (skill != null)
@@ -40,59 +44,48 @@ public class PlayerSkillHandler : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 모든 장착된 스킬의 Update 실행
-    /// </summary>
-    private void UpdateSkills()
-    {
-        foreach (var skill in equippedSkills)
-        {
-            if (skill != null)
-                skill.Update();
-        }
-    }
-
-    /// <summary>
-    /// 스킬 사용 (장착된 스킬만 발동 가능)
-    /// </summary>
     public void UseSkill(BaseSkill skill, Vector3 targetPosition)
     {
-        if (skill == null || !IsSkillEquipped(skill))
-        {
-            Debug.LogWarning($"{skill?.SkillData.itemName} 스킬은 장착되지 않았거나 유효하지 않습니다.");
-            return;
-        }
+        if (skill == null || !IsSkillEquipped(skill)) return;
 
-        if (!skill.IsReadyToActivate())
+        if (!skill.IsReadyToActivate()) return;
+
+        if (skill is BuffSkill)
         {
-            Debug.LogWarning($"{skill.SkillData.itemName} 스킬은 아직 준비되지 않았습니다.");
-            return;
+            ActivateBuffSkill(skill);
         }
-        Debug.Log($"[UseSkill] {skill.SkillData.itemName} 발동!");
-        // 스킬 발동
-        skill.Activate(targetPosition);
+        else if (skill is ActiveSkill)
+        {
+            ActivateActiveSkill(skill, targetPosition);
+        }
+        else
+        {
+            Debug.LogWarning($"[PlayerSkillHandler] 알 수 없는 스킬 타입: {skill.SkillData.itemName}");
+        }
     }
 
-    /// <summary>
-    /// 특정 스킬의 히트 등록
-    /// </summary>
+    private void ActivateBuffSkill(BaseSkill skill)
+    {
+        Debug.Log($"[PlayerSkillHandler] 버프 스킬 발동: {skill.SkillData.itemName}");
+        skill.Activate(Vector3.zero);
+    }
+
+    private void ActivateActiveSkill(BaseSkill skill, Vector3 targetPosition)
+    {
+        Debug.Log($"[PlayerSkillHandler] 액티브 스킬 발동: {skill.SkillData.itemName}, 쿨타임: {skill.RemainingCooldown}");
+        skill.Activate(targetPosition);
+        Debug.Log($"[PlayerSkillHandler] 스킬 발동 후 쿨타임: {skill.RemainingCooldown}");
+    }
+
     public void RegisterHit(BaseSkill skill)
     {
-        if (skill == null || !IsSkillEquipped(skill))
-        {
-            Debug.LogWarning("장착되지 않은 스킬에는 히트를 등록할 수 없습니다.");
-            return;
-        }
+        if (skill == null || !IsSkillEquipped(skill)) return;
 
         skill.RegisterHit();
     }
 
-    /// <summary>
-    /// 해당 스킬이 장착되었는지 확인
-    /// </summary>
-    public bool IsSkillEquipped(BaseSkill skill)
+    private bool IsSkillEquipped(BaseSkill skill)
     {
-        // equippedSkills에 해당 스킬이 존재하는지 확인
         return equippedSkills.Exists(s => s.SkillData == skill.SkillData);
     }
 }

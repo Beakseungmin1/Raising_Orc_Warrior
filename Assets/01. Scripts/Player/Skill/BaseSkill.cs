@@ -8,12 +8,44 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
     public int EnhancementLevel { get; protected set; } = 1;
     public int RequiredCurrencyForUpgrade => skillData.requiredCurrencyForUpgrade;
     public int StackCount { get; private set; } = 1;
+    public float RemainingCooldown
+    {
+        get
+        {
+            if (skillData.activationCondition == ActivationCondition.Cooldown)
+            {
+                return Mathf.Max(0, cooldownTimer);
+            }
+            else if (skillData.activationCondition == ActivationCondition.HitBased)
+            {
+                return skillData.requiredHits - currentHits;
+            }
+
+            return 0;
+        }
+    }
+    public int CurrentHits => currentHits;
 
     protected float cooldownTimer = 0f;
+    protected float activeTimer = 0f;
     protected int currentHits = 0;
     protected PlayerStat playerStat;
     protected bool isActivated = false;
     private int requireSkillCardsForUpgrade;
+    private bool isEquipped;
+    private PlayerBattle playerBattle;
+
+    public bool IsEquipped
+    {
+        get => isEquipped;
+        set
+        {
+            if (isEquipped != value)
+            {
+                isEquipped = value;
+            }
+        }
+    }
 
     public virtual void Initialize(SkillDataSO data, PlayerStat stat)
     {
@@ -21,24 +53,39 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
         playerStat = stat;
 
         requireSkillCardsForUpgrade = skillData.requireSkillCardsForUpgrade;
-    }
+        isEquipped = skillData.isEquipped;
 
-    public virtual void Update()
-    {
-        if (skillData.activationCondition == ActivationCondition.Cooldown && cooldownTimer > 0)
+        if (skillData.activationCondition == ActivationCondition.HitBased)
         {
-            cooldownTimer -= Time.deltaTime;
+            playerBattle = PlayerObjManager.Instance?.Player?.PlayerBattle;
+
+            if (playerBattle != null)
+            {
+                playerBattle.OnPlayerAttack -= RegisterHit;
+                playerBattle.OnPlayerAttack += RegisterHit;
+            }
         }
     }
+    public void Deactivate()
+    {
+        if (playerBattle != null)
+            playerBattle.OnPlayerAttack -= RegisterHit;
+    }
+
+    public virtual void Update(){}
 
     public bool IsReadyToActivate()
     {
-        return skillData.activationCondition switch
+        if (skillData.activationCondition == ActivationCondition.Cooldown)
         {
-            ActivationCondition.Cooldown => cooldownTimer <= 0,
-            ActivationCondition.HitBased => currentHits >= skillData.requiredHits,
-            _ => false,
-        };
+            return cooldownTimer <= 0;
+        }
+        else if (skillData.activationCondition == ActivationCondition.HitBased)
+        {
+            return currentHits >= skillData.requiredHits;
+        }
+
+        return false;
     }
 
     public bool ConsumeMana()
@@ -48,7 +95,6 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
             playerStat.reduceMana(skillData.manaCost);
             return true;
         }
-        Debug.Log($"{skillData.itemName} 발동 실패: 마나 부족!");
         return false;
     }
 
@@ -58,23 +104,32 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
             currentHits++;
     }
 
-    protected void ResetCondition()
+    public void ResetCondition()
     {
         if (skillData.activationCondition == ActivationCondition.Cooldown)
+        {
             cooldownTimer = skillData.cooldown;
+        }
         else if (skillData.activationCondition == ActivationCondition.HitBased)
+        {
             currentHits = 0;
+        }
     }
 
     public virtual SkillEffect GetSkillEffect(Vector3 targetPosition)
     {
         return new SkillEffect(
             skillData.effectPrefab,
-            skillData.damagePercent, // 강화 시 피해 비율 고정
-            skillData.buffDuration, // 강화 시 버프 지속 시간 고정
+            skillData.damagePercent,
+            skillData.buffDuration,
             skillData.effectRange,
             skillData.effectType,
-            targetPosition
+            targetPosition,
+            skillData.effectDuration,
+            skillData.attackIncreasePercent,
+            skillData.manaRecoveryAmount,
+            skillData.hpRecoveryAmount,
+            skillData.moveSpeedIncrease
         );
     }
 
@@ -82,28 +137,19 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
 
     public bool CanEnhance()
     {
-        int requiredSkillCount = requireSkillCardsForUpgrade;
-        int availableSkillCount = PlayerObjManager.Instance.Player.inventory.GetItemStackCount(this);
-
-        return CurrencyManager.Instance.GetCurrency(CurrencyType.Emerald) >= RequiredCurrencyForUpgrade
-               && availableSkillCount >= requiredSkillCount + 1;
+        return CurrencyManager.Instance.GetCurrency(CurrencyType.Emerald) >= RequiredCurrencyForUpgrade &&
+               PlayerObjManager.Instance.Player.inventory.GetItemStackCount(this) >= skillData.requireSkillCardsForUpgrade + 1;
     }
 
     public bool Enhance()
     {
-        if (!CanEnhance())
-        {
-            Debug.LogWarning("강화 조건이 충족되지 않았습니다.");
-            return false;
-        }
+        if (!CanEnhance()) return false;
 
         CurrencyManager.Instance.SubtractCurrency(CurrencyType.Emerald, RequiredCurrencyForUpgrade);
-        PlayerObjManager.Instance.Player.inventory.RemoveItemFromInventory(skillData, requireSkillCardsForUpgrade);
+        PlayerObjManager.Instance.Player.inventory.RemoveItemFromInventory(skillData, skillData.requireSkillCardsForUpgrade);
 
         EnhancementLevel++;
         requireSkillCardsForUpgrade++;
-
-        Debug.Log($"강화 완료! 현재 레벨: {EnhancementLevel}, 다음 강화 필요 카드: {requireSkillCardsForUpgrade}");
 
         EnhanceSkill();
 
@@ -127,5 +173,22 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
     public int GetRuntimeRequiredSkillCards()
     {
         return requireSkillCardsForUpgrade;
+    }
+
+    public void DecreaseCooldown(float deltaTime)
+    {
+        if (cooldownTimer > 0)
+            cooldownTimer = Mathf.Max(0, cooldownTimer - deltaTime);
+
+        if (isActivated && activeTimer > 0)
+            activeTimer = Mathf.Max(0, activeTimer - deltaTime);
+
+        if (isActivated && activeTimer <= 0 && !(this is ActiveSkill))
+            EndEffect();
+    }
+
+    protected virtual void EndEffect()
+    {
+        isActivated = false;
     }
 }

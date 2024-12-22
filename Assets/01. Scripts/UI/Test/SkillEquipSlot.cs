@@ -1,75 +1,163 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class SkillEquipSlot : UIBase
 {
     [SerializeField] private Image skillIcon;
     [SerializeField] private Button slotButton;
+    [SerializeField] private Image cooldownImage;
+    [SerializeField] private TextMeshProUGUI conditionText;
+    [SerializeField] private Sprite defaultSprite;
 
-    private BaseSkill equippedSkill; // Skill → BaseSkill
+    private Image skillIconImage;
+    private BaseSkill equippedSkill;
     private int slotIndex;
-    private SkillEquipSlotManager slotManager;
+    private EquipManager equipManager;
 
-    private Color defaultColor = new Color32(80, 80, 80, 255);
+    private Color defaultColor = new Color32(50, 50, 50, 255);
     private Color equippedColor = Color.white;
 
-    public void InitializeSlot(int index, SkillEquipSlotManager manager)
+    private void Start()
+    {
+        if (skillIcon != null)
+        {
+            skillIconImage = skillIcon.GetComponent<Image>();
+        }
+    }
+
+    private void Update()
+    {
+        UpdateSkillUI();
+    }
+
+    public void InitializeSlot(int index, EquipManager manager)
     {
         slotIndex = index;
-        slotManager = manager;
+        equipManager = manager;
 
-        UpdateSlotColor(equipped: false);
+        ResetUI();
 
         slotButton.onClick.RemoveAllListeners();
         slotButton.onClick.AddListener(OnClickSlot);
     }
 
-    public void EquipSkill(BaseSkill skill) // Skill → BaseSkill
+    public void UpdateSlot(BaseSkill skill, bool isEquipped)
     {
         equippedSkill = skill;
         skillIcon.sprite = skill?.SkillData.icon;
 
-        UpdateSlotColor(equipped: skill != null);
+        ResetUI();
+        UpdateSkillUI();
 
-        Debug.Log($"[SkillEquipSlot] 슬롯 {slotIndex}에 {equippedSkill?.SkillData.itemName ?? "스킬 없음"}이 장착되었습니다.");
+        Debug.Log($"[SkillEquipSlot] 슬롯 {slotIndex}에 스킬 {skill?.SkillData.itemName ?? "없음"} 업데이트됨. 장착 상태: {isEquipped}");
     }
 
-    public BaseSkill GetEquippedSkill() // 반환 타입 수정
+    private void UpdateSkillUI()
     {
-        return equippedSkill;
+        if (equippedSkill == null)
+        {
+            skillIcon.color = defaultColor;
+            cooldownImage.fillAmount = 1;
+            conditionText.text = "";
+            conditionText.gameObject.SetActive(false);
+            return;
+        }
+
+        conditionText.gameObject.SetActive(true);
+
+        if (equippedSkill.SkillData.activationCondition == ActivationCondition.Cooldown)
+        {
+            float cooldownRatio = Mathf.Clamp01(equippedSkill.RemainingCooldown / equippedSkill.SkillData.cooldown);
+            cooldownImage.fillAmount = 1 - cooldownRatio;
+
+            if (equippedSkill.IsReadyToActivate())
+            {
+                conditionText.gameObject.SetActive(false);
+            }
+            else
+            {
+                conditionText.text = $"{equippedSkill.RemainingCooldown:F1} 초";
+            }
+
+            skillIcon.color = equippedSkill.IsReadyToActivate() ? equippedColor : defaultColor;
+        }
+        else if (equippedSkill.SkillData.activationCondition == ActivationCondition.HitBased)
+        {
+            float hitRatio = Mathf.Clamp01((float)equippedSkill.CurrentHits / equippedSkill.SkillData.requiredHits);
+            cooldownImage.fillAmount = hitRatio;
+
+            if (equippedSkill.IsReadyToActivate())
+            {
+                conditionText.text = $"{equippedSkill.SkillData.requiredHits} / {equippedSkill.SkillData.requiredHits}";
+                conditionText.gameObject.SetActive(false);
+            }
+            else
+            {
+                conditionText.text = $"{equippedSkill.CurrentHits} / {equippedSkill.SkillData.requiredHits}";
+            }
+
+            skillIcon.color = equippedSkill.IsReadyToActivate() ? equippedColor : defaultColor;
+        }
     }
 
     private void OnClickSlot()
     {
-        if (slotManager.HasSkillToEquip())
+        if (equipManager.WaitingSkillForEquip != null)
         {
-            Debug.Log($"[SkillEquipSlot] 장착 대기 상태에서 슬롯 {slotIndex} 클릭으로 장착이 우선 처리됩니다.");
-            slotManager.TryEquipSkillToSlot(slotIndex);
+            equipManager.EquipSkill(equipManager.WaitingSkillForEquip, slotIndex);
         }
         else if (equippedSkill != null)
         {
-            Debug.Log($"[SkillEquipSlot] {equippedSkill.SkillData.itemName} 스킬 발동!");
-            ActivateSkill();
-        }
-        else
-        {
-            Debug.Log($"[SkillEquipSlot] 슬롯 {slotIndex}에 스킬이 없습니다.");
+            RequestSkillActivation();
         }
     }
 
-    private void ActivateSkill()
+    private void RequestSkillActivation()
     {
-        if (equippedSkill == null) return;
-
-        var playerSkillHandler = PlayerObjManager.Instance.Player?.GetComponent<PlayerSkillHandler>();
-        if (playerSkillHandler != null)
+        var playerSkillHandler = PlayerObjManager.Instance.Player?.SkillHandler;
+        if (playerSkillHandler != null && equippedSkill != null)
         {
+            Debug.Log($"[SkillEquipSlot] RequestSkillActivation: {equippedSkill.SkillData.itemName}");
             playerSkillHandler.UseSkill(equippedSkill, transform.position);
+
+            StartCoroutine(ReactivateTextAfterDelay());
         }
     }
 
-    private void UpdateSlotColor(bool equipped)
+    private IEnumerator ReactivateTextAfterDelay()
     {
-        skillIcon.color = equipped ? equippedColor : defaultColor;
+        conditionText.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        conditionText.gameObject.SetActive(true);
+    }
+
+    public BaseSkill GetEquippedSkill()
+    {
+        return equippedSkill;
+    }
+
+    private void ResetUI()
+    {
+        cooldownImage.fillAmount = 1;
+        conditionText.text = "";
+
+        skillIcon.color = equippedSkill == null ? defaultColor : equippedColor;
+
+        if (skillIcon != null)
+        {
+            if (skillIcon.sprite == null)
+            {
+                skillIcon.sprite = defaultSprite;
+            }
+
+            skillIcon.color = defaultColor;
+
+            if (skillIconImage != null)
+            {
+                skillIconImage.type = Image.Type.Simple;
+            }
+        }
     }
 }

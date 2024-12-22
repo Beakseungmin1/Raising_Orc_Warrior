@@ -2,14 +2,30 @@ using UnityEngine;
 
 public struct SkillEffect
 {
-    public GameObject SkillPrefab; // 이펙트 프리팹
-    public float DamagePercent;    // 데미지 비율
-    public float BuffDuration;     // 버프 지속 시간
-    public float EffectRange;      // 스킬 범위
-    public EffectType EffectType;  // 이펙트 타입
-    public Vector3 TargetPosition; // 대상 위치
+    public GameObject SkillPrefab;
+    public float DamagePercent;
+    public float BuffDuration;
+    public float EffectRange;
+    public float EffectDuration;
+    public EffectType EffectType;
+    public Vector3 TargetPosition;
+    public float AttackIncreasePercent;
+    public float ManaRecoveryAmount;
+    public float HpRecoveryAmount;
+    public float MoveSpeedIncrease;
 
-    public SkillEffect(GameObject skillPrefab, float damagePercent, float buffDuration, float effectRange, EffectType effectType, Vector3 targetPosition)
+    public SkillEffect(
+        GameObject skillPrefab,
+        float damagePercent,
+        float buffDuration,
+        float effectRange,
+        EffectType effectType,
+        Vector3 targetPosition,
+        float effectDuration,
+        float attackIncreasePercent,
+        float manaRecoveryAmount,
+        float hpRecoveryAmount,
+        float moveSpeedIncrease)
     {
         SkillPrefab = skillPrefab;
         DamagePercent = damagePercent;
@@ -17,5 +33,10 @@ public struct SkillEffect
         EffectRange = effectRange;
         EffectType = effectType;
         TargetPosition = targetPosition;
+        EffectDuration = effectDuration;
+        AttackIncreasePercent = attackIncreasePercent;
+        ManaRecoveryAmount = manaRecoveryAmount;
+        HpRecoveryAmount = hpRecoveryAmount;
+        MoveSpeedIncrease = moveSpeedIncrease;
     }
 }

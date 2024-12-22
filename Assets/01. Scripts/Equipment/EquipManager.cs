@@ -6,9 +6,13 @@ public class EquipManager : MonoBehaviour
 {
     public Weapon EquippedWeapon { get; private set; }
     public Accessory EquippedAccessory { get; private set; }
+    public BaseSkill WaitingSkillForEquip { get; private set; }
     public List<BaseSkill> EquippedSkills { get; private set; } = new List<BaseSkill>();
+    public int InitialSlotCount { get; private set; } = 8;
 
     public event Action OnEquippedChanged;
+    public event Action OnWaitingSkillChanged;
+    public event Action<BaseSkill, int, bool> OnSkillEquippedChanged;
 
     private PlayerStat playerStat;
     private PlayerSkillHandler skillHandler;
@@ -16,14 +20,24 @@ public class EquipManager : MonoBehaviour
     private void Start()
     {
         playerStat = PlayerObjManager.Instance?.Player.stat;
-        skillHandler = PlayerObjManager.Instance?.Player.GetComponent<PlayerSkillHandler>();
+        skillHandler = PlayerObjManager.Instance?.Player.SkillHandler;
 
         if (playerStat == null || skillHandler == null)
         {
             return;
         }
+    }
 
-        InitializeSkillSlots(0);
+    public void SetWaitingSkillForEquip(BaseSkill skill)
+    {
+        WaitingSkillForEquip = skill;
+        OnWaitingSkillChanged?.Invoke();
+    }
+
+    public void ClearWaitingSkillForEquip()
+    {
+        WaitingSkillForEquip = null;
+        OnWaitingSkillChanged?.Invoke();
     }
 
     public bool IsWeaponEquipped(Weapon weapon)
@@ -36,18 +50,103 @@ public class EquipManager : MonoBehaviour
         return EquippedAccessory == accessory;
     }
 
-    public void InitializeSkillSlots(int slotCount)
+    public void InitializeSkillSlots()
     {
-        EquippedSkills = new List<BaseSkill>();
-        for (int i = 0; i < slotCount; i++)
+        EquippedSkills.Clear();
+        for (int i = 0; i < InitialSlotCount; i++)
         {
             EquippedSkills.Add(null);
         }
-
-        Debug.Log($"[EquipManager] 슬롯 초기화 완료. 슬롯 개수: {slotCount}");
     }
 
-    public void UpdateSkillSlotCount(int newSlotCount)
+    public void EquipWeapon(Weapon weaponData)
+    {
+        if (weaponData == null) return;
+
+        EquippedWeapon = weaponData;
+
+        OnEquippedChanged?.Invoke();
+    }
+
+    public void EquipAccessory(Accessory accessory)
+    {
+        if (accessory == null) return;
+
+        EquippedAccessory = accessory;
+
+        OnEquippedChanged?.Invoke();
+    }
+
+    public void EquipSkill(BaseSkill skill, int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= EquippedSkills.Count)
+        {
+            Debug.LogWarning($"[EquipManager] 슬롯 인덱스 {slotIndex}가 유효하지 않습니다.");
+            return;
+        }
+
+        int existingSlotIndex = EquippedSkills.IndexOf(skill);
+        if (existingSlotIndex != -1 && existingSlotIndex != slotIndex)
+        {
+            Debug.Log($"[EquipManager] 스킬 {skill.SkillData.itemName}이 슬롯 {existingSlotIndex}에서 {slotIndex}로 이동합니다.");
+
+            EquippedSkills[existingSlotIndex] = null;
+            OnSkillEquippedChanged?.Invoke(skill, existingSlotIndex, false);
+
+            EquippedSkills[slotIndex] = skill;
+            OnSkillEquippedChanged?.Invoke(skill, slotIndex, true);
+
+            ClearWaitingSkillForEquip();
+            return;
+        }
+
+        if (EquippedSkills[slotIndex] != null)
+        {
+            UnequipSkill(slotIndex);
+        }
+
+        EquippedSkills[slotIndex] = skill;
+        skill.IsEquipped = true;
+
+        skill.ResetCondition();
+
+        Debug.Log($"[EquipManager] 슬롯 {slotIndex}에 스킬 {skill.SkillData.itemName} 장착 완료.");
+
+        skillHandler.SyncWithEquipManager();
+
+        OnSkillEquippedChanged?.Invoke(skill, slotIndex, true);
+
+        ClearWaitingSkillForEquip();
+    }
+
+    public void UnequipSkill(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= EquippedSkills.Count)
+        {
+            Debug.LogWarning($"[EquipManager] 슬롯 인덱스 {slotIndex}가 유효하지 않습니다.");
+            return;
+        }
+
+        BaseSkill skill = EquippedSkills[slotIndex];
+        if (skill == null) return;
+
+        skill.Deactivate();
+        EquippedSkills[slotIndex] = null;
+        skill.IsEquipped = false;
+
+        Debug.Log($"[EquipManager] 슬롯 {slotIndex}에서 스킬 {skill.SkillData.itemName}이 제거되었습니다.");
+
+        skillHandler.SyncWithEquipManager();
+
+        OnSkillEquippedChanged?.Invoke(skill, slotIndex, false);
+    }
+
+    public List<BaseSkill> GetAllEquippedSkills()
+    {
+        return EquippedSkills.FindAll(skill => skill != null);
+    }
+
+    public void UpdateSlotCount(int newSlotCount)
     {
         if (newSlotCount > EquippedSkills.Count)
         {
@@ -61,126 +160,6 @@ public class EquipManager : MonoBehaviour
         {
             EquippedSkills.RemoveRange(newSlotCount, EquippedSkills.Count - newSlotCount);
         }
-
-        Debug.Log($"[EquipManager] 슬롯 개수가 {newSlotCount}개로 업데이트되었습니다.");
-    }
-
-    public void EquipWeapon(Weapon weaponData)
-    {
-        if (weaponData == null) return;
-
-        if (EquippedWeapon != null)
-        {
-            RemoveWeaponEffect(EquippedWeapon);
-        }
-
-        EquippedWeapon = weaponData;
-
-        Debug.Log($"[EquipManager] 무기 {weaponData.BaseData.itemName} 장착 완료.");
-        OnEquippedChanged?.Invoke();
-    }
-
-    public void UnequipWeapon()
-    {
-        if (EquippedWeapon == null) return;
-
-        RemoveWeaponEffect(EquippedWeapon);
-        EquippedWeapon = null;
-
-        Debug.Log("[EquipManager] 무기 해제 완료.");
-        OnEquippedChanged?.Invoke();
-    }
-
-    public void EquipAccessory(Accessory accessory)
-    {
-        if (accessory == null) return;
-
-        if (EquippedAccessory != null)
-        {
-            RemoveAccessoryEffect(EquippedAccessory);
-        }
-
-        EquippedAccessory = accessory;
-
-        Debug.Log($"[EquipManager] 악세사리 {accessory.BaseData.itemName} 장착 완료.");
-        OnEquippedChanged?.Invoke();
-    }
-
-    public void UnequipAccessory()
-    {
-        if (EquippedAccessory == null) return;
-
-        RemoveAccessoryEffect(EquippedAccessory);
-        EquippedAccessory = null;
-
-        Debug.Log("[EquipManager] 악세사리 해제 완료.");
-        OnEquippedChanged?.Invoke();
-    }
-
-    public void EquipSkill(BaseSkill skill, int slotIndex)
-    {
-        if (slotIndex < 0 || slotIndex >= EquippedSkills.Count)
-        {
-            Debug.LogError("[EquipManager] 잘못된 슬롯 인덱스입니다.");
-            return;
-        }
-
-        if (EquippedSkills[slotIndex] != null)
-        {
-            UnequipSkill(slotIndex);
-        }
-
-        EquippedSkills[slotIndex] = skill;
-
-        // PlayerSkillHandler와 동기화
-        skillHandler.SyncWithEquipManager();
-
-        Debug.Log($"[EquipManager] 스킬 {skill.SkillData.itemName}이(가) 슬롯 {slotIndex}에 장착되었습니다.");
-        OnEquippedChanged?.Invoke();
-    }
-
-    public void UnequipSkill(int slotIndex)
-    {
-        if (slotIndex < 0 || slotIndex >= EquippedSkills.Count)
-        {
-            Debug.LogError("[EquipManager] 잘못된 슬롯 인덱스입니다.");
-            return;
-        }
-
-        BaseSkill skill = EquippedSkills[slotIndex];
-        if (skill == null) return;
-
-        EquippedSkills[slotIndex] = null;
-
-        // PlayerSkillHandler와 동기화
-        skillHandler.SyncWithEquipManager();
-
-        Debug.Log($"[EquipManager] 스킬 {skill.SkillData.itemName}이(가) 슬롯 {slotIndex}에서 해제되었습니다.");
-        OnEquippedChanged?.Invoke();
-    }
-
-    public List<BaseSkill> GetAllEquippedSkills()
-    {
-        return EquippedSkills.FindAll(skill => skill != null);
-    }
-
-    private void ApplyWeaponEffect(Weapon weapon)
-    {
-        // 무기 장착 효과를 PlayerStat에 반영
-    }
-
-    private void RemoveWeaponEffect(Weapon weapon)
-    {
-        // 무기 해제 효과를 PlayerStat에서 제거
-    }
-
-    private void ApplyAccessoryEffect(Accessory accessory)
-    {
-        // 악세사리 장착 효과를 PlayerStat에 반영
-    }
-
-    private void RemoveAccessoryEffect(Accessory accessory)
-    {
-        // 악세사리 해제 효과를 PlayerStat에서 제거
+        InitialSlotCount = newSlotCount;
     }
 }

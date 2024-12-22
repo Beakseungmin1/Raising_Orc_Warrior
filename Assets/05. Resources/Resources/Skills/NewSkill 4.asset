@@ -21,18 +21,23 @@ MonoBehaviour:
   requiredCurrencyForUpgrade: 150
   currentLevel: 1
   description: "\uD0C0\uC624\uB974\uB294 \uAC80\uC2E0\uC740 \uC810\uC810 \uB354 \uAC15\uD574\uC9C4\uB2E4"
-  effectDescription: "\uC804\uD22C \uB3CC\uC785 \uD6C4, 5\uCD08\uB9C8\uB2E4 \uC804\uCCB4
-    \uACF5\uACA9\uB825 +n%"
+  effectDescription: "\uC804\uD22C \uB3CC\uC785 \uD6C4, {cooldown}\uCD08\uB9C8\uB2E4
+    \uC804\uCCB4 \uACF5\uACA9\uB825 +{attackIncreasePercent}%"
   skillType: 2
   effectType: 0
-  activationCondition: 2
+  activationCondition: 1
   cooldown: 0
-  requiredHits: 10
+  requiredHits: 3
   damagePercent: 0
   manaCost: 40
   effectRange: 0
   buffDuration: 5
   attackIncreasePercent: 90
-  requireSkillCardsForUpgrade: 1
+  manaRecoveryAmount: 0
+  hpRecoveryAmount: 0
+  moveSpeedIncrease: 0
+  requireSkillCardsForUpgrade: 2
   maxLevel: 100
   effectPrefab: {fileID: 9054041762107104264, guid: 1b3ee55c0649d4c4c8533e6845d68467, type: 3}
+  effectDuration: 5
+  isEquipped: 0

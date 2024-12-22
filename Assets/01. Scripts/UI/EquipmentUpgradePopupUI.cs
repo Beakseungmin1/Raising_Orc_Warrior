@@ -152,11 +152,11 @@ public class EquipmentUpgradePopupUI : UIBase
     {
         if (isWeapon && item is Weapon weapon)
         {
-            return PlayerObjManager.Instance.Player.GetComponent<EquipManager>()?.IsWeaponEquipped(weapon) ?? false;
+            return PlayerObjManager.Instance.Player.EquipManager?.IsWeaponEquipped(weapon) ?? false;
         }
         else if (!isWeapon && item is Accessory accessory)
         {
-            return PlayerObjManager.Instance.Player.GetComponent<EquipManager>()?.IsAccessoryEquipped(accessory) ?? false;
+            return PlayerObjManager.Instance.Player.EquipManager?.IsAccessoryEquipped(accessory) ?? false;
         }
         return false;
     }

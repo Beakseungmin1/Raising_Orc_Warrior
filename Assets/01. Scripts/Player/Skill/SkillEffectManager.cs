@@ -1,16 +1,20 @@
 using UnityEngine;
+using System.Collections;
 
 public class SkillEffectManager : Singleton<SkillEffectManager>
 {
     public Transform playerWeaponPosition;
     public Transform mapCenter;
+    private PlayerDamageCalculator playerDamageCalculator;
 
-    private void Awake()
+    private void Start()
     {
         if (playerWeaponPosition == null || mapCenter == null)
         {
             Debug.LogError("SkillEffectManager: 필수 Transform이 설정되지 않았습니다.");
         }
+
+        playerDamageCalculator = PlayerObjManager.Instance?.Player?.DamageCalculator;
     }
 
     public void TriggerEffect(BaseSkill skill, Vector3 targetPosition)
@@ -22,6 +26,8 @@ public class SkillEffectManager : Singleton<SkillEffectManager>
         }
 
         SkillEffect effect = skill.GetSkillEffect(targetPosition);
+
+        playerDamageCalculator.ApplySkillEffect(effect);
 
         switch (effect.EffectType)
         {
@@ -48,16 +54,16 @@ public class SkillEffectManager : Singleton<SkillEffectManager>
         }
 
         GameObject effectObj = Instantiate(effect.SkillPrefab, playerWeaponPosition.position, Quaternion.identity);
-        Debug.Log($"SkillEffectManager: 플레이어 무기 이펙트 생성 완료 - 버프 지속시간: {effect.BuffDuration}초");
+        Debug.Log($"SkillEffectManager: 플레이어 무기 이펙트 생성 완료 - 지속시간: {effect.EffectDuration}초");
 
-        Destroy(effectObj, effect.BuffDuration);
+        Destroy(effectObj, effect.EffectDuration);
     }
 
     private void ApplyAreaEffect(SkillEffect effect)
     {
         GameObject effectObj = Instantiate(effect.SkillPrefab, effect.TargetPosition, Quaternion.identity);
-        Debug.Log($"SkillEffectManager: 번개 이펙트 생성 완료 - 범위: {effect.EffectRange}, 지속시간: {effect.BuffDuration}초");
+        Debug.Log($"SkillEffectManager: 번개 이펙트 생성 완료 - 범위: {effect.EffectRange}, 지속시간: {effect.EffectDuration}초");
 
-        Destroy(effectObj, effect.BuffDuration);
+        Destroy(effectObj, effect.EffectDuration);
     }
 }
