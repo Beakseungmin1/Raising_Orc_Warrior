@@ -1677,6 +1677,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8204950485934573085, guid: c53daefe854cd7445a0142c0c34b587a, type: 3}
+      propertyPath: questInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: 5b0446ff3fecea34181cf9c7260506b3, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
