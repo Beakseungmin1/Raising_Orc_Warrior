@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class EnemyDungeonBoss : MonoBehaviour, IEnemy
 {
+    private enum Pattern
+    {
+        Pattern1,
+        Pattern2,
+        Pattern3
+    }
+
     public EnemySO enemySO;
 
     [Header("Enemy information")]
@@ -23,36 +30,48 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
     [SerializeField] private Collider2D effectRange; // 스킬 효과 범위
     [SerializeField] private float damagePercent; // 액티브 스킬: 범위 내 적에게 주는 공격력 비율 (%)
 
-    public Action OnEnemyDeath;
-
-    public Action OnEnemyAttack;
+    private Pattern enemyPattern;
 
     private PlayerBattle player;
 
-    private int Hitcounter = 0;
-
-    private void Awake()
-    {
-        OnEnemyDeath += RegenManager.Instance.EnemyKilled;
-    }
+    float patternTime = 4f; // 패턴 유지시간
+    float toTime = 4; // 패턴 시간 계산용 변수
 
     private void Start()
     {
         SetupEnemy();
-        OnEnemyAttack = GiveDamageToPlayer;
+        InvokeRepeating("SwitchPattern", 0, patternTime);
+    }
+
+    private void Update()
+    {
+        toTime += Time.deltaTime;
+
+        switch (enemyPattern)
+        {
+            case Pattern.Pattern1:
+                SetfalseAnimation();
+                animator.SetBool("Pattern1", true);
+                break;
+            case Pattern.Pattern2:
+                SetfalseAnimation();
+                animator.SetBool("Pattern2", true);
+                break;
+            case Pattern.Pattern3:
+                SetfalseAnimation();
+                animator.SetTrigger("Pattern3");
+                break;
+        }
+    }
+
+    public void SetfalseAnimation()
+    {
+        animator.SetBool("Pattern1", false);
+        animator.SetBool("Pattern2", false);
     }
 
     public void TakeDamage(BigInteger Damage)
     {
-        // 기본 레이어
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
-        // IDLE 애니메이션이 재생 중 일때의 로직
-        if (stateInfo.IsName("IDLE"))
-        {
-            animator.SetTrigger("3_Damaged");
-        }
-
         if (hp - Damage > 0)
         {
             hp -= Damage;
@@ -64,28 +83,14 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
         }
     }
 
-    private void EnemyAttack()
-    {
-        if (player != null && !player.GetActive())
-        {
-            animator.SetTrigger("2_Attack");
-        }
-    }
-
     public void GiveDamageToPlayer()
     {
-        if (Hitcounter >= 2)
-        {
-            player.TakeKnockbackDamage(10, 0.5f); //안에 넣은 값은 임시값 이후 (몬스터고유데미지, 몬스터고유넉백시간) 으로 조정예정
-            Hitcounter = 0;
-            //Debug.Log("강력한 공격발동 현재 히트 : " + Hitcounter);
-        }
-        else
-        {
-            player.TakeDamage(10); // 안에 넣은 값은 임시값
-            Hitcounter++;
-            //Debug.Log("일반공격 현재 히트 : " + Hitcounter);
-        }
+        player.TakeDamage(10); // 안에 넣은 값은 임시값
+    }
+
+    public void GiveKnockDamageToPlayer()
+    {
+        player.TakeKnockbackDamage(10, 0.5f); //안에 넣은 값은 임시값 이후 (몬스터고유데미지, 몬스터고유넉백시간) 으로 조정예정
     }
 
     public BigInteger GiveExp()
@@ -95,7 +100,6 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
 
     public void Die()
     {
-        animator.SetTrigger("4_Death");
         ObjectPool.Instance.ReturnObject(gameObject);
         GameEventsManager.Instance.enemyEvents.EnemyKilled();
     }
@@ -111,11 +115,6 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
         hp = enemySO.hp;
         maxHp = enemySO.maxHp;
         giveExp = enemySO.giveExp;
-        //if (model == null)
-        //{
-        //    model = enemySO.model;
-        //    model = Instantiate(model, transform);
-        //}
         animator = GetComponentInChildren<Animator>();
 
         cooldown = enemySO.cooldown;
@@ -125,12 +124,29 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
         damagePercent = enemySO.damagePercent;
     }
 
+    void SwitchPattern()
+    {
+        if (toTime > patternTime)
+        {
+            Pattern newPattern;
+            do
+            {
+                int ran = UnityEngine.Random.Range(0, Enum.GetValues(typeof(Pattern)).Length);
+                newPattern = (Pattern)ran;
+
+            } while (newPattern == enemyPattern);
+
+            enemyPattern = newPattern;
+            toTime = 0;
+        }
+    }
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             player = collision.GetComponent<PlayerBattle>();
-            InvokeRepeating("EnemyAttack", 0f, 1.5f);
         }
     }
 
@@ -138,7 +154,6 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
     {
         if (collision.CompareTag("Player"))
         {
-            CancelInvoke("EnemyAttack");
             player = null;
         }
     }
