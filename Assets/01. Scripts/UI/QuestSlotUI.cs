@@ -32,13 +32,13 @@ public class QuestSlotUI : UIBase
     private void OnEnable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged += RefreshUI;
-        GameEventsManager.Instance.questEvents.onFinishQuest += ShowCompleteUI;
+        GameEventsManager.Instance.questEvents.onFinishQuest += RefreshUI;
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged -= RefreshUI;
-        GameEventsManager.Instance.questEvents.onFinishQuest -= ShowCompleteUI;
+        GameEventsManager.Instance.questEvents.onFinishQuest -= RefreshUI;
     }
 
     private void Start()
@@ -60,47 +60,44 @@ public class QuestSlotUI : UIBase
                 Debug.Log("반복퀘스트 미구현");
                 break;
             default: //QuestType.Achievement
+                Debug.Log("업적퀘스트 미구현");
                 break;
         }
     }
 
     public void RefreshUI(string id)
     {
+        Debug.Log("RefreshUI의 매개변수 id는" + id);
         foreach (var obj in QuestManager.Instance.questGameObjs)
         {
             QuestStep questStep = obj.GetComponent<QuestStep>();
 
-            if (questStep != null && questStep.questId == questInfo.id)
+            if (questStep != null)
             {
-                progressCountTxt.text = $"{questStep.count} / {questStep.countToComplete}";
-                slider.value = (float)questStep.count / questStep.countToComplete;
-                levelTxt.text = questStep.level.ToString();
+                if (questStep.questId == questInfo.id)
+                {
+                    progressCountTxt.text = $"{questStep.count} / {questStep.countToComplete}";
+                    slider.value = (float)questStep.count / questStep.countToComplete;
+                    levelTxt.text = questStep.level.ToString();
+                }
             }
         }
+        ManageCompleteUI(id);
+    }
 
+    public void ManageCompleteUI(string id)
+    {
         Quest quest = QuestManager.Instance.GetQuestById(id);
         if (quest.state.Equals(QuestState.FINISHED))
         {
-            ShowCompleteUI(id);
+            if (questInfo.id == id)
+            {
+                completeImage.SetActive(true);
+            }
         }
-        else
+        else if (!quest.state.Equals(QuestState.FINISHED))
         {
-            HideCompleteUI(id);
+            completeImage.SetActive(false);
         }
     }
-
-
-    public void ShowCompleteUI(string id)
-    {
-        if (questInfo != null && questInfo.id == id && completeImage != null)
-        {
-            completeImage.SetActive(true);
-        }
-    }
-
-    public void HideCompleteUI(string id)
-    {
-        completeImage.SetActive(false);
-    }
-
 }

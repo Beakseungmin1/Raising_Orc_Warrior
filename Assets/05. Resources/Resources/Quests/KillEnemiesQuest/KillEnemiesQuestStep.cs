@@ -18,9 +18,10 @@ public class KillEnemiesQuestStep : QuestStep
 
     public void EnemyKilled()
     {
+        this.count++;
+
         if (this.count < countToComplete)
         {
-            this.count ++;
             UpdateState();
 
             GameEventsManager.Instance.questEvents.QuestProgressCountChange(questId);
@@ -28,8 +29,8 @@ public class KillEnemiesQuestStep : QuestStep
 
         if (this.count >= countToComplete)
         {
-            GameEventsManager.Instance.questEvents.QuestProgressCountChange(questId);
             FinishQuestStep();
+            GameEventsManager.Instance.questEvents.QuestProgressCountChange(questId);
         }
     }
 
