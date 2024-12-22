@@ -5,13 +5,10 @@ using UnityEngine;
 
 public class CurrencyEvents
 {
-    public void CallCurrencyChangedMathod(CurrencyType currencyType)
+    public void CallCurrencyAsFloatChangedMathod(CurrencyType currencyType)
     {
         switch (currencyType)
         {
-            case CurrencyType.Gold:
-                GoldChanged();
-                break;
             case CurrencyType.Emerald:
                 EmeraldChanged();
                 break;
