@@ -61,17 +61,29 @@ public class StageManager : Singleton<StageManager>
     {
         Debug.LogWarning("StageClear");
 
-        curStageIndex++;
-        curStageIndexInThisChapter++;
+        int savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
 
-        if (curStageIndexInThisChapter <= MaxStageIndexInThisChapter)
+        if (curStageIndexInThisChapter < MaxStageIndexInThisChapter)
         {
+            curStageIndex++;
+            curStageIndexInThisChapter++;
             GoToNextStage();
         }
-        else
+        else 
         {
-            curStageIndexInThisChapter = 0;
-            GoToNextChapter();
+            int curMaxChapterIndex = chapterSOs.Count - 1;
+
+            if (curChapterIndex < curMaxChapterIndex)
+            {
+                curStageIndex++;
+                curStageIndexInThisChapter = 0;
+                GoToNextChapter();
+            }
+            else
+            {
+                curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
+                GoToNextStage();
+            }
         }
     }
 
