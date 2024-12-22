@@ -28,7 +28,7 @@ MonoBehaviour:
   effectType: 0
   activationCondition: 1
   cooldown: 0
-  requiredHits: 10
+  requiredHits: 3
   damagePercent: 0
   manaCost: 30
   effectRange: 0

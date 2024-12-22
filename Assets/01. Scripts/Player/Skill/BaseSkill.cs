@@ -125,7 +125,11 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
             skillData.effectRange,
             skillData.effectType,
             targetPosition,
-            skillData.effectDuration
+            skillData.effectDuration,
+            skillData.attackIncreasePercent,
+            skillData.manaRecoveryAmount,
+            skillData.hpRecoveryAmount,
+            skillData.moveSpeedIncrease
         );
     }
 

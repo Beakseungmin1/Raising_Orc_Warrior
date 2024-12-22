@@ -5,13 +5,16 @@ public class SkillEffectManager : Singleton<SkillEffectManager>
 {
     public Transform playerWeaponPosition;
     public Transform mapCenter;
+    private PlayerDamageCalculator playerDamageCalculator;
 
-    private void Awake()
+    private void Start()
     {
         if (playerWeaponPosition == null || mapCenter == null)
         {
             Debug.LogError("SkillEffectManager: 필수 Transform이 설정되지 않았습니다.");
         }
+
+        playerDamageCalculator = PlayerObjManager.Instance?.Player?.DamageCalculator;
     }
 
     public void TriggerEffect(BaseSkill skill, Vector3 targetPosition)
@@ -23,6 +26,8 @@ public class SkillEffectManager : Singleton<SkillEffectManager>
         }
 
         SkillEffect effect = skill.GetSkillEffect(targetPosition);
+
+        playerDamageCalculator.ApplySkillEffect(effect);
 
         switch (effect.EffectType)
         {
