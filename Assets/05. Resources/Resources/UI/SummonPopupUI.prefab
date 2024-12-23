@@ -411,6 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
+  curSummoningItemType: 0
   summonSlotObjs: []
   summonSlotListArea33obj: {fileID: 548208721670091952}
   summonSlotListArea11obj: {fileID: 3781866773118282479}
@@ -418,6 +419,8 @@ MonoBehaviour:
   extBtn: {fileID: 1520471867531131966}
   summonBtn11: {fileID: 640925263123480512}
   summonBtn33: {fileID: 9206016727224340211}
+  diaAmountLabel11: {fileID: 5822829980518089871}
+  diaAmountLabel33: {fileID: 3663004374690927755}
 --- !u!114 &8238108824962333396
 MonoBehaviour:
   m_ObjectHideFlags: 0

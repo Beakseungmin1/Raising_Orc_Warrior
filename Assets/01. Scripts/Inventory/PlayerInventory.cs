@@ -156,6 +156,14 @@ public class PlayerInventory : MonoBehaviour
         }
 
         GameObject skillObject = new GameObject(skillData.itemName);
+        if(skillData.englishItemName != "")
+        {
+            skillObject.name = skillData.englishItemName;
+        }
+        else
+        {
+            skillObject.name = "Skill";
+        }
         skillObject.transform.SetParent(PlayerObjManager.Instance.Player.transform);
 
         BaseSkill skillInstance = null;

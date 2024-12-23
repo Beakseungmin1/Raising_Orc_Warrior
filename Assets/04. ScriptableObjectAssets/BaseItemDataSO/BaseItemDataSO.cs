@@ -4,6 +4,7 @@ public abstract class BaseItemDataSO : ScriptableObject
 {
     [Header("Basic Information")]
     public string itemName;
+    public string englishItemName;
     public Sprite icon;
     public Sprite inGameImage;
     public Grade grade;
