@@ -29,12 +29,6 @@ public class Enemy : MonoBehaviour, IEnemy
 
     private int Hitcounter = 0;
 
-    private void Start()
-    {
-        //SetupEnemy();
-        OnEnemyAttack = GiveDamageToPlayer;
-    }
-
     public void TakeDamage(BigInteger Damage)
     {
 
@@ -54,30 +48,6 @@ public class Enemy : MonoBehaviour, IEnemy
         {
             hp -= Damage;
             Die();
-        }
-    }
-
-    private void EnemyAttack()
-    {
-        if (player != null && !player.GetActive())
-        {
-            animator.SetTrigger("2_Attack");
-        }
-    }
-
-    public void GiveDamageToPlayer()
-    {
-        if (Hitcounter >= 2)
-        {
-            player.TakeKnockbackDamage(10, 0.5f); //안에 넣은 값은 임시값 이후 (몬스터고유데미지, 몬스터고유넉백시간) 으로 조정예정
-            Hitcounter = 0;
-            //Debug.Log("강력한 공격발동 현재 히트 : " + Hitcounter);
-        }
-        else
-        {
-            player.TakeDamage(10); // 안에 넣은 값은 임시값
-            Hitcounter++;
-            //Debug.Log("일반공격 현재 히트 : " + Hitcounter);
         }
     }
 
@@ -108,13 +78,6 @@ public class Enemy : MonoBehaviour, IEnemy
         {
             model = enemySO.model;
             model = Instantiate(model, transform);
-
-            Battle battle = model.GetComponentInChildren<Battle>();
-            
-            if (battle != null)
-            {
-                battle.SetEnemyScript(this);
-            }
         }
         animator = GetComponentInChildren<Animator>();
 
@@ -130,7 +93,6 @@ public class Enemy : MonoBehaviour, IEnemy
         if (collision.CompareTag("Player"))
         {
             player = collision.GetComponent<PlayerBattle>();
-            InvokeRepeating("EnemyAttack", 0f, 1.5f);
         }
     }
 
@@ -138,7 +100,6 @@ public class Enemy : MonoBehaviour, IEnemy
     {
         if (collision.CompareTag("Player"))
         {
-            CancelInvoke("EnemyAttack");
             player = null;
         }
     }
