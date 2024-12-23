@@ -7,9 +7,9 @@ public class Battle : MonoBehaviour
 {
     public PlayerBattle player;
 
-    public Enemy enemy;
+    public EnemyBoss enemy;
 
-    public void SetEnemyScript(Enemy enemyboss)
+    public void SetEnemyScript(EnemyBoss enemyboss)
     {
         enemy = enemyboss;
     }
