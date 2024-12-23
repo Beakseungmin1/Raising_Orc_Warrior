@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2765211433091895320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4410134618895380387}
+  - component: {fileID: 5487129214559101246}
+  m_Layer: 0
+  m_Name: Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4410134618895380387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2765211433091895320}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 540, y: 960, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5487129214559101246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2765211433091895320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09d441e90a35d144aa36962a605b2a0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skill1: {fileID: 11400000, guid: 7cea4b16773fe114db7a86eb02f4985a, type: 2}
+  skill2: {fileID: 11400000, guid: 603afa5e7f58b794a94d391af8c56404, type: 2}
+  skill3: {fileID: 11400000, guid: 608c24c1973c2f34f94c146d88e40443, type: 2}
+  weapon1: {fileID: 11400000, guid: debfef814216716488434a970a6d0278, type: 2}
+  weapon2: {fileID: 11400000, guid: 85c931af63fe185499df3a7912a9b376, type: 2}
+  weapon3: {fileID: 11400000, guid: b38eaa08e43ebc1459d345af86c43d07, type: 2}
+  weapon4: {fileID: 11400000, guid: 4e26611470e4be2449e9c460ccadf7fd, type: 2}
+  weapon5: {fileID: 11400000, guid: 0387b50f76953e540992d65b807bda1c, type: 2}
+  accessory1: {fileID: 11400000, guid: 8b28910729210134ba19d00554f39f1a, type: 2}
+  accessory2: {fileID: 11400000, guid: d9fbe8e38f5a51d4396979d72dafd0a2, type: 2}
+  accessory3: {fileID: 11400000, guid: f9ebd8a48c3586b4eab52032eac94c4c, type: 2}
+  accessory4: {fileID: 11400000, guid: d294ca0738c2c7746afa6a2909bae6be, type: 2}
+  accessory5: {fileID: 11400000, guid: df83d9ed49973e044980020efaec50ae, type: 2}

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b47a7f738dfaec4aa384fe6ab378b38, type: 3}
+  m_Name: TestEnemy 1
+  m_EditorClassIdentifier: 
+  enemyCode: 1
+  hpString: 100
+  maxHpString: 100
+  giveExpString: 20
+  model: {fileID: 1210817250785749426, guid: 2b434b09afde1294994206c9d058e9a8, type: 3}
+  cooldown: 10
+  skillEffectPrefab: {fileID: 0}
+  effectRange: {fileID: 0}
+  damagePercent: 0
