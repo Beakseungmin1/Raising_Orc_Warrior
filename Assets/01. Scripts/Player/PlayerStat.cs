@@ -81,59 +81,116 @@ public class PlayerStat : MonoBehaviour
 
     public void AttackLevelUp()
     {
-        attackLevel++;
-        //현재 돈에서 니드머니 빼기 기능 추가
         needAttackUpgradeMoney = attackLevel * 1000; //필요가격 수정예정
-        attackPower = 20 + (attackLevel * 4);
+
+        if (CurrencyManager.Instance.GetGold() >= needAttackUpgradeMoney)
+        {
+            CurrencyManager.Instance.SubtractGold(needAttackUpgradeMoney);
+            attackLevel++;
+            attackPower = 20 + (attackLevel * 4);
+        }
+        else
+        {
+            Debug.Log("골드가 부족합니다.");
+        }
     }
 
     public void HealthLevelUp()
     {
-        healthLevel++;
         //현재 돈에서 니드머니 빼기 기능 추가
         needHealthUpgradeMoney = healthLevel * 1000;
-        maxHealth = 200 + (healthLevel * 40);
-        health += 40;
+
+        if (CurrencyManager.Instance.GetGold() >= needHealthUpgradeMoney)
+        {
+            CurrencyManager.Instance.SubtractGold(needHealthUpgradeMoney);
+            healthLevel++;
+            maxHealth = 200 + (healthLevel * 40);
+            health += 40;
+        }
+        else
+        {
+            Debug.Log("골드가 부족합니다.");
+        }
     }
 
     public void HealthRegenerationLevelUp()
     {
-        healthRegenerationLevel++;
-        //현재 돈에서 니드머니 빼기 기능 추가
         needHealthRegenerationUpgradeMoney = healthRegenerationLevel * 1000;
-        healthRegeneration = healthRegenerationLevel * 4;
+
+        if (CurrencyManager.Instance.GetGold() >= needHealthRegenerationUpgradeMoney)
+        {
+            CurrencyManager.Instance.SubtractGold(needHealthRegenerationUpgradeMoney);
+            healthRegenerationLevel++;
+            healthRegeneration = healthRegenerationLevel * 4;
+        }
+        else
+        {
+            Debug.Log("골드가 부족합니다.");
+        }
     }
 
     public void CriticalIncreaseDamageLevelUp()
     {
-        criticalIncreaseDamageLevel++;
-        //현재 돈에서 니드머니 빼기 기능 추가
         needCriticalIncreaseDamageUpgradeMoney = criticalIncreaseDamageLevel * 1000;
-        criticalIncreaseDamage = criticalIncreaseDamageLevel;
+
+        if (CurrencyManager.Instance.GetGold() >= needCriticalIncreaseDamageUpgradeMoney)
+        {
+            CurrencyManager.Instance.SubtractGold(needCriticalIncreaseDamageUpgradeMoney);
+            criticalIncreaseDamageLevel++;
+            criticalIncreaseDamage = criticalIncreaseDamageLevel;
+        }
+        else
+        {
+            Debug.Log("골드가 부족합니다.");
+        }
     }
 
     public void CriticalProbabilityLevelUp()
     {
-        criticalProbabilityLevel++;
-        //현재 돈에서 니드머니 빼기 기능 추가
         needCriticalProbabilityUpgradeMoney = criticalProbabilityLevel * 1000;
-        criticalProbability = criticalProbabilityLevel * 0.1f;
+
+        if (CurrencyManager.Instance.GetGold() >= needCriticalProbabilityUpgradeMoney)
+        {
+            CurrencyManager.Instance.SubtractGold(needCriticalProbabilityUpgradeMoney);
+            criticalProbability = criticalProbabilityLevel * 0.1f;
+            criticalProbabilityLevel++;
+        }
+        else
+        {
+            Debug.Log("골드가 부족합니다.");
+        }
     }
 
     public void BlueCriticalIncreaseDamageLevelUp()
     {
-        bluecriticalIncreaseDamageLevel++;
-        //현재 돈에서 니드머니 빼기 기능 추가
         needBlueCriticalIncreaseDamageUpgradeMoney = bluecriticalIncreaseDamageLevel * 1000;
-        bluecriticalIncreaseDamage = bluecriticalIncreaseDamageLevel;
+
+        if (CurrencyManager.Instance.GetGold() >= needBlueCriticalIncreaseDamageUpgradeMoney)
+        {
+            CurrencyManager.Instance.SubtractGold(needBlueCriticalIncreaseDamageUpgradeMoney);
+            bluecriticalIncreaseDamage = bluecriticalIncreaseDamageLevel;
+            bluecriticalIncreaseDamageLevel++;
+        }
+        else
+        {
+            Debug.Log("골드가 부족합니다.");
+        }
     }
 
     public void BlueCriticalProbabilityLevelUp()
     {
-        bluecriticalProbabilityLevel++;
-        //현재 돈에서 니드머니 빼기 기능 추가
         needBlueCriticalProbabilityUpgradeMoney = bluecriticalProbabilityLevel * 1000;
-        bluecriticalProbability = bluecriticalProbabilityLevel * 0.1f;
+
+        if (CurrencyManager.Instance.GetGold() >= needBlueCriticalProbabilityUpgradeMoney)
+        {
+            CurrencyManager.Instance.SubtractGold(needBlueCriticalProbabilityUpgradeMoney);
+            bluecriticalProbability = bluecriticalProbabilityLevel * 0.1f;
+            bluecriticalProbabilityLevel++;
+        }
+        else
+        {
+            Debug.Log("골드가 부족합니다.");
+        }
     }
 
     public void SetDefaultStat()

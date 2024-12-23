@@ -48,6 +48,7 @@ public class Main_ShopUI : UIBase
                 break;
             case 3:
                 Debug.Log("동료캔버스열기");
+                UIManager.Instance.Show<Main_ShopUI>();
                 break;
             case 4:
                 UIManager.Instance.Show<Main_DungeonUI>();
