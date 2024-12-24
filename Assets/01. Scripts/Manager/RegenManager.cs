@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -16,42 +15,62 @@ public class RegenManager : Singleton<RegenManager>
 
     [SerializeField] private float spawnDistance = 1.5f;
 
+    private List<(GameObject enemyObject, EnemyMover enemyMover)> cachedEnemies = new List<(GameObject, EnemyMover)>();
+
     private void Start()
     {
+        CacheEnemies();
         RegenStagesEnemy();
         GameEventsManager.Instance.enemyEvents.onEnemyKilled += EnemyKilled;
     }
 
-    public void RegenStagesEnemy()
+    private void CacheEnemies()
     {
-        killedEnemies = 0; // 초기화
         curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
         enemySOs = curChapterSO.stageSOs[StageManager.Instance.curStageIndexInThisChapter].enemySOs;
-        totalEnemies = curChapterSO.stageSOs[StageManager.Instance.curStageIndexInThisChapter].enemySOs.Length;
 
-        for (int i = 0; i < enemySOs.Length; i++)
+        // 적 오브젝트를 미리 캐싱
+        foreach (var enemySO in enemySOs)
+        {
+            GameObject obj = ObjectPool.Instance.GetObject("Enemy");
+            EnemyMover enemyMover = obj.GetComponent<EnemyMover>();
+
+            if (enemyMover == null)
+            {
+                enemyMover = obj.AddComponent<EnemyMover>();
+            }
+
+            obj.SetActive(false); // 캐싱 중에는 비활성화
+            cachedEnemies.Add((obj, enemyMover));
+        }
+
+        totalEnemies = enemySOs.Length;
+    }
+
+    public void RegenStagesEnemy()
+    {
+        killedEnemies = 0;
+
+        for (int i = 0; i < cachedEnemies.Count; i++)
         {
             EnemySO enemySO = enemySOs[i];
             Vector3 spawnPosition = transform.position + new Vector3(i * spawnDistance, 0, 0);
-            RegenEnemy(enemySO, spawnPosition);
+            RegenEnemy(enemySO, spawnPosition, cachedEnemies[i]);
         }
     }
 
-    public void RegenEnemy(EnemySO enemySO, Vector3 spawnPosition)
+    public void RegenEnemy(EnemySO enemySO, Vector3 spawnPosition, (GameObject enemyObject, EnemyMover enemyMover) cachedEnemy)
     {
-        GameObject obj = ObjectPool.Instance.GetObject("Enemy");
-        Enemy enemy = SetUnitObject(obj);
+        GameObject enemyObject = cachedEnemy.enemyObject;
+        EnemyMover enemyMover = cachedEnemy.enemyMover;
+
+        Enemy enemy = SetUnitObject(enemyObject);
         enemy.enemySO = enemySO;
         enemy.SetupEnemy();
         enemy.transform.position = spawnPosition;
+        enemyObject.SetActive(true);
 
-        // 적 이동을 관리하는 컴포넌트 추가
-        EnemyMover enemyMover = enemy.GetComponent<EnemyMover>();
-        if (enemyMover == null)
-        {
-            enemyMover = enemy.gameObject.AddComponent<EnemyMover>();
-        }
-        enemyMover.SetMoveSpeed(2.0f); // 왼쪽으로 이동 속도 설정
+        enemyMover.SetMoveSpeed(2.0f);
     }
 
     private Enemy SetUnitObject(GameObject obj)
