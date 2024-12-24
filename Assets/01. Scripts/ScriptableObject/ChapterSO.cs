@@ -6,6 +6,7 @@ public class ChapterSO : ScriptableObject
     public int chapterIndex;
     public AudioClip chapterMusic;
     public StageSO[] stageSOs;
+    public BossStageSO bossStageSO;
 
     [Header("BackGround")]
     public Sprite bgSprite; //¹è°æ

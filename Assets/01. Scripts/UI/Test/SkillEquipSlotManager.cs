@@ -25,6 +25,11 @@ public class SkillEquipSlotManager : UIBase
         equipManager.OnSkillEquippedChanged += UpdateSlot;
     }
 
+    private void Update()
+    {
+        HighlightWaitingSlot(); // ÀåÂø ´ë±â ½½·Ô ¹ÝÂ¦ÀÓ ¾÷µ¥ÀÌÆ®
+    }
+
     private void CreateSlots()
     {
         int slotCount = equipManager.EquippedSkills.Count;
@@ -66,6 +71,14 @@ public class SkillEquipSlotManager : UIBase
                     break;
                 }
             }
+        }
+    }
+
+    private void HighlightWaitingSlot()
+    {
+        foreach (var slot in equipSlots)
+        {
+            slot.UpdateHighlight(equipManager.WaitingSkillForEquip != null);
         }
     }
 }

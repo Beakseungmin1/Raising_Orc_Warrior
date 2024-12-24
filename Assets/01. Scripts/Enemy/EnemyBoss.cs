@@ -31,11 +31,6 @@ public class EnemyBoss : MonoBehaviour, IEnemy
 
     private int Hitcounter = 0;
 
-    private void Awake()
-    {
-        OnEnemyDeath += RegenManager.Instance.EnemyKilled;
-    }
-
     private void Start()
     {
         SetupEnemy();
@@ -97,7 +92,7 @@ public class EnemyBoss : MonoBehaviour, IEnemy
     {
         animator.SetTrigger("4_Death");
         ObjectPool.Instance.ReturnObject(gameObject);
-        GameEventsManager.Instance.enemyEvents.EnemyKilled();
+        StageManager.Instance.GoToNextChapter();
     }
 
     public bool GetActive()

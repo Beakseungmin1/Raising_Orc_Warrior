@@ -81,6 +81,11 @@ public class SkillInventorySlotManager : UIBase
             bool isEquipped = ownedSkill != null && equipManager.EquippedSkills.Contains(ownedSkill);
 
             slot.InitializeSlot(ownedSkill, skillDataSO, currentAmount, requiredAmount, isEquipped);
+
+            if (isEquipped)
+            {
+                slot.SetEquippedState(true);
+            }
         }
     }
 

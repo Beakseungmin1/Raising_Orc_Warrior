@@ -3,18 +3,31 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public GenericInventory<BaseSkill> SkillInventory { get; private set; } // Skill → BaseSkill
+    public GenericInventory<BaseSkill> SkillInventory { get; private set; }
     public GenericInventory<Weapon> WeaponInventory { get; private set; }
     public GenericInventory<Accessory> AccessoryInventory { get; private set; }
 
     public event Action<bool> OnInventoryChanged;
     public event Action OnSkillsChanged;
 
+    private Transform playerTransform;
+    private PlayerStat playerStat;
+
     private void Awake()
     {
-        SkillInventory = new GenericInventory<BaseSkill>(); // Skill → BaseSkill
+        SkillInventory = new GenericInventory<BaseSkill>();
         WeaponInventory = new GenericInventory<Weapon>();
         AccessoryInventory = new GenericInventory<Accessory>();
+    }
+
+    private void Start()
+    {
+        var player = PlayerObjManager.Instance.Player;
+        if (player != null)
+        {
+            playerTransform = player.transform;
+            playerStat = player.stat;
+        }
     }
 
     public void AddItemToInventory(BaseItemDataSO item)
@@ -34,10 +47,6 @@ public class PlayerInventory : MonoBehaviour
             case AccessoryDataSO accessoryData:
                 AddItem(AccessoryInventory, new Accessory(accessoryData));
                 OnInventoryChanged?.Invoke(false);
-                break;
-
-            default:
-                Debug.LogError("지원되지 않는 아이템");
                 break;
         }
     }
@@ -59,10 +68,6 @@ public class PlayerInventory : MonoBehaviour
             case AccessoryDataSO accessoryData:
                 RemoveItem(AccessoryInventory, accessoryData.itemName);
                 OnInventoryChanged?.Invoke(false);
-                break;
-
-            default:
-                Debug.LogError("지원되지 않는 아이템");
                 break;
         }
     }
@@ -94,16 +99,12 @@ public class PlayerInventory : MonoBehaviour
                 }
                 OnInventoryChanged?.Invoke(false);
                 break;
-
-            default:
-                Debug.LogError("지원되지 않는 아이템");
-                break;
         }
     }
 
     public int GetItemStackCount<T>(T item) where T : class, IEnhanceable
     {
-        if (item is BaseSkill) // Skill → BaseSkill
+        if (item is BaseSkill)
         {
             return SkillInventory.GetItemStackCount(item as BaseSkill);
         }
@@ -116,7 +117,6 @@ public class PlayerInventory : MonoBehaviour
             return AccessoryInventory.GetItemStackCount(item as Accessory);
         }
 
-        Debug.LogError("지원되지 않는 아이템 유형");
         return 0;
     }
 
@@ -147,24 +147,24 @@ public class PlayerInventory : MonoBehaviour
 
     private BaseSkill CreateSkillInstance(SkillDataSO skillData)
     {
-        var playerStat = PlayerObjManager.Instance.Player?.GetComponent<PlayerStat>();
-
-        if (playerStat == null)
+        if (playerStat == null || playerTransform == null)
         {
-            Debug.LogError("PlayerStat을 찾을 수 없습니다.");
             return null;
         }
 
+        foreach (Transform child in playerTransform)
+        {
+            var existingSkill = child.GetComponent<BaseSkill>();
+            if (existingSkill != null && existingSkill.SkillData == skillData)
+            {
+                existingSkill.AddStack(1);
+                return existingSkill;
+            }
+        }
+
         GameObject skillObject = new GameObject(skillData.itemName);
-        if(skillData.englishItemName != "")
-        {
-            skillObject.name = skillData.englishItemName;
-        }
-        else
-        {
-            skillObject.name = "Skill";
-        }
-        skillObject.transform.SetParent(PlayerObjManager.Instance.Player.transform);
+        skillObject.name = string.IsNullOrEmpty(skillData.englishItemName) ? "Skill" : skillData.englishItemName;
+        skillObject.transform.SetParent(playerTransform);
 
         BaseSkill skillInstance = null;
 
@@ -179,12 +179,10 @@ public class PlayerInventory : MonoBehaviour
             case SkillType.Passive:
                 skillInstance = skillObject.AddComponent<PassiveSkill>();
                 break;
-            default:
-                Debug.LogError("알 수 없는 스킬 타입입니다.");
-                return null;
         }
 
         skillInstance.Initialize(skillData, playerStat);
+
         return skillInstance;
     }
 

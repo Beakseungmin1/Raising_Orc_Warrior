@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,36 +9,61 @@ public class Enemy : MonoBehaviour, IEnemy
     public EnemySO enemySO;
 
     [Header("Enemy information")]
-    [SerializeField] private string enemyCode; // 적식별코드
-    [SerializeField] private BigInteger hp; // 체력
-    [SerializeField] private BigInteger maxHp; // 최대체력
-    [SerializeField] private BigInteger giveExp; // 주는 경험치
-    [SerializeField] private GameObject model; //적 모델
+    [SerializeField] private string enemyCode;
+    [SerializeField] private BigInteger hp;
+    [SerializeField] private BigInteger maxHp;
+    [SerializeField] private BigInteger giveExp;
+    [SerializeField] private GameObject model;
     [SerializeField] private Animator animator;
 
-
     [Header("Skill Properties")]
-    [SerializeField] private float cooldown; // 쿨다운 시간 (보스가 스킬을 지니고 있을시 사용)
+    [SerializeField] private float cooldown;
 
     [Header("Skill Effects")]
-    [SerializeField] private GameObject skillEffectPrefab; // 스킬 효과 프리팹
-    [SerializeField] private Collider2D effectRange; // 스킬 효과 범위
-    [SerializeField] private float damagePercent; // 액티브 스킬: 범위 내 적에게 주는 공격력 비율 (%)
+    [SerializeField] private GameObject skillEffectPrefab;
+    [SerializeField] private Collider2D effectRange;
+    [SerializeField] private float damagePercent;
+
+    [Header("Damage UI")]
+    [SerializeField] private TextMeshPro damageText;
+    [SerializeField] private float damageDisplayDuration = 0.5f;
+    [SerializeField] private UnityEngine.Vector3 damageTextOffset = new UnityEngine.Vector3(0, 1f, 0); // 오프셋 추가
+
+    private float damageDisplayTimer = 0f;
+    private bool isDisplayingDamage = false;
 
     [SerializeField] private Image healthBar;
 
     private PlayerBattle player;
-
     public Action OnEnemyAttack;
 
-    private int Hitcounter = 0;
+    private void Start()
+    {
+        if (damageText != null)
+        {
+            damageText.gameObject.SetActive(false); // 초기화 시 비활성화
+        }
+    }
+
+    private void Update()
+    {
+        if (isDisplayingDamage)
+        {
+            damageDisplayTimer -= Time.deltaTime;
+            if (damageDisplayTimer <= 0f)
+            {
+                isDisplayingDamage = false;
+                damageText.gameObject.SetActive(false); // 텍스트 비활성화
+            }
+        }
+    }
 
     public void TakeDamage(BigInteger Damage)
     {
+        ShowDamage(Damage);
 
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0); // 기본 레이어
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        // IDLE 애니메이션이 재생 중 일때의 로직
         if (stateInfo.IsName("IDLE") || stateInfo.IsName("DAMAGED"))
         {
             animator.SetTrigger("3_Damaged");
@@ -59,6 +85,21 @@ public class Enemy : MonoBehaviour, IEnemy
     {
         float fillAmount = (float)((double)hp / (double)maxHp);
         healthBar.fillAmount = fillAmount;
+    }
+
+    private void ShowDamage(BigInteger Damage)
+    {
+        if (damageText != null)
+        {
+            // 텍스트 위치 업데이트
+            damageText.transform.position = transform.position + damageTextOffset;
+
+            // 데미지 텍스트 업데이트
+            damageText.text = Damage.ToString();
+            damageText.gameObject.SetActive(true);
+            damageDisplayTimer = damageDisplayDuration;
+            isDisplayingDamage = true;
+        }
     }
 
     public BigInteger GiveExp()
@@ -118,5 +159,10 @@ public class Enemy : MonoBehaviour, IEnemy
         {
             player = null;
         }
+    }
+
+    public void ClearEnemy()
+    {
+        ObjectPool.Instance.ReturnObject(gameObject);
     }
 }
