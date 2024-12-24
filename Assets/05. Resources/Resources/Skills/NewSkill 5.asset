@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: NewSkill 5
   m_EditorClassIdentifier: 
   itemName: "\uB9C8\uB098\uC758 \uCD95\uBCF5"
+  englishItemName: ManaBlessingSkill
   icon: {fileID: 21300000, guid: b9e2196342992a0469902c05a29afed7, type: 3}
   inGameImage: {fileID: 0}
   grade: 3
@@ -39,4 +40,5 @@ MonoBehaviour:
   requireSkillCardsForUpgrade: 2
   maxLevel: 100
   effectPrefab: {fileID: 9054041762107104264, guid: 1b3ee55c0649d4c4c8533e6845d68467, type: 3}
+  effectDuration: 0
   isEquipped: 0

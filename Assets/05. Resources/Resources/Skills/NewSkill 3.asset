@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: NewSkill 3
   m_EditorClassIdentifier: 
   itemName: "\uBD88\uC758 \uAC80"
+  englishItemName: FireSwordSkill
   icon: {fileID: 21300000, guid: 2fc732779b691bf48bc8899a2b44d408, type: 3}
   inGameImage: {fileID: 0}
   grade: 1

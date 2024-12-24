@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: NewSkill 4
   m_EditorClassIdentifier: 
   itemName: "\uD0C0\uC624\uB974\uB294 \uAC80"
+  englishItemName: BurningSwordSkill
   icon: {fileID: 21300000, guid: 61e43715f7d3f3f4fb66342b37aafe0d, type: 3}
   inGameImage: {fileID: 0}
   grade: 2
