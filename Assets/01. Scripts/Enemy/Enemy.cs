@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour, IEnemy
 {
@@ -22,6 +23,8 @@ public class Enemy : MonoBehaviour, IEnemy
     [SerializeField] private GameObject skillEffectPrefab; // 스킬 효과 프리팹
     [SerializeField] private Collider2D effectRange; // 스킬 효과 범위
     [SerializeField] private float damagePercent; // 액티브 스킬: 범위 내 적에게 주는 공격력 비율 (%)
+
+    [SerializeField] private Image healthBar;
 
     private PlayerBattle player;
 
@@ -49,6 +52,13 @@ public class Enemy : MonoBehaviour, IEnemy
             hp -= Damage;
             Die();
         }
+        UpdateHealthBar();
+    }
+
+    private void UpdateHealthBar()
+    {
+        float fillAmount = (float)((double)hp / (double)maxHp);
+        healthBar.fillAmount = fillAmount;
     }
 
     public BigInteger GiveExp()
@@ -66,6 +76,11 @@ public class Enemy : MonoBehaviour, IEnemy
     public bool GetActive()
     {
         return gameObject.activeInHierarchy;
+    }
+
+    public BigInteger GetHealth()
+    {
+        return maxHp - hp;
     }
 
     public void SetupEnemy()
@@ -86,6 +101,7 @@ public class Enemy : MonoBehaviour, IEnemy
         skillEffectPrefab = enemySO.skillEffectPrefab;
         effectRange = enemySO.effectRange;
         damagePercent = enemySO.damagePercent;
+        UpdateHealthBar();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
