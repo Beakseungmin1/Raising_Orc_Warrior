@@ -112,9 +112,9 @@ public class RegenManager : Singleton<RegenManager>
     {
         killedEnemies = 0; //√ ±‚»≠
 
-        EnemySO bossEnemySO = enemySOs[0];
+        EnemySO boss = bossEnemySO;
         Vector3 spawnPosition = transform.position + new Vector3(0 * spawnDistance, 0, 0);
-        RegenEnemyBoss(bossEnemySO, spawnPosition, cachedEnemies[0]);
+        RegenEnemyBoss(boss, spawnPosition, cachedEnemies[0]);
     }
 
     private Enemy SetUnitObject(GameObject obj)
