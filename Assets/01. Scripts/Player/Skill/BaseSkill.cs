@@ -138,7 +138,7 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
     public bool CanEnhance()
     {
         return CurrencyManager.Instance.GetCurrency(CurrencyType.Emerald) >= RequiredCurrencyForUpgrade &&
-               PlayerObjManager.Instance.Player.inventory.GetItemStackCount(this) >= skillData.requireSkillCardsForUpgrade + 1;
+               PlayerObjManager.Instance.Player.inventory.GetItemStackCount(this) >= requireSkillCardsForUpgrade + 1;
     }
 
     public bool Enhance()
@@ -146,7 +146,7 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
         if (!CanEnhance()) return false;
 
         CurrencyManager.Instance.SubtractCurrency(CurrencyType.Emerald, RequiredCurrencyForUpgrade);
-        PlayerObjManager.Instance.Player.inventory.RemoveItemFromInventory(skillData, skillData.requireSkillCardsForUpgrade);
+        PlayerObjManager.Instance.Player.inventory.RemoveItemFromInventory(skillData, requireSkillCardsForUpgrade);
 
         EnhancementLevel++;
         requireSkillCardsForUpgrade++;

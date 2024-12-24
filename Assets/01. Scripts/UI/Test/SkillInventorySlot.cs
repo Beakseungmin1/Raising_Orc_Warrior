@@ -57,8 +57,8 @@ public class SkillInventorySlot : UIBase
             curAmountTxt.text = $"{currentAmount} / {requiredAmount}";
             amountSlider.value = (float)currentAmount / requiredAmount;
 
-            SetEquippedState(skill.IsEquipped);
             SetSlotOwned(true);
+            SetEquippedState(isEquipped);
             emptyIcon.SetActive(false);
 
             slotButton.image.color = Color.white;
@@ -72,8 +72,8 @@ public class SkillInventorySlot : UIBase
             curAmountTxt.text = "0 / 1";
             amountSlider.value = 0;
 
-            SetEquippedState(false);
             SetSlotOwned(false);
+            SetEquippedState(false);
             emptyIcon.SetActive(true);
 
             Color color = slotButton.image.color;

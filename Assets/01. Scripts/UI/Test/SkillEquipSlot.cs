@@ -10,6 +10,7 @@ public class SkillEquipSlot : UIBase
     [SerializeField] private Image cooldownImage;
     [SerializeField] private TextMeshProUGUI conditionText;
     [SerializeField] private Sprite defaultSprite;
+    [SerializeField] private GameObject highlightEffect; // 반짝임 효과 오브젝트
 
     private Image skillIconImage;
     private BaseSkill equippedSkill;
@@ -52,6 +53,14 @@ public class SkillEquipSlot : UIBase
         UpdateSkillUI();
 
         Debug.Log($"[SkillEquipSlot] 슬롯 {slotIndex}에 스킬 {skill?.SkillData.itemName ?? "없음"} 업데이트됨. 장착 상태: {isEquipped}");
+    }
+
+    public void UpdateHighlight(bool isWaitingForEquip)
+    {
+        if (highlightEffect != null)
+        {
+            highlightEffect.SetActive(isWaitingForEquip && equippedSkill == null);
+        }
     }
 
     private void UpdateSkillUI()
@@ -158,6 +167,11 @@ public class SkillEquipSlot : UIBase
             {
                 skillIconImage.type = Image.Type.Simple;
             }
+        }
+
+        if (highlightEffect != null)
+        {
+            highlightEffect.SetActive(false);
         }
     }
 }

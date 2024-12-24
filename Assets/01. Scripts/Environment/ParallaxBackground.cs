@@ -10,6 +10,7 @@ public class ParallaxBackground : MonoBehaviour
     private Transform[] backgrounds;
 
     private float backgroundWidth;
+    private bool isScrolling = true;
     private bool isBattlePaused = false;
     private bool isKnockback = false;
 
@@ -20,30 +21,29 @@ public class ParallaxBackground : MonoBehaviour
             SpriteRenderer spriteRenderer = backgrounds[0].GetComponent<SpriteRenderer>();
             if (spriteRenderer != null)
             {
-                backgroundWidth = Mathf.Round(spriteRenderer.bounds.size.x);
+                // 배경 가로 길이 계산
+                backgroundWidth = spriteRenderer.bounds.size.x;
+
+                // 디버그 로그
+                Debug.Log($"Sprite Bounds Size X: {spriteRenderer.bounds.size.x}");
+                Debug.Log($"Calculated Background Width: {backgroundWidth}");
             }
 
-            // 배경을 초기 위치에 정확히 배치
-            for (int i = 1; i < backgrounds.Length; i++)
+            // 두 번째 배경 배치
+            if (backgrounds.Length > 1)
             {
-                backgrounds[i].position = new Vector3(
-                    Mathf.Round(backgrounds[i - 1].position.x + backgroundWidth),
-                    backgrounds[i - 1].position.y,
-                    backgrounds[i - 1].position.z
+                backgrounds[1].position = new Vector3(
+                    backgrounds[0].position.x + backgroundWidth,
+                    backgrounds[0].position.y,
+                    backgrounds[0].position.z
                 );
             }
         }
 
-        BattleManager.Instance.OnBattleStart += PauseScroll;
-        BattleManager.Instance.OnBattleEnd += ResumeScroll;
-    }
-
-    private void OnDestroy()
-    {
         if (BattleManager.Instance != null)
         {
-            BattleManager.Instance.OnBattleStart -= PauseScroll;
-            BattleManager.Instance.OnBattleEnd -= ResumeScroll;
+            BattleManager.Instance.OnBattleStart += PauseScroll;
+            BattleManager.Instance.OnBattleEnd += ResumeScroll;
         }
     }
 
@@ -51,61 +51,64 @@ public class ParallaxBackground : MonoBehaviour
     {
         if (isBattlePaused) return;
 
-
         if (isKnockback)
         {
-            for (int i = 0; i < backgrounds.Length; i++)
-            {
-                backgrounds[i].position += Vector3.right * (scrollSpeed * 4) * Time.deltaTime;
-            }
+            ScrollBackground(Vector3.right * (scrollSpeed * 4));
         }
         else
         {
-            for (int i = 0; i < backgrounds.Length; i++)
-            {
-                backgrounds[i].position += Vector3.left * scrollSpeed * Time.deltaTime;
-
-                if (backgrounds[i].position.x <= -backgroundWidth)
-                {
-                    float rightmostPosition = GetRightmostBackgroundPosition();
-                    backgrounds[i].position = new Vector3(
-                        Mathf.Round(rightmostPosition + backgroundWidth),
-                        backgrounds[i].position.y,
-                        backgrounds[i].position.z
-                    );
-                }
-            }
+            ScrollBackground(Vector3.left * scrollSpeed);
         }
     }
 
-    public void StartScrollingRight(float KnockbackTime)
+    private void ScrollBackground(Vector3 direction)
+    {
+        foreach (var background in backgrounds)
+        {
+            background.position += direction * Time.deltaTime;
+        }
+
+        // 두 번째 그림의 중앙쯤 지났을 때 첫 번째 그림을 뒤로 이동
+        if (backgrounds[1].position.x <= 0)
+        {
+            RepositionBackgrounds();
+        }
+    }
+
+    private void RepositionBackgrounds()
+    {
+        // 첫 번째 그림을 두 번째 그림 뒤로 이동
+        backgrounds[0].position = new Vector3(
+            backgrounds[1].position.x + backgroundWidth,
+            backgrounds[0].position.y,
+            backgrounds[0].position.z
+        );
+
+        // 첫 번째와 두 번째 그림 순서 스왑
+        Transform temp = backgrounds[0];
+        backgrounds[0] = backgrounds[1];
+        backgrounds[1] = temp;
+
+    }
+
+    public void StartScrollingRight(float knockbackTime)
     {
         if (!isKnockback)
         {
             isKnockback = true;
-            StartCoroutine(StopScrollingRightAfterDuration(KnockbackTime));
+            StartCoroutine(StopScrollingRightAfterDuration(knockbackTime));
         }
     }
 
-    private IEnumerator StopScrollingRightAfterDuration(float KnockbackTime)
+    private IEnumerator StopScrollingRightAfterDuration(float knockbackTime)
     {
-        yield return new WaitForSeconds(KnockbackTime);
+        yield return new WaitForSeconds(knockbackTime);
         isKnockback = false;
-    }
 
-    private float GetRightmostBackgroundPosition()
-    {
-        float maxX = backgrounds[0].position.x;
-
-        for (int i = 1; i < backgrounds.Length; i++)
+        if (!isBattlePaused)
         {
-            if (backgrounds[i].position.x > maxX)
-            {
-                maxX = backgrounds[i].position.x;
-            }
+            ResumeScroll();
         }
-
-        return maxX;
     }
 
     private void PauseScroll()
