@@ -14,4 +14,14 @@ public class EnemyEvents
             onEnemyKilled();
         }
     }
+
+    public event Action onEnemyCleared;
+
+    public void ClearEnemy()
+    {
+        if (onEnemyCleared != null)
+        {
+            onEnemyCleared();
+        }
+    }
 }

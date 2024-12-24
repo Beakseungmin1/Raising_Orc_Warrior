@@ -6,6 +6,7 @@ public class RegenManager : Singleton<RegenManager>
 {
     private ChapterSO curChapterSO;
     [SerializeField] private EnemySO[] enemySOs;
+    [SerializeField] private EnemySO bossEnemySO;
 
     public int totalEnemies = 0; // 해당 스테이지 적 총 개수
     public int killedEnemies = 0; // 죽인 적 개수
@@ -73,6 +74,18 @@ public class RegenManager : Singleton<RegenManager>
         enemyMover.SetMoveSpeed(2.0f);
     }
 
+    public void RegenBossStagesEnemy()
+    {
+        killedEnemies = 0; //초기화
+        curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
+        bossEnemySO = curChapterSO.bossStageSO.bossEnemySO;
+        totalEnemies = 1;
+
+        EnemySO enemySO = bossEnemySO;
+        Vector3 spawnPosition = transform.position + new Vector3(0 * spawnDistance, 0, 0);
+        RegenEnemy(enemySO, spawnPosition, cachedEnemies[0]);
+    }
+
     private Enemy SetUnitObject(GameObject obj)
     {
         return obj.GetComponent<Enemy>();
@@ -87,5 +100,10 @@ public class RegenManager : Singleton<RegenManager>
         {
             StageManager.Instance.StageClear();
         }
+    }
+
+    public void ClearEnemies()
+    {
+        GameEventsManager.Instance.enemyEvents.ClearEnemy();
     }
 }

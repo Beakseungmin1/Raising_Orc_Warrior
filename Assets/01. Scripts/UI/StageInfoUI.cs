@@ -39,4 +39,10 @@ public class StageInfoUI : UIBase
         stageProgressSlider.value = (float)RegenManager.Instance.killedEnemies / RegenManager.Instance.totalEnemies;
         currentGoldTxt.text = CurrencyManager.Instance.GetGold().ToString();
     }
+
+    public void OnClickBossStageBtn()
+    {
+        RegenManager.Instance.ClearEnemies();
+        StageManager.Instance.GoToBossStage();
+    }
 }
