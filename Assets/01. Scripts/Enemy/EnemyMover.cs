@@ -55,7 +55,7 @@ public class EnemyMover : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Monster"))
         {
             frontEnemy = collision.transform;
         }
@@ -63,7 +63,7 @@ public class EnemyMover : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Monster"))
         {
             if (frontEnemy == collision.transform)
             {
