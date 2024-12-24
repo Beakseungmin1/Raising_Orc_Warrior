@@ -48,6 +48,26 @@ public class RegenManager : Singleton<RegenManager>
         totalEnemies = enemySOs.Length;
     }
 
+    public void CacheEnemyBoss()
+    {
+        enemySOs = new EnemySO[1];
+        curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
+        enemySOs[0] = curChapterSO.bossStageSO.bossEnemySO;
+
+
+        GameObject obj = ObjectPool.Instance.GetObject("EnemyBoss");
+        EnemyMover enemyMover = obj.GetComponent<EnemyMover>();
+
+        if (enemyMover == null)
+        {
+            enemyMover = obj.AddComponent<EnemyMover>();
+        }
+
+        obj.SetActive(false); // 캐싱 중에는 비활성화
+        cachedEnemies.Add((obj, enemyMover));
+
+    }
+
     public void RegenStagesEnemy()
     {
         killedEnemies = 0;
@@ -74,21 +94,37 @@ public class RegenManager : Singleton<RegenManager>
         enemyMover.SetMoveSpeed(2.0f);
     }
 
+    public void RegenEnemyBoss(EnemySO enemySO, Vector3 spawnPosition, (GameObject enemyObject, EnemyMover enemyMover) cachedEnemy)
+    {
+        GameObject enemyObject = cachedEnemy.enemyObject;
+        EnemyMover enemyMover = cachedEnemy.enemyMover;
+
+        EnemyBoss enemyBoss = SetUnitObjectAsEnemyBoss(enemyObject);
+        enemyBoss.enemySO = enemySO;
+        enemyBoss.SetupEnemy();
+        enemyBoss.transform.position = spawnPosition;
+        enemyObject.SetActive(true);
+
+        enemyMover.SetMoveSpeed(2.0f);
+    }
+
     public void RegenBossStagesEnemy()
     {
         killedEnemies = 0; //초기화
-        curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
-        bossEnemySO = curChapterSO.bossStageSO.bossEnemySO;
-        totalEnemies = 1;
 
-        EnemySO enemySO = bossEnemySO;
+        EnemySO bossEnemySO = enemySOs[0];
         Vector3 spawnPosition = transform.position + new Vector3(0 * spawnDistance, 0, 0);
-        RegenEnemy(enemySO, spawnPosition, cachedEnemies[0]);
+        RegenEnemyBoss(bossEnemySO, spawnPosition, cachedEnemies[0]);
     }
 
     private Enemy SetUnitObject(GameObject obj)
     {
         return obj.GetComponent<Enemy>();
+    }
+
+    private EnemyBoss SetUnitObjectAsEnemyBoss(GameObject obj)
+    {
+        return obj.GetComponent<EnemyBoss>();
     }
 
     public void EnemyKilled()

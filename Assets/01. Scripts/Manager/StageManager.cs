@@ -107,8 +107,9 @@ public class StageManager : Singleton<StageManager>
 
     public void GoToBossStage()
     {
-        UIManager.Instance.Hide<StageInfoUI>();
         curStageIndex++;
+        UIManager.Instance.Hide<StageInfoUI>();
+        RegenManager.Instance.CacheEnemyBoss();
         RegenManager.Instance.RegenBossStagesEnemy();
         OnStageChanged?.Invoke();
     }
