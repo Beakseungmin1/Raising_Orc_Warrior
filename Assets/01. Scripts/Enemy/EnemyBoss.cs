@@ -33,7 +33,7 @@ public class EnemyBoss : MonoBehaviour, IEnemy
 
     private void Start()
     {
-        //SetupEnemy();
+        SetupEnemy();
         OnEnemyAttack = GiveDamageToPlayer;
     }
 

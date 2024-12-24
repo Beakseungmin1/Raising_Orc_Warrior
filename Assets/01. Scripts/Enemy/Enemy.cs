@@ -2,6 +2,7 @@
 using System.Numerics;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour, IEnemy
 {
@@ -30,6 +31,8 @@ public class Enemy : MonoBehaviour, IEnemy
 
     private float damageDisplayTimer = 0f;
     private bool isDisplayingDamage = false;
+
+    [SerializeField] private Image healthBar;
 
     private PlayerBattle player;
     public Action OnEnemyAttack;
@@ -75,6 +78,13 @@ public class Enemy : MonoBehaviour, IEnemy
             hp -= Damage;
             Die();
         }
+        UpdateHealthBar();
+    }
+
+    private void UpdateHealthBar()
+    {
+        float fillAmount = (float)((double)hp / (double)maxHp);
+        healthBar.fillAmount = fillAmount;
     }
 
     private void ShowDamage(BigInteger Damage)
@@ -109,6 +119,11 @@ public class Enemy : MonoBehaviour, IEnemy
         return gameObject.activeInHierarchy;
     }
 
+    public BigInteger GetHealth()
+    {
+        return maxHp - hp;
+    }
+
     public void SetupEnemy()
     {
         enemyCode = enemySO.enemyCode;
@@ -127,6 +142,7 @@ public class Enemy : MonoBehaviour, IEnemy
         skillEffectPrefab = enemySO.skillEffectPrefab;
         effectRange = enemySO.effectRange;
         damagePercent = enemySO.damagePercent;
+        UpdateHealthBar();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -2,16 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using UnityEngine.UI;
 
 public class Battle : MonoBehaviour
 {
     public PlayerBattle player;
 
-    public Enemy enemy;
+    public EnemyBoss enemy;
 
-    public void SetEnemyScript(Enemy enemyboss)
+    public Image healthBar;
+
+    public void SetEnemyScript(EnemyBoss enemyboss)
     {
         enemy = enemyboss;
+    }
+
+    public void SetHealthBar()
+    {
     }
 
     public void TriggerAttack()

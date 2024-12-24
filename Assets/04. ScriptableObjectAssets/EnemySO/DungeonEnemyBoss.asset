@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DungeonEnemyBoss
   m_EditorClassIdentifier: 
   enemyCode: 1
-  hpString: 10000
-  maxHpString: 10000
+  hpString: 1000000
+  maxHpString: 1000000
   giveExpString: 400
   model: {fileID: 0}
   cooldown: 10
