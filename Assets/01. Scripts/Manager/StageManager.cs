@@ -8,8 +8,11 @@ public class StageManager : Singleton<StageManager>
     [Header("ChapterSOList")]
     public List<ChapterSO> chapterSOs;
 
-    [Header("Current Chapter StageSO")]
+    [Header("Current Chapter's StageSO")]
     public List<StageSO> stageSOs; //이 스테이지의 스테이지SO
+
+    [Header("Current Chapter's BossStageSO")]
+    public BossStageSO bossStageSO;
 
     [Header("Info")]
     public string chapterName;
@@ -32,6 +35,7 @@ public class StageManager : Singleton<StageManager>
 
         SetChapterList();
         SetStageList();
+        SetBossStage();
 
         OnStageChanged += RefreshStage;
         OnChapterChanged += RefreshChapter;
@@ -57,33 +61,30 @@ public class StageManager : Singleton<StageManager>
         MaxStageIndexInThisChapter = chapterSOs[curChapterIndex].stageSOs.Length - 1; //최대 스테이지 값 세팅. //Length는 1부터 시작. index는 0부터 시작이므로 -1.
     }
 
+    private void SetBossStage()
+    {
+        for (int i = 0; i < chapterSOs.Count; i++)
+        {
+            bossStageSO = chapterSOs[curChapterIndex].bossStageSO;
+        }
+    }
+
     public void StageClear()
     {
         Debug.LogWarning("StageClear");
 
-        int savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
-
-        if (curStageIndexInThisChapter < MaxStageIndexInThisChapter)
+        if (curStageIndexInThisChapter < MaxStageIndexInThisChapter) //챕터에 다음 스테이지가 남았다면 다음 스테이지로 이동
         {
             curStageIndex++;
             curStageIndexInThisChapter++;
             GoToNextStage();
         }
-        else 
+        else //현재가 챕터의 마지막 스테이지라면 해당 스테이지 반복
         {
-            int curMaxChapterIndex = chapterSOs.Count - 1;
+            int savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
 
-            if (curChapterIndex < curMaxChapterIndex)
-            {
-                curStageIndex++;
-                curStageIndexInThisChapter = 0;
-                GoToNextChapter();
-            }
-            else
-            {
-                curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
-                GoToNextStage();
-            }
+            curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
+            GoToNextStage();
         }
     }
 
@@ -104,10 +105,21 @@ public class StageManager : Singleton<StageManager>
         OnStageChanged?.Invoke();
     }
 
-    private void GoToNextChapter()
+    public void GoToBossStage()
     {
+        UIManager.Instance.Hide<StageInfoUI>();
+        curStageIndex++;
+        RegenManager.Instance.RegenBossStagesEnemy();
+        OnStageChanged?.Invoke();
+    }
+
+    public void GoToNextChapter()
+    {
+        UIManager.Instance.Show<StageInfoUI>();
         curChapterIndex++;
+        curStageIndexInThisChapter = 0;
         SetStageList();
+        SetBossStage();
         RefreshChapter();
         RefreshStage();
         RegenManager.Instance.RegenStagesEnemy();

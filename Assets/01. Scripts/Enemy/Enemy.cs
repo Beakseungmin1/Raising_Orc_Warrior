@@ -29,6 +29,15 @@ public class Enemy : MonoBehaviour, IEnemy
 
     private int Hitcounter = 0;
 
+    public void OnEnable()
+    {
+        GameEventsManager.Instance.enemyEvents.onEnemyCleared += ClearEnemy;
+    }
+    public void OnDisable()
+    {
+        GameEventsManager.Instance.enemyEvents.onEnemyCleared -= ClearEnemy;
+    }
+
     public void TakeDamage(BigInteger Damage)
     {
 
@@ -102,5 +111,10 @@ public class Enemy : MonoBehaviour, IEnemy
         {
             player = null;
         }
+    }
+
+    public void ClearEnemy()
+    {
+        ObjectPool.Instance.ReturnObject(gameObject);
     }
 }

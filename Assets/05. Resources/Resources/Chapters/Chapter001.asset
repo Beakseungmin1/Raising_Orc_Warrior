@@ -17,5 +17,6 @@ MonoBehaviour:
   stageSOs:
   - {fileID: 11400000, guid: 2689e113f2b523f46b46ebf938eae432, type: 2}
   - {fileID: 11400000, guid: 25f0998ae1b481d48b6f2ea1f8924cce, type: 2}
+  bossStageSO: {fileID: 11400000, guid: afdb56ec57dc30f4e9cdda93ff180539, type: 2}
   bgSprite: {fileID: 21300000, guid: 9096b57e194dba3429c64b7b3f9f244b, type: 3}
   chapterName: "\uCD08\uBCF4\uC790 \uC0AC\uB0E5\uD130"
