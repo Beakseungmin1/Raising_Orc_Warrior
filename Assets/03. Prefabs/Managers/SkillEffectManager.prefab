@@ -44,6 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d81a13150f12a4ba509dfe22d64f0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPosition: {fileID: 0}
-  projectileSpawnPoint: {fileID: 0}
+  playerWeaponPosition: {fileID: 0}
   mapCenter: {fileID: 0}
