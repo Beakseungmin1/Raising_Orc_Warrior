@@ -92,7 +92,8 @@ public class EnemyBoss : MonoBehaviour, IEnemy
     {
         animator.SetTrigger("4_Death");
         ObjectPool.Instance.ReturnObject(gameObject);
-        StageManager.Instance.GoToNextChapter();
+
+        StageManager.Instance.BossStageClear();
     }
 
     public bool GetActive()

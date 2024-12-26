@@ -29,6 +29,8 @@ public class StageManager : Singleton<StageManager>
     public Action OnStageChanged;
     public Action OnChapterChanged;
 
+    int savedCurStageIndexInThisChapter = 0;
+
     private void Awake()
     {
         bgSprite = GetComponent<Sprite>();
@@ -81,7 +83,7 @@ public class StageManager : Singleton<StageManager>
         }
         else //현재가 챕터의 마지막 스테이지라면 해당 스테이지 반복
         {
-            int savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
+            savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
 
             curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
             GoToNextStage();
@@ -101,12 +103,14 @@ public class StageManager : Singleton<StageManager>
 
     private void GoToNextStage()
     {
+        RegenManager.Instance.CacheEnemies();
         RegenManager.Instance.RegenStagesEnemy();
         OnStageChanged?.Invoke();
     }
 
     public void GoToBossStage()
     {
+        savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
         curStageIndex++;
         UIManager.Instance.Hide<StageInfoUI>();
         RegenManager.Instance.ClearEnemies();
@@ -115,7 +119,7 @@ public class StageManager : Singleton<StageManager>
         OnStageChanged?.Invoke();
     }
 
-    public void GoToNextChapter()
+    private void GoToNextChapter()
     {
         UIManager.Instance.Show<StageInfoUI>();
         curChapterIndex++;
@@ -127,5 +131,19 @@ public class StageManager : Singleton<StageManager>
         RegenManager.Instance.CacheEnemies();
         RegenManager.Instance.RegenStagesEnemy();
         OnStageChanged?.Invoke(); //현재 최대몬스터, 죽인 몬스터 수 정보 갱신해야하므로, RegenStagesEnemy()다음에 실행.
+    }
+
+    public void BossStageClear()
+    {
+        if (curChapterIndex < chapterSOs.Count - 1)
+        {
+            GoToNextChapter();
+        }
+        else //현재가 챕터의 마지막 스테이지라면 해당 스테이지 반복
+        {
+            curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
+            UIManager.Instance.Show<StageInfoUI>();
+            GoToNextStage();
+        }
     }
 }
