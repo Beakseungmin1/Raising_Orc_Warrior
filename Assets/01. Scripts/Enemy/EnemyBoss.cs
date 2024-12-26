@@ -31,10 +31,21 @@ public class EnemyBoss : MonoBehaviour, IEnemy
 
     private int Hitcounter = 0;
 
-    private void Start()
+    private void OnEnable()
     {
         SetupEnemy();
+        ResetState();
         OnEnemyAttack = GiveDamageToPlayer;
+    }
+
+    private void ResetState()
+    {
+        Hitcounter = 0;
+        if (animator != null)
+        {
+            animator.Rebind();
+            animator.Update(0f);
+        }
     }
 
     public void TakeDamage(BigInteger Damage)

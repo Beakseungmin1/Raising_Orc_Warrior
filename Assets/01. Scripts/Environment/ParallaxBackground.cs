@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
-public class ParallaxBackground : MonoBehaviour
+public class ParallaxBackground : Singleton<ParallaxBackground>
 {
     [SerializeField]
     private float scrollSpeed = 2f;
@@ -13,6 +14,8 @@ public class ParallaxBackground : MonoBehaviour
     private bool isScrolling = true;
     private bool isBattlePaused = false;
     private bool isKnockback = false;
+
+    public event Action<float> OnKnockback;
 
     private void Start()
     {
@@ -96,6 +99,7 @@ public class ParallaxBackground : MonoBehaviour
         if (!isKnockback)
         {
             isKnockback = true;
+            OnKnockback?.Invoke(knockbackTime);
             StartCoroutine(StopScrollingRightAfterDuration(knockbackTime));
         }
     }
