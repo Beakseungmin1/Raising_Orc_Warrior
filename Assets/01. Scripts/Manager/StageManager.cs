@@ -111,7 +111,7 @@ public class StageManager : Singleton<StageManager>
         UIManager.Instance.Hide<StageInfoUI>();
         RegenManager.Instance.ClearEnemies();
         RegenManager.Instance.CacheEnemyBoss();
-        RegenManager.Instance.RegenStagesEnemy();
+        RegenManager.Instance.RegenStagesBossEnemy();
         OnStageChanged?.Invoke();
     }
 

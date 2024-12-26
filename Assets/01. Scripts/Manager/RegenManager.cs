@@ -6,6 +6,7 @@ public class RegenManager : Singleton<RegenManager>
 {
     private ChapterSO curChapterSO;
     [SerializeField] private List<EnemySO> enemySOs;
+    [SerializeField] private EnemySO bossEnemy;
 
     public int totalEnemies = 0; // 해당 스테이지 적 총 개수
     public int killedEnemies = 0; // 죽인 적 개수
@@ -54,7 +55,7 @@ public class RegenManager : Singleton<RegenManager>
         curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
 
         enemySOs = new List<EnemySO>();
-        //enemySOs.Add(curChapterSO.bossStageSO.bossEnemySO);
+        bossEnemy = curChapterSO.bossStageSO.bossEnemySO;
 
         GameObject obj = ObjectPool.Instance.GetObject("EnemyBoss");
         EnemyMover enemyMover = obj.GetComponent<EnemyMover>();
@@ -64,6 +65,7 @@ public class RegenManager : Singleton<RegenManager>
             enemyMover = obj.AddComponent<EnemyMover>();
         }
 
+        cachedEnemies = new List<(GameObject, EnemyMover)>();
         obj.SetActive(false); // 캐싱 중에는 비활성화
         cachedEnemies.Add((obj, enemyMover));
 
@@ -81,6 +83,15 @@ public class RegenManager : Singleton<RegenManager>
         }
     }
 
+    public void RegenStagesBossEnemy()
+    {
+        killedEnemies = 0;
+
+        EnemySO bossEnemySO = bossEnemy;
+        Vector3 spawnPosition = transform.position + new Vector3(0 * spawnDistance, 0, 0);
+        RegenBossEnemy(bossEnemySO, spawnPosition, cachedEnemies[0]);
+    }
+
     public void RegenEnemy(EnemySO enemySO, Vector3 spawnPosition, (GameObject enemyObject, EnemyMover enemyMover) cachedEnemy)
     {
         GameObject enemyObject = cachedEnemy.enemyObject;
@@ -95,7 +106,7 @@ public class RegenManager : Singleton<RegenManager>
         enemyMover.SetMoveSpeed(2.0f);
     }
 
-    public void RegenEnemyBoss(EnemySO enemySO, Vector3 spawnPosition, (GameObject enemyObject, EnemyMover enemyMover) cachedEnemy)
+    public void RegenBossEnemy(EnemySO enemySO, Vector3 spawnPosition, (GameObject enemyObject, EnemyMover enemyMover) cachedEnemy)
     {
         GameObject enemyObject = cachedEnemy.enemyObject;
         EnemyMover enemyMover = cachedEnemy.enemyMover;
