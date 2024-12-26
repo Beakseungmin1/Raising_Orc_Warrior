@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Enemy : MonoBehaviour, IEnemy
 {
@@ -15,7 +16,7 @@ public class Enemy : MonoBehaviour, IEnemy
     [SerializeField] private BigInteger maxHp;
     [SerializeField] private BigInteger giveExp;
     [SerializeField] private GameObject model;
-    [SerializeField] private Animator animator;
+    private Animator animator;
 
     [Header("Skill Properties")]
     [SerializeField] private float cooldown;
@@ -28,26 +29,31 @@ public class Enemy : MonoBehaviour, IEnemy
     [Header("Damage UI")]
     [SerializeField] private TextMeshPro damageText;
     [SerializeField] private float damageDisplayDuration = 0.5f;
-    [SerializeField] private UnityEngine.Vector3 damageTextOffset = new UnityEngine.Vector3(0, 1f, 0); // 오프셋 추가
+    [SerializeField] private UnityEngine.Vector3 damageTextOffset = new UnityEngine.Vector3(0, 1f, 0);
 
     private float damageDisplayTimer = 0f;
     private bool isDisplayingDamage = false;
 
     [SerializeField] private Image healthBar;
+    private Collider2D enemyCollider;
 
-    private PlayerBattle player;
+    private PlayerBattle playerBattle;
     public Action OnEnemyAttack;
 
     private void Start()
     {
         if (damageText != null)
         {
-            damageText.gameObject.SetActive(false); // 초기화 시 비활성화
+            damageText.gameObject.SetActive(false);
         }
     }
 
     private void OnEnable()
     {
+        enemyCollider = GetComponent<Collider2D>();
+        animator = GetComponentInChildren<Animator>();
+        playerBattle = PlayerObjManager.Instance.Player.PlayerBattle;
+
         GameEventsManager.Instance.enemyEvents.onEnemyCleared += ClearEnemy;
     }
 
@@ -55,7 +61,6 @@ public class Enemy : MonoBehaviour, IEnemy
     {
         GameEventsManager.Instance.enemyEvents.onEnemyCleared -= ClearEnemy;
     }
-
 
     private void Update()
     {
@@ -65,7 +70,7 @@ public class Enemy : MonoBehaviour, IEnemy
             if (damageDisplayTimer <= 0f)
             {
                 isDisplayingDamage = false;
-                damageText.gameObject.SetActive(false); // 텍스트 비활성화
+                damageText.gameObject.SetActive(false);
             }
         }
     }
@@ -105,10 +110,7 @@ public class Enemy : MonoBehaviour, IEnemy
     {
         if (damageText != null)
         {
-            // 텍스트 위치 업데이트
             damageText.transform.position = transform.position + damageTextOffset;
-
-            // 데미지 텍스트 업데이트
             damageText.text = Damage.ToString();
             damageText.gameObject.SetActive(true);
             damageDisplayTimer = damageDisplayDuration;
@@ -124,6 +126,7 @@ public class Enemy : MonoBehaviour, IEnemy
     public void Die()
     {
         animator.SetTrigger("4_Death");
+        enemyCollider.enabled = false; // 콜라이더 비활성화
         GameEventsManager.Instance.enemyEvents.EnemyKilled();
         StartCoroutine(DelayedReturnToPool());
     }
@@ -160,31 +163,15 @@ public class Enemy : MonoBehaviour, IEnemy
             model = enemySO.model;
             model = Instantiate(model, transform);
         }
-        animator = GetComponentInChildren<Animator>();
 
         cooldown = enemySO.cooldown;
-
         skillEffectPrefab = enemySO.skillEffectPrefab;
         effectRange = enemySO.effectRange;
         damagePercent = enemySO.damagePercent;
+
+        enemyCollider.enabled = true; // 콜라이더 활성화
         UpdateHealthBar();
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            player = collision.GetComponent<PlayerBattle>();
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            player = null;
-        }
-    }
+    }       
 
     public void ClearEnemy()
     {
