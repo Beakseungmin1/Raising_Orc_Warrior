@@ -25,8 +25,10 @@ public class RegenManager : Singleton<RegenManager>
         GameEventsManager.Instance.enemyEvents.onEnemyKilled += EnemyKilled;
     }
 
-    private void CacheEnemies()
+    public void CacheEnemies()
     {
+        cachedEnemies = new List<(GameObject, EnemyMover)>();
+
         curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
 
         enemySOs = new List<EnemySO>(curChapterSO.stageSOs[StageManager.Instance.curStageIndexInThisChapter].enemySOs); //√ ±‚»≠
@@ -73,6 +75,7 @@ public class RegenManager : Singleton<RegenManager>
 
     public void RegenStagesEnemy()
     {
+
         killedEnemies = 0;
 
         for (int i = 0; i < cachedEnemies.Count; i++)

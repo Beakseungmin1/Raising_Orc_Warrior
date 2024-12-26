@@ -124,6 +124,7 @@ public class StageManager : Singleton<StageManager>
         SetBossStage();
         RefreshChapter();
         RefreshStage();
+        RegenManager.Instance.CacheEnemies();
         RegenManager.Instance.RegenStagesEnemy();
         OnStageChanged?.Invoke(); //현재 최대몬스터, 죽인 몬스터 수 정보 갱신해야하므로, RegenStagesEnemy()다음에 실행.
     }
