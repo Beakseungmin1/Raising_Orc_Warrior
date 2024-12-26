@@ -53,7 +53,7 @@ public class RegenManager : Singleton<RegenManager>
         totalEnemies = enemySOs.Count;
     }
 
-    public void CacheEnemyBoss(DungeonType dungeonType, int dungeonLevel)
+    public void CacheDungeonBoss(DungeonType dungeonType, int dungeonLevel)
     {
         curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
 
@@ -85,7 +85,7 @@ public class RegenManager : Singleton<RegenManager>
         cachedEnemies.Add((obj, enemyMover));
     }
 
-    public void CacheDungeonBoss()
+    public void CacheEnemyBoss()
     {
         enemySOs = new List<EnemySO>();
         bossEnemy = curChapterSO.bossStageSO.bossEnemySO;

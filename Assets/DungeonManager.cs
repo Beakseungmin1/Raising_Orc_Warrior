@@ -24,7 +24,7 @@ public class DungeonManager : Singleton<DungeonManager>
     {
         UIManager.Instance.Hide<StageInfoUI>();
         RegenManager.Instance.ClearEnemies();
-        RegenManager.Instance.CacheEnemyBoss();
+        RegenManager.Instance.CacheDungeonBoss(dungeonType, dungeonLevel);
         RegenManager.Instance.RegenStagesBossEnemy();
         StageManager.Instance.OnStageChanged?.Invoke();
     }
