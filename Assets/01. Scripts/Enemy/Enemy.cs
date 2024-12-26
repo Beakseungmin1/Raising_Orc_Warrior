@@ -3,6 +3,7 @@ using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class Enemy : MonoBehaviour, IEnemy
 {
@@ -36,16 +37,6 @@ public class Enemy : MonoBehaviour, IEnemy
 
     private PlayerBattle player;
     public Action OnEnemyAttack;
-
-    private void OnEnable()
-    {
-        GameEventsManager.Instance.enemyEvents.onEnemyCleared += ClearEnemy;
-    }
-
-    private void OnDisable()
-    {
-        GameEventsManager.Instance.enemyEvents.onEnemyCleared -= ClearEnemy;
-    }
 
     private void Start()
     {
@@ -86,7 +77,9 @@ public class Enemy : MonoBehaviour, IEnemy
         else
         {
             hp -= Damage;
+            UpdateHealthBar();
             Die();
+            return;
         }
         UpdateHealthBar();
     }
@@ -120,8 +113,19 @@ public class Enemy : MonoBehaviour, IEnemy
     public void Die()
     {
         animator.SetTrigger("4_Death");
-        ObjectPool.Instance.ReturnObject(gameObject);
         GameEventsManager.Instance.enemyEvents.EnemyKilled();
+        StartCoroutine(DelayedReturnToPool());
+    }
+
+    private IEnumerator DelayedReturnToPool()
+    {
+        if (damageText != null)
+        {
+            damageText.gameObject.SetActive(true);
+            yield return new WaitForSeconds(damageDisplayDuration);
+        }
+
+        ObjectPool.Instance.ReturnObject(gameObject);
     }
 
     public bool GetActive()
