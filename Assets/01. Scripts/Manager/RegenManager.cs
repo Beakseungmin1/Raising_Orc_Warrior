@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEditor;
 
 public class RegenManager : Singleton<RegenManager>
 {
@@ -52,14 +53,44 @@ public class RegenManager : Singleton<RegenManager>
         totalEnemies = enemySOs.Count;
     }
 
-    public void CacheEnemyBoss()
+    public void CacheEnemyBoss(DungeonType dungeonType, int dungeonLevel)
     {
         curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
 
         enemySOs = new List<EnemySO>();
+
+        switch (dungeonType)
+        {
+            case DungeonType.EXPDungeon:
+                bossEnemy = DungeonManager.Instance.expDungeonSOs[dungeonLevel].dungeonBoss;
+                break;
+            case DungeonType.GoldDungeon:
+                bossEnemy = DungeonManager.Instance.goldDungeonSOs[dungeonLevel].dungeonBoss;
+                break;
+            case DungeonType.CubeDungeon:
+                bossEnemy = DungeonManager.Instance.cubeDungeonSOs[dungeonLevel].dungeonBoss;
+                break;
+        }
+
+        GameObject obj = ObjectPool.Instance.GetObject("DungeonBoss");
+        EnemyMover enemyMover = obj.GetComponent<EnemyMover>();
+
+        if (enemyMover == null)
+        {
+            enemyMover = obj.AddComponent<EnemyMover>();
+        }
+
+        cachedEnemies = new List<(GameObject, EnemyMover)>();
+        obj.SetActive(false); // 캐싱 중에는 비활성화
+        cachedEnemies.Add((obj, enemyMover));
+    }
+
+    public void CacheDungeonBoss()
+    {
+        enemySOs = new List<EnemySO>();
         bossEnemy = curChapterSO.bossStageSO.bossEnemySO;
 
-        GameObject obj = ObjectPool.Instance.GetObject("EnemyBoss");
+        GameObject obj = ObjectPool.Instance.GetObject("DungeonBoss");
         EnemyMover enemyMover = obj.GetComponent<EnemyMover>();
 
         if (enemyMover == null)

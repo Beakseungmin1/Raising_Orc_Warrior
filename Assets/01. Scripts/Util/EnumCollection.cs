@@ -88,3 +88,10 @@ public enum StatType
     BluecriticalIncreaseDamage, //회심의 일격
     BluecriticalProbability
 }
+
+public enum DungeonType
+{
+    GoldDungeon,
+    CubeDungeon,
+    EXPDungeon
+}
