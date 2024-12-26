@@ -37,6 +37,16 @@ public class Enemy : MonoBehaviour, IEnemy
     private PlayerBattle player;
     public Action OnEnemyAttack;
 
+    private void OnEnable()
+    {
+        GameEventsManager.Instance.enemyEvents.onEnemyCleared += ClearEnemy;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.enemyEvents.onEnemyCleared -= ClearEnemy;
+    }
+
     private void Start()
     {
         if (damageText != null)
