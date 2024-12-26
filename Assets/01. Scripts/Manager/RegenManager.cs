@@ -5,8 +5,7 @@ using System;
 public class RegenManager : Singleton<RegenManager>
 {
     private ChapterSO curChapterSO;
-    [SerializeField] private EnemySO[] enemySOs;
-    [SerializeField] private EnemySO bossEnemySO;
+    [SerializeField] private List<EnemySO> enemySOs;
 
     public int totalEnemies = 0; // 해당 스테이지 적 총 개수
     public int killedEnemies = 0; // 죽인 적 개수
@@ -28,6 +27,8 @@ public class RegenManager : Singleton<RegenManager>
     private void CacheEnemies()
     {
         curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
+
+        enemySOs = new List<EnemySO>(curChapterSO.stageSOs[StageManager.Instance.curStageIndexInThisChapter].enemySOs); //초기화
         enemySOs = curChapterSO.stageSOs[StageManager.Instance.curStageIndexInThisChapter].enemySOs;
 
         // 적 오브젝트를 미리 캐싱
@@ -45,15 +46,15 @@ public class RegenManager : Singleton<RegenManager>
             cachedEnemies.Add((obj, enemyMover));
         }
 
-        totalEnemies = enemySOs.Length;
+        totalEnemies = enemySOs.Count;
     }
 
     public void CacheEnemyBoss()
     {
-        enemySOs = new EnemySO[1];
         curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
-        enemySOs[0] = curChapterSO.bossStageSO.bossEnemySO;
 
+        enemySOs = new List<EnemySO>();
+        //enemySOs.Add(curChapterSO.bossStageSO.bossEnemySO);
 
         GameObject obj = ObjectPool.Instance.GetObject("EnemyBoss");
         EnemyMover enemyMover = obj.GetComponent<EnemyMover>();
@@ -106,15 +107,6 @@ public class RegenManager : Singleton<RegenManager>
         enemyObject.SetActive(true);
 
         enemyMover.SetMoveSpeed(2.0f);
-    }
-
-    public void RegenBossStagesEnemy()
-    {
-        killedEnemies = 0; //초기화
-
-        EnemySO boss = bossEnemySO;
-        Vector3 spawnPosition = transform.position + new Vector3(0 * spawnDistance, 0, 0);
-        RegenEnemyBoss(boss, spawnPosition, cachedEnemies[0]);
     }
 
     private Enemy SetUnitObject(GameObject obj)

@@ -54,11 +54,11 @@ public class StageManager : Singleton<StageManager>
     {
         stageSOs.Clear();
         //해당 챕터에 해당하는 스테이지 리스트를 쫙 뽑아서 받아온다.
-        for (int i = 0; i < chapterSOs[curChapterIndex].stageSOs.Length; i++)
+        for (int i = 0; i < chapterSOs[curChapterIndex].stageSOs.Count; i++)
         {
             stageSOs.Add(chapterSOs[curChapterIndex].stageSOs[i]);
         }
-        MaxStageIndexInThisChapter = chapterSOs[curChapterIndex].stageSOs.Length - 1; //최대 스테이지 값 세팅. //Length는 1부터 시작. index는 0부터 시작이므로 -1.
+        MaxStageIndexInThisChapter = chapterSOs[curChapterIndex].stageSOs.Count - 1; //최대 스테이지 값 세팅. //Length는 1부터 시작. index는 0부터 시작이므로 -1.
     }
 
     private void SetBossStage()
@@ -109,8 +109,9 @@ public class StageManager : Singleton<StageManager>
     {
         curStageIndex++;
         UIManager.Instance.Hide<StageInfoUI>();
+        RegenManager.Instance.ClearEnemies();
         RegenManager.Instance.CacheEnemyBoss();
-        RegenManager.Instance.RegenBossStagesEnemy();
+        RegenManager.Instance.RegenStagesEnemy();
         OnStageChanged?.Invoke();
     }
 
