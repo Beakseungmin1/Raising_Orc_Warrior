@@ -46,6 +46,17 @@ public class Enemy : MonoBehaviour, IEnemy
         }
     }
 
+    private void OnEnable()
+    {
+        GameEventsManager.Instance.enemyEvents.onEnemyCleared += ClearEnemy;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.enemyEvents.onEnemyCleared -= ClearEnemy;
+    }
+
+
     private void Update()
     {
         if (isDisplayingDamage)
