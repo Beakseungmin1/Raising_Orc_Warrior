@@ -48,3 +48,6 @@ MonoBehaviour:
   - prefabName: Enemy
     prefab: {fileID: 822938190782927294, guid: ba18f6829388ed54380ecab078ccfe5c, type: 3}
     initialSize: 10
+  - prefabName: EnemyBoss
+    prefab: {fileID: 822938190782927294, guid: 007782c8cc21a614ba93f51085f4a5be, type: 3}
+    initialSize: 1

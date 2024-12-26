@@ -45,16 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySOs: []
-  enemyRegenPoss:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  field: {fileID: 0}
-  curEnemyCount: 0
+  bossEnemy: {fileID: 0}
+  totalEnemies: 0
+  killedEnemies: 0
+  spawnDistance: 2

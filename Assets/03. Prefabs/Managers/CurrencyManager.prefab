@@ -44,7 +44,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ef3057fde830fa43a11c1c1f008a9ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curGold: 0
-  curEmerald: 0
-  curCube: 0
-  curDiamond: 0

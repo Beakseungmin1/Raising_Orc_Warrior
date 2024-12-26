@@ -44,12 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87114a71f98ecb543850d112a5de0905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chapterSOs:
-  - {fileID: 11400000, guid: 27bddaeb908c12f40ac301ab9b0f5943, type: 2}
-  - {fileID: 11400000, guid: feb03856ac8ad774a98c1a1fe79f3149, type: 2}
+  chapterSOs: []
   stageSOs: []
+  bossStageSO: {fileID: 0}
   chapterName: 
   stageName: 
   bgSprite: {fileID: 0}
-  curChapterNum: 1
-  curStageNum: 1
+  curChapterIndex: 0
+  curStageIndex: 0
+  curStageIndexInThisChapter: 0
+  MaxStageIndexInThisChapter: 0

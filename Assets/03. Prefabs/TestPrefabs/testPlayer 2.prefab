@@ -404,3 +404,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 3124620342091247500}
   enemy: {fileID: 0}
+  healthBar: {fileID: 0}
