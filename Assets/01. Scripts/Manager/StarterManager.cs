@@ -12,10 +12,11 @@ public class StarterManager : Singleton<StarterManager>
 
         CreateInitialUI();
         CreateEventSystem();
-        //ÀÓ½Ã
+        //ìž„ì‹œ
         SoundManager.Instance.Init();
         SoundManager.Instance.PlayBGM(BGMType.Title);
 
+        OpenFirstDungeons();
         if (!isInitialized)
         {
             //InitializeGame();
@@ -24,8 +25,8 @@ public class StarterManager : Singleton<StarterManager>
 
     private void InitializeGame()
     {
-        //SetUI(); //startº¸´Ù´Â ¿©±â¿¡ ÀÖ´Â °Ô ³ªÀ½.
-        //CreateEventSystem(); //startº¸´Ù´Â ¿©±â¿¡ ÀÖ´Â °Ô ³ªÀ½.
+        //SetUI(); //startï¿½ï¿½ï¿½Ù´ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½Ö´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+        //CreateEventSystem(); //startï¿½ï¿½ï¿½Ù´ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½Ö´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
         InitializeDataManager();
         InitializeGlobalSystems();
         LoadInitialScene();
@@ -50,7 +51,7 @@ public class StarterManager : Singleton<StarterManager>
     {
         //SoundManager.Instance.Initialize();
         //UIManager.Instance.InitializeUI();
-        //±âÅ¸ ¸Å´ÏÀú ½Ï´Ù Ãß°¡
+        //ï¿½ï¿½Å¸ ï¿½Å´ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ß°ï¿½
     }
 
     private void LoadInitialScene()
@@ -76,5 +77,12 @@ public class StarterManager : Singleton<StarterManager>
             eventSystemObject.AddComponent<EventSystem>();
             eventSystemObject.AddComponent<StandaloneInputModule>();
         }
+    }
+
+    private void OpenFirstDungeons()
+    {
+        DungeonManager.Instance.ChangeDungeonState(DungeonType.CubeDungeon, 1, DungeonState.OPENED);
+        DungeonManager.Instance.ChangeDungeonState(DungeonType.EXPDungeon, 1, DungeonState.OPENED);
+        DungeonManager.Instance.ChangeDungeonState(DungeonType.GoldDungeon, 1, DungeonState.OPENED);
     }
 }

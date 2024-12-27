@@ -12,6 +12,7 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
     }
 
     public EnemySO enemySO;
+    public DungeonInfoSO dungeonInfo;
 
     [Header("Enemy information")]
     [SerializeField] private string enemyCode; // 적식별코드
@@ -41,6 +42,7 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
     {
         SetupEnemy();
         InvokeRepeating("SwitchPattern", 0, patternTime);
+        GameEventsManager.Instance.bossEvents.BossHPSet(maxHp);
     }
 
     private void Update()
@@ -81,6 +83,7 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
             hp -= Damage;
             Die();
         }
+        GameEventsManager.Instance.bossEvents.BossHPChanged(hp -= Damage);
     }
 
     public void GiveDamageToPlayer()
@@ -102,6 +105,8 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
     {
         ObjectPool.Instance.ReturnObject(gameObject);
         GameEventsManager.Instance.enemyEvents.EnemyKilled();
+
+        DungeonManager.Instance.ClearDungeon(dungeonInfo.type, dungeonInfo.level);
     }
 
     public bool GetActive()

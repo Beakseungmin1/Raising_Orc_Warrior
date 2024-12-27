@@ -101,7 +101,7 @@ public class StageManager : Singleton<StageManager>
         stageName = stageSOs[curStageIndexInThisChapter].stageName;
     }
 
-    private void GoToNextStage()
+    public void GoToNextStage()
     {
         RegenManager.Instance.CacheEnemies();
         RegenManager.Instance.RegenStagesEnemy();
@@ -113,11 +113,28 @@ public class StageManager : Singleton<StageManager>
         savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
         curStageIndex++;
         UIManager.Instance.Hide<StageInfoUI>();
+        UIManager.Instance.Show<BossStageInfoUI>();
         RegenManager.Instance.ClearEnemies();
         RegenManager.Instance.CacheEnemyBoss();
         RegenManager.Instance.RegenStagesBossEnemy();
         OnStageChanged?.Invoke();
     }
+
+
+    public void GoToDungeonStage(DungeonType dungeonType, int level)
+    {
+        //던전으로 이동하기 전 마지막 챕터와 스테이지 정보 세이브
+        savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
+        curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
+
+        RegenManager.Instance.ClearEnemies();
+        Dungeon dungeon = DungeonManager.Instance.GetDungeonByTypeAndLevel(dungeonType, level);
+        DungeonManager.Instance.currentDungeonInfo = dungeon.info;
+        RegenManager.Instance.CacheDungeonBoss(dungeon);
+        RegenManager.Instance.RegenStagesEnemyDungeonBoss(dungeon.info);
+        OnStageChanged?.Invoke();
+    }
+
 
     private void GoToNextChapter()
     {
@@ -137,11 +154,13 @@ public class StageManager : Singleton<StageManager>
     {
         if (curChapterIndex < chapterSOs.Count - 1)
         {
+            UIManager.Instance.Hide<BossStageInfoUI>();
             GoToNextChapter();
         }
         else //현재가 챕터의 마지막 스테이지라면 해당 스테이지 반복
         {
             curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
+            UIManager.Instance.Hide<BossStageInfoUI>();
             UIManager.Instance.Show<StageInfoUI>();
             GoToNextStage();
         }

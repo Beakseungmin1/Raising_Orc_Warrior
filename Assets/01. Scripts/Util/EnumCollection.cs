@@ -52,7 +52,8 @@ public enum CurrencyType
     Gold,
     Emerald,
     Cube,
-    Diamond
+    Diamond,
+    DungeonTicket
 }
 
 public enum ItemType
@@ -87,4 +88,18 @@ public enum StatType
     CriticalProbability,
     BluecriticalIncreaseDamage, //회심의 일격
     BluecriticalProbability
+}
+
+public enum DungeonType
+{
+    GoldDungeon,
+    CubeDungeon,
+    EXPDungeon
+}
+
+public enum DungeonState
+{
+    CLOSED, //요구조건 불충족(오픈 안됨)
+    OPENED, //진행 가능
+    CLEARED //클리어
 }

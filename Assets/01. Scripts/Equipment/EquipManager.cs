@@ -81,23 +81,13 @@ public class EquipManager : MonoBehaviour
     {
         if (slotIndex < 0 || slotIndex >= EquippedSkills.Count)
         {
-            Debug.LogWarning($"[EquipManager] 슬롯 인덱스 {slotIndex}가 유효하지 않습니다.");
             return;
         }
 
         int existingSlotIndex = EquippedSkills.IndexOf(skill);
         if (existingSlotIndex != -1 && existingSlotIndex != slotIndex)
         {
-            Debug.Log($"[EquipManager] 스킬 {skill.SkillData.itemName}이 슬롯 {existingSlotIndex}에서 {slotIndex}로 이동합니다.");
-
-            EquippedSkills[existingSlotIndex] = null;
-            OnSkillEquippedChanged?.Invoke(skill, existingSlotIndex, false);
-
-            EquippedSkills[slotIndex] = skill;
-            OnSkillEquippedChanged?.Invoke(skill, slotIndex, true);
-
-            ClearWaitingSkillForEquip();
-            return;
+            UnequipSkill(existingSlotIndex);
         }
 
         if (EquippedSkills[slotIndex] != null)
@@ -109,8 +99,6 @@ public class EquipManager : MonoBehaviour
         skill.IsEquipped = true;
 
         skill.ResetCondition();
-
-        Debug.Log($"[EquipManager] 슬롯 {slotIndex}에 스킬 {skill.SkillData.itemName} 장착 완료.");
 
         skillHandler.SyncWithEquipManager();
 

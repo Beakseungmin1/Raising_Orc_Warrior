@@ -21,6 +21,17 @@ public class UIManager : Singleton<UIManager>
         return (T)ui;
     }
 
+    public T Show<T>(DungeonInfoSO dungeonInfoSO) where T : UIBase
+    {
+        string uiName = typeof(T).ToString(); //UIManager.Instance.Show<MainPopup>(); 으로 코드를 쓰면 MainPopup이 uiName으로 반영된다. T는 각종 클래스에 대응함.
+        UIBase go = Resources.Load<UIBase>("UI/" + uiName); //이름이 같다면 반환해준다.
+        var ui = Load<T>(go, uiName);
+        uiList.Add(ui); //씬에 생성된 UI의 정보를 갖게된다.
+
+        return (T)ui;
+    }
+
+
     private T Load<T>(UIBase prefab, string uiName) where T : UIBase //조건문 같은 거라고 보면 된다. T는 UIBase이거나 UIBase를 상속받는 클래스로 제한한다.
     {
         GameObject newCanvasObject = new GameObject(uiName + "Canvas");

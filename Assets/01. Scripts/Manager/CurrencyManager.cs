@@ -16,7 +16,8 @@ public class CurrencyManager : Singleton<CurrencyManager>
         {
             { CurrencyType.Emerald, 99999f }, // float
             { CurrencyType.Cube, 99999f },    // float
-            { CurrencyType.Diamond, 99999f } // float
+            { CurrencyType.Diamond, 99999f }, // float
+            { CurrencyType.DungeonTicket, 10f } // float
         };
     }
 

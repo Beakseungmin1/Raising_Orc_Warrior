@@ -39,6 +39,10 @@ public class SkillEffectManager : Singleton<SkillEffectManager>
                 ApplyAreaEffect(effect);
                 break;
 
+            case EffectType.Projectile:
+                ApplyProjectileEffect(effect);
+                break;
+
             default:
                 Debug.LogWarning($"SkillEffectManager: 알 수 없는 이펙트 타입 - {effect.EffectType}");
                 break;
@@ -65,5 +69,30 @@ public class SkillEffectManager : Singleton<SkillEffectManager>
         Debug.Log($"SkillEffectManager: 번개 이펙트 생성 완료 - 범위: {effect.EffectRange}, 지속시간: {effect.EffectDuration}초");
 
         Destroy(effectObj, effect.EffectDuration);
+    }
+
+    private void ApplyProjectileEffect(SkillEffect effect)
+    {
+        if (effect.SkillPrefab == null)
+        {
+            Debug.LogError("SkillEffectManager: 프로젝타일 스킬 프리팹이 설정되지 않았습니다.");
+            return;
+        }
+
+        GameObject projectile = Instantiate(effect.SkillPrefab, playerWeaponPosition.position, Quaternion.identity);
+        Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+
+        if (rb != null)
+        {
+            rb.velocity = new Vector2(effect.EffectRange, 0);
+        }
+
+        ProjectileHandler projectileHandler = projectile.GetComponent<ProjectileHandler>();
+        if (projectileHandler != null)
+        {
+            projectileHandler.Initialize(effect);
+        }
+
+        Destroy(projectile, effect.EffectDuration);
     }
 }
