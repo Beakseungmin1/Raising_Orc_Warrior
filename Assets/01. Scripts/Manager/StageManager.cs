@@ -119,6 +119,18 @@ public class StageManager : Singleton<StageManager>
         OnStageChanged?.Invoke();
     }
 
+
+    public void GoToDungeonStage(DungeonType dungeonType, int level)
+    {
+        UIManager.Instance.Hide<StageInfoUI>();
+        RegenManager.Instance.ClearEnemies();
+        Dungeon dungeon = DungeonManager.Instance.GetDungeonByTypeAndLevel(dungeonType, level);
+        RegenManager.Instance.CacheDungeonBoss(dungeon);
+        RegenManager.Instance.RegenStagesBossEnemy();
+        OnStageChanged?.Invoke();
+    }
+
+
     private void GoToNextChapter()
     {
         UIManager.Instance.Show<StageInfoUI>();
