@@ -72,6 +72,7 @@ public class PlayerStat : MonoBehaviour
             exp -= curNeedExp;
             needExp = needExp * 2;
             UpdateLevelStatUI.Invoke();
+            SoundManager.Instance.PlaySFX(SFXType.LevelUp);
         }
         else
         {
