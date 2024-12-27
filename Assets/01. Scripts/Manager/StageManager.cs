@@ -113,6 +113,7 @@ public class StageManager : Singleton<StageManager>
         savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
         curStageIndex++;
         UIManager.Instance.Hide<StageInfoUI>();
+        UIManager.Instance.Show<BossStageInfoUI>();
         RegenManager.Instance.ClearEnemies();
         RegenManager.Instance.CacheEnemyBoss();
         RegenManager.Instance.RegenStagesBossEnemy();
@@ -153,11 +154,13 @@ public class StageManager : Singleton<StageManager>
     {
         if (curChapterIndex < chapterSOs.Count - 1)
         {
+            UIManager.Instance.Hide<BossStageInfoUI>();
             GoToNextChapter();
         }
         else //현재가 챕터의 마지막 스테이지라면 해당 스테이지 반복
         {
             curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
+            UIManager.Instance.Hide<BossStageInfoUI>();
             UIManager.Instance.Show<StageInfoUI>();
             GoToNextStage();
         }

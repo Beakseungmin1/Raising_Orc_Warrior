@@ -123,6 +123,8 @@ public class DungeonManager : Singleton<DungeonManager>
             ChangeDungeonState(dungeon.type, level + 1, DungeonState.OPENED);
         }
 
+        currentDungeonInfo = null;
+
         UIManager.Instance.Hide<BossStageInfoUI>();
         UIManager.Instance.Show<StageInfoUI>();
         StageManager.Instance.GoToNextStage();

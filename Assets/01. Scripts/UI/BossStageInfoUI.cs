@@ -31,26 +31,32 @@ public class BossStageInfoUI : UIBase
 
     private void Awake()
     {
-        remainingCountTxt.gameObject.SetActive(false);
-        InitUI();
+        //remainingCountTxt.gameObject.SetActive(false);
     }
 
     private void InitUI()
     {
-        //hpSlider.value = (float)bossCurHP/(float)bossMaxHP;
-        //remainingCountTxt.text = $"{bossCurHP}/{bossMaxHP}";
+        hpSlider.value = (float)bossCurHP/(float)bossMaxHP;
+        remainingCountTxt.text = $"{bossCurHP}/{bossMaxHP}";
 
-        switch (DungeonManager.Instance.currentDungeonInfo.type)
+        if (DungeonManager.Instance.currentDungeonInfo != null)
         {
-            case DungeonType.GoldDungeon:
-                dungeonNameLabel.text = $"폐허가된 광산 {DungeonManager.Instance.currentDungeonInfo.level}단계";
-                break;
-            case DungeonType.CubeDungeon:
-                dungeonNameLabel.text = $"큐브 던전 {DungeonManager.Instance.currentDungeonInfo.level}단계";
-                break;
-            case DungeonType.EXPDungeon:
-                dungeonNameLabel.text = $"경험의 숲 {DungeonManager.Instance.currentDungeonInfo.level}단계";
-                break;
+            switch (DungeonManager.Instance.currentDungeonInfo.type)
+            {
+                case DungeonType.GoldDungeon:
+                    dungeonNameLabel.text = $"폐허가된 광산 {DungeonManager.Instance.currentDungeonInfo.level}단계";
+                    break;
+                case DungeonType.CubeDungeon:
+                    dungeonNameLabel.text = $"큐브 던전 {DungeonManager.Instance.currentDungeonInfo.level}단계";
+                    break;
+                case DungeonType.EXPDungeon:
+                    dungeonNameLabel.text = $"경험의 숲 {DungeonManager.Instance.currentDungeonInfo.level}단계";
+                    break;
+            }
+        }
+        else
+        {
+            dungeonNameLabel.text = StageManager.Instance.stageName;
         }
     }
 
@@ -58,11 +64,12 @@ public class BossStageInfoUI : UIBase
     {
         bossMaxHP = maxHP;
         bossCurHP = maxHP;
+        InitUI();
     }
 
     private void RefreshUI(BigInteger curHP)
     {
         hpSlider.value = (float)curHP / (float)bossMaxHP;
-        //remainingCountTxt.text = $"{curHP}/{bossMaxHP}";
+        remainingCountTxt.text = $"{curHP}/{bossMaxHP}";
     }
 }

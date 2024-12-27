@@ -42,6 +42,7 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
     {
         SetupEnemy();
         InvokeRepeating("SwitchPattern", 0, patternTime);
+        GameEventsManager.Instance.bossEvents.BossHPSet(maxHp);
     }
 
     private void Update()

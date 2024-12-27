@@ -35,6 +35,7 @@ public class EnemyBoss : MonoBehaviour, IEnemy
     {
         SetupEnemy();
         ResetState();
+        GameEventsManager.Instance.bossEvents.BossHPSet(maxHp);
         OnEnemyAttack = GiveDamageToPlayer;
     }
 
