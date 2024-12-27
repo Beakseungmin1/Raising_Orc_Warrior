@@ -19,6 +19,8 @@ public class EXPDungeonEnterBtnUI : UIBase
     {
         UIManager.Instance.Show<DimmedUI>();
         EXPDungeonUI_ConfirmEnterBtnPopUpUI btnPopupUI = UIManager.Instance.Show<EXPDungeonUI_ConfirmEnterBtnPopUpUI>(dungeonInfoSO);
+        btnPopupUI.dungeonInfoSO = null;
         btnPopupUI.dungeonInfoSO = this.dungeonInfoSO;
+        btnPopupUI.Init();
     }
 }

@@ -64,6 +64,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
   dungeonInfoSO: {fileID: 0}
+  curLevel: {fileID: 1711081391469412496}
+  dungeonTicketCount: {fileID: 2851771597164944737}
 --- !u!1 &4420812215561778743
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,7 +859,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7364274605266295409}
         m_TargetAssemblyTypeName: EXPDungeonUI_ConfirmEnterBtnPopUpUI, Assembly-CSharp
-        m_MethodName: GoToDungeonStage
+        m_MethodName: OnGoToDungeonBtnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

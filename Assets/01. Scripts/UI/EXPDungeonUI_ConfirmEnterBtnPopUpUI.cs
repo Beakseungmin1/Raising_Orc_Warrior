@@ -1,10 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EXPDungeonUI_ConfirmEnterBtnPopUpUI : UIBase
 {
     public DungeonInfoSO dungeonInfoSO;
+
+    public TextMeshProUGUI curLevel;
+    public TextMeshProUGUI dungeonTicketCount;
+
+    public void Init()
+    {
+        curLevel.text = $"{dungeonInfoSO.level}±¸¿ª";
+        dungeonTicketCount.text = $"{CurrencyManager.Instance.GetCurrency(CurrencyType.DungeonTicket)}/1";
+    }
 
     public void ExitBtn()
     {
@@ -12,12 +20,16 @@ public class EXPDungeonUI_ConfirmEnterBtnPopUpUI : UIBase
         UIManager.Instance.Hide<DimmedUI>();
     }
 
-    public void GoToDungeonStage()
+    public void OnGoToDungeonBtnClick()
     {
-        StageManager.Instance.GoToDungeonStage(dungeonInfoSO.type, dungeonInfoSO.level);
-        Hide();
-        UIManager.Instance.Hide<EXPDungeonUI>();
-        UIManager.Instance.Show<Main_PlayerUpgradeUI>();
-        UIManager.Instance.Hide<DimmedUI>();
+        if (CurrencyManager.Instance.GetCurrency(CurrencyType.DungeonTicket) >= 1)
+        {
+            CurrencyManager.Instance.SubtractCurrency(CurrencyType.DungeonTicket, 1);
+            StageManager.Instance.GoToDungeonStage(dungeonInfoSO.type, dungeonInfoSO.level);
+            Hide();
+            UIManager.Instance.Hide<EXPDungeonUI>();
+            UIManager.Instance.Show<Main_PlayerUpgradeUI>();
+            UIManager.Instance.Hide<DimmedUI>();
+        }
     }
 }

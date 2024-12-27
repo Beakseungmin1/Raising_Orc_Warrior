@@ -52,7 +52,8 @@ public enum CurrencyType
     Gold,
     Emerald,
     Cube,
-    Diamond
+    Diamond,
+    DungeonTicket
 }
 
 public enum ItemType

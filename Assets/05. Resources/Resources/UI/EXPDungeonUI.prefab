@@ -1531,6 +1531,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EXPDungeonEnterBtn (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: dungeonInfoSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 5714af01f4888d34793300478278a7c0, type: 2}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1545,7 +1549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1553,7 +1557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1593,11 +1597,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 440
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -330
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1633,6 +1637,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EXPDungeonEnterBtn (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: dungeonInfoSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 091d34ef5ccc12b45a97ff2be4d5e6a7, type: 2}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1647,7 +1655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1655,7 +1663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1695,11 +1703,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 440
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -540
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1735,6 +1743,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EXPDungeonEnterBtn (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: dungeonInfoSO
+      value: 
+      objectReference: {fileID: 11400000, guid: dd494665b7ff4684d877f2d177cfe906, type: 2}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1749,7 +1761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1757,7 +1769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1797,11 +1809,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 440
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -750
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1855,7 +1867,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1863,7 +1875,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1903,11 +1915,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 440
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -120
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1943,6 +1955,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EXPDungeonEnterBtn (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: dungeonInfoSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 867f03df63f76ba4f880e8155b54a8b5, type: 2}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1957,7 +1973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1965,7 +1981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2005,11 +2021,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 440
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -960
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
