@@ -28,8 +28,10 @@ public class EXPDungeonUI_ConfirmEnterBtnPopUpUI : UIBase
             StageManager.Instance.GoToDungeonStage(dungeonInfoSO.type, dungeonInfoSO.level);
             Hide();
             UIManager.Instance.Hide<EXPDungeonUI>();
-            UIManager.Instance.Show<Main_PlayerUpgradeUI>();
+            UIManager.Instance.Hide<StageInfoUI>();
             UIManager.Instance.Hide<DimmedUI>();
+            UIManager.Instance.Show<Main_PlayerUpgradeUI>();
+            UIManager.Instance.Show<BossStageInfoUI>();
         }
     }
 }

@@ -126,9 +126,9 @@ public class StageManager : Singleton<StageManager>
         savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
         curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
 
-        UIManager.Instance.Hide<StageInfoUI>();
         RegenManager.Instance.ClearEnemies();
         Dungeon dungeon = DungeonManager.Instance.GetDungeonByTypeAndLevel(dungeonType, level);
+        DungeonManager.Instance.currentDungeonInfo = dungeon.info;
         RegenManager.Instance.CacheDungeonBoss(dungeon);
         RegenManager.Instance.RegenStagesEnemyDungeonBoss(dungeon.info);
         OnStageChanged?.Invoke();

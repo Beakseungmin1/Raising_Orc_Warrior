@@ -82,6 +82,7 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
             hp -= Damage;
             Die();
         }
+        GameEventsManager.Instance.bossEvents.BossHPChanged(hp -= Damage);
     }
 
     public void GiveDamageToPlayer()

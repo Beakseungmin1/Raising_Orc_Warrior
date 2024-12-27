@@ -7,6 +7,7 @@ public class DungeonManager : Singleton<DungeonManager>
 {
     Dictionary<DungeonType, Dictionary<int, Dungeon>> dungeonMap;
 
+    public DungeonInfoSO currentDungeonInfo;
     private void Awake()
     {
         dungeonMap = CreateDungeonMap();
@@ -122,6 +123,7 @@ public class DungeonManager : Singleton<DungeonManager>
             ChangeDungeonState(dungeon.type, level + 1, DungeonState.OPENED);
         }
 
+        UIManager.Instance.Hide<BossStageInfoUI>();
         UIManager.Instance.Show<StageInfoUI>();
         StageManager.Instance.GoToNextStage();
     }
@@ -131,5 +133,6 @@ public class DungeonManager : Singleton<DungeonManager>
         Dungeon dungeon = GetDungeonByTypeAndLevel(dungeonType, level);
         dungeon.state = state;
     }
+
 
 }
