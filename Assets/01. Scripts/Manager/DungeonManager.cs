@@ -128,7 +128,8 @@ public class DungeonManager : Singleton<DungeonManager>
             ChangeDungeonState(dungeon.type, level + 1, DungeonState.OPENED);
         }
 
-        //StageManager.Instance.GoToNextStage();
+        UIManager.Instance.Show<StageInfoUI>();
+        StageManager.Instance.GoToNextStage();
     }
 
     public void ChangeDungeonState(DungeonType dungeonType, int level, DungeonState state)

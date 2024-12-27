@@ -105,8 +105,6 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
         GameEventsManager.Instance.enemyEvents.EnemyKilled();
 
         DungeonManager.Instance.ClearDungeon(dungeonInfo.type, dungeonInfo.level);
-        StageManager.Instance.GoToNextStage();
-        UIManager.Instance.Show<StageInfoUI>();
     }
 
     public bool GetActive()
