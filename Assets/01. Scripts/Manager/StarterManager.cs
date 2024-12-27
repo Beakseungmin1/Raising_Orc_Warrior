@@ -12,6 +12,10 @@ public class StarterManager : Singleton<StarterManager>
 
         CreateInitialUI();
         CreateEventSystem();
+        //юс╫ц
+        SoundManager.Instance.Init();
+        SoundManager.Instance.PlayBGM(BGMType.Title);
+
         if (!isInitialized)
         {
             //InitializeGame();
