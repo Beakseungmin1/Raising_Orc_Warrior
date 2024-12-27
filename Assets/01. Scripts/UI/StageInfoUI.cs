@@ -42,7 +42,6 @@ public class StageInfoUI : UIBase
 
     public void OnClickBossStageBtn()
     {
-        RegenManager.Instance.ClearEnemies();
         StageManager.Instance.GoToBossStage();
     }
 }
