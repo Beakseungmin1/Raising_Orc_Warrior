@@ -7,6 +7,7 @@ public class PlayerInfoPopupUI : UIBase
     public void ExitBtn()
     {
         UIManager.Instance.Hide<DimmedUI>();
+        SoundManager.Instance.PlaySFX(SFXType.Button);
         Hide();
     }
 }

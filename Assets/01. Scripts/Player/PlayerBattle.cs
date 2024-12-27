@@ -115,6 +115,8 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         totalDamage = PlayerDamageCalculator.GetTotalDamage();
 
         currentMonster.TakeDamage(totalDamage);
+
+        SoundManager.Instance.PlaySFX(SFXType.playerAttack2);
     }
 
 

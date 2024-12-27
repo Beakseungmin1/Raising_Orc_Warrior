@@ -51,6 +51,7 @@ public class HUDPanel : UIBase
     {
         UIManager.Instance.Show<DimmedUI>();
         UIManager.Instance.Show<PlayerInfoPopupUI>();
+        SoundManager.Instance.PlaySFX(SFXType.Button);
         stat.UpdateUserInformationUI?.Invoke();
     }
 
