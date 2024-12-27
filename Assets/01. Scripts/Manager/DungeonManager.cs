@@ -6,12 +6,6 @@ using System.Numerics;
 public class DungeonManager : Singleton<DungeonManager>
 {
     Dictionary<DungeonType, Dictionary<int, Dungeon>> dungeonMap;
-    //던전 클리어시 다음 던전레벨
-    //던전 난이도 상승 매서드 
-    //던전 레벨업 관리 매서드
-    //던전에 들어가면 몬스터가 소환된다.
-
-    //관리 기준: 던전 타입, 레벨.
 
     private void Awake()
     {
