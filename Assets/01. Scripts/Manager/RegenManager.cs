@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEditor;
+using System.Collections;
 
 public class RegenManager : Singleton<RegenManager>
 {
@@ -11,6 +12,8 @@ public class RegenManager : Singleton<RegenManager>
 
     public int totalEnemies = 0; // 해당 스테이지 적 총 개수
     public int killedEnemies = 0; // 죽인 적 개수
+
+    private int totalEnemiesForDebug = 0; //죽인 적 수가 스테이지 총 적 수보다 많아지는 버그를 체크하기 위한 변수
 
     public Action OnEnemyCountDown;
     public Action OnEnemyCountZero;
@@ -51,6 +54,7 @@ public class RegenManager : Singleton<RegenManager>
         }
 
         totalEnemies = enemySOs.Count;
+        totalEnemiesForDebug += totalEnemies;
     }
 
     public void CacheDungeonBoss(Dungeon dungeon)
@@ -92,6 +96,10 @@ public class RegenManager : Singleton<RegenManager>
 
     public void RegenStagesEnemy()
     {
+        if (totalEnemiesForDebug != 0)
+        {
+            ClearEnemies();
+        }
 
         killedEnemies = 0;
 
@@ -182,6 +190,7 @@ public class RegenManager : Singleton<RegenManager>
     public void EnemyKilled()
     {
         killedEnemies++;
+        totalEnemiesForDebug -= killedEnemies;
         OnEnemyCountDown?.Invoke();
 
         if (killedEnemies >= totalEnemies)
