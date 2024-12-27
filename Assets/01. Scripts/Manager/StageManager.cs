@@ -126,7 +126,7 @@ public class StageManager : Singleton<StageManager>
         RegenManager.Instance.ClearEnemies();
         Dungeon dungeon = DungeonManager.Instance.GetDungeonByTypeAndLevel(dungeonType, level);
         RegenManager.Instance.CacheDungeonBoss(dungeon);
-        RegenManager.Instance.RegenStagesBossEnemy();
+        RegenManager.Instance.RegenStagesEnemyDungeonBoss();
         OnStageChanged?.Invoke();
     }
 
