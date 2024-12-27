@@ -89,12 +89,15 @@ public class SkillInventorySlotManager : UIBase
         }
     }
 
-    private void UpdateEquipStates(BaseSkill changedSkill, int slotIndex, bool isEquipped)
+    private void UpdateEquipStates(BaseSkill skill, int slotIndex, bool isEquipped)
     {
         foreach (var slot in inventorySlots)
         {
-            bool isSlotEquipped = equipManager.EquippedSkills.Contains(slot.SkillData);
-            slot.SetEquippedState(isSlotEquipped);
+            if (slot.SkillData == skill)
+            {
+                slot.SetEquippedState(isEquipped);
+                break;
+            }
         }
     }
 }
