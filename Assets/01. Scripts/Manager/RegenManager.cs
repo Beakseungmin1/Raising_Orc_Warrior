@@ -53,24 +53,11 @@ public class RegenManager : Singleton<RegenManager>
         totalEnemies = enemySOs.Count;
     }
 
-    public void CacheDungeonBoss(DungeonType dungeonType, int dungeonLevel)
+    public void CacheDungeonBoss(Dungeon dungeon)
     {
         curChapterSO = StageManager.Instance.chapterSOs[StageManager.Instance.curChapterIndex];
 
         enemySOs = new List<EnemySO>();
-
-        switch (dungeonType)
-        {
-            case DungeonType.EXPDungeon:
-                bossEnemy = DungeonManager.Instance.expDungeonSOs[dungeonLevel].dungeonBoss;
-                break;
-            case DungeonType.GoldDungeon:
-                bossEnemy = DungeonManager.Instance.goldDungeonSOs[dungeonLevel].dungeonBoss;
-                break;
-            case DungeonType.CubeDungeon:
-                bossEnemy = DungeonManager.Instance.cubeDungeonSOs[dungeonLevel].dungeonBoss;
-                break;
-        }
 
         GameObject obj = ObjectPool.Instance.GetObject("DungeonBoss");
         EnemyMover enemyMover = obj.GetComponent<EnemyMover>();
