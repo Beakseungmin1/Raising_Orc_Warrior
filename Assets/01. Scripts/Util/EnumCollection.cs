@@ -95,3 +95,10 @@ public enum DungeonType
     CubeDungeon,
     EXPDungeon
 }
+
+public enum DungeonState
+{
+    CLOSED, //요구조건 불충족(오픈 안됨)
+    OPENED, //진행 가능
+    CLEARED //클리어
+}
