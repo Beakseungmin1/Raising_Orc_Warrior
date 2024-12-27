@@ -57,6 +57,11 @@ public class PlayerStat : MonoBehaviour
         exp += enemy.GiveExp();
     }
 
+    public void AddExp(BigInteger getExp)
+    {
+        exp += getExp;
+    }
+
     public void decreaseHp(BigInteger damage)
     {
         health -= damage;
