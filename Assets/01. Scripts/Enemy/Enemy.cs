@@ -144,7 +144,7 @@ public class Enemy : MonoBehaviour, IEnemy
 
     public bool GetActive()
     {
-        return gameObject.activeInHierarchy;
+        return enemyCollider.enabled;
     }
 
     public BigInteger GetHealth()
