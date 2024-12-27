@@ -20,9 +20,9 @@ public class BossEvents
 
     public void BossHPSet(BigInteger maxHealth)
     {
-        if (onBossHpChanged != null)
+        if (onSetBossHp != null)
         {
-            onBossHpChanged(maxHealth);
+            onSetBossHp(maxHealth);
         }
     }
 }

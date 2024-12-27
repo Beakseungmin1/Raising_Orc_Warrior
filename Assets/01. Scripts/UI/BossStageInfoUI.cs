@@ -15,7 +15,6 @@ public class BossStageInfoUI : UIBase
     public Button runBtn;
     public TextMeshProUGUI dungeonNameLabel;
 
-    private BigInteger bossCurHP;
     private BigInteger bossMaxHP;
 
     private void OnEnable()
@@ -36,8 +35,8 @@ public class BossStageInfoUI : UIBase
 
     private void InitUI()
     {
-        hpSlider.value = (float)bossCurHP/(float)bossMaxHP;
-        remainingCountTxt.text = $"{bossCurHP}/{bossMaxHP}";
+        hpSlider.value = (float)bossMaxHP/(float)bossMaxHP;
+        remainingCountTxt.text = $"{bossMaxHP}/{bossMaxHP}";
 
         if (DungeonManager.Instance.currentDungeonInfo != null)
         {
@@ -63,7 +62,6 @@ public class BossStageInfoUI : UIBase
     private void SetMaxHP(BigInteger maxHP)
     {
         bossMaxHP = maxHP;
-        bossCurHP = maxHP;
         InitUI();
     }
 
