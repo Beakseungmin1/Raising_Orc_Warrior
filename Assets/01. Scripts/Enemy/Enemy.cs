@@ -37,7 +37,18 @@ public class Enemy : MonoBehaviour, IEnemy
     [SerializeField] private Image healthBar;
     private Collider2D enemyCollider;
 
-    private PlayerBattle playerBattle;
+    private PlayerBattle playerBattle
+    {
+        get
+        {
+            if (_playerBattle == null)
+            {
+                _playerBattle = PlayerObjManager.Instance.Player.PlayerBattle;
+            }
+            return _playerBattle;
+        }
+    }
+    private PlayerBattle _playerBattle;
     public Action OnEnemyAttack;
 
     private void Start()
@@ -52,7 +63,6 @@ public class Enemy : MonoBehaviour, IEnemy
     {
         enemyCollider = GetComponent<Collider2D>();
         animator = GetComponentInChildren<Animator>();
-        playerBattle = PlayerObjManager.Instance.Player.PlayerBattle;
 
         GameEventsManager.Instance.enemyEvents.onEnemyCleared += ClearEnemy;
     }
