@@ -102,7 +102,7 @@ public class DungeonManager : Singleton<DungeonManager>
 
     private void ClaimRewards(Dungeon dungeon)
     {
-        switch(dungeon.info.type)
+        switch(dungeon.type)
         {
             case DungeonType.CubeDungeon:
                 CurrencyManager.Instance.AddCurrency(CurrencyType.Cube, dungeon.info.rewardAmount);
@@ -116,17 +116,25 @@ public class DungeonManager : Singleton<DungeonManager>
         }
     }
 
-    private void ClearDungeon(DungeonType dungeonType, int level)
+    public void ClearDungeon(DungeonType dungeonType, int level)
     {
         Dungeon dungeon = GetDungeonByTypeAndLevel(dungeonType, level);
+        ChangeDungeonState(dungeon.type, level, DungeonState.CLEARED);
         ClaimRewards(dungeon);
+
         //다음 레벨 던전 오픈
+        if (GetDungeonByTypeAndLevel(dungeonType, level+1) != null)
+        {
+            ChangeDungeonState(dungeon.type, level + 1, DungeonState.OPENED);
+        }
+
+        //StageManager.Instance.GoToNextStage();
     }
 
-    private void FinishDungeon(DungeonType dungeonType, int level)
+    public void ChangeDungeonState(DungeonType dungeonType, int level, DungeonState state)
     {
-        //Dungeon dungeon = GetDungeonById(id);
-        //ClaimRewards(dungeon);
+        Dungeon dungeon = GetDungeonByTypeAndLevel(dungeonType, level);
+        dungeon.state = state;
     }
 
 }

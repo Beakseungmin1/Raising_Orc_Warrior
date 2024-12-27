@@ -8,13 +8,26 @@ public class EXPDungeonEnterBtnUI : UIBase
 
     public TextMeshProUGUI dungeonLabel;
 
+    public Dungeon dungeon;
+
     private void Awake()
     {
         if (dungeonInfoSO != null)
         {
             dungeonLabel.text = $"{dungeonInfoSO.level}±¸¿ª";
         }
+
+        dungeon = DungeonManager.Instance.GetDungeonByTypeAndLevel(dungeonInfoSO.type, dungeonInfoSO.level);
+        if(dungeon.state == DungeonState.CLOSED)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
     }
+
     public void ShowEXPDungeonUI_ConfirmEnterBtnPopUpUI()
     {
         UIManager.Instance.Show<DimmedUI>();

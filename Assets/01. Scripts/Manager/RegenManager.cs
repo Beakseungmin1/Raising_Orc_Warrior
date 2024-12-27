@@ -112,13 +112,13 @@ public class RegenManager : Singleton<RegenManager>
         RegenBossEnemy(bossEnemySO, spawnPosition, cachedEnemies[0]);
     }
 
-    public void RegenStagesEnemyDungeonBoss()
+    public void RegenStagesEnemyDungeonBoss(DungeonInfoSO dungeonInfo)
     {
         killedEnemies = 0;
 
         EnemySO bossEnemySO = bossEnemy;
         Vector3 spawnPosition = transform.position + new Vector3(0 * spawnDistance, 1, 0);
-        RegenEnemyDungeonBoss(bossEnemySO, spawnPosition, cachedEnemies[0]);
+        RegenEnemyDungeonBoss(bossEnemySO, spawnPosition, cachedEnemies[0], dungeonInfo);
     }
 
     public void RegenEnemy(EnemySO enemySO, Vector3 spawnPosition, (GameObject enemyObject, EnemyMover enemyMover) cachedEnemy)
@@ -149,13 +149,14 @@ public class RegenManager : Singleton<RegenManager>
         enemyMover.SetMoveSpeed(2.0f);
     }
 
-    public void RegenEnemyDungeonBoss(EnemySO enemySO, Vector3 spawnPosition, (GameObject enemyObject, EnemyMover enemyMover) cachedEnemy)
+    public void RegenEnemyDungeonBoss(EnemySO enemySO, Vector3 spawnPosition, (GameObject enemyObject, EnemyMover enemyMover) cachedEnemy, DungeonInfoSO dungeonInfo)
     {
         GameObject enemyObject = cachedEnemy.enemyObject;
         EnemyMover enemyMover = cachedEnemy.enemyMover;
 
         EnemyDungeonBoss enemyBoss = SetUnitObjectAsEnemyDungeonBoss(enemyObject);
         enemyBoss.enemySO = enemySO;
+        enemyBoss.dungeonInfo = dungeonInfo;
         enemyBoss.SetupEnemy();
         enemyBoss.transform.position = spawnPosition;
         enemyObject.SetActive(true);

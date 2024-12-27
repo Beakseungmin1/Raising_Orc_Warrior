@@ -101,7 +101,7 @@ public class StageManager : Singleton<StageManager>
         stageName = stageSOs[curStageIndexInThisChapter].stageName;
     }
 
-    private void GoToNextStage()
+    public void GoToNextStage()
     {
         RegenManager.Instance.CacheEnemies();
         RegenManager.Instance.RegenStagesEnemy();
@@ -122,11 +122,15 @@ public class StageManager : Singleton<StageManager>
 
     public void GoToDungeonStage(DungeonType dungeonType, int level)
     {
+        //던전으로 이동하기 전 마지막 챕터와 스테이지 정보 세이브
+        savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
+        curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
+
         UIManager.Instance.Hide<StageInfoUI>();
         RegenManager.Instance.ClearEnemies();
         Dungeon dungeon = DungeonManager.Instance.GetDungeonByTypeAndLevel(dungeonType, level);
         RegenManager.Instance.CacheDungeonBoss(dungeon);
-        RegenManager.Instance.RegenStagesEnemyDungeonBoss();
+        RegenManager.Instance.RegenStagesEnemyDungeonBoss(dungeon.info);
         OnStageChanged?.Invoke();
     }
 

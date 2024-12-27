@@ -12,6 +12,7 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
     }
 
     public EnemySO enemySO;
+    public DungeonInfoSO dungeonInfo;
 
     [Header("Enemy information")]
     [SerializeField] private string enemyCode; // 적식별코드
@@ -102,6 +103,10 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
     {
         ObjectPool.Instance.ReturnObject(gameObject);
         GameEventsManager.Instance.enemyEvents.EnemyKilled();
+
+        DungeonManager.Instance.ClearDungeon(dungeonInfo.type, dungeonInfo.level);
+        StageManager.Instance.GoToNextStage();
+        UIManager.Instance.Show<StageInfoUI>();
     }
 
     public bool GetActive()
