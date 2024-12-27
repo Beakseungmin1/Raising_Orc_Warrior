@@ -90,7 +90,7 @@ public class RegenManager : Singleton<RegenManager>
         enemySOs = new List<EnemySO>();
         bossEnemy = curChapterSO.bossStageSO.bossEnemySO;
 
-        GameObject obj = ObjectPool.Instance.GetObject("DungeonBoss");
+        GameObject obj = ObjectPool.Instance.GetObject("EnemyBoss");
         EnemyMover enemyMover = obj.GetComponent<EnemyMover>();
 
         if (enemyMover == null)

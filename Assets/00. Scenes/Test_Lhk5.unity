@@ -348,19 +348,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6871178706348115941, guid: a48275b408167fc408449fa94f59b7ae, type: 3}
       propertyPath: pools.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6871178706348115941, guid: a48275b408167fc408449fa94f59b7ae, type: 3}
       propertyPath: pools.Array.data[1].prefab
       value: 
       objectReference: {fileID: 822938190782927294, guid: 007782c8cc21a614ba93f51085f4a5be, type: 3}
     - target: {fileID: 6871178706348115941, guid: a48275b408167fc408449fa94f59b7ae, type: 3}
+      propertyPath: pools.Array.data[2].prefab
+      value: 
+      objectReference: {fileID: 3187110840222732715, guid: 190ac41ace9e25e408d830f5c0ba29bd, type: 3}
+    - target: {fileID: 6871178706348115941, guid: a48275b408167fc408449fa94f59b7ae, type: 3}
       propertyPath: pools.Array.data[1].prefabName
       value: EnemyBoss
       objectReference: {fileID: 0}
     - target: {fileID: 6871178706348115941, guid: a48275b408167fc408449fa94f59b7ae, type: 3}
+      propertyPath: pools.Array.data[2].prefabName
+      value: DungeonBoss
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871178706348115941, guid: a48275b408167fc408449fa94f59b7ae, type: 3}
       propertyPath: pools.Array.data[1].initialSize
-      value: 10
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871178706348115941, guid: a48275b408167fc408449fa94f59b7ae, type: 3}
+      propertyPath: pools.Array.data[2].initialSize
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
