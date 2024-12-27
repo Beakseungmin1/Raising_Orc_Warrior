@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Numerics;
 
 public class DungeonManager : Singleton<DungeonManager>
 {
@@ -101,7 +102,18 @@ public class DungeonManager : Singleton<DungeonManager>
 
     private void ClaimRewards(Dungeon dungeon)
     {
-        CurrencyManager.Instance.AddCurrency(dungeon.info.currenyType, dungeon.info.rewardAmount);
+        switch(dungeon.info.type)
+        {
+            case DungeonType.CubeDungeon:
+                CurrencyManager.Instance.AddCurrency(CurrencyType.Cube, dungeon.info.rewardAmount);
+                break;
+            case DungeonType.GoldDungeon:
+                CurrencyManager.Instance.AddCurrency(CurrencyType.Gold, dungeon.info.rewardAmount);
+                break;
+            default:
+                PlayerObjManager.Instance.Player.stat.AddExp((BigInteger)dungeon.info.rewardAmount);
+                break;
+        }
     }
 
     private void ClearDungeon(DungeonType dungeonType, int level)
