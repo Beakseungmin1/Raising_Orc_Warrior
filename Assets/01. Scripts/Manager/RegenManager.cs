@@ -117,7 +117,7 @@ public class RegenManager : Singleton<RegenManager>
         killedEnemies = 0;
 
         EnemySO bossEnemySO = bossEnemy;
-        Vector3 spawnPosition = transform.position + new Vector3(0 * spawnDistance, 0, 0);
+        Vector3 spawnPosition = transform.position + new Vector3(0 * spawnDistance, 1, 0);
         RegenEnemyDungeonBoss(bossEnemySO, spawnPosition, cachedEnemies[0]);
     }
 
