@@ -25,8 +25,6 @@ public class StageManager : Singleton<StageManager>
     public int curStageIndexInThisChapter = 0; //현재 챕터에서의 스테이지 인덱스정보값 ex) 챕터5의 10번째 스테이지
     public int MaxStageIndexInThisChapter = 0; //현 챕터의 스테이지 인덱스 최대치 ex) 챕터 5에는 최대 20스테이지가 있음.
 
-
-    public Action OnStageChanged;
     public Action OnChapterChanged;
 
     int savedCurStageIndexInThisChapter = 0;
@@ -41,8 +39,8 @@ public class StageManager : Singleton<StageManager>
         SetStageList();
         SetBossStage();
 
-        OnStageChanged += RefreshStage;
-        OnChapterChanged += RefreshChapter;
+        GameEventsManager.Instance.stageEvents.onStageChange += RefreshStage;
+        GameEventsManager.Instance.stageEvents.onChapterChange += RefreshChapter;
     }
 
     private void SetChapterList()
@@ -107,7 +105,7 @@ public class StageManager : Singleton<StageManager>
     {
         RegenManager.Instance.CacheEnemies();
         RegenManager.Instance.RegenStagesEnemy();
-        OnStageChanged?.Invoke();
+        GameEventsManager.Instance.stageEvents.ChangeStage();
     }
 
     public void GoToBossStage()
@@ -120,7 +118,7 @@ public class StageManager : Singleton<StageManager>
         RegenManager.Instance.CacheEnemyBoss();
         RegenManager.Instance.RegenStagesBossEnemy();
         SetTimer(bossStageSO.bossEnemySO.bossTimeLimit);
-        OnStageChanged?.Invoke();
+        GameEventsManager.Instance.stageEvents.ChangeStage();
     }
 
 
@@ -136,7 +134,7 @@ public class StageManager : Singleton<StageManager>
         RegenManager.Instance.CacheDungeonBoss(dungeon);
         RegenManager.Instance.RegenStagesEnemyDungeonBoss(dungeon.info);
         SetTimer(dungeon.info.dungeonBoss.bossTimeLimit);
-        OnStageChanged?.Invoke();
+        GameEventsManager.Instance.stageEvents.ChangeStage();
     }
 
 
@@ -151,7 +149,7 @@ public class StageManager : Singleton<StageManager>
         RefreshStage();
         RegenManager.Instance.CacheEnemies();
         RegenManager.Instance.RegenStagesEnemy();
-        OnStageChanged?.Invoke(); //현재 최대몬스터, 죽인 몬스터 수 정보 갱신해야하므로, RegenStagesEnemy()다음에 실행.
+        GameEventsManager.Instance.stageEvents.ChangeStage();//현재 최대몬스터, 죽인 몬스터 수 정보 갱신해야하므로, RegenStagesEnemy()다음에 실행.
     }
 
     public void BossStageClear()

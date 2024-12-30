@@ -11,4 +11,14 @@ public class StageEvents
             onStageChange();
         }
     }
+
+    public event Action onChapterChange;
+
+    public void ChapterChange()
+    {
+        if (onChapterChange != null)
+        {
+            onChapterChange();
+        }
+    }
 }
