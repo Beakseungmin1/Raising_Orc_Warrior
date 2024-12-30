@@ -17,6 +17,8 @@ public class BossStageInfoUI : UIBase
 
     private BigInteger bossMaxHP;
 
+    public float maxLimitTime;
+
     private void OnEnable()
     {
         GameEventsManager.Instance.bossEvents.onSetBossHp += SetMaxHP;
@@ -31,6 +33,16 @@ public class BossStageInfoUI : UIBase
     private void Awake()
     {
         //remainingCountTxt.gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        maxLimitTime = StageManager.Instance.timer.GetMaxTime();
+    }
+
+    private void FixedUpdate()
+    {
+        timeSlider.value = StageManager.Instance.timer.GetLimitTime() / maxLimitTime;
     }
 
     private void InitUI()

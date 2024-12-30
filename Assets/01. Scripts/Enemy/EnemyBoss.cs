@@ -13,7 +13,7 @@ public class EnemyBoss : MonoBehaviour, IEnemy
     [SerializeField] private BigInteger giveExp; // 주는 경험치
     [SerializeField] private GameObject model; //적 모델
     [SerializeField] private Animator animator;
-
+    public float timeLimit = 50f;
 
     [Header("Skill Properties")]
     [SerializeField] private float cooldown; // 쿨다운 시간 (보스가 스킬을 지니고 있을시 사용)
@@ -37,6 +37,12 @@ public class EnemyBoss : MonoBehaviour, IEnemy
         ResetState();
         GameEventsManager.Instance.bossEvents.BossHPSet(maxHp);
         OnEnemyAttack = GiveDamageToPlayer;
+        GameEventsManager.Instance.enemyEvents.onEnemyCleared += ClearEnemy;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.enemyEvents.onEnemyCleared -= ClearEnemy;
     }
 
     private void ResetState()
@@ -150,5 +156,10 @@ public class EnemyBoss : MonoBehaviour, IEnemy
             CancelInvoke("EnemyAttack");
             player = null;
         }
+    }
+
+    public void ClearEnemy()
+    {
+        ObjectPool.Instance.ReturnObject(gameObject);
     }
 }

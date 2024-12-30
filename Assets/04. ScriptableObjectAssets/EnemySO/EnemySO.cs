@@ -11,6 +11,7 @@ public class EnemySO : ScriptableObject
     public string maxHpString; // 최대체력
     public string giveExpString; // 주는 경험치
     public GameObject model; //적 모델
+    public float bossTimeLimit = 10f;
 
     public BigInteger hp;
     public BigInteger maxHp;

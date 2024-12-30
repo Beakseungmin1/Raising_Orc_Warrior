@@ -31,6 +31,8 @@ public class StageManager : Singleton<StageManager>
 
     int savedCurStageIndexInThisChapter = 0;
 
+    public Timer timer;
+
     private void Awake()
     {
         bgSprite = GetComponent<Sprite>();
@@ -117,6 +119,7 @@ public class StageManager : Singleton<StageManager>
         RegenManager.Instance.ClearEnemies();
         RegenManager.Instance.CacheEnemyBoss();
         RegenManager.Instance.RegenStagesBossEnemy();
+        SetTimer(bossStageSO.bossEnemySO.bossTimeLimit);
         OnStageChanged?.Invoke();
     }
 
@@ -132,6 +135,7 @@ public class StageManager : Singleton<StageManager>
         DungeonManager.Instance.currentDungeonInfo = dungeon.info;
         RegenManager.Instance.CacheDungeonBoss(dungeon);
         RegenManager.Instance.RegenStagesEnemyDungeonBoss(dungeon.info);
+        SetTimer(dungeon.info.dungeonBoss.bossTimeLimit);
         OnStageChanged?.Invoke();
     }
 
@@ -159,10 +163,27 @@ public class StageManager : Singleton<StageManager>
         }
         else //현재가 챕터의 마지막 스테이지라면 해당 스테이지 반복
         {
-            curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
-            UIManager.Instance.Hide<BossStageInfoUI>();
-            UIManager.Instance.Show<StageInfoUI>();
-            GoToNextStage();
+            BackToLastStage();
         }
+
+        if (timer != null)
+        {
+            Destroy(timer);
+        }
+    }
+
+    private void SetTimer(float limitTime)
+    {
+        timer = Instantiate(gameObject, this.transform).AddComponent<Timer>();
+        timer.SetLimitTime(limitTime);
+    }
+
+    public void BackToLastStage()
+    {
+        GameEventsManager.Instance.enemyEvents.ClearEnemy();
+        curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
+        UIManager.Instance.Hide<BossStageInfoUI>();
+        UIManager.Instance.Show<StageInfoUI>();
+        GoToNextStage();
     }
 }
