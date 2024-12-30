@@ -15,6 +15,7 @@ public class HUDPanel : UIBase
     [SerializeField] private Slider expBar;
     [SerializeField] private TextMeshProUGUI emeraldTxt;
     [SerializeField] private TextMeshProUGUI diamondTxt;
+    [SerializeField] private Button settingBtn;
 
 
     private void OnEnable()
@@ -77,6 +78,12 @@ public class HUDPanel : UIBase
             expTxt.text = ExppercentTxt.ToString("F2");
 
         }
+    }
+
+    public void ShowSettingPopup()
+    {
+        UIManager.Instance.Show<DimmedUI>();
+        UIManager.Instance.Show<SettingPopupUI>();
     }
 
 
