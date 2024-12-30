@@ -43,7 +43,7 @@ public class PlayerDamageCalculator : MonoBehaviour
 
         if (equipManager.EquippedWeapon != null)
         {
-            WeaponIncreaseDamage = (BigInteger)(basicDamage * (equipManager.EquippedWeapon.BaseData.equipAtkIncreaseRate / 100));
+            WeaponIncreaseDamage = (BigInteger)(basicDamage * (equipManager.EquippedWeapon.EquipAtkIncreaseRate / 100));
         }
 
         SkillIncreaseDamage = 0;

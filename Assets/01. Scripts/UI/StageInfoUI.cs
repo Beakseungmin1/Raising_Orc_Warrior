@@ -13,7 +13,7 @@ public class StageInfoUI : UIBase
 
     private void Awake()
     {
-        StageManager.Instance.OnStageChanged += RefreshUI;
+        GameEventsManager.Instance.stageEvents.onStageChange += RefreshUI;
         RegenManager.Instance.OnEnemyCountDown += RefreshUI;
         RegenManager.Instance.OnEnemyCountZero += RefreshUI;
         GameEventsManager.Instance.currencyEvents.onGoldChanged += RefreshUI;
@@ -23,7 +23,7 @@ public class StageInfoUI : UIBase
     {
         RefreshUI();
         StageManager.Instance.OnChapterChanged?.Invoke();
-        StageManager.Instance.OnStageChanged?.Invoke();
+        GameEventsManager.Instance.stageEvents.ChangeStage();
     }
 
     public string GetGoldAmountAsString()

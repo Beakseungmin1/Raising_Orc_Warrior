@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public class PlayerSkillHandler : MonoBehaviour
     private List<BaseSkill> equippedSkills;
     private EquipManager equipManager;
     private PlayerStat playerStat;
+
+    public event Action<BaseSkill> OnSkillUsed;
 
     private void Start()
     {
@@ -54,6 +57,7 @@ public class PlayerSkillHandler : MonoBehaviour
         if (skill is BuffSkill)
         {
             ActivateBuffSkill(skill);
+            OnSkillUsed?.Invoke(skill);
             return;
         }
 
@@ -87,12 +91,13 @@ public class PlayerSkillHandler : MonoBehaviour
                         return;
                     }
 
+                    OnSkillUsed?.Invoke(skill);
                     ActivateActiveSkill(skill, targetPosition, targets);
                     break;
 
                 case EffectType.Projectile:
-                    // 프로젝타일 스킬은 바로 발사
                     ActivateProjectileSkill(skill, targetPosition);
+                    OnSkillUsed?.Invoke(skill);
                     break;
 
                 default:
@@ -112,19 +117,39 @@ public class PlayerSkillHandler : MonoBehaviour
     {
         Debug.Log($"[PlayerSkillHandler] 액티브 스킬 발동: {skill.SkillData.itemName}, 쿨타임: {skill.RemainingCooldown}");
 
-        foreach (var target in targets)
+        // OnPlayer: 범위 내 첫 번째 적만 공격
+        if (skill.SkillData.effectType == EffectType.OnPlayer)
         {
-            if (target.CompareTag("Monster"))
+            foreach (var target in targets)
             {
-                IEnemy enemy = target.GetComponent<IEnemy>();
-                if (enemy != null)
+                if (target.CompareTag("Monster"))
                 {
-                    skill.Activate(target.transform.position);
+                    IEnemy enemy = target.GetComponent<IEnemy>();
+                    if (enemy != null)
+                    {
+                        skill.Activate(target.transform.position); // 스킬 발동
+                        break; // 첫 번째 적만 공격
+                    }
+                }
+            }
+        }
+        // OnMapCenter: 범위 내 모든 적을 공격
+        else if (skill.SkillData.effectType == EffectType.OnMapCenter)
+        {
+            foreach (var target in targets)
+            {
+                if (target.CompareTag("Monster"))
+                {
+                    IEnemy enemy = target.GetComponent<IEnemy>();
+                    if (enemy != null)
+                    {
+                        skill.Activate(target.transform.position); // 스킬 발동
+                    }
                 }
             }
         }
 
-        skill.ResetCondition();
+        skill.ResetCondition(); // 스킬 조건 초기화
     }
 
     private void ActivateProjectileSkill(BaseSkill skill, Vector3 targetPosition)
