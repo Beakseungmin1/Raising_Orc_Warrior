@@ -9,6 +9,7 @@ public sealed class SoundManager : SingletonDontDestroy<SoundManager>
     public AudioSource sfxSource;       //sfx전용 오디오 변수
     public AudioSource bgmSource;       //bgm전용 오디오 변수
 
+
     //소리 저장해놓는 Dictionary
     private Dictionary<Enum, AudioClip> soundDictionary = new Dictionary<Enum, AudioClip>();
 
@@ -49,6 +50,36 @@ public sealed class SoundManager : SingletonDontDestroy<SoundManager>
         //이 코드의 목적은 배경 음악의 중복 재생을 방지하고,
         //요청된 배경 음악이 다를 경우에만 새로운 배경 음악을 설정하고 재생
     }
+
+    public void MuteBGM()
+    {
+        if (bgmSource.mute)
+        {
+            bgmSource.mute = false;
+        }
+        else
+        {
+            bgmSource.mute = true;
+        }
+    }
+
+    public void MuteSFX()
+    {
+        if (sfxSource.mute)
+        {
+            sfxSource.mute = false;
+        }
+        else
+        {
+            sfxSource.mute = true;
+        }
+    }
+
+
+
+
+
+
 
     public void SetVolume(string name, float volume)
     {
