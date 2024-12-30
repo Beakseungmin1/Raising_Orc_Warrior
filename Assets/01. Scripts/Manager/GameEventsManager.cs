@@ -16,6 +16,8 @@ public class GameEventsManager : Singleton<GameEventsManager>
 
     public BossEvents bossEvents;
 
+    public StageEvents stageEvents;
+
     private void Awake()
     {
         enemyEvents = new EnemyEvents();
@@ -24,5 +26,6 @@ public class GameEventsManager : Singleton<GameEventsManager>
         questEvents = new QuestEvents();
         currencyEvents = new CurrencyEvents();
         bossEvents = new BossEvents();
+        stageEvents = new StageEvents();
     }
 }
