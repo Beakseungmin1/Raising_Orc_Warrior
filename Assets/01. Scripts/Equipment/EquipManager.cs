@@ -9,6 +9,7 @@ public class EquipManager : MonoBehaviour
     public BaseSkill WaitingSkillForEquip { get; private set; }
     public List<BaseSkill> EquippedSkills { get; private set; } = new List<BaseSkill>();
     public int InitialSlotCount { get; private set; } = 8;
+    public SpriteRenderer WeaponImage;
 
     public event Action OnEquippedChanged;
     public event Action OnWaitingSkillChanged;
@@ -64,6 +65,7 @@ public class EquipManager : MonoBehaviour
         if (weaponData == null) return;
 
         EquippedWeapon = weaponData;
+        WeaponImage.sprite = weaponData.BaseData.icon;
 
         OnEquippedChanged?.Invoke();
     }

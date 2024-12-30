@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 089daacc2b3cf954daf7100948978195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WeaponImage: {fileID: 5794303463570115573}
 --- !u!114 &4365298221228220091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,3 +406,8 @@ MonoBehaviour:
   player: {fileID: 3124620342091247500}
   enemy: {fileID: 0}
   healthBar: {fileID: 0}
+--- !u!212 &5794303463570115573 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1810726376552431708, guid: c0bda75594cb6584e94d98eed8b3d60d, type: 3}
+  m_PrefabInstance: {fileID: 5280890882705263529}
+  m_PrefabAsset: {fileID: 0}
