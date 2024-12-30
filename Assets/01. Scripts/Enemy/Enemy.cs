@@ -4,13 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Enemy : MonoBehaviour, IEnemy
 {
     public EnemySO enemySO;
 
-    [Header("Enemy information")]
+    [Header("Enemy Information")]
     [SerializeField] private string enemyCode;
     [SerializeField] private BigInteger hp;
     [SerializeField] private BigInteger maxHp;
@@ -31,27 +30,26 @@ public class Enemy : MonoBehaviour, IEnemy
     [SerializeField] private float damageDisplayDuration = 0.5f;
     [SerializeField] private UnityEngine.Vector3 damageTextOffset = new UnityEngine.Vector3(0, 1f, 0);
 
-    private float damageDisplayTimer = 0f;
-    private bool isDisplayingDamage = false;
-
     [SerializeField] private Image healthBar;
+
     private Collider2D enemyCollider;
+    private float damageDisplayTimer;
+    private bool isDisplayingDamage;
+    private bool isClearing;
+    private Coroutine damageCoroutine;
 
     public Action OnEnemyAttack;
 
     private void Start()
     {
         if (damageText != null)
-        {
             damageText.gameObject.SetActive(false);
-        }
     }
 
     private void OnEnable()
     {
         enemyCollider = GetComponent<Collider2D>();
         animator = GetComponentInChildren<Animator>();
-
         GameEventsManager.Instance.enemyEvents.onEnemyCleared += ClearEnemy;
     }
 
@@ -73,28 +71,27 @@ public class Enemy : MonoBehaviour, IEnemy
         }
     }
 
-    public void TakeDamage(BigInteger Damage)
+    public void TakeDamage(BigInteger damage)
     {
-        ShowDamage(Damage);
+        ShowDamage(damage);
 
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         if (stateInfo.IsName("IDLE") || stateInfo.IsName("DAMAGED"))
-        {
             animator.SetTrigger("3_Damaged");
-        }
 
-        if (hp - Damage > 0)
+        if (hp - damage > 0)
         {
-            hp -= Damage;
+            hp -= damage;
         }
         else
         {
-            hp -= Damage;
+            hp -= damage;
             UpdateHealthBar();
             Die();
             return;
         }
+
         UpdateHealthBar();
     }
 
@@ -104,12 +101,12 @@ public class Enemy : MonoBehaviour, IEnemy
         healthBar.fillAmount = fillAmount;
     }
 
-    private void ShowDamage(BigInteger Damage)
+    private void ShowDamage(BigInteger damage)
     {
         if (damageText != null)
         {
             damageText.transform.position = transform.position + damageTextOffset;
-            damageText.text = Damage.ToString();
+            damageText.text = damage.ToString();
             damageText.gameObject.SetActive(true);
             damageDisplayTimer = damageDisplayDuration;
             isDisplayingDamage = true;
@@ -123,10 +120,20 @@ public class Enemy : MonoBehaviour, IEnemy
 
     public void Die()
     {
+        if (isClearing) return;
+
+        isClearing = true;
         animator.SetTrigger("4_Death");
-        enemyCollider.enabled = false; // 콜라이더 비활성화
+        enemyCollider.enabled = false;
         GameEventsManager.Instance.enemyEvents.EnemyKilled();
-        StartCoroutine(DelayedReturnToPool());
+
+        if (damageCoroutine != null)
+        {
+            StopCoroutine(damageCoroutine);
+            damageCoroutine = null;
+        }
+
+        GameEventsManager.Instance.StartCoroutine(DelayedReturnToPool());
     }
 
     private IEnumerator DelayedReturnToPool()
@@ -156,6 +163,7 @@ public class Enemy : MonoBehaviour, IEnemy
         hp = enemySO.hp;
         maxHp = enemySO.maxHp;
         giveExp = enemySO.giveExp;
+
         if (model == null)
         {
             model = enemySO.model;
@@ -167,12 +175,39 @@ public class Enemy : MonoBehaviour, IEnemy
         effectRange = enemySO.effectRange;
         damagePercent = enemySO.damagePercent;
 
-        enemyCollider.enabled = true; // 콜라이더 활성화
+        enemyCollider.enabled = true;
+        isClearing = false;
+        isDisplayingDamage = false;
+        damageDisplayTimer = 0f;
+
+        if (damageText != null)
+            damageText.gameObject.SetActive(false);
+
         UpdateHealthBar();
-    }       
+    }
 
     public void ClearEnemy()
     {
+        if (isClearing) return;
+
+        isClearing = true;
+
+        if (damageCoroutine != null)
+        {
+            StopCoroutine(damageCoroutine);
+            damageCoroutine = null;
+        }
+
+        GameEventsManager.Instance.StartCoroutine(ClearAndReturnToPool());
+    }
+
+    private IEnumerator ClearAndReturnToPool()
+    {
+        if (damageText != null && damageText.gameObject.activeSelf)
+        {
+            yield return new WaitForSeconds(damageDisplayDuration);
+        }
+
         ObjectPool.Instance.ReturnObject(gameObject);
     }
 }
