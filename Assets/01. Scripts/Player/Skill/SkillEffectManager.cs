@@ -106,7 +106,7 @@ public class SkillEffectManager : Singleton<SkillEffectManager>
     // 특정 영역(맵 중심 또는 타겟 위치)에서 효과 실행
     private void HandleAreaEffect(SkillEffect effect)
     {
-        Collider2D[] targets = Physics2D.OverlapCircleAll(effect.TargetPosition, effect.EffectRange);
+        Collider2D[] targets = Physics2D.OverlapCircleAll(playerWeaponPosition.position, effect.EffectRange);
 
         foreach (var target in targets)
         {

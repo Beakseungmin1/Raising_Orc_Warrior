@@ -31,6 +31,15 @@ public class EquipmentFusionPopupUI : UIBase
     [SerializeField] private Button leftArrowBtn;
     [SerializeField] private Button rightArrowBtn;
 
+    [Header("Grade Images")]
+    [SerializeField] private GameObject normalImage;
+    [SerializeField] private GameObject uncommonImage;
+    [SerializeField] private GameObject rareImage;
+    [SerializeField] private GameObject heroImage;
+    [SerializeField] private GameObject legendaryImage;
+    [SerializeField] private GameObject mythicImage;
+    [SerializeField] private GameObject ultimateImage;
+
     private IFusable currentEquipment;
     private BaseItemDataSO resultEquipmentData;
     private int materialCount;
@@ -77,6 +86,8 @@ public class EquipmentFusionPopupUI : UIBase
         fusionBtn.gameObject.SetActive(false);
         leftArrowBtn.gameObject.SetActive(false);
         rightArrowBtn.gameObject.SetActive(false);
+
+        DisableAllGradeImages();
     }
 
     private void InitializeUI()
@@ -125,6 +136,8 @@ public class EquipmentFusionPopupUI : UIBase
         currentEquipmentIcon.color = hasItem ? Color.white : new Color(0.2f, 0.2f, 0.2f, 1f);
 
         currentEquipmentAmountTxt.text = $"{currentEquipment.StackCount - 1} (-{usedMaterials})";
+
+        UpdateGradeImage(currentEquipment.BaseData.grade);
     }
 
     private void UpdateResultEquipmentUI()
@@ -135,6 +148,8 @@ public class EquipmentFusionPopupUI : UIBase
             resultEquipmentIcon.color = Color.white;
             resultEquipmentNameTxt.text = "결과 없음";
             resultEquipmentAmountTxt.text = "0 (+0)";
+
+            DisableAllGradeImages();
         }
         else
         {
@@ -146,7 +161,50 @@ public class EquipmentFusionPopupUI : UIBase
             resultEquipmentIcon.color = hasResultItem ? Color.white : new Color(0.2f, 0.2f, 0.2f, 1f);
 
             resultEquipmentAmountTxt.text = $"{resultCount} (+{materialCount})";
+
+            UpdateGradeImage(resultEquipmentData.grade);
         }
+    }
+
+    private void UpdateGradeImage(Grade grade)
+    {
+        DisableAllGradeImages();
+
+        switch (grade)
+        {
+            case Grade.Normal:
+                normalImage.SetActive(true);
+                break;
+            case Grade.Uncommon:
+                uncommonImage.SetActive(true);
+                break;
+            case Grade.Rare:
+                rareImage.SetActive(true);
+                break;
+            case Grade.Hero:
+                heroImage.SetActive(true);
+                break;
+            case Grade.Legendary:
+                legendaryImage.SetActive(true);
+                break;
+            case Grade.Mythic:
+                mythicImage.SetActive(true);
+                break;
+            case Grade.Ultimate:
+                ultimateImage.SetActive(true);
+                break;
+        }
+    }
+
+    private void DisableAllGradeImages()
+    {
+        normalImage.SetActive(false);
+        uncommonImage.SetActive(false);
+        rareImage.SetActive(false);
+        heroImage.SetActive(false);
+        legendaryImage.SetActive(false);
+        mythicImage.SetActive(false);
+        ultimateImage.SetActive(false);
     }
 
     private void UpdateFusionButtonState()

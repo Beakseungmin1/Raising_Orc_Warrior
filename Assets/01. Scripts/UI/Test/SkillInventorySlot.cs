@@ -12,6 +12,14 @@ public class SkillInventorySlot : UIBase
     [SerializeField] private GameObject emptyIcon;
     [SerializeField] private Button slotButton;
 
+    [SerializeField] private GameObject normalImage;
+    [SerializeField] private GameObject uncommonImage;
+    [SerializeField] private GameObject rareImage;
+    [SerializeField] private GameObject heroImage;
+    [SerializeField] private GameObject legendaryImage;
+    [SerializeField] private GameObject mythicImage;
+    [SerializeField] private GameObject ultimateImage;
+
     private BaseSkill skillData;
     private SkillDataSO skillDataSO;
 
@@ -64,6 +72,8 @@ public class SkillInventorySlot : UIBase
             slotButton.image.color = Color.white;
             slotButton.onClick.RemoveAllListeners();
             slotButton.onClick.AddListener(() => OnClickSlot());
+
+            UpdateGradeImage(skillData.SkillData.grade);
         }
         else if (skillDataSO != null)
         {
@@ -82,6 +92,8 @@ public class SkillInventorySlot : UIBase
 
             slotButton.onClick.RemoveAllListeners();
             slotButton.onClick.AddListener(() => OnClickSlot(skillDataSO));
+
+            UpdateGradeImage(skillDataSO.grade);
         }
         else
         {
@@ -102,6 +114,8 @@ public class SkillInventorySlot : UIBase
         SetSlotOwned(false);
         ClearEquippedState();
         slotButton.onClick.RemoveAllListeners();
+
+        DisableAllGradeImages();
     }
 
     private void OnClickSlot(SkillDataSO skillDataSO = null)
@@ -150,5 +164,46 @@ public class SkillInventorySlot : UIBase
         {
             SetEquippedState(isEquipped);
         }
+    }
+
+    private void UpdateGradeImage(Grade grade)
+    {
+        DisableAllGradeImages();
+
+        switch (grade)
+        {
+            case Grade.Normal:
+                normalImage.SetActive(true);
+                break;
+            case Grade.Uncommon:
+                uncommonImage.SetActive(true);
+                break;
+            case Grade.Rare:
+                rareImage.SetActive(true);
+                break;
+            case Grade.Hero:
+                heroImage.SetActive(true);
+                break;
+            case Grade.Legendary:
+                legendaryImage.SetActive(true);
+                break;
+            case Grade.Mythic:
+                mythicImage.SetActive(true);
+                break;
+            case Grade.Ultimate:
+                ultimateImage.SetActive(true);
+                break;
+        }
+    }
+
+    private void DisableAllGradeImages()
+    {
+        normalImage.SetActive(false);
+        uncommonImage.SetActive(false);
+        rareImage.SetActive(false);
+        heroImage.SetActive(false);
+        legendaryImage.SetActive(false);
+        mythicImage.SetActive(false);
+        ultimateImage.SetActive(false);
     }
 }

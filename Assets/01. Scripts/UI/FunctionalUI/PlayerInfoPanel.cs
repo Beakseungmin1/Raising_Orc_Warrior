@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +5,7 @@ using UnityEngine.UI;
 public class PlayerInfoPanel : MonoBehaviour
 {
     private PlayerStat stat;
+    private EquipManager equipManager;
 
     [SerializeField] private TextMeshProUGUI playerLevelTxt;
     [SerializeField] private TextMeshProUGUI playerNameTxt;
@@ -30,24 +29,17 @@ public class PlayerInfoPanel : MonoBehaviour
     private void Awake()
     {
         stat = PlayerObjManager.Instance.Player.stat;
+        equipManager = PlayerObjManager.Instance.Player.EquipManager;
 
         stat.UpdateUserInformationUI += UpdatePlayerInfoUI;
+        equipManager.OnEquippedChanged += UpdatePlayerInfoUI;
     }
-
 
     public void UpdatePlayerInfoUI()
     {
         if (stat != null)
         {
             playerLevelTxt.text = "Lv." + stat.level.ToString();
-
-            // 이름 추가
-            // 이미지 추가
-            // 장착중인 무기 이름추가
-            // 장착중인 무기 이미지추가
-            // 장착중인 악세사리 이름추가
-            // 장착중인 악세사리 이미지추가
-
             attackPowerTxt.text = stat.attackPower.ToString();
             maxHealthTxt.text = stat.maxHealth.ToString();
             healthRegenTxt.text = stat.healthRegeneration.ToString();
@@ -58,19 +50,41 @@ public class PlayerInfoPanel : MonoBehaviour
             hitLateTxt.text = stat.hitLate.ToString();
             avoidTxt.text = stat.avoid.ToString();
             extraGoldGainRateTxt.text = stat.extraGoldGainRate.ToString() + "%";
-            extraExpRateTxt.text= stat.extraExpRate.ToString() + "%";
-
+            extraExpRateTxt.text = stat.extraExpRate.ToString() + "%";
         }
-        else
+
+        if (equipManager != null)
         {
-            return;
+            if (equipManager.EquippedWeapon != null)
+            {
+                equipWeaponNameTxt.text = equipManager.EquippedWeapon.BaseData.itemName;
+                equipWeaponImage.sprite = equipManager.EquippedWeapon.BaseData.icon;
+            }
+            else
+            {
+                equipWeaponNameTxt.text = null;
+                equipWeaponImage.sprite = null;
+            }
+
+            if (equipManager.EquippedAccessory != null)
+            {
+                equipAccNameTxt.text = equipManager.EquippedAccessory.BaseData.itemName;
+                equipAccImage.sprite = equipManager.EquippedAccessory.BaseData.icon;
+            }
+            else
+            {
+                equipAccNameTxt.text = null;
+                equipAccImage.sprite = null;
+            }
         }
     }
 
+    private void OnDestroy()
+    {
+        if (stat != null)
+            stat.UpdateUserInformationUI -= UpdatePlayerInfoUI;
 
-
-
-
-
-
+        if (equipManager != null)
+            equipManager.OnEquippedChanged -= UpdatePlayerInfoUI;
+    }
 }
