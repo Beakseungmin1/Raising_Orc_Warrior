@@ -21,4 +21,4 @@ MonoBehaviour:
   - {fileID: 3641058592214559329, guid: 3bcc12245924cac4fab8fe945ddd77f0, type: 3}
   currenyType: 3
   rewardAmount: 100
-  rewardImage: {fileID: 0}
+  rewardImage: {fileID: 21300000, guid: 9ccd35b184f8a4f458e52f29d1257a8b, type: 3}
