@@ -17,7 +17,7 @@ MonoBehaviour:
   maxHpString: 1000000
   giveExpString: 400
   model: {fileID: 0}
-  bossTimeLimit: 10
+  bossTimeLimit: 100
   cooldown: 10
   skillEffectPrefab: {fileID: 0}
   effectRange: {fileID: 0}
