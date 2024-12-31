@@ -22,7 +22,7 @@ public class QuestInfoSO : ScriptableObject
     [Header("Rewards")]
     public CurrencyType currenyType;
     public float rewardAmount;
-    public Image rewardImage;
+    public Sprite rewardImage;
 
     //id는 항상 스크립터블 오브젝트 에셋의 이름과 동일함
     private void OnValidate()

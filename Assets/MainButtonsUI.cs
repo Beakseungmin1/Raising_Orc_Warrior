@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class MainButtonsUI : UIBase
 {
+    private void OnEnable()
+    {
+        UIBase ui = this;
+        ui.canvas.sortingOrder = 7;
+    }
+
     public void ShowMainUI(int index)
     {
         UIManager.Instance.Hide<Main_PlayerUpgradeUI>();
