@@ -25,7 +25,7 @@ public class QuestSlotUI : UIBase
         {
             displayNameTxt.text = questInfo.displayName;
             rewardAmountTxt.text = questInfo.rewardAmount.ToString();
-            rewardImage = questInfo.rewardImage;
+            rewardImage.sprite = questInfo.rewardImage;
         }
     }
 
