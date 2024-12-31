@@ -20,16 +20,16 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     [SerializeField] private ParallaxBackground background;
     public Animator animator;
 
-    private BigInteger totalDamage; // 계산기에서 받아온 최종데미지
-    private float attackSpeed; // 공격 속도 퍼센트 게이지로 만들어 딜레이 에서 빼줄예정
-    private float attackDelay = 1f; // 공격 딜레이
+    private BigInteger totalDamage;
+    private float attackSpeed;
+    private float attackDelay = 1f;
     private bool isDead;
-    public List<BaseSkill> activeBuffSkills = new List<BaseSkill>(); // 현재 활성화된 버프 스킬 리스트
+    public List<BaseSkill> activeBuffSkills = new List<BaseSkill>();
     private PlayerSkillHandler skillHandler;
 
     public Action OnPlayerAttack;
 
-    private IEnemy currentMonster; // 현재 공격 중인 몬스터
+    private IEnemy currentMonster;
 
     private void Start()
     {
@@ -41,7 +41,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         skillHandler = GetComponent<PlayerSkillHandler>();
         if (skillHandler != null)
         {
-            skillHandler.OnSkillUsed += HandleSkillUsed; // 스킬 사용 이벤트 구독
+            skillHandler.OnSkillUsed += HandleSkillUsed;
         }
 
         OnPlayerAttack += GiveDamageToEnemy;
@@ -70,10 +70,11 @@ public class PlayerBattle : MonoBehaviour, IDamageable
                 break;
 
             case State.Skill:
-                // 스킬 상태에서도 currentMonster를 유지
                 if (currentMonster == null || !currentMonster.GetActive())
                 {
-                    currentState = State.Idle; // 적이 없으면 Idle 상태로 전환
+                    // 몬스터가 없으면 Idle로 복귀
+                    currentState = State.Idle;
+                    animator.Play("IDLE"); // Animator 상태를 Idle로 강제 전환
                 }
                 break;
         }
@@ -89,7 +90,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         }
     }
 
-    // 데미지 만큼 데미지를 주고 Knockback의 시간만큼 밀어냄
     public void TakeKnockbackDamage(BigInteger damage, float Knockback)
     {
         if (currentState != State.Dead)
@@ -142,7 +142,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     {
         playerStat.AddExpFromMonsters(currentMonster);
 
-        // 플레이어 레벨 ui 업데이트
         playerStat.UpdateLevelStatUI.Invoke();
 
         currentMonster = null;
@@ -187,39 +186,39 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private void HandleSkillUsed(BaseSkill skill)
     {
-        // 1. 스킬 상태로 전환
         currentState = State.Skill;
 
-        // 2. 애니메이션 실행
-        animator.Play("IDLE"); // 애니메이션 초기화
-        animator.SetTrigger("2_Attack"); // 스킬 애니메이션 실행
-        // 4. 일정 시간 후 Idle 상태로 복귀
+        // 스킬 애니메이션 실행
+        animator.SetTrigger("7_Skill");
+
+        // 스킬 종료 후 상태 복원 및 공격 재개
         StartCoroutine(ResetToIdleAfterSkill());
     }
 
     private IEnumerator ResetToIdleAfterSkill()
     {
-        // 스킬 애니메이션 지속 시간 동안 대기
-        yield return new WaitForSeconds(0.2f); // 필요에 따라 조정 (스킬 애니메이션 시간)
+        // 스킬 애니메이션 지속 시간 대기
+        yield return new WaitForSeconds(0.5f); // 스킬 애니메이션 길이
+        yield return new WaitForSeconds(0.2f); // 추가 대기 시간
 
-        // 적이 있는 경우 Attacking 상태로 복귀
-        if (currentMonster != null && currentMonster.GetActive())
+        // 스킬 트리거 초기화 및 Idle 상태로 전환
+        animator.ResetTrigger("7_Skill");
+        animator.SetBool("2_Attack", false); // 공격 중단
+
+        // 몬스터가 없으면 Idle로 전환
+        if (currentMonster == null || !currentMonster.GetActive())
         {
-            currentState = State.Attacking;
+            currentState = State.Idle; // Idle 상태로 변경
+            animator.Play("IDLE"); // Animator 상태를 Idle로 강제 전환
         }
         else
         {
-            currentState = State.Idle;
+            currentState = State.Attacking; // 몬스터가 있으면 공격 상태로 전환
         }
-
-        // 트리거 초기화
-        animator.ResetTrigger("2_Attack");
-        // 애니메이션 강제 호출 제거 (Animator가 상태 전환을 처리)
     }
 
     private void OnDestroy()
     {
-        // 이벤트 구독 해제
         if (skillHandler != null)
         {
             skillHandler.OnSkillUsed -= HandleSkillUsed;
