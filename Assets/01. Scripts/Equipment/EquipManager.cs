@@ -65,7 +65,7 @@ public class EquipManager : MonoBehaviour
         if (weaponData == null) return;
 
         EquippedWeapon = weaponData;
-        WeaponImage.sprite = weaponData.BaseData.icon;
+        WeaponImage.sprite = weaponData.BaseData.inGameImage;
 
         OnEquippedChanged?.Invoke();
     }
