@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Accessory 24
   m_EditorClassIdentifier: 
   itemName: "\uD76C\uB9DD\uC758 \uC624\uBE0C"
-  icon: {fileID: 5223213533427645220, guid: 69edace412443554185db672d1906d5f, type: 3}
+  englishItemName: 
+  icon: {fileID: 21300000, guid: ff74c1bd2fc042b42b85bc377cf8332a, type: 3}
   inGameImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   grade: 6
   gradeColor: {r: 0, g: 0, b: 0, a: 0}
@@ -25,3 +26,4 @@ MonoBehaviour:
   passiveMpAndMpRecoveryIncreaseRate: 0
   passiveAddEXPRate: 0
   rank: 4
+  requireFuseItemCount: 5
