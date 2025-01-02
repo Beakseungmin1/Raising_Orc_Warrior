@@ -12,8 +12,8 @@ public class RegenManager : Singleton<RegenManager>
 
     public int totalEnemies = 0; // 해당 스테이지 적 총 개수
     public int killedEnemies = 0; // 죽인 적 개수
-
     private int totalEnemiesForDebug = 0; //죽인 적 수가 스테이지 총 적 수보다 많아지는 버그를 체크하기 위한 변수
+    private float scrollSpeed;
 
     public Action OnEnemyCountDown;
     public Action OnEnemyCountZero;
@@ -55,6 +55,7 @@ public class RegenManager : Singleton<RegenManager>
 
         totalEnemies = enemySOs.Count;
         totalEnemiesForDebug += totalEnemies;
+        scrollSpeed = ParallaxBackground.Instance.GetScrollSpeed();
     }
 
     public void CacheDungeonBoss(Dungeon dungeon)
@@ -140,7 +141,7 @@ public class RegenManager : Singleton<RegenManager>
         enemy.transform.position = spawnPosition;
         enemyObject.SetActive(true);
 
-        enemyMover.SetMoveSpeed(2.0f);
+        enemyMover.SetMoveSpeed(scrollSpeed);
     }
 
     public void RegenBossEnemy(EnemySO enemySO, Vector3 spawnPosition, (GameObject enemyObject, EnemyMover enemyMover) cachedEnemy)
@@ -154,7 +155,7 @@ public class RegenManager : Singleton<RegenManager>
         enemyBoss.transform.position = spawnPosition;
         enemyObject.SetActive(true);
 
-        enemyMover.SetMoveSpeed(2.0f);
+        enemyMover.SetMoveSpeed(scrollSpeed);
     }
 
     public void RegenEnemyDungeonBoss(EnemySO enemySO, Vector3 spawnPosition, (GameObject enemyObject, EnemyMover enemyMover) cachedEnemy, DungeonInfoSO dungeonInfo)
@@ -169,7 +170,7 @@ public class RegenManager : Singleton<RegenManager>
         enemyBoss.transform.position = spawnPosition;
         enemyObject.SetActive(true);
 
-        enemyMover.SetMoveSpeed(2.0f);
+        enemyMover.SetMoveSpeed(scrollSpeed);
     }
 
     private Enemy SetUnitObject(GameObject obj)

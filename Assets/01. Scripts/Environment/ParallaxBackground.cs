@@ -61,6 +61,11 @@ public class ParallaxBackground : Singleton<ParallaxBackground>
         }
     }
 
+    public float GetScrollSpeed()
+    {
+        return scrollSpeed;
+    }
+
     private void ScrollBackground(Vector3 direction)
     {
         foreach (var background in backgrounds)
