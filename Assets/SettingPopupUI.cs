@@ -41,7 +41,7 @@ public class SettingPopupUI : UIBase
         SoundManager.Instance.MuteSFX();
     }
 
-    public bool isBGMActive()
+    public bool isBGMMute()
     {
         return BgmSlider.gameObject.activeSelf;
     }

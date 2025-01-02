@@ -128,7 +128,7 @@ Animator:
   m_GameObject: {fileID: 3043883501962652656}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6dfc2227fea5a9e49b4b53d81edc044e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 24d5af01cb102a1409e2c5b3c73377ea, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -202,9 +202,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySO: {fileID: 11400000, guid: 141d795a02777924e81e256d587a2497, type: 2}
+  dungeonInfo: {fileID: 0}
   enemyCode: 
   model: {fileID: 0}
   animator: {fileID: 4990691328434815162}
+  timeLimit: 50
   cooldown: 0
   skillEffectPrefab: {fileID: 0}
   effectRange: {fileID: 0}
