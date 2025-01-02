@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: "\uAD11\uAE30\uC758 \uCE7C\uB0A0"
   englishItemName: 
   icon: {fileID: 21300000, guid: 051e60f8260ec40468407d041d7f1a67, type: 3}
-  inGameImage: {fileID: 0}
+  inGameImage: {fileID: 21300000, guid: 8d2e32343359643008ec8b92017bbf89, type: 3}
   grade: 3
   gradeColor: {r: 0, g: 0, b: 0, a: 0}
   currencyIcon: {fileID: 0}
