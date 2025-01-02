@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ParallaxBackground : Singleton<ParallaxBackground>
@@ -26,10 +27,6 @@ public class ParallaxBackground : Singleton<ParallaxBackground>
             {
                 // 배경 가로 길이 계산
                 backgroundWidth = spriteRenderer.bounds.size.x;
-
-                // 디버그 로그
-                Debug.Log($"Sprite Bounds Size X: {spriteRenderer.bounds.size.x}");
-                Debug.Log($"Calculated Background Width: {backgroundWidth}");
             }
 
             // 두 번째 배경 배치
