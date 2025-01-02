@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class Battle : MonoBehaviour
@@ -34,4 +31,16 @@ public class Battle : MonoBehaviour
         }
     }
 
+    public void TriggerSkill()
+    {
+        if (player != null && player.OnPlayerSkill != null)
+        {
+            player.OnPlayerSkill.Invoke();
+        }
+
+        if (enemy != null && enemy.OnEnemySkill != null)
+        {
+            enemy.OnEnemySkill.Invoke();
+        }
+    }
 }

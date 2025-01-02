@@ -28,6 +28,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     private PlayerSkillHandler skillHandler;
 
     public Action OnPlayerAttack;
+    public Action OnPlayerSkill;
 
     private IEnemy currentMonster;
 

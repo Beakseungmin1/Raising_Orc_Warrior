@@ -24,11 +24,6 @@ public class PlayerDamageCalculator : MonoBehaviour
 
     public void ApplySkillEffect(SkillEffect effect)
     {
-        if (effect.DamagePercent > 0)
-        {
-            ApplyDamageMultiplier(effect.DamagePercent);
-        }
-
         if (effect.AttackIncreasePercent > 0)
         {
             AddAttackBuff(effect.AttackIncreasePercent, effect.BuffDuration);
@@ -59,20 +54,15 @@ public class PlayerDamageCalculator : MonoBehaviour
 
         TotalDamage = ((BigInteger)basicDamage + WeaponIncreaseDamage + SkillIncreaseDamage) * (BigInteger)damageMultiplier;
 
-        StartCoroutine(ResetMultiplierAfterDelay());
-
         return TotalDamage;
     }
 
-    private IEnumerator ResetMultiplierAfterDelay()
+    public BigInteger CalculateSkillDamage(float skillDamagePercent)
     {
-        yield return null;
-        ResetDamageMultiplier();
-    }
+        BigInteger skillDamage = (BigInteger)(basicDamage * (skillDamagePercent / 100));
+        BigInteger totalSkillDamage = skillDamage + SkillIncreaseDamage;
 
-    private void ApplyDamageMultiplier(float multiplierPercent)
-    {
-        damageMultiplier = 1 + (multiplierPercent / 100f);
+        return totalSkillDamage;
     }
 
     public void ResetDamageMultiplier()

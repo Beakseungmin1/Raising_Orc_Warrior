@@ -27,6 +27,8 @@ public class EnemyBoss : MonoBehaviour, IEnemy
 
     public Action OnEnemyAttack;
 
+    public Action OnEnemySkill;
+
     private PlayerBattle player;
 
     private int Hitcounter = 0;
