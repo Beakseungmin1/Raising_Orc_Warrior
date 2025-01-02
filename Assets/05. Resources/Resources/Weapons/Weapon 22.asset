@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Weapon 22
   m_EditorClassIdentifier: 
   itemName: "\uCE68\uBB35\uC758 \uAC80 - \uB460"
-  icon: {fileID: 21300000, guid: 119fb0b286335eb40b5bccd74e1df90d, type: 3}
+  englishItemName: 
+  icon: {fileID: 21300000, guid: b8d476e6d1ad1d64a84b44d4d601a5c4, type: 3}
   inGameImage: {fileID: 0}
   grade: 5
   gradeColor: {r: 0, g: 0, b: 0, a: 0}
@@ -25,3 +26,4 @@ MonoBehaviour:
   passiveCriticalDamageBonus: 0
   passiveGoldGainRate: 0
   rank: 2
+  requireFuseItemCount: 5
