@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Weapon 2
   m_EditorClassIdentifier: 
   itemName: "\uC7A5\uAC80"
-  icon: {fileID: 21300000, guid: 82a19965a0728884c95d8d0db814992f, type: 3}
-  inGameImage: {fileID: 0}
+  englishItemName: 
+  icon: {fileID: 21300000, guid: e2414c490abe52e4f9e0475d048cbcb2, type: 3}
+  inGameImage: {fileID: 21300000, guid: df96032537d4c482e9b20c674c73dc45, type: 3}
   grade: 0
   gradeColor: {r: 0, g: 0, b: 0, a: 0}
   currencyIcon: {fileID: 0}
@@ -25,3 +26,4 @@ MonoBehaviour:
   passiveCriticalDamageBonus: 0
   passiveGoldGainRate: 0
   rank: 2
+  requireFuseItemCount: 5
