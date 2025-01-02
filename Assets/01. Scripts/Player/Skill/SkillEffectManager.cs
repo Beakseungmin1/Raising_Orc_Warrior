@@ -75,29 +75,48 @@ public class SkillEffectManager : Singleton<SkillEffectManager>
 
     private IEnumerator PerformWeaponEffect(SkillEffect effect, GameObject effectObj)
     {
-        yield return new WaitForSeconds(0.2f); // 모션 딜레이 (예시)
+        yield return new WaitForSeconds(0.35f); // 모션 딜레이 (예시)
 
-        // 범위 내 첫 번째 적 탐지 및 데미지
+        // 범위 내 적 탐지
         Collider2D[] targets = Physics2D.OverlapCircleAll(playerWeaponPosition.position, effect.EffectRange);
 
-        bool hasHitTarget = false;
+        if (targets.Length == 0)
+        {
+            Debug.Log("SkillEffectManager: 범위 내 적이 없습니다.");
+            Destroy(effectObj, effect.EffectDuration);
+            yield break;
+        }
+
+        // 가장 가까운 적 탐지
+        Collider2D closestTarget = null;
+        float closestDistance = float.MaxValue;
 
         foreach (var target in targets)
         {
             if (target.CompareTag("Monster"))
             {
-                IEnemy enemy = target.GetComponent<IEnemy>();
-                if (enemy != null && !hasHitTarget) // 첫 번째 적만 처리
+                float distance = UnityEngine.Vector2.Distance(playerWeaponPosition.position, target.transform.position);
+                if (distance < closestDistance)
                 {
-                    hasHitTarget = true; // 첫 번째 적 공격 완료
-                    break; // 첫 번째 적만 공격하므로 루프 종료
+                    closestDistance = distance;
+                    closestTarget = target;
                 }
             }
         }
 
-        if (!hasHitTarget)
+        // 가장 가까운 적에게 데미지 적용
+        if (closestTarget != null)
         {
-            Debug.Log("SkillEffectManager: 범위 내 적이 없습니다.");
+            IEnemy enemy = closestTarget.GetComponent<IEnemy>();
+            if (enemy != null)
+            {
+                BigInteger skillDamage = playerDamageCalculator.CalculateSkillDamage(effect.DamagePercent);
+                enemy.TakeDamage(skillDamage); // 데미지 적용
+            }
+        }
+        else
+        {
+            Debug.Log("SkillEffectManager: 가장 가까운 적을 찾을 수 없습니다.");
         }
 
         Destroy(effectObj, effect.EffectDuration);
@@ -106,16 +125,43 @@ public class SkillEffectManager : Singleton<SkillEffectManager>
     // 특정 영역(맵 중심 또는 타겟 위치)에서 효과 실행
     private void HandleAreaEffect(SkillEffect effect)
     {
+        if (mapCenter == null)
+        {
+            Debug.LogError("SkillEffectManager: 맵 중심이 설정되지 않았습니다.");
+            return;
+        }
+
+        StartCoroutine(PerformAreaEffect(effect));
+    }
+
+    private IEnumerator PerformAreaEffect(SkillEffect effect)
+    {
+        yield return new WaitForSeconds(0.3f); // 모션 딜레이 (예시)
+
+        // 맵 중심 기준 범위 내 모든 적 탐지
         Collider2D[] targets = Physics2D.OverlapCircleAll(playerWeaponPosition.position, effect.EffectRange);
 
         foreach (var target in targets)
         {
             if (target.CompareTag("Monster"))
             {
-                GameObject areaEffect = Instantiate(effect.SkillPrefab, target.transform.position, UnityEngine.Quaternion.identity);
-                Debug.Log($"SkillEffectManager: 범위 효과 생성 - {target.name}");
+                // 적의 위치에 맞춰 이펙트 생성
+                GameObject effectOnTarget = Instantiate(effect.SkillPrefab, target.transform.position, UnityEngine.Quaternion.identity);
+                Debug.Log($"SkillEffectManager: {target.name} 위치에 이펙트 생성");
 
-                Destroy(areaEffect, effect.EffectDuration);
+                // 이펙트를 적의 부모로 설정하여 계속 따라가게 하기
+                effectOnTarget.transform.SetParent(target.transform);
+
+                // 적에게 데미지 적용
+                IEnemy enemy = target.GetComponent<IEnemy>();
+                if (enemy != null)
+                {
+                    BigInteger skillDamage = playerDamageCalculator.CalculateSkillDamage(effect.DamagePercent);
+                    enemy.TakeDamage(skillDamage); // 스킬 데미지 적용
+                }
+
+                // 이펙트 지속시간에 맞춰 제거
+                Destroy(effectOnTarget, effect.EffectDuration);
             }
         }
     }

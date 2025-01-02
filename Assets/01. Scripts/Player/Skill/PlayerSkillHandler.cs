@@ -144,6 +144,7 @@ public class PlayerSkillHandler : MonoBehaviour
                     if (enemy != null)
                     {
                         skill.Activate(target.transform.position); // 스킬 발동
+                        break;
                     }
                 }
             }

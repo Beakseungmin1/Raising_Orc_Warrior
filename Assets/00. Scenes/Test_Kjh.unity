@@ -225,7 +225,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
       propertyPath: spawnDistance
-      value: 2
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
       propertyPath: spawnYPosition
@@ -804,6 +804,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: acdb77e11ef81e04796031ced830f6eb, type: 3}
+--- !u!4 &1454491446 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 850088974580134644, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
+  m_PrefabInstance: {fileID: 1143699028}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1472243174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1159,15 +1164,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 341988885238371909, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 458.56158
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 341988885238371909, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -605.6494
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 341988885238371909, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.3722339
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 341988885238371909, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1200,7 +1205,7 @@ PrefabInstance:
     - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: mapCenter
       value: 
-      objectReference: {fileID: 1823932295}
+      objectReference: {fileID: 1454491446}
     - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: playerPosition
       value: 
@@ -1208,7 +1213,7 @@ PrefabInstance:
     - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: playerWeaponPosition
       value: 
-      objectReference: {fileID: 1823932295}
+      objectReference: {fileID: 1454491446}
     - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: projectileSpawnPoint
       value: 
