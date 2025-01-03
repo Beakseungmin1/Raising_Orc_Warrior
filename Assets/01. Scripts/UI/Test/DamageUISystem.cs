@@ -32,7 +32,7 @@ public class DamageUISystem : Singleton<DamageUISystem>
         }
         else
         {
-            damageText.color = Color.black;
+            damageText.color = new Color(255f/255f, 165f/255f, 0f/255f);
         }
 
         float heightAdjustment = enemyTransform.localScale.y * 1.0f;
