@@ -7,8 +7,6 @@ using System.Numerics;
 
 public class BossStageInfoUI : UIBase
 {
-    public List<GameObject> dungeonBosses;
-
     public Slider timeSlider;
     public Slider hpSlider;
     public TextMeshProUGUI remainingCountTxt;
@@ -23,6 +21,9 @@ public class BossStageInfoUI : UIBase
     {
         GameEventsManager.Instance.bossEvents.onSetBossHp += SetMaxHP;
         GameEventsManager.Instance.bossEvents.onBossHpChanged += RefreshUI;
+        SetMaxHP(DungeonManager.Instance.currentDungeonInfo.dungeonBoss.maxHp);
+        RefreshUI(bossMaxHP);
+        InitUI();
     }
     private void OnDisable()
     {
@@ -74,7 +75,6 @@ public class BossStageInfoUI : UIBase
     private void SetMaxHP(BigInteger maxHP)
     {
         bossMaxHP = maxHP;
-        InitUI();
     }
 
     private void RefreshUI(BigInteger curHP)

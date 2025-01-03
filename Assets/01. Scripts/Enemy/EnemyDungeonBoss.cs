@@ -52,7 +52,6 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
     {
         SetupEnemy();
         InvokeRepeating("SwitchPattern", 0, patternTime);
-        GameEventsManager.Instance.bossEvents.BossHPSet(maxHp);
     }
 
     private void Update()
@@ -137,6 +136,7 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
         skillEffectPrefab = enemySO.skillEffectPrefab;
         effectRange = enemySO.effectRange;
         damagePercent = enemySO.damagePercent;
+        GameEventsManager.Instance.bossEvents.BossHPSet(maxHp);
     }
 
     void SwitchPattern()
