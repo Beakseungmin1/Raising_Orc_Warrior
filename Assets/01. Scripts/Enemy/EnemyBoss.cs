@@ -2,7 +2,7 @@
 using System.Numerics;
 using UnityEngine;
 
-public class EnemyBoss : MonoBehaviour, IEnemy
+public class EnemyBoss : EnemyBase, IEnemy
 {
     public EnemySO enemySO;
 
@@ -57,8 +57,10 @@ public class EnemyBoss : MonoBehaviour, IEnemy
         }
     }
 
-    public void TakeDamage(BigInteger Damage)
+    public override void TakeDamage(BigInteger Damage)
     {
+        base.TakeDamage(Damage);
+
         // 기본 레이어
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 

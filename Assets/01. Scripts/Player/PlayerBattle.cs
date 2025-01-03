@@ -142,15 +142,21 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     public void GetMonsterReward()
     {
         playerStat.AddExpFromMonsters(currentMonster);
-
         playerStat.UpdateLevelStatUI.Invoke();
-
         currentMonster = null;
 
         if (!isDead)
         {
-            currentState = State.Idle;
+            StartCoroutine(DelayBeforeReturningToIdle());
         }
+    }
+
+    private IEnumerator DelayBeforeReturningToIdle()
+    {
+        animator.SetBool("2_Attack", false);
+        yield return new WaitForSeconds(0.5f);
+        currentState = State.Idle;
+        animator.Play("IDLE");
     }
 
     public bool GetActive()
@@ -188,33 +194,26 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     private void HandleSkillUsed(BaseSkill skill)
     {
         currentState = State.Skill;
-
-        // 스킬 애니메이션 실행
         animator.SetTrigger("7_Skill");
-
-        // 스킬 종료 후 상태 복원 및 공격 재개
         StartCoroutine(ResetToIdleAfterSkill());
     }
 
     private IEnumerator ResetToIdleAfterSkill()
     {
-        // 스킬 애니메이션 지속 시간 대기
-        yield return new WaitForSeconds(0.5f); // 스킬 애니메이션 길이
-        yield return new WaitForSeconds(0.2f); // 추가 대기 시간
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
 
-        // 스킬 트리거 초기화 및 Idle 상태로 전환
         animator.ResetTrigger("7_Skill");
-        animator.SetBool("2_Attack", false); // 공격 중단
+        animator.SetBool("2_Attack", false);
 
-        // 몬스터가 없으면 Idle로 전환
         if (currentMonster == null || !currentMonster.GetActive())
         {
-            currentState = State.Idle; // Idle 상태로 변경
-            animator.Play("IDLE"); // Animator 상태를 Idle로 강제 전환
+            currentState = State.Idle;
+            animator.Play("IDLE");
         }
         else
         {
-            currentState = State.Attacking; // 몬스터가 있으면 공격 상태로 전환
+            currentState = State.Attacking;
         }
     }
 

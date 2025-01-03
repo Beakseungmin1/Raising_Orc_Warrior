@@ -48,19 +48,27 @@ public class PlayerStat : MonoBehaviour
 
     private void Start()
     {
-        // ÀÓ½Ã
         SetDefaultStat();
     }
 
     public void AddExpFromMonsters(IEnemy enemy)
     {
         exp += enemy.GiveExp();
-        LevelUp();
+
+        while (exp >= needExp)
+        {
+            LevelUp();
+        }
     }
 
     public void AddExp(BigInteger getExp)
     {
         exp += getExp;
+
+        while (exp >= needExp)
+        {
+            LevelUp();
+        }
     }
 
     public void decreaseHp(BigInteger damage)
@@ -82,13 +90,13 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("°æÇèÄ¡°¡ ºÎÁ·ÇÕ´Ï´Ù");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½");
         }
     }
 
     public void AttackLevelUp()
     {
-        needAttackUpgradeMoney = attackLevel * 1000; //ÇÊ¿ä°¡°Ý ¼öÁ¤¿¹Á¤
+        needAttackUpgradeMoney = attackLevel * 1000; //ï¿½Ê¿ä°¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
         if (CurrencyManager.Instance.GetGold() >= needAttackUpgradeMoney)
         {
@@ -98,13 +106,13 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
         }
     }
 
     public void HealthLevelUp()
     {
-        //ÇöÀç µ·¿¡¼­ ´Ïµå¸Ó´Ï »©±â ±â´É Ãß°¡
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ïµï¿½Ó´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
         needHealthUpgradeMoney = healthLevel * 1000;
 
         if (CurrencyManager.Instance.GetGold() >= needHealthUpgradeMoney)
@@ -116,7 +124,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
         }
     }
 
@@ -132,7 +140,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
         }
     }
 
@@ -144,11 +152,11 @@ public class PlayerStat : MonoBehaviour
         {
             CurrencyManager.Instance.SubtractGold(needCriticalIncreaseDamageUpgradeMoney);
             criticalIncreaseDamageLevel++;
-            criticalIncreaseDamage = criticalIncreaseDamageLevel;
+            criticalIncreaseDamage = 100 + criticalIncreaseDamageLevel;
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
         }
     }
 
@@ -164,7 +172,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
         }
     }
 
@@ -180,7 +188,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
         }
     }
 
@@ -196,13 +204,13 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
         }
     }
 
     public void SetDefaultStat()
     {
-        level = 1;
+        level = 0;
         exp = 0;
         needExp = 100;
         attackPower = 20;
@@ -221,10 +229,10 @@ public class PlayerStat : MonoBehaviour
         attackSpeed = 0;
         normalMonsterIncreaseDamage = 0;
         bossMonsterIncreaseDamage = 0;
-        attackLevel = 1;
-        healthLevel = 1;
-        healthRegenerationLevel = 1;
-        criticalIncreaseDamageLevel = 1;
+        attackLevel = 0;
+        healthLevel = 0;
+        healthRegenerationLevel = 0;
+        criticalIncreaseDamageLevel = 0;
         criticalProbabilityLevel = 1;
         bluecriticalIncreaseDamageLevel = 1;
         bluecriticalProbabilityLevel = 1;
@@ -269,7 +277,7 @@ public class PlayerStat : MonoBehaviour
 
     private IEnumerator BuffCoroutine(float skillValue, float skillTime)
     {
-        // ¹öÇÁ Àû¿ë
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         attackPower += attackPower * (skillValue / 100);
 
         yield return new WaitForSeconds(skillTime);
