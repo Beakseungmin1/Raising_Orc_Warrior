@@ -19,15 +19,12 @@ public class BossStageInfoUI : UIBase
 
     private void OnEnable()
     {
-        GameEventsManager.Instance.bossEvents.onSetBossHp += SetMaxHP;
+        GameEventsManager.Instance.bossEvents.onSetBossHp += InitUI;
         GameEventsManager.Instance.bossEvents.onBossHpChanged += RefreshUI;
-        SetMaxHP(DungeonManager.Instance.currentDungeonInfo.dungeonBoss.maxHp);
-        RefreshUI(bossMaxHP);
-        InitUI();
     }
     private void OnDisable()
     {
-        GameEventsManager.Instance.bossEvents.onSetBossHp -= SetMaxHP;
+        GameEventsManager.Instance.bossEvents.onSetBossHp -= InitUI;
         GameEventsManager.Instance.bossEvents.onBossHpChanged -= RefreshUI;
     }
 
@@ -46,8 +43,9 @@ public class BossStageInfoUI : UIBase
         timeSlider.value = StageManager.Instance.timer.GetLimitTime() / maxLimitTime;
     }
 
-    private void InitUI()
+    private void InitUI(BigInteger maxHP)
     {
+        bossMaxHP = maxHP;
         hpSlider.value = (float)bossMaxHP/(float)bossMaxHP;
         remainingCountTxt.text = $"{bossMaxHP}/{bossMaxHP}";
 
@@ -70,11 +68,6 @@ public class BossStageInfoUI : UIBase
         {
             dungeonNameLabel.text = StageManager.Instance.stageName;
         }
-    }
-
-    private void SetMaxHP(BigInteger maxHP)
-    {
-        bossMaxHP = maxHP;
     }
 
     private void RefreshUI(BigInteger curHP)
