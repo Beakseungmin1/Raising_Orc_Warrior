@@ -62,6 +62,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2a7b339f4cb03245936db373aaab597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  dungeonInfoSO: {fileID: 0}
+  curLevel: {fileID: 1711081391469412496}
+  dungeonTicketCount: {fileID: 2851771597164944737}
 --- !u!1 &3461232298991112304
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,8 +263,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EXPDungeonUI_ConfirmEnterBtnPopUpUI, Assembly-CSharp
+      - m_Target: {fileID: 4813592508022305878}
+        m_TargetAssemblyTypeName: CubeDungeonUI_ConfirmEnterBtnPopUpUI, Assembly-CSharp
         m_MethodName: ExitBtn
         m_Mode: 1
         m_Arguments:
@@ -929,8 +933,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EXPDungeonUI_ConfirmEnterBtnPopUpUI, Assembly-CSharp
+      - m_Target: {fileID: 4813592508022305878}
+        m_TargetAssemblyTypeName: CubeDungeonUI_ConfirmEnterBtnPopUpUI, Assembly-CSharp
         m_MethodName: OnGoToDungeonBtnClick
         m_Mode: 1
         m_Arguments:

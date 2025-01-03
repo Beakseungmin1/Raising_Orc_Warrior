@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class CubeDungeonUI_ConfirmEnterBtnPopUpUI : UIBase
+public class GoldDungeonUI_ConfirmEnterBtnPopUpUI : UIBase
 {
     public DungeonInfoSO dungeonInfoSO;
 

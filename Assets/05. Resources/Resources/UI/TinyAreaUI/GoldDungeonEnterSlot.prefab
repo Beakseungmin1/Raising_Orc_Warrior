@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2335063687247580329
+--- !u!1 &2734166787392946202
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2157252097512887738}
-  - component: {fileID: 4475820341963550201}
-  - component: {fileID: 5174448814115374837}
+  - component: {fileID: 1758232771241498889}
+  - component: {fileID: 4290567989591302474}
+  - component: {fileID: 4780909646531381830}
   m_Layer: 5
   m_Name: LabelTxt
   m_TagString: Untagged
@@ -18,40 +18,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &2157252097512887738
+--- !u!224 &1758232771241498889
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2335063687247580329}
+  m_GameObject: {fileID: 2734166787392946202}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 102568665813151257}
+  m_Father: {fileID: 358603045050049194}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &4475820341963550201
+--- !u!222 &4290567989591302474
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2335063687247580329}
+  m_GameObject: {fileID: 2734166787392946202}
   m_CullTransparentMesh: 1
---- !u!114 &5174448814115374837
+--- !u!114 &4780909646531381830
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2335063687247580329}
+  m_GameObject: {fileID: 2734166787392946202}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &4678547447042456981
+--- !u!1 &5006855053415461158
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,31 +142,31 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 102568665813151257}
-  - component: {fileID: 1562175887027323120}
-  - component: {fileID: 7462011757865059730}
-  - component: {fileID: 3525046357907984677}
-  - component: {fileID: 6348061070298013959}
+  - component: {fileID: 358603045050049194}
+  - component: {fileID: 1169687446175468611}
+  - component: {fileID: 7068401888137431329}
+  - component: {fileID: 3854268492200533398}
+  - component: {fileID: 2974383170549954409}
   m_Layer: 5
-  m_Name: CubeDungeonEnterSlot
+  m_Name: GoldDungeonEnterSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &102568665813151257
+--- !u!224 &358603045050049194
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4678547447042456981}
+  m_GameObject: {fileID: 5006855053415461158}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2157252097512887738}
+  - {fileID: 1758232771241498889}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -174,21 +174,21 @@ RectTransform:
   m_AnchoredPosition: {x: 440, y: -120}
   m_SizeDelta: {x: 680, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &1562175887027323120
+--- !u!222 &1169687446175468611
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4678547447042456981}
+  m_GameObject: {fileID: 5006855053415461158}
   m_CullTransparentMesh: 1
---- !u!114 &7462011757865059730
+--- !u!114 &7068401888137431329
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4678547447042456981}
+  m_GameObject: {fileID: 5006855053415461158}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -212,13 +212,13 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3525046357907984677
+--- !u!114 &3854268492200533398
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4678547447042456981}
+  m_GameObject: {fileID: 5006855053415461158}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -252,13 +252,13 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 7462011757865059730}
+  m_TargetGraphic: {fileID: 7068401888137431329}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6348061070298013959}
-        m_TargetAssemblyTypeName: CubeDungeonEnterSlotUI, Assembly-CSharp
-        m_MethodName: ShowCubeDungeonUI_ConfirmEnterBtnPopUpUI
+      - m_Target: {fileID: 2974383170549954409}
+        m_TargetAssemblyTypeName: GoldDungeonEnterSlotUI, Assembly-CSharp
+        m_MethodName: ShowGoldDungeonUI_ConfirmEnterBtnPopUpUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -268,18 +268,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6348061070298013959
+--- !u!114 &2974383170549954409
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4678547447042456981}
+  m_GameObject: {fileID: 5006855053415461158}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ec479b4a62036a4eb1e3b929205b76d, type: 3}
+  m_Script: {fileID: 11500000, guid: d160954db33633247a988a0a47aada16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
   dungeonInfoSO: {fileID: 0}
-  dungeonLabel: {fileID: 5174448814115374837}
+  dungeonLabel: {fileID: 4780909646531381830}

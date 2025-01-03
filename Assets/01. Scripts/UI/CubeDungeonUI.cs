@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonUI : UIBase
+public class CubeDungeonUI : UIBase
 {
     
     public void ExitBtn()
