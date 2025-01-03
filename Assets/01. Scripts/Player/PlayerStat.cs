@@ -90,13 +90,13 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("°æÇèÄ¡°¡ ºÎÁ·ÇÕ´Ï´Ù");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½");
         }
     }
 
     public void AttackLevelUp()
     {
-        needAttackUpgradeMoney = attackLevel * 1000; //ÇÊ¿ä°¡°Ý ¼öÁ¤¿¹Á¤
+        needAttackUpgradeMoney = attackLevel * 1000; //ï¿½Ê¿ä°¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
         if (CurrencyManager.Instance.GetGold() >= needAttackUpgradeMoney)
         {
@@ -106,13 +106,13 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
         }
     }
 
     public void HealthLevelUp()
     {
-        //ÇöÀç µ·¿¡¼­ ´Ïµå¸Ó´Ï »©±â ±â´É Ãß°¡
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ïµï¿½Ó´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
         needHealthUpgradeMoney = healthLevel * 1000;
 
         if (CurrencyManager.Instance.GetGold() >= needHealthUpgradeMoney)
@@ -124,7 +124,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
         }
     }
 
@@ -140,7 +140,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
         }
     }
 
@@ -156,7 +156,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
         }
     }
 
@@ -172,7 +172,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
         }
     }
 
@@ -188,7 +188,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
         }
     }
 
@@ -204,7 +204,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
         }
     }
 
@@ -277,7 +277,7 @@ public class PlayerStat : MonoBehaviour
 
     private IEnumerator BuffCoroutine(float skillValue, float skillTime)
     {
-        // ¹öÇÁ Àû¿ë
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         attackPower += attackPower * (skillValue / 100);
 
         yield return new WaitForSeconds(skillTime);
