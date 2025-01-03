@@ -144,7 +144,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     public void GetMonsterReward()
     {
         playerStat.AddExpFromMonsters(currentMonster);
-        playerStat.UpdateLevelStatUI.Invoke();
         currentMonster = null;
 
         if (!isDead)
