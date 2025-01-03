@@ -16,6 +16,8 @@ public class PlayerDamageCalculator : MonoBehaviour
     private float damageMultiplier = 1.0f;
     private List<(float percent, float duration)> attackBuffs = new List<(float, float)>();
 
+    private const float damageRandomVariation = 0.1f;
+
     private void Start()
     {
         stat = GetComponent<PlayerStat>();
@@ -52,17 +54,49 @@ public class PlayerDamageCalculator : MonoBehaviour
     {
         UpdateValue();
 
-        TotalDamage = ((BigInteger)basicDamage + WeaponIncreaseDamage + SkillIncreaseDamage) * (BigInteger)damageMultiplier;
+        BigInteger baseDamage = (BigInteger)basicDamage;
+        BigInteger weaponDamage = WeaponIncreaseDamage;
 
-        return TotalDamage;
+        BigInteger totalDamage = baseDamage + weaponDamage;
+
+        float randomMultiplier = Random.Range(1 - damageRandomVariation, 1 + damageRandomVariation);
+        float totalDamageWithRandom = (float)totalDamage * randomMultiplier;
+
+        if (Random.Range(0, 100) < stat.criticalProbability)
+        {
+            totalDamageWithRandom += totalDamageWithRandom * (stat.criticalIncreaseDamage / 100f);
+
+            if (Random.Range(0, 100) < stat.bluecriticalProbability)
+            {
+                totalDamageWithRandom += totalDamageWithRandom * (stat.bluecriticalIncreaseDamage / 100f);
+            }
+        }
+
+        return (BigInteger)totalDamageWithRandom;
     }
 
     public BigInteger CalculateSkillDamage(float skillDamagePercent)
     {
-        BigInteger skillDamage = (BigInteger)(basicDamage * (skillDamagePercent / 100));
-        BigInteger totalSkillDamage = skillDamage + SkillIncreaseDamage;
+        BigInteger baseDamage = (BigInteger)basicDamage;
+        BigInteger weaponDamage = WeaponIncreaseDamage;
 
-        return totalSkillDamage;
+        BigInteger skillDamage = baseDamage + weaponDamage;
+        skillDamage = skillDamage * (BigInteger)(skillDamagePercent / 100f);
+
+        float randomMultiplier = Random.Range(1 - damageRandomVariation, 1 + damageRandomVariation);
+        float totalSkillDamageWithRandom = (float)skillDamage * randomMultiplier;
+
+        if (Random.Range(0, 100) < stat.criticalProbability)
+        {
+            totalSkillDamageWithRandom += totalSkillDamageWithRandom * (stat.criticalIncreaseDamage / 100f);
+
+            if (Random.Range(0, 100) < stat.bluecriticalProbability)
+            {
+                totalSkillDamageWithRandom += totalSkillDamageWithRandom * (stat.bluecriticalIncreaseDamage / 100f);
+            }
+        }
+
+        return (BigInteger)totalSkillDamageWithRandom;
     }
 
     public void ResetDamageMultiplier()

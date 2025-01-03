@@ -50,6 +50,9 @@ public class PlayerStat : MonoBehaviour
     {
         // юс╫ц
         SetDefaultStat();
+
+        criticalProbabilityLevel = 1000;
+        bluecriticalProbability = 100;
     }
 
     public void AddExpFromMonsters(IEnemy enemy)
