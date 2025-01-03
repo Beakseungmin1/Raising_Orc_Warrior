@@ -2,7 +2,7 @@
 using System.Numerics;
 using UnityEngine;
 
-public class EnemyDungeonBoss : MonoBehaviour, IEnemy
+public class EnemyDungeonBoss : EnemyBase, IEnemy
 {
     private enum Pattern
     {
@@ -40,6 +40,8 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
 
     private void OnEnable()
     {
+        SetupEnemy();
+        GameEventsManager.Instance.bossEvents.BossHPSet(maxHp);
         GameEventsManager.Instance.enemyEvents.onEnemyCleared += ClearEnemy;
     }
 
@@ -48,11 +50,9 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
         GameEventsManager.Instance.enemyEvents.onEnemyCleared -= ClearEnemy;
     }
 
-    private void Start()
+    public void Start()
     {
-        SetupEnemy();
         InvokeRepeating("SwitchPattern", 0, patternTime);
-        GameEventsManager.Instance.bossEvents.BossHPSet(maxHp);
     }
 
     private void Update()
@@ -82,8 +82,10 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
         animator.SetBool("Pattern2", false);
     }
 
-    public void TakeDamage(BigInteger Damage)
+    public override void TakeDamage(BigInteger Damage)
     {
+        base.TakeDamage(Damage);
+
         if (hp - Damage > 0)
         {
             hp -= Damage;

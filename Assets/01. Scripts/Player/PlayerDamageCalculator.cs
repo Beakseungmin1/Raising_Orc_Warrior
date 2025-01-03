@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using System;
 
 public class PlayerDamageCalculator : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class PlayerDamageCalculator : MonoBehaviour
 
     private float damageMultiplier = 1.0f;
     private List<(float percent, float duration)> attackBuffs = new List<(float, float)>();
+    public event Action OnCriticalHit;
 
     private const float damageRandomVariation = 0.1f;
 
@@ -59,17 +61,26 @@ public class PlayerDamageCalculator : MonoBehaviour
 
         BigInteger totalDamage = baseDamage + weaponDamage;
 
-        float randomMultiplier = Random.Range(1 - damageRandomVariation, 1 + damageRandomVariation);
+        float randomMultiplier = UnityEngine.Random.Range(1 - damageRandomVariation, 1 + damageRandomVariation);
         float totalDamageWithRandom = (float)totalDamage * randomMultiplier;
 
-        if (Random.Range(0, 100) < stat.criticalProbability)
+        bool criticalHit = false;
+
+        if (UnityEngine.Random.Range(0, 100) < stat.criticalProbability)
         {
+            criticalHit = true;
+
             totalDamageWithRandom += totalDamageWithRandom * (stat.criticalIncreaseDamage / 100f);
 
-            if (Random.Range(0, 100) < stat.bluecriticalProbability)
+            if (UnityEngine.Random.Range(0, 100) < stat.bluecriticalProbability)
             {
                 totalDamageWithRandom += totalDamageWithRandom * (stat.bluecriticalIncreaseDamage / 100f);
             }
+        }
+
+        if (criticalHit)
+        {
+            OnCriticalHit?.Invoke();
         }
 
         return (BigInteger)totalDamageWithRandom;
@@ -83,17 +94,26 @@ public class PlayerDamageCalculator : MonoBehaviour
         BigInteger skillDamage = baseDamage + weaponDamage;
         skillDamage = skillDamage * (BigInteger)(skillDamagePercent / 100f);
 
-        float randomMultiplier = Random.Range(1 - damageRandomVariation, 1 + damageRandomVariation);
+        float randomMultiplier = UnityEngine.Random.Range(1 - damageRandomVariation, 1 + damageRandomVariation);
         float totalSkillDamageWithRandom = (float)skillDamage * randomMultiplier;
 
-        if (Random.Range(0, 100) < stat.criticalProbability)
+        bool criticalHit = false;
+
+        if (UnityEngine.Random.Range(0, 100) < stat.criticalProbability)
         {
+            criticalHit = true;
+
             totalSkillDamageWithRandom += totalSkillDamageWithRandom * (stat.criticalIncreaseDamage / 100f);
 
-            if (Random.Range(0, 100) < stat.bluecriticalProbability)
+            if (UnityEngine.Random.Range(0, 100) < stat.bluecriticalProbability)
             {
                 totalSkillDamageWithRandom += totalSkillDamageWithRandom * (stat.bluecriticalIncreaseDamage / 100f);
             }
+        }
+
+        if (criticalHit)
+        {
+            OnCriticalHit?.Invoke();
         }
 
         return (BigInteger)totalSkillDamageWithRandom;

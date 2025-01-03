@@ -20,7 +20,7 @@ public class UpgradeTabUI : MonoBehaviour
     {
         if (stat != null)
         {
-            upgradeLevelTxt.text = "Lv." + stat.attackLevel.ToString();
+            upgradeLevelTxt.text = "Lv." + (stat.attackLevel + 1).ToString();
             needMoneyTxt.text = stat.needAttackUpgradeMoney.ToString();
             curValueTxt.text = stat.attackPower.ToString();
             upgradeValueTxt.text = (stat.attackPower + 4).ToString();
@@ -31,7 +31,7 @@ public class UpgradeTabUI : MonoBehaviour
     {
         if (stat != null)
         {
-            upgradeLevelTxt.text = "Lv." + stat.healthLevel.ToString();
+            upgradeLevelTxt.text = "Lv." + (stat.healthLevel + 1).ToString();
             needMoneyTxt.text = stat.needHealthUpgradeMoney.ToString();
             curValueTxt.text = stat.maxHealth.ToString();
             upgradeValueTxt.text = (stat.maxHealth + 40).ToString();
@@ -42,7 +42,7 @@ public class UpgradeTabUI : MonoBehaviour
     {
         if (stat != null)
         {
-            upgradeLevelTxt.text = "Lv." + stat.healthRegenerationLevel.ToString();
+            upgradeLevelTxt.text = "Lv." + (stat.healthRegenerationLevel + 1).ToString();
             needMoneyTxt.text = stat.needHealthRegenerationUpgradeMoney.ToString();
             curValueTxt.text = stat.healthRegeneration.ToString();
             upgradeValueTxt.text = (stat.healthRegeneration + 4).ToString();
@@ -62,7 +62,7 @@ public class UpgradeTabUI : MonoBehaviour
     {
         if (stat != null)
         {
-            upgradeLevelTxt.text = "Lv." + stat.criticalIncreaseDamageLevel.ToString();
+            upgradeLevelTxt.text = "Lv." + (stat.criticalIncreaseDamageLevel + 1).ToString();
             needMoneyTxt.text = stat.needCriticalIncreaseDamageUpgradeMoney.ToString();
             curValueTxt.text = stat.criticalIncreaseDamage.ToString() + "%";
             upgradeValueTxt.text = (stat.criticalIncreaseDamage + 1).ToString() + "%";
