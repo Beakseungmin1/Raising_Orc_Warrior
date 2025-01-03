@@ -16,4 +16,4 @@ MonoBehaviour:
   type: 0
   dungeonBoss: {fileID: 11400000, guid: 141d795a02777924e81e256d587a2497, type: 2}
   enemySOs: []
-  rewardAmount: 1000
+  rewardAmount: 800000
