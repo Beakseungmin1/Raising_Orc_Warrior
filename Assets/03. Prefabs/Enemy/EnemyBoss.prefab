@@ -50,6 +50,7 @@ MonoBehaviour:
   enemyCode: 1
   model: {fileID: 0}
   animator: {fileID: 3856753427837562700}
+  timeLimit: 50
   cooldown: 0
   skillEffectPrefab: {fileID: 0}
   effectRange: {fileID: 0}
@@ -110,7 +111,7 @@ PrefabInstance:
     - target: {fileID: 2025806811731348541, guid: 03d10b03e2eb6f143b7ca88c16582be6, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: a54dd58e5c3aca84791e874f80826f61, type: 2}
+      objectReference: {fileID: 9100000, guid: 9543a60b3c32197479d81aebdbcacfb7, type: 2}
     - target: {fileID: 5694516274345104080, guid: 03d10b03e2eb6f143b7ca88c16582be6, type: 3}
       propertyPath: enemy
       value: 

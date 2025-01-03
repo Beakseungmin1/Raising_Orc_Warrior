@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &145446914 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5069115452476776642, guid: 17af02ad8fc1ca347a2558c4b70c1f8d, type: 3}
+  m_PrefabInstance: {fileID: 1815593581}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5aae1504aad3694385cb3e0ff716fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &197399287
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -196,17 +207,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9deb5255de3a04b4e8e09b436d68951a, type: 3}
---- !u!114 &387934757 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
-  m_PrefabInstance: {fileID: 1989979142}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08d81a13150f12a4ba509dfe22d64f0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &688609796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -218,7 +218,7 @@ PrefabInstance:
     - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
       propertyPath: field
       value: 
-      objectReference: {fileID: 1815593582}
+      objectReference: {fileID: 0}
     - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
       propertyPath: initialSpawnX
       value: 3
@@ -669,21 +669,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2724144882414713927, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
-      propertyPath: skillEffectManager
-      value: 
-      objectReference: {fileID: 387934757}
     - target: {fileID: 3124620342091247500, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
       propertyPath: background
       value: 
-      objectReference: {fileID: 1651838626}
+      objectReference: {fileID: 145446914}
     - target: {fileID: 5242343083079520144, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
       propertyPath: m_Name
       value: testPlayer 2
       objectReference: {fileID: 0}
-    - target: {fileID: 5242343083079520144, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 5858243489823047196, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -974,17 +970,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1651838626 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7249950515092072011, guid: 17af02ad8fc1ca347a2558c4b70c1f8d, type: 3}
-  m_PrefabInstance: {fileID: 1815593581}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5aae1504aad3694385cb3e0ff716fa7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1815593581
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1042,11 +1027,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17af02ad8fc1ca347a2558c4b70c1f8d, type: 3}
---- !u!4 &1815593582 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8008408115907324945, guid: 17af02ad8fc1ca347a2558c4b70c1f8d, type: 3}
-  m_PrefabInstance: {fileID: 1815593581}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1823932295 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 951958769847937792, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
@@ -1298,7 +1278,7 @@ SceneRoots:
   - {fileID: 1989979142}
   - {fileID: 836493920}
   - {fileID: 1815593581}
-  - {fileID: 1143699028}
   - {fileID: 1952867025}
   - {fileID: 2985390019823663689}
   - {fileID: 1472243174}
+  - {fileID: 1143699028}

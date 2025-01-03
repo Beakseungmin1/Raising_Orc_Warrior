@@ -7254,7 +7254,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 4
   m_SortAtRoot: 0
 --- !u!95 &4920477416689064690
 Animator:
@@ -7291,6 +7291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   enemy: {fileID: 0}
+  healthBar: {fileID: 0}
 --- !u!1 &6579809918657982163
 GameObject:
   m_ObjectHideFlags: 0

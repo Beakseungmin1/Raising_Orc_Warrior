@@ -51,3 +51,6 @@ MonoBehaviour:
   - prefabName: EnemyBoss
     prefab: {fileID: 822938190782927294, guid: 007782c8cc21a614ba93f51085f4a5be, type: 3}
     initialSize: 1
+  - prefabName: DungeonBoss
+    prefab: {fileID: 3187110840222732715, guid: 190ac41ace9e25e408d830f5c0ba29bd, type: 3}
+    initialSize: 1
