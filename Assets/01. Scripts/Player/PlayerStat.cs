@@ -59,6 +59,7 @@ public class PlayerStat : MonoBehaviour
         {
             LevelUp();
         }
+        PlayerObjManager.Instance.Player.stat.UpdateLevelStatUI?.Invoke();
     }
 
     public void AddExp(BigInteger getExp)
@@ -69,6 +70,7 @@ public class PlayerStat : MonoBehaviour
         {
             LevelUp();
         }
+        PlayerObjManager.Instance.Player.stat.UpdateLevelStatUI?.Invoke();
     }
 
     public void decreaseHp(BigInteger damage)
