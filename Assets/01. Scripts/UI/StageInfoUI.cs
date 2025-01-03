@@ -11,12 +11,20 @@ public class StageInfoUI : UIBase
     public Slider stageProgressSlider;
     public TextMeshProUGUI currentGoldTxt;
 
-    private void Awake()
+    private void OnEnable()
     {
         GameEventsManager.Instance.stageEvents.onStageChange += RefreshUI;
         RegenManager.Instance.OnEnemyCountDown += RefreshUI;
         RegenManager.Instance.OnEnemyCountZero += RefreshUI;
         GameEventsManager.Instance.currencyEvents.onGoldChanged += RefreshUI;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.stageEvents.onStageChange -= RefreshUI;
+        RegenManager.Instance.OnEnemyCountDown -= RefreshUI;
+        RegenManager.Instance.OnEnemyCountZero -= RefreshUI;
+        GameEventsManager.Instance.currencyEvents.onGoldChanged -= RefreshUI;
     }
 
     private void Start()
