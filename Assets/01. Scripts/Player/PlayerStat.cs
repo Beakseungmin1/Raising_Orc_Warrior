@@ -55,6 +55,7 @@ public class PlayerStat : MonoBehaviour
     public void AddExpFromMonsters(IEnemy enemy)
     {
         exp += enemy.GiveExp();
+        LevelUp();
     }
 
     public void AddExp(BigInteger getExp)
