@@ -121,8 +121,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EXPDungeonUI, Assembly-CSharp
+      - m_Target: {fileID: 2453252794128978950}
+        m_TargetAssemblyTypeName: CubeDungeonUI, Assembly-CSharp
         m_MethodName: ExitBtn
         m_Mode: 1
         m_Arguments:
