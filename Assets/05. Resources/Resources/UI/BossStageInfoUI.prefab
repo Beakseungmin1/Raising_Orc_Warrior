@@ -262,12 +262,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
-  dungeonBosses: []
   timeSlider: {fileID: 4723581233326209106}
   hpSlider: {fileID: 833466558319329410}
   remainingCountTxt: {fileID: 1726605264485312363}
   runBtn: {fileID: 6915773968941930609}
   dungeonNameLabel: {fileID: 3616652284396273150}
+  maxLimitTime: 0
 --- !u!1 &1637731595757221779
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,7 +1361,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9141039458158509182}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1348099380721434454}
+        m_TargetAssemblyTypeName: BossStageInfoUI, Assembly-CSharp
+        m_MethodName: OnRunBtnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8947397821875483980
 GameObject:
   m_ObjectHideFlags: 0
