@@ -103,7 +103,7 @@ public class DungeonManager : Singleton<DungeonManager>
                 CurrencyManager.Instance.AddCurrency(CurrencyType.Cube, dungeon.info.rewardAmount);
                 break;
             case DungeonType.GoldDungeon:
-                CurrencyManager.Instance.AddCurrency(CurrencyType.Gold, dungeon.info.rewardAmount);
+                CurrencyManager.Instance.AddGold((BigInteger)dungeon.info.rewardAmount);
                 break;
             default:
                 PlayerObjManager.Instance.Player.stat.AddExp((BigInteger)dungeon.info.rewardAmount);
