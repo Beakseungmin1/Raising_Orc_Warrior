@@ -302,4 +302,8 @@ public class PlayerStat : MonoBehaviour
 
     }
 
+    public void RefillHP()
+    {
+        health = maxHealth;
+    }
 }
