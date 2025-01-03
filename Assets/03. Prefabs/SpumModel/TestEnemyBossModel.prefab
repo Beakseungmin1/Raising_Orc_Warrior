@@ -9914,6 +9914,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: a54dd58e5c3aca84791e874f80826f61, type: 2}
+    - target: {fileID: 7743007196220270669, guid: cfa910a7f6838b54ab839c777a3147c3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 9220367751522291498, guid: cfa910a7f6838b54ab839c777a3147c3, type: 3}
       propertyPath: m_Name
       value: UnitRoot
