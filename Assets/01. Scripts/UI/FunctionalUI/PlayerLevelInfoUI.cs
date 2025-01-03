@@ -15,7 +15,6 @@ public class PlayerLevelInfoUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI UICurExpTxt;
     [SerializeField] private TextMeshProUGUI UINeedExpTxt;
 
-
     private void Start()
     {
         stat = PlayerObjManager.Instance.Player.stat;
@@ -25,13 +24,11 @@ public class PlayerLevelInfoUI : MonoBehaviour
         UpdateLevelUI();
     }
 
-
-
     public void UpdateLevelUI()
     {
         if (stat != null)
         {
-            UILevelTxt.text = stat.level.ToString();
+            UILevelTxt.text = (stat.level + 1).ToString();
 
             BigInteger currentExp = stat.exp;
             BigInteger needExp = stat.needExp;
@@ -55,10 +52,4 @@ public class PlayerLevelInfoUI : MonoBehaviour
             return;
         }
     }
-
-
-
-
-
-
 }

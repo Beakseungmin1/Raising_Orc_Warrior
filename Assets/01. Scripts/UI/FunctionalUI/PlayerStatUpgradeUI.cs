@@ -12,9 +12,10 @@ public class PlayerStatUpgradeUI : MonoBehaviour
     public UpgradeTabUI blueCriticalDamageUi;
     public UpgradeTabUI blueCriticalProbabilityUi;
 
+    private PlayerStat playerstat;
+
     private void Start()
     {
-        //юс╫ц
         attackUi.UpdateAttackStatUI();
         healthUi.UpdateHealthStatUI();
         healthRegenUi.UpdateHealthRegenerationUI();
@@ -53,17 +54,9 @@ public class PlayerStatUpgradeUI : MonoBehaviour
         PlayerObjManager.Instance.Player.stat.BlueCriticalIncreaseDamageLevelUp();
         blueCriticalDamageUi.UpdateblueCriticalIncreaseDamageStatUI();
     }
-    public void OnBlueCriticalProbabilityLevelUpButto()
+    public void OnBlueCriticalProbabilityLevelUpButton()
     {
         PlayerObjManager.Instance.Player.stat.BlueCriticalProbabilityLevelUp();
         blueCriticalProbabilityUi.UpdateblueCriticalProbabilityStatUI();
     }
-
-
-
-
-
-
-
-
 }

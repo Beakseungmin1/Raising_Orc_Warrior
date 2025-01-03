@@ -68,7 +68,7 @@ public class EnemyMover : MonoBehaviour
 
     private void ResetState()
     {
-        canMove = true;
+        canMove = false;
         isKnockback = false;
         frontEnemy = null;
     }

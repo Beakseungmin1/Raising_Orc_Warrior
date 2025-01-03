@@ -2,7 +2,7 @@
 using System.Numerics;
 using UnityEngine;
 
-public class EnemyDungeonBoss : MonoBehaviour, IEnemy
+public class EnemyDungeonBoss : EnemyBase, IEnemy
 {
     private enum Pattern
     {
@@ -50,7 +50,7 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
         GameEventsManager.Instance.enemyEvents.onEnemyCleared -= ClearEnemy;
     }
 
-    private void Start()
+    public void Start()
     {
         InvokeRepeating("SwitchPattern", 0, patternTime);
     }
@@ -82,8 +82,10 @@ public class EnemyDungeonBoss : MonoBehaviour, IEnemy
         animator.SetBool("Pattern2", false);
     }
 
-    public void TakeDamage(BigInteger Damage)
+    public override void TakeDamage(BigInteger Damage)
     {
+        base.TakeDamage(Damage);
+
         if (hp - Damage > 0)
         {
             hp -= Damage;

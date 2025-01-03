@@ -48,18 +48,27 @@ public class PlayerStat : MonoBehaviour
 
     private void Start()
     {
-        // юс╫ц
         SetDefaultStat();
     }
 
     public void AddExpFromMonsters(IEnemy enemy)
     {
         exp += enemy.GiveExp();
+
+        while (exp >= needExp)
+        {
+            LevelUp();
+        }
     }
 
     public void AddExp(BigInteger getExp)
     {
         exp += getExp;
+
+        while (exp >= needExp)
+        {
+            LevelUp();
+        }
     }
 
     public void decreaseHp(BigInteger damage)
@@ -143,7 +152,7 @@ public class PlayerStat : MonoBehaviour
         {
             CurrencyManager.Instance.SubtractGold(needCriticalIncreaseDamageUpgradeMoney);
             criticalIncreaseDamageLevel++;
-            criticalIncreaseDamage = criticalIncreaseDamageLevel;
+            criticalIncreaseDamage = 100 + criticalIncreaseDamageLevel;
         }
         else
         {
@@ -201,7 +210,7 @@ public class PlayerStat : MonoBehaviour
 
     public void SetDefaultStat()
     {
-        level = 1;
+        level = 0;
         exp = 0;
         needExp = 100;
         attackPower = 20;
@@ -220,10 +229,10 @@ public class PlayerStat : MonoBehaviour
         attackSpeed = 0;
         normalMonsterIncreaseDamage = 0;
         bossMonsterIncreaseDamage = 0;
-        attackLevel = 1;
-        healthLevel = 1;
-        healthRegenerationLevel = 1;
-        criticalIncreaseDamageLevel = 1;
+        attackLevel = 0;
+        healthLevel = 0;
+        healthRegenerationLevel = 0;
+        criticalIncreaseDamageLevel = 0;
         criticalProbabilityLevel = 1;
         bluecriticalIncreaseDamageLevel = 1;
         bluecriticalProbabilityLevel = 1;

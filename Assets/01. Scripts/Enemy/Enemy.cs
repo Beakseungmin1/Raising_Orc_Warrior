@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Numerics;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class Enemy : MonoBehaviour, IEnemy
+public class Enemy : EnemyBase, IEnemy
 {
     public EnemySO enemySO;
 
@@ -25,26 +24,14 @@ public class Enemy : MonoBehaviour, IEnemy
     [SerializeField] private Collider2D effectRange;
     [SerializeField] private float damagePercent;
 
-    [Header("Damage UI")]
-    [SerializeField] private TextMeshPro damageText;
-    [SerializeField] private float damageDisplayDuration = 0.5f;
-    [SerializeField] private UnityEngine.Vector3 damageTextOffset = new UnityEngine.Vector3(0, 1f, 0);
-
+    [Header("UI Components")]
     [SerializeField] private Image healthBar;
 
     private Collider2D enemyCollider;
-    private float damageDisplayTimer;
-    private bool isDisplayingDamage;
     private bool isClearing;
     private Coroutine damageCoroutine;
 
     public Action OnEnemyAttack;
-
-    private void Start()
-    {
-        if (damageText != null)
-            damageText.gameObject.SetActive(false);
-    }
 
     private void OnEnable()
     {
@@ -58,22 +45,9 @@ public class Enemy : MonoBehaviour, IEnemy
         GameEventsManager.Instance.enemyEvents.onEnemyCleared -= ClearEnemy;
     }
 
-    private void Update()
+    public override void TakeDamage(BigInteger damage)
     {
-        if (isDisplayingDamage)
-        {
-            damageDisplayTimer -= Time.deltaTime;
-            if (damageDisplayTimer <= 0f)
-            {
-                isDisplayingDamage = false;
-                damageText.gameObject.SetActive(false);
-            }
-        }
-    }
-
-    public void TakeDamage(BigInteger damage)
-    {
-        ShowDamage(damage);
+        base.TakeDamage(damage);
 
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
@@ -86,7 +60,7 @@ public class Enemy : MonoBehaviour, IEnemy
         }
         else
         {
-            hp -= damage;
+            hp = 0;
             UpdateHealthBar();
             Die();
             return;
@@ -99,18 +73,6 @@ public class Enemy : MonoBehaviour, IEnemy
     {
         float fillAmount = (float)((double)hp / (double)maxHp);
         healthBar.fillAmount = fillAmount;
-    }
-
-    private void ShowDamage(BigInteger damage)
-    {
-        if (damageText != null)
-        {
-            damageText.transform.position = transform.position + damageTextOffset;
-            damageText.text = damage.ToString();
-            damageText.gameObject.SetActive(true);
-            damageDisplayTimer = damageDisplayDuration;
-            isDisplayingDamage = true;
-        }
     }
 
     public BigInteger GiveExp()
@@ -138,12 +100,7 @@ public class Enemy : MonoBehaviour, IEnemy
 
     private IEnumerator DelayedReturnToPool()
     {
-        if (damageText != null)
-        {
-            damageText.gameObject.SetActive(true);
-            yield return new WaitForSeconds(damageDisplayDuration);
-        }
-
+        yield return new WaitForSeconds(1.0f);
         ObjectPool.Instance.ReturnObject(gameObject);
     }
 
@@ -177,11 +134,6 @@ public class Enemy : MonoBehaviour, IEnemy
 
         enemyCollider.enabled = true;
         isClearing = false;
-        isDisplayingDamage = false;
-        damageDisplayTimer = 0f;
-
-        if (damageText != null)
-            damageText.gameObject.SetActive(false);
 
         UpdateHealthBar();
     }
@@ -198,16 +150,13 @@ public class Enemy : MonoBehaviour, IEnemy
             damageCoroutine = null;
         }
 
+        BattleManager.Instance.StartBattle();
         GameEventsManager.Instance.StartCoroutine(ClearAndReturnToPool());
     }
 
     private IEnumerator ClearAndReturnToPool()
     {
-        if (damageText != null && damageText.gameObject.activeSelf)
-        {
-            yield return new WaitForSeconds(damageDisplayDuration);
-        }
-
+        yield return new WaitForSeconds(1.0f);
         ObjectPool.Instance.ReturnObject(gameObject);
     }
 }
