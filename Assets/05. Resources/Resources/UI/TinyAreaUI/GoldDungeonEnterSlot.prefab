@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 1169687446175468611}
   - component: {fileID: 7068401888137431329}
   - component: {fileID: 3854268492200533398}
-  - component: {fileID: 2974383170549954409}
+  - component: {fileID: 9099938924841251933}
   m_Layer: 5
   m_Name: GoldDungeonEnterSlot
   m_TagString: Untagged
@@ -169,9 +169,9 @@ RectTransform:
   - {fileID: 1758232771241498889}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 440, y: -120}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 680, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1169687446175468611
@@ -256,7 +256,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2974383170549954409}
+      - m_Target: {fileID: 9099938924841251933}
         m_TargetAssemblyTypeName: GoldDungeonEnterSlotUI, Assembly-CSharp
         m_MethodName: ShowGoldDungeonUI_ConfirmEnterBtnPopUpUI
         m_Mode: 1
@@ -268,7 +268,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2974383170549954409
+--- !u!114 &9099938924841251933
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5006855053415461158}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d160954db33633247a988a0a47aada16, type: 3}
+  m_Script: {fileID: 11500000, guid: 55370793bffc1f948b602d776d1514ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}

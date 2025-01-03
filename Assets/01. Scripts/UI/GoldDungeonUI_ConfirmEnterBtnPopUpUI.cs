@@ -25,7 +25,7 @@ public class GoldDungeonUI_ConfirmEnterBtnPopUpUI : UIBase
         if (CurrencyManager.Instance.GetCurrency(CurrencyType.DungeonTicket) >= 1)
         {
             Hide();
-            UIManager.Instance.Hide<EXPDungeonUI>();
+            UIManager.Instance.Hide<GoldDungeonUI>();
             UIManager.Instance.Hide<StageInfoUI>();
             UIManager.Instance.Hide<DimmedUI>();
             UIManager.Instance.Show<Main_PlayerUpgradeUI>();

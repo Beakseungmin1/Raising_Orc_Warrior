@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2347243177176839514}
   - component: {fileID: 8475437059289194908}
-  - component: {fileID: 730309056744721370}
+  - component: {fileID: 5285910554735498010}
   m_Layer: 5
   m_Name: GoldDungeonUI_ConfirmEnterBtnPopUpUI
   m_TagString: Untagged
@@ -50,7 +50,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 91953527001898977}
   m_CullTransparentMesh: 1
---- !u!114 &730309056744721370
+--- !u!114 &5285910554735498010
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,7 +59,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 91953527001898977}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c73a3aa9fab12046903248d7d4f2668, type: 3}
+  m_Script: {fileID: 11500000, guid: e415371b8f2a3a94b95d98c01a8e0ba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
@@ -263,7 +263,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 730309056744721370}
+      - m_Target: {fileID: 5285910554735498010}
         m_TargetAssemblyTypeName: GoldDungeonUI_ConfirmEnterBtnPopUpUI, Assembly-CSharp
         m_MethodName: ExitBtn
         m_Mode: 1
@@ -933,7 +933,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 730309056744721370}
+      - m_Target: {fileID: 5285910554735498010}
         m_TargetAssemblyTypeName: GoldDungeonUI_ConfirmEnterBtnPopUpUI, Assembly-CSharp
         m_MethodName: OnGoToDungeonBtnClick
         m_Mode: 1
