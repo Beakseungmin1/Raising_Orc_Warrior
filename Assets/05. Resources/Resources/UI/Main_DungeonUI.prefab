@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 3668695224637409193}
   - component: {fileID: 6909853354387400282}
   m_Layer: 5
-  m_Name: GoldDungeonPopupBtn (1)
+  m_Name: GoldDungeonPopupBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -274,7 +274,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3668695224637409193}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7171581943793515933}
+        m_TargetAssemblyTypeName: Main_DungeonUI, Assembly-CSharp
+        m_MethodName: ShowGoldDungeonUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3053976030188955954
 GameObject:
   m_ObjectHideFlags: 0
@@ -1075,7 +1087,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6128920087644987120}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7171581943793515933}
+        m_TargetAssemblyTypeName: Main_DungeonUI, Assembly-CSharp
+        m_MethodName: ShowCubeDungeonUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8236585019290921344
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BossStage0002
   m_EditorClassIdentifier: 
   bossEnemySO: {fileID: 11400000, guid: 22d84c7d7c0bb21468253ae3fb8c0744, type: 2}
-  stageName: "\uCD08\uAE09\uC790 \uC0AC\uB0E5\uD130 I Boss"
+  stageName: "\uC911\uAE09\uC790 \uC0AC\uB0E5\uD130 I Boss"

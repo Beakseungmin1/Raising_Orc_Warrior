@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-    private List<UIBase> uiList = new List<UIBase>(); //이미 생성된 리스트
+    private Dictionary<string, UIBase> uiDictionary = new Dictionary<string, UIBase>(); //이미 생성된 리스트
     public static float ScreenWidth = 1080;
     public static float ScreenHeight = 1920;
 
@@ -13,20 +14,46 @@ public class UIManager : Singleton<UIManager>
 
     public T Show<T>() where T : UIBase
     {
-        string uiName = typeof(T).ToString(); //UIManager.Instance.Show<MainPopup>(); 으로 코드를 쓰면 MainPopup이 uiName으로 반영된다. T는 각종 클래스에 대응함.
-        UIBase go = Resources.Load<UIBase>("UI/" + uiName); //이름이 같다면 반환해준다.
-        var ui = Load<T>(go, uiName);
-        uiList.Add(ui); //씬에 생성된 UI의 정보를 갖게된다.
+        string uiName = typeof(T).ToString(); // T 타입에 따라 UI 이름을 결정합니다.
+
+        // 딕셔너리에서 UI가 이미 생성되었는지 확인
+        if (uiDictionary.TryGetValue(uiName, out UIBase existingUI))
+        {
+            return (T)existingUI; // 이미 존재하는 UI 인스턴스를 반환
+        }
+
+        // UI가 존재하지 않을 경우 새로 생성
+        UIBase go = Resources.Load<UIBase>("UI/" + uiName); // UI 리소스를 로드합니다.
+        if (go == null)
+        {
+            throw new System.Exception($"UI Resource not found: {uiName}"); // 로드 실패 처리
+        }
+
+        var ui = Load<T>(go, uiName); // 새 UI 생성
+        uiDictionary[uiName] = ui; // 생성된 UI를 딕셔너리에 추가
 
         return (T)ui;
     }
 
     public T Show<T>(DungeonInfoSO dungeonInfoSO) where T : UIBase
     {
-        string uiName = typeof(T).ToString(); //UIManager.Instance.Show<MainPopup>(); 으로 코드를 쓰면 MainPopup이 uiName으로 반영된다. T는 각종 클래스에 대응함.
-        UIBase go = Resources.Load<UIBase>("UI/" + uiName); //이름이 같다면 반환해준다.
-        var ui = Load<T>(go, uiName);
-        uiList.Add(ui); //씬에 생성된 UI의 정보를 갖게된다.
+        string uiName = typeof(T).ToString(); // T 타입에 따라 UI 이름을 결정합니다.
+
+        // 딕셔너리에서 UI가 이미 생성되었는지 확인
+        if (uiDictionary.TryGetValue(uiName, out UIBase existingUI))
+        {
+            return (T)existingUI; // 이미 존재하는 UI 인스턴스를 반환
+        }
+
+        // UI가 존재하지 않을 경우 새로 생성
+        UIBase go = Resources.Load<UIBase>("UI/" + uiName); // UI 리소스를 로드합니다.
+        if (go == null)
+        {
+            throw new System.Exception($"UI Resource not found: {uiName}"); // 로드 실패 처리
+        }
+
+        var ui = Load<T>(go, uiName); // 새 UI 생성
+        uiDictionary[uiName] = ui; // 생성된 UI를 딕셔너리에 추가
 
         return (T)ui;
     }
@@ -62,17 +89,23 @@ public class UIManager : Singleton<UIManager>
 
     public void Hide(string uiName)
     {
-        UIBase go = uiList.Find(obj => obj.name == uiName);
-        uiList.Remove(go);
-        if (go != null)
+        // 딕셔너리에서 UI가 존재하는지 확인
+        if (uiDictionary.TryGetValue(uiName, out UIBase go))
         {
-            uiList.Remove(go);
-            Destroy(go.canvas.gameObject);
+            uiDictionary.Remove(uiName); // 딕셔너리에서 UI 제거
+            Destroy(go.canvas.gameObject); // UI 오브젝트 파괴
 
-            if (uiList.Count > 0)
-                currentSortingOrder = uiList[uiList.Count - 1].canvas.sortingOrder;
+            if (uiDictionary.Count > 0)
+            {
+                // 가장 높은 sortingOrder를 가진 UI를 찾음
+                currentSortingOrder = uiDictionary.Values
+                    .Select(ui => ui.canvas.sortingOrder)
+                    .Max();
+            }
             else
-                currentSortingOrder = 0;
+            {
+                currentSortingOrder = 0; // UI가 없으면 기본 sortingOrder로 설정
+            }
         }
     }
 }

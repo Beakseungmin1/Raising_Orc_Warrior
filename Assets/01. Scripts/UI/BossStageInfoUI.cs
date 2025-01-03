@@ -7,12 +7,9 @@ using System.Numerics;
 
 public class BossStageInfoUI : UIBase
 {
-    public List<GameObject> dungeonBosses;
-
     public Slider timeSlider;
     public Slider hpSlider;
     public TextMeshProUGUI remainingCountTxt;
-    public Button runBtn;
     public TextMeshProUGUI dungeonNameLabel;
 
     private BigInteger bossMaxHP;
@@ -21,12 +18,12 @@ public class BossStageInfoUI : UIBase
 
     private void OnEnable()
     {
-        GameEventsManager.Instance.bossEvents.onSetBossHp += SetMaxHP;
+        GameEventsManager.Instance.bossEvents.onSetBossHp += InitUI;
         GameEventsManager.Instance.bossEvents.onBossHpChanged += RefreshUI;
     }
     private void OnDisable()
     {
-        GameEventsManager.Instance.bossEvents.onSetBossHp -= SetMaxHP;
+        GameEventsManager.Instance.bossEvents.onSetBossHp -= InitUI;
         GameEventsManager.Instance.bossEvents.onBossHpChanged -= RefreshUI;
     }
 
@@ -45,8 +42,9 @@ public class BossStageInfoUI : UIBase
         timeSlider.value = StageManager.Instance.timer.GetLimitTime() / maxLimitTime;
     }
 
-    private void InitUI()
+    private void InitUI(BigInteger maxHP)
     {
+        bossMaxHP = maxHP;
         hpSlider.value = (float)bossMaxHP/(float)bossMaxHP;
         remainingCountTxt.text = $"{bossMaxHP}/{bossMaxHP}";
 
@@ -71,15 +69,14 @@ public class BossStageInfoUI : UIBase
         }
     }
 
-    private void SetMaxHP(BigInteger maxHP)
-    {
-        bossMaxHP = maxHP;
-        InitUI();
-    }
-
     private void RefreshUI(BigInteger curHP)
     {
         hpSlider.value = (float)curHP / (float)bossMaxHP;
         remainingCountTxt.text = $"{curHP}/{bossMaxHP}";
+    }
+
+    public void OnRunBtnClick()
+    {
+        StageManager.Instance.BackToLastStage();
     }
 }

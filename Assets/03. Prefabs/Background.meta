@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/04. ScriptableObjectAssets/StageSO/Chapter003.meta
+guid: 660fbb9f122a44c41b7a3dc1c54d60b0
+========
 guid: c16d636867610294c954147f8127f2ee
+>>>>>>>> Dev:Assets/03. Prefabs/Background.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

@@ -24,14 +24,14 @@ public class EXPDungeonUI_ConfirmEnterBtnPopUpUI : UIBase
     {
         if (CurrencyManager.Instance.GetCurrency(CurrencyType.DungeonTicket) >= 1)
         {
-            CurrencyManager.Instance.SubtractCurrency(CurrencyType.DungeonTicket, 1);
-            StageManager.Instance.GoToDungeonStage(dungeonInfoSO.type, dungeonInfoSO.level);
             Hide();
             UIManager.Instance.Hide<EXPDungeonUI>();
             UIManager.Instance.Hide<StageInfoUI>();
             UIManager.Instance.Hide<DimmedUI>();
             UIManager.Instance.Show<Main_PlayerUpgradeUI>();
             UIManager.Instance.Show<BossStageInfoUI>();
+            CurrencyManager.Instance.SubtractCurrency(CurrencyType.DungeonTicket, 1);
+            StageManager.Instance.GoToDungeonStage(dungeonInfoSO.type, dungeonInfoSO.level);
         }
     }
 }

@@ -1,8 +1,9 @@
-using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine;
 
-public class EXPDungeonEnterBtnUI : UIBase
+public class GoldDungeonEnterSlotUI : UIBase
 {
     public DungeonInfoSO dungeonInfoSO;
 
@@ -18,7 +19,7 @@ public class EXPDungeonEnterBtnUI : UIBase
         }
 
         dungeon = DungeonManager.Instance.GetDungeonByTypeAndLevel(dungeonInfoSO.type, dungeonInfoSO.level);
-        if(dungeon.state == DungeonState.CLOSED)
+        if (dungeon.state == DungeonState.CLOSED)
         {
             gameObject.SetActive(false);
         }
@@ -28,10 +29,10 @@ public class EXPDungeonEnterBtnUI : UIBase
         }
     }
 
-    public void ShowEXPDungeonUI_ConfirmEnterBtnPopUpUI()
+    public void ShowGoldDungeonUI_ConfirmEnterBtnPopUpUI()
     {
         UIManager.Instance.Show<DimmedUI>();
-        EXPDungeonUI_ConfirmEnterBtnPopUpUI btnPopupUI = UIManager.Instance.Show<EXPDungeonUI_ConfirmEnterBtnPopUpUI>(dungeonInfoSO);
+        GoldDungeonUI_ConfirmEnterBtnPopUpUI btnPopupUI = UIManager.Instance.Show<GoldDungeonUI_ConfirmEnterBtnPopUpUI>(dungeonInfoSO);
         btnPopupUI.dungeonInfoSO = null;
         btnPopupUI.dungeonInfoSO = this.dungeonInfoSO;
         btnPopupUI.Init();

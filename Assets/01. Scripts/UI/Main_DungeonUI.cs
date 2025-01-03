@@ -9,4 +9,14 @@ public class Main_DungeonUI : UIBase
         Hide();
         UIManager.Instance.Show<EXPDungeonUI>();
     }
+    public void ShowGoldDungeonUI()
+    {
+        Hide();
+        UIManager.Instance.Show<GoldDungeonUI>();
+    }
+    public void ShowCubeDungeonUI()
+    {
+        Hide();
+        UIManager.Instance.Show<CubeDungeonUI>();
+    }
 }

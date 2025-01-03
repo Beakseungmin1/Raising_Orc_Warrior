@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyCode: 1
   hpString: 1000000
   maxHpString: 1000000
-  giveExpString: 400
+  giveExpString: 0
   model: {fileID: 0}
   bossTimeLimit: 100
   cooldown: 10
