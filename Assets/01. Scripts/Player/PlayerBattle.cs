@@ -115,6 +115,8 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         animator.SetTrigger("4_Death");
         animator.SetBool("isDeath", true);
         currentState = State.Dead;
+
+        StartCoroutine(DelayBeforeResurrection());
     }
 
     private void PlayerAttack()
@@ -142,7 +144,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     public void GetMonsterReward()
     {
         playerStat.AddExpFromMonsters(currentMonster);
-        playerStat.UpdateLevelStatUI.Invoke();
         currentMonster = null;
 
         if (!isDead)
@@ -223,5 +224,17 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         {
             skillHandler.OnSkillUsed -= HandleSkillUsed;
         }
+    }
+
+    private IEnumerator DelayBeforeResurrection()
+    {
+        yield return new WaitForSeconds(5f);
+
+        StageManager.Instance.BackToLastStage();
+        playerStat.RefillHP();
+        isDead = false;
+        animator.Play("IDLE");
+        animator.SetBool("isDeath", false);
+        currentState = State.Idle;
     }
 }
