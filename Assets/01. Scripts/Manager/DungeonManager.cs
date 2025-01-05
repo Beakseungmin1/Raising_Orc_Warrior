@@ -95,27 +95,36 @@ public class DungeonManager : Singleton<DungeonManager>
         return null; // 던전을 찾지 못한 경우 null 반환
     }
 
-    private void ClaimRewards(Dungeon dungeon)
+    private void ClaimRewards(Dungeon dungeon, float enemysHplostPercentage)
     {
-        switch(dungeon.type)
+        switch (dungeon.type)
         {
             case DungeonType.CubeDungeon:
-                CurrencyManager.Instance.AddCurrency(CurrencyType.Cube, dungeon.info.rewardAmount);
-                break;
+                float lastRewardAmountCube = Mathf.RoundToInt(dungeon.info.rewardAmount * enemysHplostPercentage * 100);
+                CurrencyManager.Instance.AddCurrency(CurrencyType.Cube, lastRewardAmountCube);
+                break; 
             case DungeonType.GoldDungeon:
-                CurrencyManager.Instance.AddGold((BigInteger)dungeon.info.rewardAmount);
+                BigInteger lastRewardAmountGold = (BigInteger)(dungeon.info.rewardAmount * enemysHplostPercentage * 100);
+                CurrencyManager.Instance.AddGold(lastRewardAmountGold);
                 break;
             default:
-                PlayerObjManager.Instance.Player.stat.AddExp((BigInteger)dungeon.info.rewardAmount);
+                BigInteger lastRewardAmountExp = (BigInteger)(dungeon.info.rewardAmount * enemysHplostPercentage * 100);
+                PlayerObjManager.Instance.Player.stat.AddExp(lastRewardAmountExp);
                 break;
         }
     }
 
-    public void ClearDungeon(DungeonType dungeonType, int level)
+    public void ClearDungeon(DungeonType dungeonType, int level, BigInteger maxHP, BigInteger hp)
     {
+        // BigInteger를 double로 변환하여 비율 계산
+        double maxHpDouble = (double)maxHP;
+        double currentHpDouble = (double)hp;
+        // 손실된 체력 비율 계산
+        double lostPercentage = (maxHpDouble - currentHpDouble) / maxHpDouble * 100.0;
+
         Dungeon dungeon = GetDungeonByTypeAndLevel(dungeonType, level);
         ChangeDungeonState(dungeon.type, level, DungeonState.CLEARED);
-        ClaimRewards(dungeon);
+        ClaimRewards(dungeon, (float)lostPercentage);
 
         //다음 레벨 던전 오픈
         if (GetDungeonByTypeAndLevel(dungeonType, level+1) != null)

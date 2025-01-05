@@ -117,8 +117,8 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
     {
         ObjectPool.Instance.ReturnObject(gameObject);
         GameEventsManager.Instance.enemyEvents.EnemyKilled();
-
-        DungeonManager.Instance.ClearDungeon(dungeonInfo.type, dungeonInfo.level);
+     
+        DungeonManager.Instance.ClearDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp);
     }
 
     public bool GetActive()
