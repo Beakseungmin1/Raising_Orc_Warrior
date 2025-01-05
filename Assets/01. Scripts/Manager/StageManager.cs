@@ -135,6 +135,7 @@ public class StageManager : Singleton<StageManager>
         RegenManager.Instance.RegenStagesEnemyDungeonBoss(dungeon.info);
         SetTimer(dungeon.info.dungeonBoss.bossTimeLimit);
         GameEventsManager.Instance.stageEvents.ChangeStage();
+        DungeonManager.Instance.playerIsInDungeon = true;
     }
 
 

@@ -43,11 +43,13 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
         SetupEnemy();
         GameEventsManager.Instance.bossEvents.BossHPSet(maxHp);
         GameEventsManager.Instance.enemyEvents.onEnemyCleared += ClearEnemy;
+        GameEventsManager.Instance.dungeonEvents.onPlayerFinishDungeon += FinishDungeon;
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.enemyEvents.onEnemyCleared -= ClearEnemy;
+        GameEventsManager.Instance.dungeonEvents.onPlayerFinishDungeon -= FinishDungeon;
     }
 
     public void Start()
@@ -117,8 +119,14 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
     {
         ObjectPool.Instance.ReturnObject(gameObject);
         GameEventsManager.Instance.enemyEvents.EnemyKilled();
-     
-        DungeonManager.Instance.ClearDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp);
+
+        bool isCleared = true;
+        FinishDungeon(isCleared);
+    }
+
+    public void FinishDungeon(bool isCleared)
+    {
+        DungeonManager.Instance.FinishDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp, isCleared);
     }
 
     public bool GetActive()

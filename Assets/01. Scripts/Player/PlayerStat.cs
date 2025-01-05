@@ -216,7 +216,7 @@ public class PlayerStat : MonoBehaviour
         exp = 0;
         needExp = 100;
         attackPower = 20;
-        maxHealth = 200;
+        maxHealth = 30;
         health = maxHealth;
         healthRegeneration = 0;
         criticalProbability = 0;

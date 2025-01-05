@@ -117,6 +117,12 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         currentState = State.Dead;
 
         StartCoroutine(DelayBeforeResurrection());
+
+        if (DungeonManager.Instance.playerIsInDungeon)
+        {
+            bool isCleared = false;
+            GameEventsManager.Instance.dungeonEvents.PlayerFinishDungeon(isCleared);
+        }
     }
 
     private void PlayerAttack()

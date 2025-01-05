@@ -270,8 +270,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 258695710bb7e11458dd2d9fd611cab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  dungeonInfoSO: {fileID: 0}
   rewardIconImage: {fileID: 1159314988908408887}
   rewardAmountTxt: {fileID: 9000747228950147381}
+  rewardTypeCube: {fileID: 21300000, guid: a01ae6bc24e837848a3edef5f91f9219, type: 3}
+  rewardTypeGold: {fileID: 21300000, guid: a375e8672dbd859418167cc527625ada, type: 3}
+  rewardTypeExp: {fileID: 21300000, guid: e5d6644fd62cecf439bcf52812b9f0d8, type: 3}
 --- !u!1 &6335342619724841884
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,15 @@ public class Timer : MonoBehaviour
 
         if (GetLimitTime() <= 0)
         {
-            StageManager.Instance.BackToLastStage();
+            if (DungeonManager.Instance.playerIsInDungeon) //带傈老 版快
+            {
+                bool isCleared = false;
+                GameEventsManager.Instance.dungeonEvents.PlayerFinishDungeon(isCleared);
+            }
+            else //焊胶老 版快
+            {
+                StageManager.Instance.BackToLastStage();
+            }
             Destroy(gameObject);
         }
     }
