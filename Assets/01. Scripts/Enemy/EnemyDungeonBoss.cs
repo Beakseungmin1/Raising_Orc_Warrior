@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Numerics;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class EnemyDungeonBoss : EnemyBase, IEnemy
@@ -38,8 +40,11 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
     float patternTime = 4f; // 패턴 유지시간
     float toTime = 4; // 패턴 시간 계산용 변수
 
+    bool canAttack = true;
+
     private void OnEnable()
     {
+        canAttack = true;
         SetupEnemy();
         GameEventsManager.Instance.bossEvents.BossHPSet(maxHp);
         GameEventsManager.Instance.enemyEvents.onEnemyCleared += ClearEnemy;
@@ -61,20 +66,23 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
     {
         toTime += Time.deltaTime;
 
-        switch (enemyPattern)
+        if (canAttack)
         {
-            case Pattern.Pattern1:
-                SetfalseAnimation();
-                animator.SetBool("Pattern1", true);
-                break;
-            case Pattern.Pattern2:
-                SetfalseAnimation();
-                animator.SetBool("Pattern2", true);
-                break;
-            case Pattern.Pattern3:
-                SetfalseAnimation();
-                animator.SetTrigger("Pattern3");
-                break;
+            switch (enemyPattern)
+            {
+                case Pattern.Pattern1:
+                    SetfalseAnimation();
+                    animator.SetBool("Pattern1", true);
+                    break;
+                case Pattern.Pattern2:
+                    SetfalseAnimation();
+                    animator.SetBool("Pattern2", true);
+                    break;
+                case Pattern.Pattern3:
+                    SetfalseAnimation();
+                    animator.SetTrigger("Pattern3");
+                    break;
+            }
         }
     }
 
@@ -117,16 +125,15 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
 
     public void Die()
     {
-        ObjectPool.Instance.ReturnObject(gameObject);
-        GameEventsManager.Instance.enemyEvents.EnemyKilled();
-
         bool isCleared = true;
         FinishDungeon(isCleared);
     }
 
     public void FinishDungeon(bool isCleared)
     {
-        StartCoroutine(DungeonManager.Instance.FinishDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp, isCleared));
+        this.canAttack = false;
+
+        StartCoroutine(DungeonManager.Instance.FinishDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp, isCleared, this));
     }
 
     public bool GetActive()

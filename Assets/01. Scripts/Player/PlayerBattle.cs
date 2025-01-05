@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class PlayerBattle : MonoBehaviour, IDamageable
@@ -32,6 +33,8 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private IEnemy currentMonster;
 
+    public bool isStopped = false;
+
     private void Start()
     {
         PlayerDamageCalculator = GetComponent<PlayerDamageCalculator>();
@@ -50,34 +53,45 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        switch (currentState)
+        if(!isStopped)
         {
-            case State.Idle:
-                CancelInvoke("PlayerAttack");
-                animator.SetBool("2_Attack", false);
-                BattleManager.Instance.EndBattle();
-                break;
+            switch (currentState)
+            {
+                case State.Idle:
+                    CancelInvoke("PlayerAttack");
+                    animator.SetBool("2_Attack", false);
+                    BattleManager.Instance.EndBattle();
+                    break;
 
-            case State.Attacking:
-                if (currentMonster != null && !IsInvoking("PlayerAttack"))
-                {
-                    InvokeRepeating("PlayerAttack", 0f, attackDelay);
+                case State.Attacking:
+                    if (currentMonster != null && !IsInvoking("PlayerAttack"))
+                    {
+                        InvokeRepeating("PlayerAttack", 0f, attackDelay);
+                        BattleManager.Instance.StartBattle();
+                    }
+                    break;
+
+                case State.Dead:
                     BattleManager.Instance.StartBattle();
-                }
-                break;
+                    break;
 
-            case State.Dead:
-                BattleManager.Instance.StartBattle();
-                break;
-
-            case State.Skill:
-                if (currentMonster == null || !currentMonster.GetActive())
-                {
-                    // 몬스터가 없으면 Idle로 복귀
-                    currentState = State.Idle;
-                    animator.Play("IDLE"); // Animator 상태를 Idle로 강제 전환
-                }
-                break;
+                case State.Skill:
+                    if (currentMonster == null || !currentMonster.GetActive())
+                    {
+                        // 몬스터가 없으면 Idle로 복귀
+                        currentState = State.Idle;
+                        animator.Play("IDLE"); // Animator 상태를 Idle로 강제 전환
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            currentState = State.Idle;
+            animator.Play("IDLE");
+            CancelInvoke("PlayerAttack");
+            animator.SetBool("2_Attack", false);
+            BattleManager.Instance.StartBattle();
         }
     }
 
@@ -235,24 +249,28 @@ public class PlayerBattle : MonoBehaviour, IDamageable
             bool isCleared = false;
             GameEventsManager.Instance.dungeonEvents.PlayerFinishDungeon(isCleared);
 
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(7f);
 
             playerStat.RefillHP();
-            isDead = false;
-            animator.Play("IDLE");
-            animator.SetBool("isDeath", false);
-            currentState = State.Idle;
         }
         else
         {
             yield return new WaitForSeconds(5f);
 
-            playerStat.RefillHP();
-            isDead = false;
-            animator.Play("IDLE");
-            animator.SetBool("isDeath", false);
-            currentState = State.Idle;
             StageManager.Instance.BackToLastStage();
+            playerStat.RefillHP();
+            SetPlayerStateIdle();
         }
+    }
+
+    public void SetPlayerStateIdle()
+    {
+        isStopped = false;
+        isDead = false;
+        animator.SetBool("isDeath", false);
+        animator.SetBool("2_Attack", false);
+        currentState = State.Idle;
+        animator.Play("IDLE");
+        BattleManager.Instance.EndBattle();
     }
 }

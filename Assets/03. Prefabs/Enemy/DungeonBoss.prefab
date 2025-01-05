@@ -201,7 +201,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f7ef0388459174cbfd78a7d2c0b868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 0}
   enemySO: {fileID: 11400000, guid: 141d795a02777924e81e256d587a2497, type: 2}
   dungeonInfo: {fileID: 0}
   enemyCode: 

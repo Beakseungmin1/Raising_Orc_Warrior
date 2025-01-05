@@ -127,8 +127,12 @@ public class DungeonManager : Singleton<DungeonManager>
 
     
 
-    public IEnumerator FinishDungeon(DungeonType dungeonType, int level, BigInteger maxHP, BigInteger hp, bool isCleared)
+    public IEnumerator FinishDungeon(DungeonType dungeonType, int level, BigInteger maxHP, BigInteger hp, bool isCleared, EnemyDungeonBoss enemyDungeonBoss)
     {
+        PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateIdle();
+        BattleManager.Instance.StartBattle(); //배경 스크롤 이동 중지
+        PlayerObjManager.Instance.Player.PlayerBattle.isStopped = true;
+
         // BigInteger를 double로 변환하여 비율 계산
         double maxHpDouble = (double)maxHP;
         double currentHpDouble = (double)hp;
@@ -163,6 +167,7 @@ public class DungeonManager : Singleton<DungeonManager>
         UIManager.Instance.Hide<BossStageInfoUI>();
         UIManager.Instance.Show<StageInfoUI>();
         StageManager.Instance.GoToNextStage();
+        PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateIdle();
     }
 
     
