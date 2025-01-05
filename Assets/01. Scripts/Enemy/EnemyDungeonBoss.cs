@@ -126,7 +126,7 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
 
     public void FinishDungeon(bool isCleared)
     {
-        DungeonManager.Instance.FinishDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp, isCleared);
+        StartCoroutine(DungeonManager.Instance.FinishDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp, isCleared));
     }
 
     public bool GetActive()

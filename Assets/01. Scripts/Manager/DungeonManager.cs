@@ -98,7 +98,7 @@ public class DungeonManager : Singleton<DungeonManager>
         return null; // 던전을 찾지 못한 경우 null 반환
     }
 
-    public void ClaimRewards(Dungeon dungeon, float enemysHplostPercentage)
+    public BigInteger ClaimRewards(Dungeon dungeon, float enemysHplostPercentage)
     {
         BigInteger lastRewardAmount = (BigInteger)(dungeon.info.rewardAmount * enemysHplostPercentage * 100);
 
@@ -115,22 +115,19 @@ public class DungeonManager : Singleton<DungeonManager>
                 break;
         }
 
-        StartCoroutine(ShowRewardPopup(lastRewardAmount));
+        return lastRewardAmount;
     }
 
-    private IEnumerator ShowRewardPopup(BigInteger lastRewardAmount)
+    private void ShowRewardPopup(BigInteger lastRewardAmount)
     {
         UIManager.Instance.Show<DimmedUI>();
         DungeonRewardPopupUI dungeonRewardPopupUI = UIManager.Instance.Show<DungeonRewardPopupUI>();
         dungeonRewardPopupUI.SetUI(currentDungeonInfo, lastRewardAmount);
-
-        yield return new WaitForSeconds(5f);
-
-        UIManager.Instance.Hide<DimmedUI>();
-        UIManager.Instance.Hide<DungeonRewardPopupUI>();
     }
 
-    public void FinishDungeon(DungeonType dungeonType, int level, BigInteger maxHP, BigInteger hp, bool isCleared)
+    
+
+    public IEnumerator FinishDungeon(DungeonType dungeonType, int level, BigInteger maxHP, BigInteger hp, bool isCleared)
     {
         // BigInteger를 double로 변환하여 비율 계산
         double maxHpDouble = (double)maxHP;
@@ -139,7 +136,11 @@ public class DungeonManager : Singleton<DungeonManager>
         double lostPercentage = (maxHpDouble - currentHpDouble) / maxHpDouble * 100.0;
 
         Dungeon dungeon = GetDungeonByTypeAndLevel(dungeonType, level);
-        ClaimRewards(dungeon, (float)lostPercentage);
+        BigInteger lastRewardAmount = ClaimRewards(dungeon, (float)lostPercentage);
+        
+        ShowRewardPopup(lastRewardAmount);
+
+        yield return new WaitForSeconds(5f);
 
         if (isCleared)
         {
@@ -155,6 +156,9 @@ public class DungeonManager : Singleton<DungeonManager>
 
         currentDungeonInfo = null;
         playerIsInDungeon = false;
+
+        UIManager.Instance.Hide<DimmedUI>();
+        UIManager.Instance.Hide<DungeonRewardPopupUI>();
 
         UIManager.Instance.Hide<BossStageInfoUI>();
         UIManager.Instance.Show<StageInfoUI>();
