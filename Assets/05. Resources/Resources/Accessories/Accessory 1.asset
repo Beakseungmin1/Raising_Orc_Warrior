@@ -23,7 +23,7 @@ MonoBehaviour:
   currentLevel: 1
   equipHpAndHpRecoveryIncreaseRate: 0
   passiveHpAndHpRecoveryIncreaseRate: 0
-  passiveMpAndMpRecoveryIncreaseRate: 0
-  passiveAddEXPRate: 0
+  passiveMpAndMpRecoveryIncreaseRate: 500
+  passiveAddEXPRate: 500
   rank: 3
   requireFuseItemCount: 5
