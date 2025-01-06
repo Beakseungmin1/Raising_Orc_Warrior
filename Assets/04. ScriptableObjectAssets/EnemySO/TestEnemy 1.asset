@@ -16,6 +16,7 @@ MonoBehaviour:
   hpString: 100
   maxHpString: 100
   giveExpString: 20
+  giveMoneyString: 200
   model: {fileID: 6924214075169127045, guid: 04463c88a66db5840afd4d8188ab03d9, type: 3}
   bossTimeLimit: 10
   cooldown: 10

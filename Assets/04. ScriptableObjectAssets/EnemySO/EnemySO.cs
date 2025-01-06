@@ -10,12 +10,14 @@ public class EnemySO : ScriptableObject
     public string hpString; // 체력
     public string maxHpString; // 최대체력
     public string giveExpString; // 주는 경험치
+    public string giveMoneyString; // 주는 돈
     public GameObject model; //적 모델
     public float bossTimeLimit = 10f;
 
     public BigInteger hp;
     public BigInteger maxHp;
     public BigInteger giveExp;
+    public BigInteger giveMoney;
 
     [Header("Skill Properties")]
     public float cooldown; // 쿨다운 시간 (보스가 스킬을 지니고 있을시 사용)
@@ -30,5 +32,6 @@ public class EnemySO : ScriptableObject
         hp = BigInteger.Parse(hpString);
         maxHp = BigInteger.Parse(maxHpString);
         giveExp = BigInteger.Parse(giveExpString);
+        giveMoney = BigInteger.Parse(giveMoneyString);
     }
 }

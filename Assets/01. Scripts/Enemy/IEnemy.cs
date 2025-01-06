@@ -6,6 +6,9 @@ using UnityEngine;
 public interface IEnemy
 {
     BigInteger GiveExp();
+
+    BigInteger GiveMoney();
+
     void Die();
     bool GetActive();
 
