@@ -99,7 +99,7 @@ public class RegenManager : Singleton<RegenManager>
     {
         if (totalEnemiesForDebug != 0)
         {
-            ClearEnemies();
+            GameEventsManager.Instance.enemyEvents.ClearEnemy();
         }
 
         killedEnemies = 0;
@@ -198,10 +198,5 @@ public class RegenManager : Singleton<RegenManager>
         {
             StageManager.Instance.StageClear();
         }
-    }
-
-    public void ClearEnemies()
-    {
-        GameEventsManager.Instance.enemyEvents.ClearEnemy();
     }
 }

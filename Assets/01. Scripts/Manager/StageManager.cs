@@ -114,7 +114,7 @@ public class StageManager : Singleton<StageManager>
         curStageIndex++;
         UIManager.Instance.Hide<StageInfoUI>();
         UIManager.Instance.Show<BossStageInfoUI>();
-        RegenManager.Instance.ClearEnemies();
+        GameEventsManager.Instance.enemyEvents.ClearEnemy();
         RegenManager.Instance.CacheEnemyBoss();
         RegenManager.Instance.RegenStagesBossEnemy();
         SetTimer(bossStageSO.bossEnemySO.bossTimeLimit);
@@ -128,7 +128,7 @@ public class StageManager : Singleton<StageManager>
         savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
         curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
 
-        RegenManager.Instance.ClearEnemies();
+        GameEventsManager.Instance.enemyEvents.ClearEnemy();
         Dungeon dungeon = DungeonManager.Instance.GetDungeonByTypeAndLevel(dungeonType, level);
         DungeonManager.Instance.currentDungeonInfo = dungeon.info;
         RegenManager.Instance.CacheDungeonBoss(dungeon);
