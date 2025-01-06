@@ -244,14 +244,9 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     {
         if (DungeonManager.Instance.playerIsInDungeon)
         {
-            yield return new WaitForSeconds(2f);
-
             bool isCleared = false;
-            GameEventsManager.Instance.dungeonEvents.PlayerFinishDungeon(isCleared);
-
-            yield return new WaitForSeconds(7f);
-
-            playerStat.RefillHP();
+            bool isPlayerDead = true;
+            GameEventsManager.Instance.dungeonEvents.PlayerFinishDungeon(isCleared, isPlayerDead);
         }
         else
         {

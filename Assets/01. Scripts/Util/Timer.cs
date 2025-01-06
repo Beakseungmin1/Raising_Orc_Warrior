@@ -21,7 +21,8 @@ public class Timer : MonoBehaviour
             if (DungeonManager.Instance.playerIsInDungeon) //带傈老 版快
             {
                 bool isCleared = false;
-                GameEventsManager.Instance.dungeonEvents.PlayerFinishDungeon(isCleared);
+                bool isPlayerDead = false;
+                GameEventsManager.Instance.dungeonEvents.PlayerFinishDungeon(isCleared, isPlayerDead);
             }
             else //焊胶老 版快
             {

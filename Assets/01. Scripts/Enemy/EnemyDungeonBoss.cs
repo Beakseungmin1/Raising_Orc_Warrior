@@ -40,7 +40,7 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
     float patternTime = 4f; // 패턴 유지시간
     float toTime = 4; // 패턴 시간 계산용 변수
 
-    bool canAttack = true;
+    public bool canAttack = true;
 
     private void OnEnable()
     {
@@ -126,14 +126,15 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
     public void Die()
     {
         bool isCleared = true;
-        FinishDungeon(isCleared);
+        bool isPlayerDead = false;
+        FinishDungeon(isCleared, isPlayerDead);
     }
 
-    public void FinishDungeon(bool isCleared)
+    public void FinishDungeon(bool isCleared, bool isPlayerDead)
     {
         this.canAttack = false;
 
-        StartCoroutine(DungeonManager.Instance.FinishDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp, isCleared, this));
+        StartCoroutine(DungeonManager.Instance.FinishDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp, isCleared, isPlayerDead, this));
     }
 
     public bool GetActive()
