@@ -133,6 +133,8 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     public void Die()
     {
+        GameEventsManager.Instance.bossEvents.TimerStop(); //던전일 경우 타이머 멈추기.
+
         isDead = true;
         animator.SetTrigger("4_Death");
         animator.SetBool("isDeath", true);

@@ -114,6 +114,7 @@ public class EnemyBoss : EnemyBase, IEnemy
 
     public void Die()
     {
+        GameEventsManager.Instance.bossEvents.TimerStop();
         animator.SetTrigger("4_Death");
         ObjectPool.Instance.ReturnObject(gameObject);
 
