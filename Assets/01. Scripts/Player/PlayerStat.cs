@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
+
     public int level { get; private set; }
     public BigInteger exp { get; private set; }
     public BigInteger needExp { get; private set; }
@@ -41,6 +42,8 @@ public class PlayerStat : MonoBehaviour
     public BigInteger needBlueCriticalIncreaseDamageUpgradeMoney { get; private set; }
     public BigInteger needBlueCriticalProbabilityUpgradeMoney { get; private set; }
 
+    private int statUpgradeMultiplier = 0; // 스탯 업그레이드 배율 , 0 = 1배, 1 = 10배, 2 = 100배
+
     public Action UpdateLevelStatUI;
 
     public Action UpdateUserInformationUI;
@@ -48,6 +51,15 @@ public class PlayerStat : MonoBehaviour
     private void Start()
     {
         SetDefaultStat();
+    }
+
+    public void ChangeUpgradeMultiplier(int number)
+    {
+        if (number >= 0 && number <= 2)
+        {
+            statUpgradeMultiplier = number;
+
+        }
     }
 
     public void AddExpFromMonsters(IEnemy enemy)
@@ -97,12 +109,13 @@ public class PlayerStat : MonoBehaviour
 
     public void AttackLevelUp()
     {
-        needAttackUpgradeMoney = attackLevel * 1000; //임시값
+        int multiplier = statUpgradeMultiplier == 0 ? 1 : (statUpgradeMultiplier == 1 ? 10 : 100);
+        needAttackUpgradeMoney = attackLevel * 1000 * multiplier; // 1000 이 레벨당 드는 업그레이드 비용 (임시)
 
         if (CurrencyManager.Instance.GetGold() >= needAttackUpgradeMoney)
         {
             CurrencyManager.Instance.SubtractGold(needAttackUpgradeMoney);
-            attackLevel++;
+            attackLevel += multiplier;
             attackPower = 20 + (attackLevel * 4);
         }
         else
@@ -110,6 +123,7 @@ public class PlayerStat : MonoBehaviour
             Debug.Log("골드가 부족합니다");
         }
     }
+
 
     public void HealthLevelUp()
     {
