@@ -4556,7 +4556,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 7236221356393701011}
           m_TargetAssemblyTypeName: PlayerStatUpgradeUI, Assembly-CSharp
-          m_MethodName: HealthPointerUp
+          m_MethodName: HealthRegenPointerUp
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

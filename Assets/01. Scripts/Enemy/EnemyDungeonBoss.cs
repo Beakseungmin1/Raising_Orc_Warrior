@@ -60,7 +60,7 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
 
     public void Start()
     {
-        InvokeRepeating("SwitchPattern", 0, patternTime);
+        InvokeRepeating("SwitchPattern", 2f, patternTime);
     }
 
     private void Update()
