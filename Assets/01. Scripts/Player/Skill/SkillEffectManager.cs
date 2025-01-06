@@ -28,10 +28,8 @@ public class SkillEffectManager : Singleton<SkillEffectManager>
 
         SkillEffect effect = skill.GetSkillEffect(targetPosition);
 
-        // 스킬 효과를 데미지 계산기에 전달
         playerDamageCalculator.ApplySkillEffect(effect);
 
-        // 효과 타입에 따라 처리
         HandleEffect(effect);
     }
 

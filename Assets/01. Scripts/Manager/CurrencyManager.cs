@@ -27,8 +27,8 @@ public class CurrencyManager : Singleton<CurrencyManager>
     // Gold Ãß°¡
     public void AddGold(BigInteger amount)
     {
-        BigInteger goldMultiplier = stat.extraGoldGainRate + 1;
-        BigInteger adjustedAmount = amount * goldMultiplier;
+        BigInteger goldMultiplier = stat.extraGoldGainRate;
+        BigInteger adjustedAmount = amount + (amount * (goldMultiplier / 100));
 
         gold += adjustedAmount;
         GameEventsManager.Instance.currencyEvents.GoldChanged();

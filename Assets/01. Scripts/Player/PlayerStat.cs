@@ -21,7 +21,7 @@ public class PlayerStat : MonoBehaviour
     public float hitLate { get; private set; }
     public float avoid { get; private set; }
     public BigInteger extraGoldGainRate { get; private set; }
-    public float extraExpRate { get; private set; }
+    public BigInteger extraExpRate { get; private set; }
     public float attackSpeed { get; private set; }
     public float normalMonsterIncreaseDamage { get; private set; }
     public float bossMonsterIncreaseDamage { get; private set; }
@@ -77,8 +77,6 @@ public class PlayerStat : MonoBehaviour
             }
         }
 
-        Debug.Log("Health: " + health + ", MaxHealth: " + PlayerStatCalculator.GetAdjustedMaxHealth());
-
         if (mana < maxMana)
         {
             mana += manaRegeneration * Time.deltaTime;
@@ -92,13 +90,17 @@ public class PlayerStat : MonoBehaviour
 
     public void AddExpFromMonsters(IEnemy enemy)
     {
-        exp += enemy.GiveExp();
+        BigInteger expGained = enemy.GiveExp();
+        BigInteger adjustedExp = expGained + (expGained * (extraExpRate / 100));
+
+        exp += adjustedExp;
 
         while (exp >= needExp)
         {
             LevelUp();
         }
-        PlayerObjManager.Instance.Player.stat.UpdateLevelStatUI?.Invoke();
+
+        UpdateLevelStatUI?.Invoke();
     }
 
     public void AddExp(BigInteger getExp)
@@ -109,14 +111,14 @@ public class PlayerStat : MonoBehaviour
         {
             LevelUp();
         }
-        PlayerObjManager.Instance.Player.stat.UpdateLevelStatUI?.Invoke();
+
+        UpdateLevelStatUI?.Invoke();
     }
 
     public void decreaseHp(BigInteger damage)
     {
         health -= damage;
-
-        Debug.Log("Current Health: " + health + " / Max Health: " + PlayerStatCalculator.GetAdjustedMaxHealth());
+        UpdateUserInformationUI?.Invoke();
     }
 
 
@@ -130,6 +132,7 @@ public class PlayerStat : MonoBehaviour
             needExp = needExp * 2;
             UpdateLevelStatUI.Invoke();
             SoundManager.Instance.PlaySFX(SFXType.LevelUp);
+            UpdateUserInformationUI?.Invoke();
         }
         else
         {
@@ -308,6 +311,11 @@ public class PlayerStat : MonoBehaviour
         mana -= value;
     }
 
+    public BigInteger GetGoldGainRate()
+    {
+        return extraGoldGainRate;
+    }
+
 
     public void UseHealSkill(BaseSkill skill)
     {
@@ -336,6 +344,11 @@ public class PlayerStat : MonoBehaviour
         health = PlayerStatCalculator.GetAdjustedMaxHealth();
     }
 
+    public void ResetMana()
+    {
+        mana = PlayerStatCalculator.GetAdjustedMaxMana();
+    }
+
     public void ApplyPassiveStats()
     {
         //BigInteger increaseRate = new BigInteger(PassiveStatManager.Instance.PassiveHpAndHpRecoveryIncreaseRate);
@@ -347,5 +360,10 @@ public class PlayerStat : MonoBehaviour
         //manaRegeneration += manaRegeneration * (PassiveStatManager.Instance.PassiveMpAndMpRecoveryIncreaseRate / 100);
 
         //extraExpRate += PassiveStatManager.Instance.PassiveAddEXPRate;
-    }    
+    }
+
+    public void InvokeUpdateUserInformationUI()
+    {
+        UpdateUserInformationUI?.Invoke();
+    }
 }
