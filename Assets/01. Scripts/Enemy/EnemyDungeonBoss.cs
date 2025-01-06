@@ -48,13 +48,13 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
         SetupEnemy();
         GameEventsManager.Instance.bossEvents.BossHPSet(maxHp);
         GameEventsManager.Instance.enemyEvents.onEnemyCleared += ClearEnemy;
-        GameEventsManager.Instance.dungeonEvents.onPlayerFinishDungeon += FinishDungeon;
+        GameEventsManager.Instance.dungeonEvents.onPlayerDeadOrTimeEndInDungeon += FinishDungeon;
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.enemyEvents.onEnemyCleared -= ClearEnemy;
-        GameEventsManager.Instance.dungeonEvents.onPlayerFinishDungeon -= FinishDungeon;
+        GameEventsManager.Instance.dungeonEvents.onPlayerDeadOrTimeEndInDungeon -= FinishDungeon;
     }
 
     public void Start()
