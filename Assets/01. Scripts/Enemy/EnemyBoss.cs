@@ -11,6 +11,7 @@ public class EnemyBoss : EnemyBase, IEnemy
     [SerializeField] private BigInteger hp; // 체력
     [SerializeField] private BigInteger maxHp; // 최대체력
     [SerializeField] private BigInteger giveExp; // 주는 경험치
+    [SerializeField] private BigInteger giveMoney; // 주는 돈
     [SerializeField] private GameObject model; //적 모델
     [SerializeField] private Animator animator;
     public float timeLimit = 50f;
@@ -122,6 +123,10 @@ public class EnemyBoss : EnemyBase, IEnemy
     public bool GetActive()
     {
         return gameObject.activeInHierarchy;
+    }
+    public BigInteger GiveMoney()
+    {
+        return giveMoney;
     }
 
     public void SetupEnemy()

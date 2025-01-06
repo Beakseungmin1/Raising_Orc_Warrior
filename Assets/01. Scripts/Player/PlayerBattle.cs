@@ -158,9 +158,11 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     public void GetMonsterReward()
     {
         playerStat.AddExpFromMonsters(currentMonster);
+        BigInteger monsterGold = currentMonster.GiveMoney();
+        CurrencyManager.Instance.AddGold(monsterGold);
         currentMonster = null;
 
-        if (!isDead)
+        if (!isDead) 
         {
             StartCoroutine(DelayBeforeReturningToIdle());
         }
