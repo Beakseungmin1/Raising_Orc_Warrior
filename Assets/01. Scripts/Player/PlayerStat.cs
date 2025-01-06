@@ -133,13 +133,13 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("����ġ�� �����մϴ�");
+            Debug.Log("경험치가 부족합니다");
         }
     }
 
     public void AttackLevelUp()
     {
-        needAttackUpgradeMoney = attackLevel * 1000; //�ʿ䰡�� ��������
+        needAttackUpgradeMoney = attackLevel * 1000; //임시값
 
         if (CurrencyManager.Instance.GetGold() >= needAttackUpgradeMoney)
         {
@@ -149,13 +149,12 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("��尡 �����մϴ�.");
+            Debug.Log("골드가 부족합니다");
         }
     }
 
     public void HealthLevelUp()
     {
-        //���� ������ �ϵ�Ӵ� ���� ��� �߰�
         needHealthUpgradeMoney = healthLevel * 1000;
 
         if (CurrencyManager.Instance.GetGold() >= needHealthUpgradeMoney)
@@ -168,7 +167,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("��尡 �����մϴ�.");
+            Debug.Log("골드가 부족합니다");
         }
     }
 
@@ -186,7 +185,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("��尡 �����մϴ�.");
+            Debug.Log("골드가 부족합니다");
         }
     }
 
@@ -204,7 +203,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("��尡 �����մϴ�.");
+            Debug.Log("골드가 부족합니다");
         }
     }
 
@@ -222,7 +221,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("��尡 �����մϴ�.");
+            Debug.Log("골드가 부족합니다");
         }
     }
 
@@ -240,7 +239,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("��尡 �����մϴ�.");
+            Debug.Log("골드가 부족합니다");
         }
     }
 
@@ -258,7 +257,7 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("��尡 �����մϴ�.");
+            Debug.Log("골드가 부족합니다");
         }
     }
 
@@ -308,6 +307,7 @@ public class PlayerStat : MonoBehaviour
     {
         mana -= value;
     }
+
 
     public void UseHealSkill(BaseSkill skill)
     {
