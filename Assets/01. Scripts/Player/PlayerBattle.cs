@@ -130,7 +130,16 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         animator.SetBool("isDeath", true);
         currentState = State.Dead;
 
-        StartCoroutine(DelayBeforeResurrection());
+        if (DungeonManager.Instance.playerIsInDungeon)
+        {
+            bool isCleared = false;
+            bool isPlayerDead = true;
+            GameEventsManager.Instance.dungeonEvents.PlayerFinishDungeon(isCleared, isPlayerDead);
+        }
+        else
+        {
+            StartCoroutine(DelayBeforeResurrection());
+        }
     }
 
     private void PlayerAttack()
@@ -242,20 +251,11 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private IEnumerator DelayBeforeResurrection()
     {
-        if (DungeonManager.Instance.playerIsInDungeon)
-        {
-            bool isCleared = false;
-            bool isPlayerDead = true;
-            GameEventsManager.Instance.dungeonEvents.PlayerFinishDungeon(isCleared, isPlayerDead);
-        }
-        else
-        {
-            yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(5f);
 
-            StageManager.Instance.BackToLastStage();
-            playerStat.RefillHP();
-            SetPlayerStateIdle();
-        }
+        StageManager.Instance.BackToLastStage();
+        playerStat.RefillHpAndMp();
+        SetPlayerStateIdle();
     }
 
     public void SetPlayerStateIdle()
