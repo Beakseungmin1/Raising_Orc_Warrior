@@ -33,7 +33,15 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private IEnemy currentMonster;
 
-    public bool isStopped = false;
+    private void OnEnable()
+    {
+        GameEventsManager.Instance.stageEvents.onStageChange += SetPlayerStateIdle;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.stageEvents.onStageChange -= SetPlayerStateIdle;
+    }
 
     private void Start()
     {
@@ -83,13 +91,12 @@ public class PlayerBattle : MonoBehaviour, IDamageable
                 break;
 
             case State.StoppedIdle:
-                if (isStopped && !isDead)
                 {
                     currentState = State.StoppedIdle;
-                    animator.Play("IDLE");
                     CancelInvoke("PlayerAttack");
                     animator.SetBool("isDeath", false);
                     animator.SetBool("2_Attack", false);
+                    animator.Play("IDLE");
                     BattleManager.Instance.StartBattle();
                 }
                 break;
@@ -263,7 +270,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     public void SetPlayerStateIdle()
     {
-        isStopped = false;
         isDead = false;
         animator.SetBool("isDeath", false);
         currentState = State.Idle;
@@ -272,7 +278,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     public void SetPlayerStateStoppedIdle()
     {
-        isStopped = true;
         currentState = State.StoppedIdle;
     }
 

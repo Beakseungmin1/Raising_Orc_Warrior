@@ -106,11 +106,6 @@ public class StageManager : Singleton<StageManager>
         RegenManager.Instance.CacheEnemies();
         RegenManager.Instance.RegenStagesEnemy();
         GameEventsManager.Instance.stageEvents.ChangeStage();
-
-        if (PlayerObjManager.Instance.Player.PlayerBattle.GetIsDead())
-        {
-            PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateIdle();
-        }
     }
 
     public void GoToBossStage()
