@@ -103,3 +103,10 @@ public enum DungeonState
     OPENED, //진행 가능
     CLEARED //클리어
 }
+
+public enum FadeType
+{
+    FadeIn, //검은화면에서 점점 밝아짐
+    FadeOut, //밝은화면에서 점점 어두워짐
+    FadeOutFadeIn //밝은화면 -> 어두워짐 -> 밝아짐
+}
