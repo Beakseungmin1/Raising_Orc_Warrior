@@ -254,7 +254,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(5f);
 
         StageManager.Instance.BackToLastStage();
-        playerStat.RefillHpAndMp();
         SetPlayerStateIdle();
     }
 

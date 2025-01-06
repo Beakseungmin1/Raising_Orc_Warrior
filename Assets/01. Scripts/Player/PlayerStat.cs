@@ -50,6 +50,11 @@ public class PlayerStat : MonoBehaviour
         SetDefaultStat();
     }
 
+    private void Awake()
+    {
+        GameEventsManager.Instance.stageEvents.onStageChange += RefillHpAndMp;
+    }
+
     public void AddExpFromMonsters(IEnemy enemy)
     {
         exp += enemy.GiveExp();

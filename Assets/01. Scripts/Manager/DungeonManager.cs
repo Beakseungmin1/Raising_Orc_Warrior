@@ -172,7 +172,6 @@ public class DungeonManager : Singleton<DungeonManager>
         currentDungeonInfo = null;
         playerIsInDungeon = false;
 
-        PlayerObjManager.Instance.Player.stat.RefillHpAndMp();
         PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateIdle();
     }
 
