@@ -27,13 +27,13 @@ MonoBehaviour:
   skillType: 1
   effectType: 0
   activationCondition: 0
-  cooldown: 10
+  cooldown: 6
   requiredHits: 0
   damagePercent: 0
   manaCost: 0
   effectRange: 0
-  buffDuration: 5
-  attackIncreasePercent: 90
+  buffDuration: 0
+  attackIncreasePercent: 0
   manaRecoveryAmount: 50
   hpRecoveryAmount: 0
   moveSpeedIncrease: 0

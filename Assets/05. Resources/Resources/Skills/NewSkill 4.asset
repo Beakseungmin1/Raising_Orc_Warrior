@@ -26,9 +26,9 @@ MonoBehaviour:
     \uC804\uCCB4 \uACF5\uACA9\uB825 +{attackIncreasePercent}%"
   skillType: 2
   effectType: 0
-  activationCondition: 1
-  cooldown: 0
-  requiredHits: 5
+  activationCondition: 0
+  cooldown: 5
+  requiredHits: 0
   damagePercent: 0
   manaCost: 40
   effectRange: 0

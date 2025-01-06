@@ -214,7 +214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
       propertyPath: spawnDistance
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
       propertyPath: spawnYPosition
@@ -270,7 +270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6798184018873239610, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.7
+      value: 16.66
       objectReference: {fileID: 0}
     - target: {fileID: 6798184018873239610, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -440,6 +440,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 357593857474867090, guid: 80c6140c8a675124888f1b1a16ba591c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4996350026959308300, guid: 80c6140c8a675124888f1b1a16ba591c, type: 3}
       propertyPath: m_Name
       value: Forest BG
@@ -499,7 +503,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 928666057587963121, guid: fb44485e552075c45837942efd9709c7, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3675286958119098450, guid: fb44485e552075c45837942efd9709c7, type: 3}
       propertyPath: m_Name

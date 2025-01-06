@@ -110,6 +110,7 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
         {
             cooldownTimer = skillData.cooldown;
         }
+
         else if (skillData.activationCondition == ActivationCondition.HitBased)
         {
             currentHits = 0;

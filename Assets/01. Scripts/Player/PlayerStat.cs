@@ -294,7 +294,7 @@ public class PlayerStat : MonoBehaviour
         healthRegeneration = 1;
         criticalProbability = 0;
         criticalIncreaseDamage = 100;
-        maxMana = 10000;
+        maxMana = 200;
         mana = maxMana;
         manaRegeneration = 10;
         hitLate = 0;
@@ -328,6 +328,15 @@ public class PlayerStat : MonoBehaviour
     public void reduceMana(float value)
     {
         mana -= value;
+
+        UpdateUserInformationUI?.Invoke();
+    }
+
+    public void setMana(float value)
+    {
+        mana += value;
+
+        UpdateUserInformationUI?.Invoke();
     }
 
     public BigInteger GetGoldGainRate()
@@ -380,10 +389,5 @@ public class PlayerStat : MonoBehaviour
         //manaRegeneration += manaRegeneration * (PassiveStatManager.Instance.PassiveMpAndMpRecoveryIncreaseRate / 100);
 
         //extraExpRate += PassiveStatManager.Instance.PassiveAddEXPRate;
-    }
-
-    public void InvokeUpdateUserInformationUI()
-    {
-        UpdateUserInformationUI?.Invoke();
     }
 }
