@@ -168,7 +168,7 @@ public class DungeonManager : Singleton<DungeonManager>
             dungeonBoss.ClearEnemy();
         }
 
-        StageManager.Instance.GoToNextStage();
+        StageManager.Instance.GoToStage();
         currentDungeonInfo = null;
         playerIsInDungeon = false;
 
