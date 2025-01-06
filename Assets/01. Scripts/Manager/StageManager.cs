@@ -110,11 +110,11 @@ public class StageManager : Singleton<StageManager>
 
     public void GoToBossStage()
     {
+        GameEventsManager.Instance.enemyEvents.ClearEnemy();
         savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
         curStageIndex++;
         UIManager.Instance.Hide<StageInfoUI>();
         UIManager.Instance.Show<BossStageInfoUI>();
-        GameEventsManager.Instance.enemyEvents.ClearEnemy();
         RegenManager.Instance.CacheEnemyBoss();
         RegenManager.Instance.RegenStagesBossEnemy();
         SetTimer(bossStageSO.bossEnemySO.bossTimeLimit);
@@ -124,11 +124,10 @@ public class StageManager : Singleton<StageManager>
 
     public void GoToDungeonStage(DungeonType dungeonType, int level)
     {
+        GameEventsManager.Instance.enemyEvents.ClearEnemy();
         //던전으로 이동하기 전 마지막 챕터와 스테이지 정보 세이브
         savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
         curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
-
-        GameEventsManager.Instance.enemyEvents.ClearEnemy();
         Dungeon dungeon = DungeonManager.Instance.GetDungeonByTypeAndLevel(dungeonType, level);
         DungeonManager.Instance.currentDungeonInfo = dungeon.info;
         RegenManager.Instance.CacheDungeonBoss(dungeon);
