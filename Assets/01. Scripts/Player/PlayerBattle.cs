@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
-using System.Xml.Serialization;
 using UnityEngine;
 
 public class PlayerBattle : MonoBehaviour, IDamageable
@@ -169,9 +168,11 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     public void GetMonsterReward()
     {
         playerStat.AddExpFromMonsters(currentMonster);
+        BigInteger monsterGold = currentMonster.GiveMoney();
+        CurrencyManager.Instance.AddGold(monsterGold);
         currentMonster = null;
 
-        if (!isDead)
+        if (!isDead) 
         {
             StartCoroutine(DelayBeforeReturningToIdle());
         }

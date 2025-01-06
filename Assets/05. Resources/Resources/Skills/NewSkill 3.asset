@@ -27,9 +27,9 @@ MonoBehaviour:
     +{attackIncreasePercent}%"
   skillType: 1
   effectType: 0
-  activationCondition: 1
-  cooldown: 0
-  requiredHits: 3
+  activationCondition: 0
+  cooldown: 7
+  requiredHits: 0
   damagePercent: 0
   manaCost: 30
   effectRange: 0
@@ -41,5 +41,5 @@ MonoBehaviour:
   requireSkillCardsForUpgrade: 2
   maxLevel: 100
   effectPrefab: {fileID: 4772634663576830964, guid: e1385af346f4e624eb313ec1ea4fcd7e, type: 3}
-  effectDuration: 2
+  effectDuration: 5
   isEquipped: 0

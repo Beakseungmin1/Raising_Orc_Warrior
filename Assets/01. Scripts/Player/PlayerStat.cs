@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Numerics;
 using UnityEngine;
 
@@ -21,8 +20,8 @@ public class PlayerStat : MonoBehaviour
     public float manaRegeneration { get; private set; }
     public float hitLate { get; private set; }
     public float avoid { get; private set; }
-    public float extraGoldGainRate { get; private set; }
-    public float extraExpRate { get; private set; }
+    public BigInteger extraGoldGainRate { get; private set; }
+    public BigInteger extraExpRate { get; private set; }
     public float attackSpeed { get; private set; }
     public float normalMonsterIncreaseDamage { get; private set; }
     public float bossMonsterIncreaseDamage { get; private set; }
@@ -45,9 +44,48 @@ public class PlayerStat : MonoBehaviour
 
     public Action UpdateUserInformationUI;
 
+    public Action OnStatChange;
+
+    [Header("Multiplier")]
+    public BigInteger healthMultiplier = 1;
+    public BigInteger maxHealthMultiplier = 1;
+
+    private PlayerStatCalculator PlayerStatCalculator;
+    private float timer = 0f;
+
     private void Start()
     {
-        SetDefaultStat();
+        PlayerStatCalculator = GetComponent<PlayerStatCalculator>();
+    }
+
+    private void Update()
+    {
+        if (health < PlayerStatCalculator.GetAdjustedMaxHealth())
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= 1f)
+            {
+                health += PlayerStatCalculator.GetAdjustedHealthRegeneration();
+
+                if (health > PlayerStatCalculator.GetAdjustedMaxHealth())
+                {
+                    health = PlayerStatCalculator.GetAdjustedMaxHealth();
+                }
+
+                timer = 0f;
+            }
+        }
+
+        if (mana < maxMana)
+        {
+            mana += manaRegeneration * Time.deltaTime;
+
+            if (mana > maxMana)
+            {
+                mana = maxMana;
+            }
+        }
     }
 
     private void Awake()
@@ -57,13 +95,17 @@ public class PlayerStat : MonoBehaviour
 
     public void AddExpFromMonsters(IEnemy enemy)
     {
-        exp += enemy.GiveExp();
+        BigInteger expGained = enemy.GiveExp();
+        BigInteger adjustedExp = expGained + (expGained * (extraExpRate / 100));
+
+        exp += adjustedExp;
 
         while (exp >= needExp)
         {
             LevelUp();
         }
-        PlayerObjManager.Instance.Player.stat.UpdateLevelStatUI?.Invoke();
+
+        UpdateLevelStatUI?.Invoke();
     }
 
     public void AddExp(BigInteger getExp)
@@ -74,12 +116,14 @@ public class PlayerStat : MonoBehaviour
         {
             LevelUp();
         }
-        PlayerObjManager.Instance.Player.stat.UpdateLevelStatUI?.Invoke();
+
+        UpdateLevelStatUI?.Invoke();
     }
 
     public void decreaseHp(BigInteger damage)
     {
         health -= damage;
+        UpdateUserInformationUI?.Invoke();
     }
 
 
@@ -93,16 +137,17 @@ public class PlayerStat : MonoBehaviour
             needExp = needExp * 2;
             UpdateLevelStatUI.Invoke();
             SoundManager.Instance.PlaySFX(SFXType.LevelUp);
+            UpdateUserInformationUI?.Invoke();
         }
         else
         {
-            Debug.Log("����ġ�� �����մϴ�");
+            Debug.Log("경험치가 부족합니다");
         }
     }
 
     public void AttackLevelUp()
     {
-        needAttackUpgradeMoney = attackLevel * 1000; //�ʿ䰡�� ��������
+        needAttackUpgradeMoney = attackLevel * 1000; //임시값
 
         if (CurrencyManager.Instance.GetGold() >= needAttackUpgradeMoney)
         {
@@ -112,13 +157,12 @@ public class PlayerStat : MonoBehaviour
         }
         else
         {
-            Debug.Log("��尡 �����մϴ�.");
+            Debug.Log("골드가 부족합니다");
         }
     }
 
     public void HealthLevelUp()
     {
-        //���� ������ �ϵ�Ӵ� ���� ��� �߰�
         needHealthUpgradeMoney = healthLevel * 1000;
 
         if (CurrencyManager.Instance.GetGold() >= needHealthUpgradeMoney)
@@ -126,11 +170,12 @@ public class PlayerStat : MonoBehaviour
             CurrencyManager.Instance.SubtractGold(needHealthUpgradeMoney);
             healthLevel++;
             maxHealth = 200 + (healthLevel * 40);
-            health += 40;
+
+            OnStatChange?.Invoke();
         }
         else
         {
-            Debug.Log("��尡 �����մϴ�.");
+            Debug.Log("골드가 부족합니다");
         }
     }
 
@@ -143,10 +188,12 @@ public class PlayerStat : MonoBehaviour
             CurrencyManager.Instance.SubtractGold(needHealthRegenerationUpgradeMoney);
             healthRegenerationLevel++;
             healthRegeneration = healthRegenerationLevel * 4;
+
+            OnStatChange?.Invoke();
         }
         else
         {
-            Debug.Log("��尡 �����մϴ�.");
+            Debug.Log("골드가 부족합니다");
         }
     }
 
@@ -159,10 +206,12 @@ public class PlayerStat : MonoBehaviour
             CurrencyManager.Instance.SubtractGold(needCriticalIncreaseDamageUpgradeMoney);
             criticalIncreaseDamageLevel++;
             criticalIncreaseDamage = 100 + criticalIncreaseDamageLevel;
+
+            OnStatChange?.Invoke();
         }
         else
         {
-            Debug.Log("��尡 �����մϴ�.");
+            Debug.Log("골드가 부족합니다");
         }
     }
 
@@ -175,10 +224,12 @@ public class PlayerStat : MonoBehaviour
             CurrencyManager.Instance.SubtractGold(needCriticalProbabilityUpgradeMoney);
             criticalProbability = criticalProbabilityLevel * 0.1f;
             criticalProbabilityLevel++;
+
+            OnStatChange?.Invoke();
         }
         else
         {
-            Debug.Log("��尡 �����մϴ�.");
+            Debug.Log("골드가 부족합니다");
         }
     }
 
@@ -191,10 +242,12 @@ public class PlayerStat : MonoBehaviour
             CurrencyManager.Instance.SubtractGold(needBlueCriticalIncreaseDamageUpgradeMoney);
             bluecriticalIncreaseDamage = bluecriticalIncreaseDamageLevel;
             bluecriticalIncreaseDamageLevel++;
+
+            OnStatChange?.Invoke();
         }
         else
         {
-            Debug.Log("��尡 �����մϴ�.");
+            Debug.Log("골드가 부족합니다");
         }
     }
 
@@ -207,10 +260,12 @@ public class PlayerStat : MonoBehaviour
             CurrencyManager.Instance.SubtractGold(needBlueCriticalProbabilityUpgradeMoney);
             bluecriticalProbability = bluecriticalProbabilityLevel * 0.1f;
             bluecriticalProbabilityLevel++;
+
+            OnStatChange?.Invoke();
         }
         else
         {
-            Debug.Log("��尡 �����մϴ�.");
+            Debug.Log("골드가 부족합니다");
         }
     }
 
@@ -222,7 +277,7 @@ public class PlayerStat : MonoBehaviour
         attackPower = 20;
         maxHealth = 200;
         health = maxHealth;
-        healthRegeneration = 0;
+        healthRegeneration = 1;
         criticalProbability = 0;
         criticalIncreaseDamage = 100;
         maxMana = 10000;
@@ -261,35 +316,11 @@ public class PlayerStat : MonoBehaviour
         mana -= value;
     }
 
-    public void HoldIncreaseWeaponValue(Weapon weapon)
+    public BigInteger GetGoldGainRate()
     {
-        //float holdWeaponPower = attackPower * (weapon.atkIncreaseRate / 30 / 100);
-        //attackPower += holdWeaponPower;
-
-        //float holdIncreaseCriticalPower = criticalIncreaseDamage * (weapon.criticalDamageBonus / 100);
-        //criticalIncreaseDamage += holdIncreaseCriticalPower;
-
-        //float holdIncreaseGoldGain = extraGoldGainRate * (weapon.increaseGoldGainRate / 100);
-        //extraGoldGainRate += holdIncreaseGoldGain;
+        return extraGoldGainRate;
     }
 
-    public void UseTimelimitBuffSkill(BaseSkill skill)
-    {
-        float skillValue = skill.SkillData.attackIncreasePercent;
-        float skillTime = skill.SkillData.buffDuration;
-
-        StartCoroutine(BuffCoroutine(skillValue, skillTime));
-    }
-
-    private IEnumerator BuffCoroutine(float skillValue, float skillTime)
-    {
-        // ���� ����
-        attackPower += attackPower * (skillValue / 100);
-
-        yield return new WaitForSeconds(skillTime);
-
-        attackPower -= attackPower * (skillValue / 100);
-    }
 
     public void UseHealSkill(BaseSkill skill)
     {
@@ -314,16 +345,31 @@ public class PlayerStat : MonoBehaviour
         mana = maxMana;
     }
 
+    public void ResetHealth()
+    {
+        health = PlayerStatCalculator.GetAdjustedMaxHealth();
+    }
+
+    public void ResetMana()
+    {
+        mana = PlayerStatCalculator.GetAdjustedMaxMana();
+    }
+
     public void ApplyPassiveStats()
     {
-        BigInteger increaseRate = new BigInteger(PassiveStatManager.Instance.PassiveHpAndHpRecoveryIncreaseRate);
+        //BigInteger increaseRate = new BigInteger(PassiveStatManager.Instance.PassiveHpAndHpRecoveryIncreaseRate);
 
-        maxHealth += maxHealth * increaseRate / 100;
-        healthRegeneration += healthRegeneration * increaseRate / 100;
+        //maxHealth += maxHealth * increaseRate / 100;
+        //healthRegeneration += healthRegeneration * increaseRate / 100;
 
-        maxMana += maxMana * (PassiveStatManager.Instance.PassiveMpAndMpRecoveryIncreaseRate / 100);
-        manaRegeneration += manaRegeneration * (PassiveStatManager.Instance.PassiveMpAndMpRecoveryIncreaseRate / 100);
+        //maxMana += maxMana * (PassiveStatManager.Instance.PassiveMpAndMpRecoveryIncreaseRate / 100);
+        //manaRegeneration += manaRegeneration * (PassiveStatManager.Instance.PassiveMpAndMpRecoveryIncreaseRate / 100);
 
-        extraExpRate += PassiveStatManager.Instance.PassiveAddEXPRate;
+        //extraExpRate += PassiveStatManager.Instance.PassiveAddEXPRate;
+    }
+
+    public void InvokeUpdateUserInformationUI()
+    {
+        UpdateUserInformationUI?.Invoke();
     }
 }

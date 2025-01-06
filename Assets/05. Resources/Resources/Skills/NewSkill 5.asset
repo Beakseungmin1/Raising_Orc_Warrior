@@ -30,15 +30,15 @@ MonoBehaviour:
   cooldown: 10
   requiredHits: 0
   damagePercent: 0
-  manaCost: 40
+  manaCost: 0
   effectRange: 0
   buffDuration: 5
   attackIncreasePercent: 90
-  manaRecoveryAmount: 0
+  manaRecoveryAmount: 50
   hpRecoveryAmount: 0
   moveSpeedIncrease: 0
   requireSkillCardsForUpgrade: 2
   maxLevel: 100
   effectPrefab: {fileID: 9054041762107104264, guid: 1b3ee55c0649d4c4c8533e6845d68467, type: 3}
-  effectDuration: 0
+  effectDuration: 1
   isEquipped: 0

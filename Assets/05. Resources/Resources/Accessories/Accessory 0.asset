@@ -21,7 +21,7 @@ MonoBehaviour:
   currencyIcon: {fileID: 0}
   requiredCurrencyForUpgrade: 1
   currentLevel: 1
-  equipHpAndHpRecoveryIncreaseRate: 1594.5
+  equipHpAndHpRecoveryIncreaseRate: 2000
   passiveHpAndHpRecoveryIncreaseRate: 531.5
   passiveMpAndMpRecoveryIncreaseRate: 0
   passiveAddEXPRate: 0

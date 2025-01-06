@@ -13,6 +13,7 @@ public class Enemy : EnemyBase, IEnemy
     [SerializeField] private BigInteger hp;
     [SerializeField] private BigInteger maxHp;
     [SerializeField] private BigInteger giveExp;
+    [SerializeField] private BigInteger giveMoney;
     [SerializeField] private GameObject model;
     private Animator animator;
 
@@ -80,6 +81,11 @@ public class Enemy : EnemyBase, IEnemy
         return giveExp;
     }
 
+    public BigInteger GiveMoney()
+    {
+        return giveMoney;
+    }
+
     public void Die()
     {
         if (isClearing) return;
@@ -120,6 +126,7 @@ public class Enemy : EnemyBase, IEnemy
         hp = enemySO.hp;
         maxHp = enemySO.maxHp;
         giveExp = enemySO.giveExp;
+        giveMoney = enemySO.giveMoney;
 
         if (model == null)
         {

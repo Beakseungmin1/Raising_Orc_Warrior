@@ -13,6 +13,7 @@ public class PlayerDamageCalculator : MonoBehaviour
     public float basicDamage;
     public BigInteger WeaponIncreaseDamage;
     public BigInteger SkillIncreaseDamage;
+    private BigInteger rawTotalDamage;
 
     private float damageMultiplier = 1.0f;
     private List<(float percent, float duration)> attackBuffs = new List<(float, float)>();
@@ -24,6 +25,8 @@ public class PlayerDamageCalculator : MonoBehaviour
     {
         stat = GetComponent<PlayerStat>();
         equipManager = GetComponent<EquipManager>();
+
+        rawTotalDamage = (BigInteger)stat.attackPower;
     }
 
     public void ApplySkillEffect(SkillEffect effect)
@@ -58,11 +61,12 @@ public class PlayerDamageCalculator : MonoBehaviour
 
         BigInteger baseDamage = (BigInteger)basicDamage;
         BigInteger weaponDamage = WeaponIncreaseDamage;
+        BigInteger skillBuffDamage = SkillIncreaseDamage;
 
-        BigInteger totalDamage = baseDamage + weaponDamage;
+        rawTotalDamage = baseDamage + weaponDamage + skillBuffDamage;
 
         float randomMultiplier = UnityEngine.Random.Range(1 - damageRandomVariation, 1 + damageRandomVariation);
-        float totalDamageWithRandom = (float)totalDamage * randomMultiplier;
+        float totalDamageWithRandom = (float)rawTotalDamage * randomMultiplier;
 
         bool criticalHit = false;
 
@@ -136,5 +140,10 @@ public class PlayerDamageCalculator : MonoBehaviour
         yield return new WaitForSeconds(duration);
         attackBuffs.Remove((percent, duration));
         UpdateValue();
+    }
+
+    public BigInteger GetRawTotalDamage()
+    {
+        return rawTotalDamage;
     }
 }

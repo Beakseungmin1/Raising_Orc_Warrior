@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 3621781569165430439}
   - component: {fileID: 2985324186412040310}
   - component: {fileID: 4811843573773169377}
+  - component: {fileID: 5960179295589861949}
   m_Layer: 5
   m_Name: UpgradeBtn
   m_TagString: Untagged
@@ -267,6 +268,51 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5960179295589861949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59120910902103961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7236221356393701011}
+          m_TargetAssemblyTypeName: PlayerStatUpgradeUI, Assembly-CSharp
+          m_MethodName: AttackPointerDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7236221356393701011}
+          m_TargetAssemblyTypeName: PlayerStatUpgradeUI, Assembly-CSharp
+          m_MethodName: AttackPointerUp
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &231531645437576297
 GameObject:
   m_ObjectHideFlags: 0
@@ -1146,6 +1192,7 @@ GameObject:
   - component: {fileID: 6863554300056626808}
   - component: {fileID: 5933486492927709419}
   - component: {fileID: 2081926268526592043}
+  - component: {fileID: 191053914177613210}
   m_Layer: 5
   m_Name: UpgradeBtn
   m_TagString: Untagged
@@ -1267,6 +1314,51 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &191053914177613210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862757411868813724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7236221356393701011}
+          m_TargetAssemblyTypeName: PlayerStatUpgradeUI, Assembly-CSharp
+          m_MethodName: CriDamagePointerDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7236221356393701011}
+          m_TargetAssemblyTypeName: PlayerStatUpgradeUI, Assembly-CSharp
+          m_MethodName: CriDamagePointerUp
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &882284952774705010
 GameObject:
   m_ObjectHideFlags: 0
@@ -4307,6 +4399,7 @@ GameObject:
   - component: {fileID: 7509929752038700903}
   - component: {fileID: 9220943494466910075}
   - component: {fileID: 4916014582845713048}
+  - component: {fileID: 1027135820352482565}
   m_Layer: 5
   m_Name: UpgradeBtn
   m_TagString: Untagged
@@ -4428,6 +4521,51 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1027135820352482565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3335637959525286443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7236221356393701011}
+          m_TargetAssemblyTypeName: PlayerStatUpgradeUI, Assembly-CSharp
+          m_MethodName: HealthRegenPointerDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7236221356393701011}
+          m_TargetAssemblyTypeName: PlayerStatUpgradeUI, Assembly-CSharp
+          m_MethodName: HealthPointerUp
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3412712194590768707
 GameObject:
   m_ObjectHideFlags: 0
@@ -4714,7 +4852,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5415661467623733283
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4732,9 +4870,9 @@ RectTransform:
   - {fileID: 543567214116956388}
   m_Father: {fileID: 7326630092793974451}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 540, y: -1195}
   m_SizeDelta: {x: 1030, y: 190}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7012901627324244624
@@ -4878,6 +5016,7 @@ GameObject:
   - component: {fileID: 1228295946001181920}
   - component: {fileID: 7971403741979116883}
   - component: {fileID: 6837371573936900840}
+  - component: {fileID: 799491548793568487}
   m_Layer: 5
   m_Name: UpgradeBtn
   m_TagString: Untagged
@@ -4999,6 +5138,51 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &799491548793568487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4194402585291068317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7236221356393701011}
+          m_TargetAssemblyTypeName: PlayerStatUpgradeUI, Assembly-CSharp
+          m_MethodName: CriProbabilityPointerDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7236221356393701011}
+          m_TargetAssemblyTypeName: PlayerStatUpgradeUI, Assembly-CSharp
+          m_MethodName: CriProbabilityPointerUp
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &4219698004698364918
 GameObject:
   m_ObjectHideFlags: 0
@@ -5273,6 +5457,7 @@ GameObject:
   - component: {fileID: 9177069149854203209}
   - component: {fileID: 4152566134944428575}
   - component: {fileID: 2822632132286388833}
+  - component: {fileID: 2536895766523441888}
   m_Layer: 5
   m_Name: UpgradeBtn
   m_TagString: Untagged
@@ -5394,6 +5579,51 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2536895766523441888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4579912781620651163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7236221356393701011}
+          m_TargetAssemblyTypeName: PlayerStatUpgradeUI, Assembly-CSharp
+          m_MethodName: BlueCriDamagePointerDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7236221356393701011}
+          m_TargetAssemblyTypeName: PlayerStatUpgradeUI, Assembly-CSharp
+          m_MethodName: BlueCriDamagePointerUp
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &4633375320226665729
 GameObject:
   m_ObjectHideFlags: 0
@@ -5704,6 +5934,7 @@ GameObject:
   - component: {fileID: 7899447026260552311}
   - component: {fileID: 3333225268569427682}
   - component: {fileID: 6334437368751881377}
+  - component: {fileID: 7323960211528637547}
   m_Layer: 5
   m_Name: UpgradeBtn
   m_TagString: Untagged
@@ -5825,6 +6056,51 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7323960211528637547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4889298225574838163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7236221356393701011}
+          m_TargetAssemblyTypeName: PlayerStatUpgradeUI, Assembly-CSharp
+          m_MethodName: BlueCriProbabilityPointerDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7236221356393701011}
+          m_TargetAssemblyTypeName: PlayerStatUpgradeUI, Assembly-CSharp
+          m_MethodName: BlueCriProbabilityPointerUp
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &4896762164247363323
 GameObject:
   m_ObjectHideFlags: 0
@@ -7580,7 +7856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2459046373005945896
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7598,9 +7874,9 @@ RectTransform:
   - {fileID: 6609885592284816572}
   m_Father: {fileID: 7326630092793974451}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 540, y: -1195}
   m_SizeDelta: {x: 1030, y: 190}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8099769494364412406
@@ -10556,6 +10832,7 @@ GameObject:
   - component: {fileID: 2805374177711370936}
   - component: {fileID: 4584482129030529483}
   - component: {fileID: 4091411889072203581}
+  - component: {fileID: 1171719388827514817}
   m_Layer: 5
   m_Name: UpgradeBtn
   m_TagString: Untagged
@@ -10677,3 +10954,48 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1171719388827514817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9126153964516001838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7236221356393701011}
+          m_TargetAssemblyTypeName: PlayerStatUpgradeUI, Assembly-CSharp
+          m_MethodName: HealthPointerDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7236221356393701011}
+          m_TargetAssemblyTypeName: PlayerStatUpgradeUI, Assembly-CSharp
+          m_MethodName: HealthPointerUp
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2

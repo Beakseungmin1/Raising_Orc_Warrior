@@ -21,8 +21,8 @@ MonoBehaviour:
   currencyIcon: {fileID: 0}
   requiredCurrencyForUpgrade: 0
   currentLevel: 1
-  equipAtkIncreaseRate: 3
-  passiveEquipAtkIncreaseRate: 0
+  equipAtkIncreaseRate: 50
+  passiveEquipAtkIncreaseRate: 100
   passiveCriticalDamageBonus: 0
   passiveGoldGainRate: 0
   rank: 3
