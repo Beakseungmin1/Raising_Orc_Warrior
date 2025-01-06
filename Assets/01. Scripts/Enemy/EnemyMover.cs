@@ -38,6 +38,8 @@ public class EnemyMover : MonoBehaviour
 
     private void Update()
     {
+        moveSpeed = ParallaxBackground.Instance.scrollSpeed;
+
         if (isKnockback)
         {
             KnockbackMovement();
