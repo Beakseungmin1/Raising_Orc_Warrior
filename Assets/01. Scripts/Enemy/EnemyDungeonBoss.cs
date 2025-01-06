@@ -40,7 +40,7 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
     private PlayerBattle player;
 
     float patternTime = 4f; // 패턴 유지시간
-    float toTime = 2; // 패턴 시간 계산용 변수
+    float toTime = 2.5f; // 패턴 시간 계산용 변수
 
     public bool canAttack = true;
 
