@@ -47,7 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c77cdaddd8a9f514b831060057055643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 3923372061916497678}
   enemySO: {fileID: 0}
   enemyCode: 
   model: {fileID: 0}
@@ -55,9 +54,6 @@ MonoBehaviour:
   skillEffectPrefab: {fileID: 0}
   effectRange: {fileID: 0}
   damagePercent: 0
-  damageText: {fileID: 0}
-  damageDisplayDuration: 0.5
-  damageTextOffset: {x: 0, y: 1.2, z: 0}
   healthBar: {fileID: 3923372061916497678}
 --- !u!61 &-5439154651377271386
 BoxCollider2D:

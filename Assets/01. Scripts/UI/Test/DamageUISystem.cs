@@ -57,7 +57,7 @@ public class DamageUISystem : Singleton<DamageUISystem>
         }
         else if (enemyBaseComponent is EnemyDungeonBoss)
         {
-            heightMultiplier = 1.5f;
+            heightMultiplier = 1.0f;
         }
 
         TextMeshPro damageText = Instantiate(damageTextPrefab, enemyTransform);

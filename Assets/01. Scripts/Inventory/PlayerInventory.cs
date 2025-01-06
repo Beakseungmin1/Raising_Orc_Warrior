@@ -49,6 +49,8 @@ public class PlayerInventory : MonoBehaviour
                 OnInventoryChanged?.Invoke(false);
                 break;
         }
+
+        PassiveStatManager.Instance.UpdatePassiveStats(WeaponInventory.GetAllItems(), AccessoryInventory.GetAllItems());
     }
 
     public void RemoveItemFromInventory(BaseItemDataSO item)

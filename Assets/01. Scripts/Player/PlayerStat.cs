@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 
@@ -289,7 +288,7 @@ public class PlayerStat : MonoBehaviour
 
     public void UseHealSkill(BaseSkill skill)
     {
-        BigInteger skillValue = (BigInteger)skill.SkillData.attackIncreasePercent;
+        BigInteger skillValue = (BigInteger)skill.SkillData.hpRecoveryAmount;
 
         BigInteger Healhealth = maxHealth * (skillValue / 100);
 
@@ -307,5 +306,18 @@ public class PlayerStat : MonoBehaviour
     public void RefillHP()
     {
         health = maxHealth;
+    }
+
+    public void ApplyPassiveStats()
+    {
+        BigInteger increaseRate = new BigInteger(PassiveStatManager.Instance.PassiveHpAndHpRecoveryIncreaseRate);
+
+        maxHealth += maxHealth * increaseRate / 100;
+        healthRegeneration += healthRegeneration * increaseRate / 100;
+
+        maxMana += maxMana * (PassiveStatManager.Instance.PassiveMpAndMpRecoveryIncreaseRate / 100);
+        manaRegeneration += manaRegeneration * (PassiveStatManager.Instance.PassiveMpAndMpRecoveryIncreaseRate / 100);
+
+        extraExpRate += PassiveStatManager.Instance.PassiveAddEXPRate;
     }
 }
