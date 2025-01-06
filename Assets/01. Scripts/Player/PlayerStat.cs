@@ -303,9 +303,10 @@ public class PlayerStat : MonoBehaviour
 
     }
 
-    public void RefillHP()
+    public void RefillHpAndMp()
     {
         health = maxHealth;
+        mana = maxMana;
     }
 
     public void ApplyPassiveStats()
