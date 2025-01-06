@@ -8,7 +8,6 @@ public class DungeonManager : Singleton<DungeonManager>
     Dictionary<DungeonType, Dictionary<int, Dungeon>> dungeonMap;
 
     public DungeonInfoSO currentDungeonInfo;
-    public EnemyDungeonBoss dungeonBoss;
 
     public bool playerIsInDungeon = false;
 
@@ -122,7 +121,6 @@ public class DungeonManager : Singleton<DungeonManager>
  
     public void FinishDungeon(DungeonType dungeonType, int level, BigInteger maxHP, BigInteger hp, bool isCleared, bool isPlayerDead, EnemyDungeonBoss enemyDungeonBoss)
     {
-        this.dungeonBoss = enemyDungeonBoss;
         enemyDungeonBoss.canAttack = false;
 
         if (!isPlayerDead)
@@ -152,7 +150,6 @@ public class DungeonManager : Singleton<DungeonManager>
         double lostPercentage = (maxHpDouble - currentHpDouble) / maxHpDouble * 100.0;
 
         BigInteger lastRewardAmount = ClaimRewards(dungeon, (float)lostPercentage);
-
         UIManager.Instance.Show<DimmedUI>();
         DungeonRewardPopupUI dungeonRewardPopupUI = UIManager.Instance.Show<DungeonRewardPopupUI>();
         dungeonRewardPopupUI.SetUI(currentDungeonInfo, lastRewardAmount);
@@ -162,12 +159,6 @@ public class DungeonManager : Singleton<DungeonManager>
     {
         UIManager.Instance.Hide<BossStageInfoUI>();
         UIManager.Instance.Show<StageInfoUI>();
-
-        if (dungeonBoss != null)
-        {
-            dungeonBoss.ClearEnemy();
-        }
-
         StageManager.Instance.GoToStage();
         currentDungeonInfo = null;
         playerIsInDungeon = false;
