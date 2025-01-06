@@ -8,6 +8,7 @@ public class DungeonManager : Singleton<DungeonManager>
     Dictionary<DungeonType, Dictionary<int, Dungeon>> dungeonMap;
 
     public DungeonInfoSO currentDungeonInfo;
+    public EnemyDungeonBoss dungeonBoss;
 
     public bool playerIsInDungeon = false;
 
@@ -119,8 +120,9 @@ public class DungeonManager : Singleton<DungeonManager>
     }
 
  
-    public IEnumerator FinishDungeon(DungeonType dungeonType, int level, BigInteger maxHP, BigInteger hp, bool isCleared, bool isPlayerDead, EnemyDungeonBoss enemyDungeonBoss)
+    public void FinishDungeon(DungeonType dungeonType, int level, BigInteger maxHP, BigInteger hp, bool isCleared, bool isPlayerDead, EnemyDungeonBoss enemyDungeonBoss)
     {
+        this.dungeonBoss = enemyDungeonBoss;
         enemyDungeonBoss.canAttack = false;
 
         if (!isPlayerDead)
@@ -128,12 +130,6 @@ public class DungeonManager : Singleton<DungeonManager>
             PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateIdle();
             PlayerObjManager.Instance.Player.PlayerBattle.isStopped = true;
         }
-
-        // BigInteger를 double로 변환하여 비율 계산
-        double maxHpDouble = (double)maxHP;
-        double currentHpDouble = (double)hp;
-        // 손실된 체력 비율 계산
-        double lostPercentage = (maxHpDouble - currentHpDouble) / maxHpDouble * 100.0;
 
         Dungeon dungeon = GetDungeonByTypeAndLevel(dungeonType, level);
 
@@ -149,29 +145,36 @@ public class DungeonManager : Singleton<DungeonManager>
 
         }
 
+        // BigInteger를 double로 변환하여 비율 계산
+        double maxHpDouble = (double)maxHP;
+        double currentHpDouble = (double)hp;
+        // 손실된 체력 비율 계산
+        double lostPercentage = (maxHpDouble - currentHpDouble) / maxHpDouble * 100.0;
+
         BigInteger lastRewardAmount = ClaimRewards(dungeon, (float)lostPercentage);
 
         UIManager.Instance.Show<DimmedUI>();
         DungeonRewardPopupUI dungeonRewardPopupUI = UIManager.Instance.Show<DungeonRewardPopupUI>();
         dungeonRewardPopupUI.SetUI(currentDungeonInfo, lastRewardAmount);
+    }
 
-        yield return new WaitForSeconds(5f);
-
-        UIManager.Instance.Hide<DimmedUI>();
-        UIManager.Instance.Hide<DungeonRewardPopupUI>();
-
+    public void ExitDungeon()
+    {
         UIManager.Instance.Hide<BossStageInfoUI>();
         UIManager.Instance.Show<StageInfoUI>();
-        enemyDungeonBoss.ClearEnemy();
+
+        if (dungeonBoss != null)
+        {
+            dungeonBoss.ClearEnemy();
+        }
+
         StageManager.Instance.GoToNextStage();
         currentDungeonInfo = null;
         playerIsInDungeon = false;
 
-        PlayerObjManager.Instance.Player.stat.RefillHP();
+        PlayerObjManager.Instance.Player.stat.RefillHpAndMp();
         PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateIdle();
     }
-
-    
 
     public void ChangeDungeonState(DungeonType dungeonType, int level, DungeonState state)
     {

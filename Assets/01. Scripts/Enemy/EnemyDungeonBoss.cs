@@ -134,7 +134,7 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
     {
         this.canAttack = false;
 
-        StartCoroutine(DungeonManager.Instance.FinishDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp, isCleared, isPlayerDead, this));
+        DungeonManager.Instance.FinishDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp, isCleared, isPlayerDead, this);
     }
 
     public bool GetActive()
