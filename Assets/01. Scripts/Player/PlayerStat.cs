@@ -157,16 +157,21 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
-    public void AttackLevelUp()
+
+    //스탯업그레이드시 호출되는 메서드 (스탯레벨, 스탯값, 총 업그레이드 비용, 시작스탯, 1레벨당 업그레이드 비용, 1레벨당 업그레이드값)
+    public void UpgradeStat(ref int level, ref BigInteger Stat, ref BigInteger totalUpgradeCost, int startStat, int baseCost, int increment)
     {
         int multiplier = statUpgradeMultiplier == 0 ? 1 : (statUpgradeMultiplier == 1 ? 10 : 100);
-        needAttackUpgradeMoney = attackLevel * 1000 * multiplier; // 1000 이 레벨당 드는 업그레이드 비용 (임시)
+        BigInteger needUpgradeMoney = baseCost + ((level+1) * baseCost * multiplier); // 레벨당 드는 업그레이드 비용
+        totalUpgradeCost = needUpgradeMoney; // 합산한 비용을 스탯당 업그레이드 비용으로 전달
 
-        if (CurrencyManager.Instance.GetGold() >= needAttackUpgradeMoney)
+        if (CurrencyManager.Instance.GetGold() >= needUpgradeMoney)
         {
-            CurrencyManager.Instance.SubtractGold(needAttackUpgradeMoney);
-            attackLevel += multiplier;
-            attackPower = 20 + (attackLevel * 4);
+            CurrencyManager.Instance.SubtractGold(needUpgradeMoney);
+            level += multiplier; // 레벨 증가
+            Stat = startStat + (level * increment); // 스탯 업데이트
+
+           OnStatChange?.Invoke(); // 건강 스탯 변경 이벤트 호출
         }
         else
         {
@@ -175,71 +180,73 @@ public class PlayerStat : MonoBehaviour
     }
 
 
+
+    public void AttackLevelUp()
+    {
+        int LevelValue = attackLevel;
+        BigInteger PowerValue = (BigInteger)attackPower;
+        BigInteger upgradecost = needAttackUpgradeMoney;
+
+        UpgradeStat(ref LevelValue, ref PowerValue, ref upgradecost, 20,1000, 4);
+
+        attackLevel = LevelValue;
+        attackPower = (float)PowerValue;
+        needAttackUpgradeMoney = upgradecost;
+    }
+
+    //스탯업그레이드시 호출되는 메서드 (스탯레벨, 스탯값, 총 업그레이드 비용, 시작스탯, 1레벨당 업그레이드 비용, 1레벨당 업그레이드값)
     public void HealthLevelUp()
     {
-        needHealthUpgradeMoney = healthLevel * 1000;
+        int LevelValue = healthLevel;
+        BigInteger PowerValue = health;
+        BigInteger upgradecost = needHealthUpgradeMoney;
 
-        if (CurrencyManager.Instance.GetGold() >= needHealthUpgradeMoney)
-        {
-            CurrencyManager.Instance.SubtractGold(needHealthUpgradeMoney);
-            healthLevel++;
-            maxHealth = 200 + (healthLevel * 40);
+        UpgradeStat(ref LevelValue, ref PowerValue, ref upgradecost, 200, 1000, 40);
 
-            OnStatChange?.Invoke();
-        }
-        else
-        {
-            Debug.Log("골드가 부족합니다");
-        }
+        healthLevel = LevelValue;
+        health = PowerValue;
+        needHealthUpgradeMoney = upgradecost;
     }
 
     public void HealthRegenerationLevelUp()
     {
-        needHealthRegenerationUpgradeMoney = healthRegenerationLevel * 1000;
+        int LevelValue = healthRegenerationLevel;
+        BigInteger PowerValue = healthRegeneration;
+        BigInteger upgradecost = needHealthRegenerationUpgradeMoney;
 
-        if (CurrencyManager.Instance.GetGold() >= needHealthRegenerationUpgradeMoney)
-        {
-            CurrencyManager.Instance.SubtractGold(needHealthRegenerationUpgradeMoney);
-            healthRegenerationLevel++;
-            healthRegeneration = healthRegenerationLevel * 4;
+        UpgradeStat(ref LevelValue, ref PowerValue, ref upgradecost, 0, 1000, 4);
 
-            OnStatChange?.Invoke();
-        }
-        else
-        {
-            Debug.Log("골드가 부족합니다");
-        }
+        healthRegenerationLevel = LevelValue;
+        healthRegeneration = PowerValue;
+        needHealthRegenerationUpgradeMoney = upgradecost;
     }
 
     public void CriticalIncreaseDamageLevelUp()
     {
-        needCriticalIncreaseDamageUpgradeMoney = criticalIncreaseDamageLevel * 1000;
+        int LevelValue = criticalIncreaseDamageLevel;
+        BigInteger PowerValue = (BigInteger)criticalIncreaseDamage;
+        BigInteger upgradecost = needCriticalIncreaseDamageUpgradeMoney;
 
-        if (CurrencyManager.Instance.GetGold() >= needCriticalIncreaseDamageUpgradeMoney)
-        {
-            CurrencyManager.Instance.SubtractGold(needCriticalIncreaseDamageUpgradeMoney);
-            criticalIncreaseDamageLevel++;
-            criticalIncreaseDamage = 100 + criticalIncreaseDamageLevel;
+        UpgradeStat(ref LevelValue, ref PowerValue, ref upgradecost, 100, 1000, 1);
 
-            OnStatChange?.Invoke();
-        }
-        else
-        {
-            Debug.Log("골드가 부족합니다");
-        }
+        criticalIncreaseDamageLevel = LevelValue;
+        criticalIncreaseDamage = (float)PowerValue;
+        needCriticalIncreaseDamageUpgradeMoney = upgradecost;
     }
 
     public void CriticalProbabilityLevelUp()
     {
-        needCriticalProbabilityUpgradeMoney = criticalProbabilityLevel * 1000;
+        int multiplier = statUpgradeMultiplier == 0 ? 1 : (statUpgradeMultiplier == 1 ? 10 : 100);
+        BigInteger needUpgradeMoney = 1000 + ((criticalProbabilityLevel + 1) * 1000 * multiplier); // 레벨당 드는 업그레이드 비용
+        needCriticalProbabilityUpgradeMoney = needUpgradeMoney;
 
-        if (CurrencyManager.Instance.GetGold() >= needCriticalProbabilityUpgradeMoney)
+        if (CurrencyManager.Instance.GetGold() >= needUpgradeMoney)
         {
-            CurrencyManager.Instance.SubtractGold(needCriticalProbabilityUpgradeMoney);
-            criticalProbability = criticalProbabilityLevel * 0.1f;
-            criticalProbabilityLevel++;
+            CurrencyManager.Instance.SubtractGold(needUpgradeMoney);
+            criticalProbabilityLevel += multiplier; // 레벨 증가
+            criticalProbability = criticalProbabilityLevel * 0.1f; // 스탯 업데이트
 
-            OnStatChange?.Invoke();
+            OnStatChange?.Invoke(); // 건강 스탯 변경 이벤트 호출
         }
         else
         {
@@ -308,7 +315,7 @@ public class PlayerStat : MonoBehaviour
         healthLevel = 0;
         healthRegenerationLevel = 0;
         criticalIncreaseDamageLevel = 0;
-        criticalProbabilityLevel = 1;
+        criticalProbabilityLevel = 0;
         bluecriticalIncreaseDamageLevel = 1;
         bluecriticalProbabilityLevel = 1;
         needAttackUpgradeMoney = 1000;
