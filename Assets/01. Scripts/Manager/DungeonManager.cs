@@ -121,12 +121,12 @@ public class DungeonManager : Singleton<DungeonManager>
  
     public void FinishDungeon(DungeonType dungeonType, int level, BigInteger maxHP, BigInteger hp, bool isCleared, bool isPlayerDead, EnemyDungeonBoss enemyDungeonBoss)
     {
+        GameEventsManager.Instance.bossEvents.TimerStop();
         enemyDungeonBoss.canAttack = false;
 
         if (!isPlayerDead)
         {
-            PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateIdle();
-            PlayerObjManager.Instance.Player.PlayerBattle.isStopped = true;
+            PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateStoppedIdle();
         }
 
         Dungeon dungeon = GetDungeonByTypeAndLevel(dungeonType, level);
@@ -162,8 +162,6 @@ public class DungeonManager : Singleton<DungeonManager>
         StageManager.Instance.GoToStage();
         currentDungeonInfo = null;
         playerIsInDungeon = false;
-
-        PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateIdle();
     }
 
     public void ChangeDungeonState(DungeonType dungeonType, int level, DungeonState state)

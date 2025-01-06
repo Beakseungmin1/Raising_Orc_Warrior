@@ -25,4 +25,14 @@ public class BossEvents
             onSetBossHp(maxHealth);
         }
     }
+
+    public event Action onTimerStop;
+
+    public void TimerStop()
+    {
+        if (onTimerStop != null)
+        {
+            onTimerStop();
+        }
+    }
 }
