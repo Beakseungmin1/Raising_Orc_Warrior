@@ -18,6 +18,8 @@ public class EnemyMover : MonoBehaviour
         BattleManager.Instance.OnBattleEnd += ResumeMovement;
 
         ParallaxBackground.Instance.OnKnockback += TriggerKnockback;
+
+        canMove = !BattleManager.Instance.IsBattleActive;
     }
 
     private void OnDisable()
@@ -32,11 +34,6 @@ public class EnemyMover : MonoBehaviour
         {
             ParallaxBackground.Instance.OnKnockback -= TriggerKnockback;
         }
-    }
-
-    private void Start()
-    {
-        canMove = !BattleManager.Instance.IsBattleActive;
     }
 
     private void Update()
