@@ -79,14 +79,14 @@ public class StageManager : Singleton<StageManager>
         {
             curStageIndex++;
             curStageIndexInThisChapter++;
-            GoToNextStage();
+            GoToStage();
         }
         else //현재가 챕터의 마지막 스테이지라면 해당 스테이지 반복
         {
             savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
 
             curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
-            GoToNextStage();
+            GoToStage();
         }
     }
 
@@ -101,11 +101,16 @@ public class StageManager : Singleton<StageManager>
         stageName = stageSOs[curStageIndexInThisChapter].stageName;
     }
 
-    public void GoToNextStage()
+    public void GoToStage()
     {
         RegenManager.Instance.CacheEnemies();
         RegenManager.Instance.RegenStagesEnemy();
         GameEventsManager.Instance.stageEvents.ChangeStage();
+
+        if (PlayerObjManager.Instance.Player.PlayerBattle.GetIsDead())
+        {
+            PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateIdle();
+        }
     }
 
     public void GoToBossStage()
@@ -114,7 +119,7 @@ public class StageManager : Singleton<StageManager>
         curStageIndex++;
         UIManager.Instance.Hide<StageInfoUI>();
         UIManager.Instance.Show<BossStageInfoUI>();
-        RegenManager.Instance.ClearEnemies();
+        GameEventsManager.Instance.enemyEvents.ClearEnemy();
         RegenManager.Instance.CacheEnemyBoss();
         RegenManager.Instance.RegenStagesBossEnemy();
         SetTimer(bossStageSO.bossEnemySO.bossTimeLimit);
@@ -128,7 +133,7 @@ public class StageManager : Singleton<StageManager>
         savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
         curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
 
-        RegenManager.Instance.ClearEnemies();
+        GameEventsManager.Instance.enemyEvents.ClearEnemy();
         Dungeon dungeon = DungeonManager.Instance.GetDungeonByTypeAndLevel(dungeonType, level);
         DungeonManager.Instance.currentDungeonInfo = dungeon.info;
         RegenManager.Instance.CacheDungeonBoss(dungeon);
@@ -183,6 +188,6 @@ public class StageManager : Singleton<StageManager>
         curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
         UIManager.Instance.Hide<BossStageInfoUI>();
         UIManager.Instance.Show<StageInfoUI>();
-        GoToNextStage();
+        GoToStage();
     }
 }

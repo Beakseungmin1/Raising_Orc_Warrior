@@ -49,13 +49,13 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
         SetupEnemy();
         GameEventsManager.Instance.bossEvents.BossHPSet(maxHp);
         GameEventsManager.Instance.enemyEvents.onEnemyCleared += ClearEnemy;
-        GameEventsManager.Instance.dungeonEvents.onPlayerFinishDungeon += FinishDungeon;
+        GameEventsManager.Instance.dungeonEvents.onPlayerDeadOrTimeEndInDungeon += FinishDungeon;
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.enemyEvents.onEnemyCleared -= ClearEnemy;
-        GameEventsManager.Instance.dungeonEvents.onPlayerFinishDungeon -= FinishDungeon;
+        GameEventsManager.Instance.dungeonEvents.onPlayerDeadOrTimeEndInDungeon -= FinishDungeon;
     }
 
     public void Start()
@@ -139,8 +139,9 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
     public void FinishDungeon(bool isCleared, bool isPlayerDead)
     {
         this.canAttack = false;
-
-        StartCoroutine(DungeonManager.Instance.FinishDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp, isCleared, isPlayerDead, this));
+        SetfalseAnimation();
+        animator.SetTrigger("Pattern3");
+        DungeonManager.Instance.FinishDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp, isCleared, isPlayerDead, this);
     }
 
     public bool GetActive()

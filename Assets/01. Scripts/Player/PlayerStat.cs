@@ -100,6 +100,11 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        GameEventsManager.Instance.stageEvents.onStageChange += RefillHpAndMp;
+    }
+
     public void AddExpFromMonsters(IEnemy enemy)
     {
         BigInteger expGained = enemy.GiveExp();
@@ -348,9 +353,10 @@ public class PlayerStat : MonoBehaviour
 
     }
 
-    public void RefillHP()
+    public void RefillHpAndMp()
     {
         health = maxHealth;
+        mana = maxMana;
     }
 
     public void ResetHealth()

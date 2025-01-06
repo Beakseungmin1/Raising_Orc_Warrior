@@ -119,21 +119,15 @@ public class DungeonManager : Singleton<DungeonManager>
     }
 
  
-    public IEnumerator FinishDungeon(DungeonType dungeonType, int level, BigInteger maxHP, BigInteger hp, bool isCleared, bool isPlayerDead, EnemyDungeonBoss enemyDungeonBoss)
+    public void FinishDungeon(DungeonType dungeonType, int level, BigInteger maxHP, BigInteger hp, bool isCleared, bool isPlayerDead, EnemyDungeonBoss enemyDungeonBoss)
     {
+        GameEventsManager.Instance.bossEvents.TimerStop();
         enemyDungeonBoss.canAttack = false;
 
         if (!isPlayerDead)
         {
-            PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateIdle();
-            PlayerObjManager.Instance.Player.PlayerBattle.isStopped = true;
+            PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateStoppedIdle();
         }
-
-        // BigInteger를 double로 변환하여 비율 계산
-        double maxHpDouble = (double)maxHP;
-        double currentHpDouble = (double)hp;
-        // 손실된 체력 비율 계산
-        double lostPercentage = (maxHpDouble - currentHpDouble) / maxHpDouble * 100.0;
 
         Dungeon dungeon = GetDungeonByTypeAndLevel(dungeonType, level);
 
@@ -149,29 +143,26 @@ public class DungeonManager : Singleton<DungeonManager>
 
         }
 
-        BigInteger lastRewardAmount = ClaimRewards(dungeon, (float)lostPercentage);
+        // BigInteger를 double로 변환하여 비율 계산
+        double maxHpDouble = (double)maxHP;
+        double currentHpDouble = (double)hp;
+        // 손실된 체력 비율 계산
+        double lostPercentage = (maxHpDouble - currentHpDouble) / maxHpDouble * 100.0;
 
+        BigInteger lastRewardAmount = ClaimRewards(dungeon, (float)lostPercentage);
         UIManager.Instance.Show<DimmedUI>();
         DungeonRewardPopupUI dungeonRewardPopupUI = UIManager.Instance.Show<DungeonRewardPopupUI>();
         dungeonRewardPopupUI.SetUI(currentDungeonInfo, lastRewardAmount);
-
-        yield return new WaitForSeconds(5f);
-
-        UIManager.Instance.Hide<DimmedUI>();
-        UIManager.Instance.Hide<DungeonRewardPopupUI>();
-
-        UIManager.Instance.Hide<BossStageInfoUI>();
-        UIManager.Instance.Show<StageInfoUI>();
-        enemyDungeonBoss.ClearEnemy();
-        StageManager.Instance.GoToNextStage();
-        currentDungeonInfo = null;
-        playerIsInDungeon = false;
-
-        PlayerObjManager.Instance.Player.stat.RefillHP();
-        PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateIdle();
     }
 
-    
+    public void ExitDungeon()
+    {
+        UIManager.Instance.Hide<BossStageInfoUI>();
+        UIManager.Instance.Show<StageInfoUI>();
+        StageManager.Instance.GoToStage();
+        currentDungeonInfo = null;
+        playerIsInDungeon = false;
+    }
 
     public void ChangeDungeonState(DungeonType dungeonType, int level, DungeonState state)
     {
