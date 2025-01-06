@@ -14,7 +14,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
 
     private bool isAttackButtonDown;
     private bool isHealthButtonDown;
-    private bool isHealtRegenButtonDown;
+    private bool isHealthRegenButtonDown;
     private bool isCriticalDamageButtonDown;
     private bool isCriticalProbabilityButtonDown;
     private bool isBlueCriticalDamageButtonDown;
@@ -29,6 +29,22 @@ public class PlayerStatUpgradeUI : MonoBehaviour
 
     private void Start()
     {
+        UpdateAllStatUI();
+    }
+
+    private void Update()
+    {
+        HandleButtonHold(ref isAttackButtonDown, OnAttackLevelUpButton);
+        HandleButtonHold(ref isHealthButtonDown, OnHealthLevelUpButton);
+        HandleButtonHold(ref isHealthRegenButtonDown, OnHealthRegenLevelUpButton);
+        HandleButtonHold(ref isCriticalDamageButtonDown, OnCriticalDamageLevelUpButton);
+        HandleButtonHold(ref isCriticalProbabilityButtonDown, OnCriticalProbabilityLevelUpButton);
+        HandleButtonHold(ref isBlueCriticalDamageButtonDown, OnBlueCriticalDamageLevelUpButton);
+        HandleButtonHold(ref isBlueCriticalProbabilityButtonDown, OnBlueCriticalProbabilityLevelUpButton);
+    }
+
+    public void UpdateAllStatUI()
+    {
         attackUi.UpdateAttackStatUI();
         healthUi.UpdateHealthStatUI();
         healthRegenUi.UpdateHealthRegenerationUI();
@@ -38,100 +54,18 @@ public class PlayerStatUpgradeUI : MonoBehaviour
         blueCriticalProbabilityUi.UpdateblueCriticalProbabilityStatUI();
     }
 
-    private void Update()
+    private void HandleButtonHold(ref bool isButtonDown, System.Action upgradeAction)
     {
-        if (isAttackButtonDown)
+        if (isButtonDown)
         {
             holdTimer += Time.deltaTime;
             repeatTimer += Time.deltaTime;
-            if (holdTimer >= holdDuration)
+            if (holdTimer >= holdDuration && repeatTimer >= repeatInterval)
             {
-                if (repeatTimer >= repeatInterval)
-                {
-                    repeatTimer = 0f;
-                    OnAttackLevelUpButton();
-                }
+                repeatTimer = 0f;
+                upgradeAction();
             }
         }
-        if (isHealthButtonDown)
-        {
-            holdTimer += Time.deltaTime;
-            repeatTimer += Time.deltaTime;
-            if (holdTimer >= holdDuration)
-            {
-                if (repeatTimer >= repeatInterval)
-                {
-                    repeatTimer = 0f;
-                    OnHealthLevelUpButton();
-                }
-            }
-        }
-        if (isHealtRegenButtonDown)
-        {
-            holdTimer += Time.deltaTime;
-            repeatTimer += Time.deltaTime;
-            if (holdTimer >= holdDuration)
-            {
-                if (repeatTimer >= repeatInterval)
-                {
-                    repeatTimer = 0f;
-                    OnHealthRegenLevelUpButton();
-                }
-            }
-        }
-        if (isCriticalDamageButtonDown)
-        {
-            holdTimer += Time.deltaTime;
-            repeatTimer += Time.deltaTime;
-            if (holdTimer >= holdDuration)
-            {
-                if (repeatTimer >= repeatInterval)
-                {
-                    repeatTimer = 0f;
-                    OnCriticalDamageLevelUpButton();
-                }
-            }
-        }
-        if (isCriticalProbabilityButtonDown)
-        {
-            holdTimer += Time.deltaTime;
-            repeatTimer += Time.deltaTime;
-            if (holdTimer >= holdDuration)
-            {
-                if (repeatTimer >= repeatInterval)
-                {
-                    repeatTimer = 0f;
-                    OnCriticalProbabilityLevelUpButton();
-                }
-            }
-        }
-        if (isBlueCriticalDamageButtonDown)
-        {
-            holdTimer += Time.deltaTime;
-            repeatTimer += Time.deltaTime;
-            if (holdTimer >= holdDuration)
-            {
-                if (repeatTimer >= repeatInterval)
-                {
-                    repeatTimer = 0f;
-                    OnBlueCriticalDamageLevelUpButton();
-                }
-            }
-        }
-        if (isBlueCriticalProbabilityButtonDown)
-        {
-            holdTimer += Time.deltaTime;
-            repeatTimer += Time.deltaTime;
-            if (holdTimer >= holdDuration)
-            {
-                if (repeatTimer >= repeatInterval)
-                {
-                    repeatTimer = 0f;
-                    OnBlueCriticalProbabilityLevelUpButton();
-                }
-            }
-        }
-
     }
 
     public void OnAttackLevelUpButton()
@@ -179,13 +113,13 @@ public class PlayerStatUpgradeUI : MonoBehaviour
 
     public void HealthRegenPointerDown()
     {
-        isHealtRegenButtonDown = true;
+        isHealthRegenButtonDown = true;
         holdTimer = 0f;
     }
 
     public void HealthRegenPointerUp()
     {
-        isHealtRegenButtonDown = false;
+        isHealthRegenButtonDown = false;
         holdTimer = 0f;
     }
 
