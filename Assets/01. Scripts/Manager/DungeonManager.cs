@@ -157,6 +157,7 @@ public class DungeonManager : Singleton<DungeonManager>
 
     public void ExitDungeon()
     {
+        UIManager.Instance.ShowFadePanel<FadeInFadeOutUI>(FadeType.FadeOutFadeIn);
         UIManager.Instance.Hide<BossStageInfoUI>();
         UIManager.Instance.Show<StageInfoUI>();
         StageManager.Instance.GoToStage();

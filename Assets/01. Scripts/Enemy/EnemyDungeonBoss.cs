@@ -104,20 +104,26 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
         }
         else
         {
-            hp -= Damage;
+            hp = 0;
             Die();
         }
-        GameEventsManager.Instance.bossEvents.BossHPChanged(hp -= Damage);
+        GameEventsManager.Instance.bossEvents.BossHPChanged(hp);
     }
 
     public void GiveDamageToPlayer()
     {
-        player.TakeDamage(10); // 안에 넣은 값은 임시값
+        if(player != null)
+        {
+            player.TakeDamage(10); // 안에 넣은 값은 임시값
+        }
     }
 
     public void GiveKnockDamageToPlayer()
     {
-        player.TakeKnockbackDamage(10, 0.5f); //안에 넣은 값은 임시값 이후 (몬스터고유데미지, 몬스터고유넉백시간) 으로 조정예정
+        if (player != null)
+        {
+            player.TakeKnockbackDamage(10, 0.5f); //안에 넣은 값은 임시값 이후 (몬스터고유데미지, 몬스터고유넉백시간) 으로 조정예정
+        }
     }
 
     public BigInteger GiveExp()
@@ -140,8 +146,9 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
     public void FinishDungeon(bool isCleared, bool isPlayerDead)
     {
         this.canAttack = false;
-        SetfalseAnimation();
-        animator.SetTrigger("Pattern3");
+        animator.SetBool("Pattern1", false);
+        animator.SetBool("Pattern3", false);
+        animator.SetBool("Pattern2", true);
         DungeonManager.Instance.FinishDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp, isCleared, isPlayerDead, this);
     }
 
