@@ -133,7 +133,8 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
     public void FinishDungeon(bool isCleared, bool isPlayerDead)
     {
         this.canAttack = false;
-
+        SetfalseAnimation();
+        animator.SetTrigger("Pattern3");
         DungeonManager.Instance.FinishDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp, isCleared, isPlayerDead, this);
     }
 

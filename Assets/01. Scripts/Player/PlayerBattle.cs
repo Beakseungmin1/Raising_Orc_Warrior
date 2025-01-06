@@ -260,9 +260,23 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         animator.Play("IDLE");
     }
 
+    public void SetPlayerStateIdle()
+    {
+        isStopped = false;
+        isDead = false;
+        animator.SetBool("isDeath", false);
+        currentState = State.Idle;
+        animator.Play("IDLE");
+    }
+
     public void SetPlayerStateStoppedIdle()
     {
         isStopped = true;
         currentState = State.StoppedIdle;
+    }
+
+    public bool GetIsDead()
+    {
+        return isDead;
     }
 }
