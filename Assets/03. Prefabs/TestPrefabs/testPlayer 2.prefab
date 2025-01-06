@@ -356,6 +356,7 @@ GameObject:
   - component: {fileID: 4365298221228220091}
   - component: {fileID: 7265899195095097864}
   - component: {fileID: 6265034368803010045}
+  - component: {fileID: 159942053630262429}
   m_Layer: 0
   m_Name: testPlayer 2
   m_TagString: Player
@@ -440,6 +441,7 @@ MonoBehaviour:
   background: {fileID: 0}
   animator: {fileID: 0}
   activeBuffSkills: []
+  isStopped: 0
 --- !u!114 &1201181367610977052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,6 +513,7 @@ MonoBehaviour:
   EquipManager: {fileID: 0}
   SkillHandler: {fileID: 0}
   DamageCalculator: {fileID: 0}
+  StatCalculator: {fileID: 0}
   hpBar: {fileID: 7387941599714733976}
   manaBar: {fileID: 8958338355040510154}
 --- !u!114 &8219078698626856518
@@ -563,6 +566,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: "\uAE30\uBCF8 \uB2C9\uB124\uC784"
+--- !u!114 &159942053630262429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5242343083079520144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56a85f23e7215d142a51c5347ea87b30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5440593672448997053
 GameObject:
   m_ObjectHideFlags: 0

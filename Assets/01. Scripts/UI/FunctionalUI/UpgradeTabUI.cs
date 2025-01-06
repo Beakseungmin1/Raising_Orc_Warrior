@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -54,8 +53,8 @@ public class UpgradeTabUI : MonoBehaviour
         {
             upgradeLevelTxt.text = "Lv." + stat.criticalProbabilityLevel.ToString();
             needMoneyTxt.text = stat.needCriticalProbabilityUpgradeMoney.ToString();
-            curValueTxt.text = stat.criticalProbability.ToString() + "%";
-            upgradeValueTxt.text = (stat.criticalProbability + 0.1f).ToString() + "%";
+            curValueTxt.text = Math.Round(stat.criticalProbability, 1).ToString() + "%";
+            upgradeValueTxt.text = Math.Round(stat.criticalProbability + 0.1f, 1).ToString() + "%";
         }
     }
     public void UpdateCriticalIncreaseDamageUI()

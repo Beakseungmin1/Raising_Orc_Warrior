@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public EquipManager EquipManager;
     public PlayerSkillHandler SkillHandler;
     public PlayerDamageCalculator DamageCalculator;
+    public PlayerStatCalculator StatCalculator;
 
     [Header("UI Elements")]
     public Image hpBar;
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour
         EquipManager = GetComponent<EquipManager>();
         SkillHandler = GetComponent<PlayerSkillHandler>();
         DamageCalculator = GetComponent<PlayerDamageCalculator>();
+        StatCalculator = GetComponent<PlayerStatCalculator>();
         PlayerObjManager.Instance.Player = this;
     }
 
@@ -36,7 +38,9 @@ public class Player : MonoBehaviour
 
     public void UpdateHealthBar()
     {
-        float fillAmount = (float)((double)stat.health / (double)stat.maxHealth);
+        BigInteger adjustedMaxHealth = StatCalculator.GetAdjustedMaxHealth();
+
+        float fillAmount = (float)stat.health / (float)adjustedMaxHealth;
         hpBar.fillAmount = fillAmount;
     }
 
