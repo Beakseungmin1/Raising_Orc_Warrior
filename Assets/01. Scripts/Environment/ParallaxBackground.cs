@@ -6,7 +6,7 @@ using UnityEngine;
 public class ParallaxBackground : Singleton<ParallaxBackground>
 {
     [SerializeField]
-    private float scrollSpeed = 2f;
+    public float scrollSpeed = 2f;
 
     [SerializeField]
     private Transform[] backgrounds;

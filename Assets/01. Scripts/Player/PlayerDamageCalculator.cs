@@ -94,8 +94,9 @@ public class PlayerDamageCalculator : MonoBehaviour
     {
         BigInteger baseDamage = (BigInteger)basicDamage;
         BigInteger weaponDamage = WeaponIncreaseDamage;
+        BigInteger skillBuffDamage = SkillIncreaseDamage;
 
-        BigInteger skillDamage = baseDamage + weaponDamage;
+        BigInteger skillDamage = baseDamage + weaponDamage + skillBuffDamage;
         skillDamage = skillDamage * (BigInteger)(skillDamagePercent / 100f);
 
         float randomMultiplier = UnityEngine.Random.Range(1 - damageRandomVariation, 1 + damageRandomVariation);
