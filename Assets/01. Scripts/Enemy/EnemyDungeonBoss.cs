@@ -8,6 +8,7 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
 {
     private enum Pattern
     {
+        Idle,
         Pattern1,
         Pattern2,
         Pattern3
@@ -39,7 +40,7 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
     private PlayerBattle player;
 
     float patternTime = 4f; // 패턴 유지시간
-    float toTime = 4; // 패턴 시간 계산용 변수
+    float toTime = 2; // 패턴 시간 계산용 변수
 
     public bool canAttack = true;
 
@@ -60,7 +61,7 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
 
     public void Start()
     {
-        InvokeRepeating("SwitchPattern", 2f, patternTime);
+        InvokeRepeating("SwitchPattern", 0f, patternTime);
     }
 
     private void Update()
@@ -171,7 +172,7 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
             Pattern newPattern;
             do
             {
-                int ran = UnityEngine.Random.Range(0, Enum.GetValues(typeof(Pattern)).Length);
+                int ran = UnityEngine.Random.Range(1, Enum.GetValues(typeof(Pattern)).Length);
                 newPattern = (Pattern)ran;
 
             } while (newPattern == enemyPattern);
