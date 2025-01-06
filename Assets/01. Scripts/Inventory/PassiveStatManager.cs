@@ -1,15 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public class PassiveStatManager : Singleton<PassiveStatManager>
 {
     public float PassiveAtkIncreaseRate { get; private set; }
     public float PassiveCriticalDamageBonus { get; private set; }
-    public float PassiveGoldGainRate { get; private set; }
+    public BigInteger PassiveGoldGainRate { get; private set; }
     public float PassiveHpAndHpRecoveryIncreaseRate { get; private set; }
     public float PassiveMpAndMpRecoveryIncreaseRate { get; private set; }
     public float PassiveAddEXPRate { get; private set; }
+
+    private PlayerStat stat;
+
+    private void Start()
+    {
+        stat = PlayerObjManager.Instance.Player.stat;
+
+
+        PassiveGoldGainRate = stat.GetGoldGainRate();
+        //PassiveMpAndMpRecoveryIncreaseRate = stat.mana
+    }
 
     public void ResetPassiveStats()
     {
@@ -34,7 +46,7 @@ public class PassiveStatManager : Singleton<PassiveStatManager>
             {
                 PassiveAtkIncreaseRate += weapon.PassiveEquipAtkIncreaseRate;
                 PassiveCriticalDamageBonus += weapon.PassiveCriticalDamageBonus;
-                PassiveGoldGainRate += weapon.PassiveGoldGainRate;
+                PassiveGoldGainRate += (BigInteger)weapon.PassiveGoldGainRate;
                 processedWeapons.Add(weapon.BaseData.name);
             }
         }

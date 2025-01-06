@@ -8,6 +8,7 @@ public class CurrencyManager : Singleton<CurrencyManager>
     private BigInteger gold = 99999999999; // 능력치 강화용 (전역 변수)
 
     private Dictionary<CurrencyType, float> currencies; // float 타입만 사용
+    private PlayerStat stat;
 
     private void Awake()
     {
@@ -19,12 +20,17 @@ public class CurrencyManager : Singleton<CurrencyManager>
             { CurrencyType.Diamond, 99999f }, // float
             { CurrencyType.DungeonTicket, 10f } // float
         };
+
+        stat = PlayerObjManager.Instance.Player.stat;
     }
 
     // Gold 추가
     public void AddGold(BigInteger amount)
     {
-        gold += amount;
+        BigInteger goldMultiplier = stat.extraGoldGainRate;
+        BigInteger adjustedAmount = amount + (amount * (goldMultiplier / 100));
+
+        gold += adjustedAmount;
         GameEventsManager.Instance.currencyEvents.GoldChanged();
     }
 
