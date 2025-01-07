@@ -20,7 +20,10 @@ public class CurrencyManager : Singleton<CurrencyManager>
             { CurrencyType.Diamond, 99999f }, // float
             { CurrencyType.DungeonTicket, 10f } // float
         };
+    }
 
+    private void Start()
+    {
         stat = PlayerObjManager.Instance.Player.stat;
     }
 

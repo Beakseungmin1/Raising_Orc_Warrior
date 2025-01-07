@@ -56,9 +56,17 @@ public class PlayerStat : MonoBehaviour
     private PlayerStatCalculator PlayerStatCalculator;
     private float timer = 0f;
 
-    private void Start()
+    private void OnValidate()
     {
         PlayerStatCalculator = GetComponent<PlayerStatCalculator>();
+    }
+
+    private void Start()
+    {
+        if (PlayerStatCalculator == null)
+        {
+            PlayerStatCalculator = GetComponent<PlayerStatCalculator>();
+        }
     }
 
     private void Update()
@@ -80,15 +88,25 @@ public class PlayerStat : MonoBehaviour
             }
         }
 
-        if (mana < maxMana)
+        if (mana < PlayerStatCalculator.GetAdjustedMaxMana())
         {
-            mana += manaRegeneration * Time.deltaTime;
+            mana += PlayerStatCalculator.GetAdjustedManaRegeneration() * Time.deltaTime;
 
-            if (mana > maxMana)
+            if (mana > PlayerStatCalculator.GetAdjustedMaxMana())
             {
-                mana = maxMana;
+                mana = PlayerStatCalculator.GetAdjustedMaxMana();
             }
         }
+    }
+
+    public void ChangeExtraExpRate(BigInteger value)
+    {
+        extraExpRate = value;
+    }
+
+    public void ChangeExtraGoldGainRate(BigInteger value)
+    {
+        extraGoldGainRate = value;
     }
 
     public void ChangeUpgradeMultiplier(int number)
@@ -108,7 +126,11 @@ public class PlayerStat : MonoBehaviour
     public void AddExpFromMonsters(IEnemy enemy)
     {
         BigInteger expGained = enemy.GiveExp();
-        BigInteger adjustedExp = expGained + (expGained * (extraExpRate / 100));
+        decimal extraExpRateDecimal = (decimal)extraExpRate / 100;
+
+        decimal adjustedExpDecimal = (decimal)expGained * extraExpRateDecimal;
+
+        BigInteger adjustedExp = expGained + new BigInteger(adjustedExpDecimal);
 
         exp += adjustedExp;
 
@@ -198,13 +220,13 @@ public class PlayerStat : MonoBehaviour
     public void HealthLevelUp()
     {
         int LevelValue = healthLevel;
-        BigInteger PowerValue = health;
+        BigInteger PowerValue = maxHealth;
         BigInteger upgradecost = needHealthUpgradeMoney;
 
         UpgradeStat(ref LevelValue, ref PowerValue, ref upgradecost, 200, 1000, 40);
 
         healthLevel = LevelValue;
-        health = PowerValue;
+        maxHealth = PowerValue;
         needHealthUpgradeMoney = upgradecost;
     }
 
@@ -303,7 +325,7 @@ public class PlayerStat : MonoBehaviour
         criticalIncreaseDamage = 100;
         maxMana = 200;
         mana = maxMana;
-        manaRegeneration = 10;
+        manaRegeneration = 5;
         hitLate = 0;
         avoid = 0;
         extraGoldGainRate = 0;
@@ -327,11 +349,6 @@ public class PlayerStat : MonoBehaviour
         needBlueCriticalProbabilityUpgradeMoney = 1000;
     }
 
-    public float GetMana()
-    {
-        return mana;
-    }
-
     public void reduceMana(float value)
     {
         mana -= value;
@@ -350,7 +367,6 @@ public class PlayerStat : MonoBehaviour
     {
         return extraGoldGainRate;
     }
-
 
     public void UseHealSkill(BaseSkill skill)
     {
@@ -371,8 +387,8 @@ public class PlayerStat : MonoBehaviour
 
     public void RefillHpAndMp()
     {
-        health = maxHealth;
-        mana = maxMana;
+        ResetHealth();
+        ResetMana();
     }
 
     public void ResetHealth()

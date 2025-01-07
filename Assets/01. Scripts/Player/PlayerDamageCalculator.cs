@@ -8,6 +8,7 @@ public class PlayerDamageCalculator : MonoBehaviour
 {
     private PlayerStat stat;
     private EquipManager equipManager;
+    private PlayerInventory inventory;
 
     public BigInteger TotalDamage;
     public float basicDamage;
@@ -18,13 +19,17 @@ public class PlayerDamageCalculator : MonoBehaviour
     private float damageMultiplier = 1.0f;
     private List<(float percent, float duration)> attackBuffs = new List<(float, float)>();
     public event Action OnCriticalHit;
+    public event Action OnMissHit;
 
     private const float damageRandomVariation = 0.1f;
+    private BigInteger PassiveAttackIncrease;
+    private float PassiveCritAttackIncrease;
 
     private void Start()
     {
         stat = GetComponent<PlayerStat>();
         equipManager = GetComponent<EquipManager>();
+        inventory = GetComponent<PlayerInventory>();
 
         rawTotalDamage = (BigInteger)stat.attackPower;
     }
@@ -53,6 +58,9 @@ public class PlayerDamageCalculator : MonoBehaviour
         {
             SkillIncreaseDamage += (BigInteger)(basicDamage * (buff.percent / 100));
         }
+
+        PassiveAttackIncrease = (BigInteger)(basicDamage * (inventory.GetTotalWeaponPassiveAtkIncrease() / 100f));
+        PassiveCritAttackIncrease = inventory.GetTotalWeaponCriticalDamageBonus();
     }
 
     public BigInteger GetTotalDamage()
@@ -63,18 +71,24 @@ public class PlayerDamageCalculator : MonoBehaviour
         BigInteger weaponDamage = WeaponIncreaseDamage;
         BigInteger skillBuffDamage = SkillIncreaseDamage;
 
-        rawTotalDamage = baseDamage + weaponDamage + skillBuffDamage;
+        rawTotalDamage = baseDamage + weaponDamage + skillBuffDamage + PassiveAttackIncrease;
 
         float randomMultiplier = UnityEngine.Random.Range(1 - damageRandomVariation, 1 + damageRandomVariation);
         float totalDamageWithRandom = (float)rawTotalDamage * randomMultiplier;
 
         bool criticalHit = false;
 
+        if (UnityEngine.Random.Range(0, 100) < 10)
+        {
+            OnMissHit?.Invoke();
+            return 0;
+        }
+
         if (UnityEngine.Random.Range(0, 100) < stat.criticalProbability)
         {
             criticalHit = true;
 
-            totalDamageWithRandom += totalDamageWithRandom * (stat.criticalIncreaseDamage / 100f);
+            totalDamageWithRandom += totalDamageWithRandom * ((stat.criticalIncreaseDamage + PassiveCritAttackIncrease) / 100f);
 
             if (UnityEngine.Random.Range(0, 100) < stat.bluecriticalProbability)
             {
@@ -96,19 +110,20 @@ public class PlayerDamageCalculator : MonoBehaviour
         BigInteger weaponDamage = WeaponIncreaseDamage;
         BigInteger skillBuffDamage = SkillIncreaseDamage;
 
-        BigInteger skillDamage = baseDamage + weaponDamage + skillBuffDamage;
+        BigInteger skillDamage = baseDamage + weaponDamage + skillBuffDamage + PassiveAttackIncrease;
         skillDamage = skillDamage * (BigInteger)(skillDamagePercent / 100f);
 
         float randomMultiplier = UnityEngine.Random.Range(1 - damageRandomVariation, 1 + damageRandomVariation);
         float totalSkillDamageWithRandom = (float)skillDamage * randomMultiplier;
 
         bool criticalHit = false;
+        
 
         if (UnityEngine.Random.Range(0, 100) < stat.criticalProbability)
         {
             criticalHit = true;
 
-            totalSkillDamageWithRandom += totalSkillDamageWithRandom * (stat.criticalIncreaseDamage / 100f);
+            totalSkillDamageWithRandom += totalSkillDamageWithRandom * ((stat.criticalIncreaseDamage + PassiveCritAttackIncrease) / 100f);
 
             if (UnityEngine.Random.Range(0, 100) < stat.bluecriticalProbability)
             {
@@ -146,5 +161,10 @@ public class PlayerDamageCalculator : MonoBehaviour
     public BigInteger GetRawTotalDamage()
     {
         return rawTotalDamage;
+    }
+
+    public float GetTotalCriticalDamageBonus()
+    {
+        return stat.criticalIncreaseDamage + PassiveCritAttackIncrease;
     }
 }

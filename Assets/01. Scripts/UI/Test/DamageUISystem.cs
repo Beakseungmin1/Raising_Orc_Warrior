@@ -8,6 +8,7 @@ public class DamageUISystem : Singleton<DamageUISystem>
     [SerializeField] private TextMeshPro damageTextPrefab;
     private PlayerDamageCalculator playerDamageCalculator;
     private bool isCriticalHit = false;
+    private bool isMissHit = false;
 
     private Enemy enemyComponent;
     private EnemyBoss enemyBossComponent;
@@ -17,6 +18,7 @@ public class DamageUISystem : Singleton<DamageUISystem>
     {
         playerDamageCalculator = PlayerObjManager.Instance.Player.DamageCalculator;
         playerDamageCalculator.OnCriticalHit += HandleCriticalHit;
+        playerDamageCalculator.OnMissHit += HandleMissHit;
     }
 
     private void CacheEnemyComponents(Transform enemyTransform)
@@ -34,6 +36,11 @@ public class DamageUISystem : Singleton<DamageUISystem>
     private void HandleCriticalHit()
     {
         isCriticalHit = true;
+    }
+
+    private void HandleMissHit()
+    {
+        isMissHit = true;
     }
 
     public void ShowDamage(BigInteger damage, UnityEngine.Vector3 position, Transform enemyTransform)
@@ -63,7 +70,13 @@ public class DamageUISystem : Singleton<DamageUISystem>
         TextMeshPro damageText = Instantiate(damageTextPrefab, enemyTransform);
         damageText.text = damage.ToString();
 
-        if (isCriticalHit)
+        if (isMissHit)
+        {
+            damageText.color = Color.gray;
+            damageText.text = "Miss";
+            isMissHit = false;
+        }
+        else if(isCriticalHit)
         {
             damageText.color = Color.red;
             isCriticalHit = false;

@@ -23,7 +23,7 @@ MonoBehaviour:
   currentLevel: 1
   equipAtkIncreaseRate: 300
   passiveEquipAtkIncreaseRate: 0
-  passiveCriticalDamageBonus: 123
-  passiveGoldGainRate: 12
+  passiveCriticalDamageBonus: 0
+  passiveGoldGainRate: 0
   rank: 4
   requireFuseItemCount: 5

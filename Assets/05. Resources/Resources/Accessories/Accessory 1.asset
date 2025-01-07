@@ -22,8 +22,8 @@ MonoBehaviour:
   requiredCurrencyForUpgrade: 0
   currentLevel: 1
   equipHpAndHpRecoveryIncreaseRate: 100
-  passiveHpAndHpRecoveryIncreaseRate: 0
-  passiveMpAndMpRecoveryIncreaseRate: 500
-  passiveAddEXPRate: 500
+  passiveHpAndHpRecoveryIncreaseRate: 100
+  passiveMpAndMpRecoveryIncreaseRate: 50
+  passiveAddEXPRate: 100
   rank: 3
   requireFuseItemCount: 5
