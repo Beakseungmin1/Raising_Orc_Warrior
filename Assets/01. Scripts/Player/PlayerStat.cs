@@ -101,9 +101,6 @@ public class PlayerStat : MonoBehaviour
                 mana = PlayerStatCalculator.GetAdjustedMaxMana();
             }
         }
-
-
-        Debug.Log(needAttackUpgradeMoney);
     }
 
     public void ChangeExtraExpRate(BigInteger value)
@@ -198,7 +195,7 @@ public class PlayerStat : MonoBehaviour
             CurrencyManager.Instance.SubtractGold(needUpgradeMoney);
             level += multiplier; // 레벨 증가
             Stat = startStat + (level * increment); // 스탯 업데이트
-            totalUpgradeCost = level * baseCost * multiplier;
+            totalUpgradeCost = level * baseCost;
             OnStatChange?.Invoke(); // 건강 스탯 변경 이벤트 호출
         }
         else
