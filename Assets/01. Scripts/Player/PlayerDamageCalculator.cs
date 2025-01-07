@@ -160,11 +160,13 @@ public class PlayerDamageCalculator : MonoBehaviour
 
     public BigInteger GetRawTotalDamage()
     {
+        GetTotalDamage();
         return rawTotalDamage;
     }
 
     public float GetTotalCriticalDamageBonus()
     {
+        GetTotalDamage();
         return stat.criticalIncreaseDamage + PassiveCritAttackIncrease;
     }
 }

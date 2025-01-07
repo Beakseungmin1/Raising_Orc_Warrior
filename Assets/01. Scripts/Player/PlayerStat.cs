@@ -67,6 +67,8 @@ public class PlayerStat : MonoBehaviour
         {
             PlayerStatCalculator = GetComponent<PlayerStatCalculator>();
         }
+
+        OnStatChange += PassiveManager.Instance.TotalEffects;
     }
 
     private void Update()
@@ -320,7 +322,7 @@ public class PlayerStat : MonoBehaviour
         attackPower = 20;
         maxHealth = 200;
         health = maxHealth;
-        healthRegeneration = 1;
+        healthRegeneration = 0;
         criticalProbability = 0;
         criticalIncreaseDamage = 100;
         maxMana = 200;

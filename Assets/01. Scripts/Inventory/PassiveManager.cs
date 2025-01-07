@@ -46,4 +46,10 @@ public class PassiveManager : Singleton<PassiveManager>
         stat.ChangeExtraGoldGainRate(totalGoldGainRate);
         damageCalculator.GetTotalDamage();
     }
+
+    public void TotalEffects()
+    {
+        UpdateAccessoryEffects();
+        UpdateWeaponEffects();
+    }
 }
