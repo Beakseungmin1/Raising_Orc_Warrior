@@ -19,10 +19,27 @@ public class UpgradeTabUI : MonoBehaviour
     {
         if (stat != null)
         {
-            upgradeLevelTxt.text = "Lv." + (stat.attackLevel + 1).ToString();
-            needMoneyTxt.text = stat.needAttackUpgradeMoney.ToString();
-            curValueTxt.text = stat.attackPower.ToString();
-            upgradeValueTxt.text = (stat.attackPower + 4).ToString();
+            if (stat.statUpgradeMultiplier == 0)
+            {
+                upgradeLevelTxt.text = "Lv." + (stat.attackLevel + 1).ToString();
+                needMoneyTxt.text = stat.needAttackUpgradeMoney.ToString();
+                curValueTxt.text = stat.attackPower.ToString();
+                upgradeValueTxt.text = (stat.attackPower + 4).ToString();
+            }
+            else if (stat.statUpgradeMultiplier == 1)
+            {
+                upgradeLevelTxt.text = "Lv." + (stat.attackLevel + 1).ToString();
+                needMoneyTxt.text = (stat.needAttackUpgradeMoney * 10).ToString();
+                curValueTxt.text = stat.attackPower.ToString();
+                upgradeValueTxt.text = (stat.attackPower + 40).ToString();
+            }
+            else
+            {
+                upgradeLevelTxt.text = "Lv." + (stat.attackLevel + 1).ToString();
+                needMoneyTxt.text = (stat.needAttackUpgradeMoney * 100).ToString();
+                curValueTxt.text = stat.attackPower.ToString();
+                upgradeValueTxt.text = (stat.attackPower + 400).ToString();
+            }
         }
     }
 
@@ -30,10 +47,28 @@ public class UpgradeTabUI : MonoBehaviour
     {
         if (stat != null)
         {
-            upgradeLevelTxt.text = "Lv." + (stat.healthLevel + 1).ToString();
-            needMoneyTxt.text = stat.needHealthUpgradeMoney.ToString();
-            curValueTxt.text = stat.maxHealth.ToString();
-            upgradeValueTxt.text = (stat.maxHealth + 40).ToString();
+
+            if (stat.statUpgradeMultiplier == 0)
+            {
+                upgradeLevelTxt.text = "Lv." + (stat.healthLevel + 1).ToString();
+                needMoneyTxt.text = stat.needHealthUpgradeMoney.ToString();
+                curValueTxt.text = stat.maxHealth.ToString();
+                upgradeValueTxt.text = (stat.maxHealth + 40).ToString();
+            }
+            else if (stat.statUpgradeMultiplier == 1)
+            {
+                upgradeLevelTxt.text = "Lv." + (stat.healthLevel + 1).ToString();
+                needMoneyTxt.text = (stat.needHealthUpgradeMoney * 10).ToString();
+                curValueTxt.text = stat.maxHealth.ToString();
+                upgradeValueTxt.text = (stat.maxHealth + 400).ToString();
+            }
+            else
+            {
+                upgradeLevelTxt.text = "Lv." + (stat.healthLevel + 1).ToString();
+                needMoneyTxt.text = (stat.needHealthUpgradeMoney * 100).ToString();
+                curValueTxt.text = stat.maxHealth.ToString();
+                upgradeValueTxt.text = (stat.maxHealth + 4000).ToString();
+            }
         }
     }
 

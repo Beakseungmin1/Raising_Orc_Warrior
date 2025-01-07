@@ -62,7 +62,7 @@ public class PlayerStatCalculator : MonoBehaviour
         adjustedMaxHealth = basicMaxHealth * (1 + currentMaxHealthIncreasePercentage / 100);
         adjustedHealthRegeneration = basicHealthRegeneration * (1 + currentHealthRegenerationIncreasePercentage / 100);
 
-        
+
 
         if (stat.health > adjustedMaxHealth)
         {

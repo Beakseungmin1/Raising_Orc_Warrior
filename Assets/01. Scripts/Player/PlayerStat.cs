@@ -41,13 +41,15 @@ public class PlayerStat : MonoBehaviour
     public BigInteger needBlueCriticalIncreaseDamageUpgradeMoney { get; private set; }
     public BigInteger needBlueCriticalProbabilityUpgradeMoney { get; private set; }
 
-    private int statUpgradeMultiplier = 0; // 스탯 업그레이드 배율 , 0 = 1배, 1 = 10배, 2 = 100배
+    public int statUpgradeMultiplier = 0; // 스탯 업그레이드 배율 , 0 = 1배, 1 = 10배, 2 = 100배
 
     public Action UpdateLevelStatUI;
 
     public Action UpdateUserInformationUI;
 
     public Action OnStatChange;
+
+    public Action UpdateAllStatUI;
 
     [Header("Multiplier")]
     public BigInteger healthMultiplier = 1;
@@ -89,6 +91,7 @@ public class PlayerStat : MonoBehaviour
                 mana = maxMana;
             }
         }
+
     }
 
     public void ChangeUpgradeMultiplier(int number)
@@ -198,13 +201,13 @@ public class PlayerStat : MonoBehaviour
     public void HealthLevelUp()
     {
         int LevelValue = healthLevel;
-        BigInteger PowerValue = health;
+        BigInteger PowerValue = maxHealth;
         BigInteger upgradecost = needHealthUpgradeMoney;
 
         UpgradeStat(ref LevelValue, ref PowerValue, ref upgradecost, 200, 1000, 40);
 
         healthLevel = LevelValue;
-        health = PowerValue;
+        maxHealth = PowerValue;
         needHealthUpgradeMoney = upgradecost;
     }
 
