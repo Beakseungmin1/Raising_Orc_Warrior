@@ -48,9 +48,9 @@ public class PlayerInfoPanel : MonoBehaviour
             maxHealthTxt.text = playerStatCalculator.GetAdjustedMaxHealth().ToString();
             healthRegenTxt.text = playerStatCalculator.GetAdjustedHealthRegeneration().ToString();
             criticalProbabilityTxt.text = stat.criticalProbability.ToString() + "%";
-            criticalIncreaseDamageTxt.text = stat.criticalIncreaseDamage.ToString() + "%";
-            maxManaTxt.text = stat.maxMana.ToString();
-            manaRegenTxt.text = stat.manaRegeneration.ToString();
+            criticalIncreaseDamageTxt.text = playerDamageCalculator.GetTotalCriticalDamageBonus().ToString() + "%";
+            maxManaTxt.text = playerStatCalculator.GetAdjustedMaxMana().ToString();
+            manaRegenTxt.text = playerStatCalculator.GetAdjustedManaRegeneration().ToString();
             hitLateTxt.text = stat.hitLate.ToString();
             avoidTxt.text = stat.avoid.ToString();
             extraGoldGainRateTxt.text = stat.extraGoldGainRate.ToString() + "%";

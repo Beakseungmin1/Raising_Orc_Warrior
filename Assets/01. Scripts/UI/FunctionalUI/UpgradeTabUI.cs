@@ -51,7 +51,7 @@ public class UpgradeTabUI : MonoBehaviour
     {
         if (stat != null)
         {
-            upgradeLevelTxt.text = "Lv." + stat.criticalProbabilityLevel.ToString();
+            upgradeLevelTxt.text = "Lv." + (stat.criticalProbabilityLevel + 1).ToString();
             needMoneyTxt.text = stat.needCriticalProbabilityUpgradeMoney.ToString();
             curValueTxt.text = Math.Round(stat.criticalProbability, 1).ToString() + "%";
             upgradeValueTxt.text = Math.Round(stat.criticalProbability + 0.1f, 1).ToString() + "%";

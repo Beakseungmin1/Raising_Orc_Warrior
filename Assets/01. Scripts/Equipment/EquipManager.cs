@@ -18,12 +18,14 @@ public class EquipManager : MonoBehaviour
     private PlayerStat playerStat;
     private PlayerSkillHandler skillHandler;
     private PlayerStatCalculator playerStatCalculator;
+    private PlayerDamageCalculator playerDamageCalculator;
 
     private void Start()
     {
         playerStat = PlayerObjManager.Instance?.Player.stat;
         skillHandler = PlayerObjManager.Instance?.Player.SkillHandler;
         playerStatCalculator = PlayerObjManager.Instance?.Player.StatCalculator;
+        playerDamageCalculator = PlayerObjManager.Instance?.Player.DamageCalculator;
 
         if (playerStat == null || skillHandler == null)
         {
@@ -68,6 +70,7 @@ public class EquipManager : MonoBehaviour
 
         EquippedWeapon = weaponData;
         WeaponImage.sprite = weaponData.BaseData.inGameImage;
+        playerDamageCalculator.GetTotalDamage();
 
         OnEquippedChanged?.Invoke();
     }

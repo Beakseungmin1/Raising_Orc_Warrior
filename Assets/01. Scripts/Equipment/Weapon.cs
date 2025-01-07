@@ -21,7 +21,7 @@ public class Weapon : IFusable
         StackCount = initialStackCount;
         RequiredCurrencyForUpgrade = baseData.requiredCurrencyForUpgrade;
         EquipAtkIncreaseRate = baseData.equipAtkIncreaseRate;
-        PassiveEquipAtkIncreaseRate = Mathf.RoundToInt(baseData.equipAtkIncreaseRate / 3f);
+        PassiveEquipAtkIncreaseRate = Mathf.RoundToInt(baseData.equipAtkIncreaseRate / 10f);
         PassiveCriticalDamageBonus = baseData.passiveCriticalDamageBonus;
         PassiveGoldGainRate = baseData.passiveGoldGainRate;
     }
@@ -43,7 +43,7 @@ public class Weapon : IFusable
         EnhancementLevel++;
         RequiredCurrencyForUpgrade = Mathf.RoundToInt(RequiredCurrencyForUpgrade * 1.5f);
         UpdateWeaponEffects();
-
+        PassiveManager.Instance.UpdateWeaponEffects();
         PlayerObjManager.Instance.Player.inventory.NotifyInventoryChanged(true);
         return true;
     }
