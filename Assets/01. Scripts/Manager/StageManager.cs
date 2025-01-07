@@ -77,14 +77,12 @@ public class StageManager : Singleton<StageManager>
 
         if (curStageIndexInThisChapter < MaxStageIndexInThisChapter) //챕터에 다음 스테이지가 남았다면 다음 스테이지로 이동
         {
-            UIManager.Instance.ShowFadePanel<FadeInFadeOutUI>(FadeType.FadeOutFadeIn);
             curStageIndex++;
             curStageIndexInThisChapter++;
             GoToStage();
         }
         else //현재가 챕터의 마지막 스테이지라면 해당 스테이지 반복
         {
-            UIManager.Instance.ShowFadePanel<FadeInFadeOutUI>(FadeType.FadeOutFadeIn);
             savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
 
             curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
