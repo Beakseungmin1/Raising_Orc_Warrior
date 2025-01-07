@@ -6,6 +6,7 @@ public class Accessory : IFusable
     public AccessoryDataSO BaseData { get; private set; }
     BaseItemDataSO IEnhanceable.BaseData => BaseData;
     public int Rank => BaseData.rank;
+    public Grade Grade => BaseData.grade;
     public int EnhancementLevel { get; private set; }
     public int StackCount { get; internal set; }
     public int RequiredCurrencyForUpgrade { get; private set; }
@@ -50,17 +51,70 @@ public class Accessory : IFusable
 
     private void UpdateAccessoryEffects()
     {
-        EquipHpAndHpRecoveryIncreaseRate += EnhancementLevel * 1.5f;
-        PassiveHpAndHpRecoveryIncreaseRate = Mathf.RoundToInt(EquipHpAndHpRecoveryIncreaseRate / 3f);
-
-        if (PassiveMpAndMpRecoveryIncreaseRate > 0)
+        switch (Grade)
         {
-            PassiveMpAndMpRecoveryIncreaseRate += EnhancementLevel * 1.2f;
+            case Grade.Normal:
+                EquipHpAndHpRecoveryIncreaseRate += EnhancementLevel * 1;
+                PassiveHpAndHpRecoveryIncreaseRate += EnhancementLevel * 1;
+                break;
+
+            case Grade.Uncommon:
+                EquipHpAndHpRecoveryIncreaseRate += EnhancementLevel * 10;
+                PassiveHpAndHpRecoveryIncreaseRate += EnhancementLevel * 2;
+                break;
+
+            case Grade.Rare:
+                EquipHpAndHpRecoveryIncreaseRate += EnhancementLevel * 30;
+                PassiveHpAndHpRecoveryIncreaseRate += EnhancementLevel * 10;
+                break;
+
+            case Grade.Hero:
+                EquipHpAndHpRecoveryIncreaseRate += EnhancementLevel * 200;
+                PassiveHpAndHpRecoveryIncreaseRate += EnhancementLevel * 50;
+                break;
+
+            case Grade.Legendary:
+                EquipHpAndHpRecoveryIncreaseRate += EnhancementLevel * 2000;
+                PassiveHpAndHpRecoveryIncreaseRate += EnhancementLevel * 700;
+                break;
+
+            case Grade.Mythic:
+                if (Rank == 4)
+                {
+                    EquipHpAndHpRecoveryIncreaseRate += EnhancementLevel * 30000;
+                    PassiveHpAndHpRecoveryIncreaseRate += EnhancementLevel * 3000;
+                }
+                else if (Rank == 3)
+                {
+                    EquipHpAndHpRecoveryIncreaseRate += EnhancementLevel * 70000;
+                    PassiveHpAndHpRecoveryIncreaseRate += EnhancementLevel * 7000;
+                }
+                else if (Rank == 2)
+                {
+                    EquipHpAndHpRecoveryIncreaseRate += EnhancementLevel * 100000;
+                    PassiveHpAndHpRecoveryIncreaseRate += EnhancementLevel * 30000;
+                }
+                else if (Rank == 1)
+                {
+                    EquipHpAndHpRecoveryIncreaseRate += EnhancementLevel * 300000;
+                    PassiveHpAndHpRecoveryIncreaseRate += EnhancementLevel * 100000;
+                }
+                break;
+
+            case Grade.Ultimate:
+                EquipHpAndHpRecoveryIncreaseRate += EnhancementLevel * 3000000;
+                PassiveHpAndHpRecoveryIncreaseRate += EnhancementLevel * 300000;
+                break;
         }
 
-        if (PassiveAddEXPRate > 0)
+        if (PassiveMpAndMpRecoveryIncreaseRate >= 0)
         {
-            PassiveAddEXPRate += EnhancementLevel * 0.5f;
+            PassiveMpAndMpRecoveryIncreaseRate += 1;
+        }
+
+        if (PassiveAddEXPRate >= 0)
+        {
+            PassiveAddEXPRate += 1;
         }
     }
 
