@@ -67,6 +67,7 @@ public class StarterManager : Singleton<StarterManager>
         UIManager.Instance.Show<Main_PlayerUpgradeUI>();
         UIManager.Instance.Show<RightSideBtnsAreaUI>();
         UIManager.Instance.Show<MainButtonsUI>();
+        UIManager.Instance.Show<SkillEquipSlotManager>();
     }
 
     private void CreateEventSystem()

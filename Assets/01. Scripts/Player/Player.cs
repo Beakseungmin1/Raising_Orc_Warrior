@@ -46,6 +46,6 @@ public class Player : MonoBehaviour
 
     public void UpdateManaBar()
     {
-        manaBar.fillAmount = (float)stat.mana / stat.maxMana;
+        manaBar.fillAmount = stat.mana / StatCalculator.GetAdjustedMaxMana();
     }
 }

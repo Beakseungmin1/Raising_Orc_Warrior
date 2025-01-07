@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
@@ -42,15 +43,15 @@ public class PlayerInventory : MonoBehaviour
             case WeaponDataSO weaponData:
                 AddItem(WeaponInventory, new Weapon(weaponData));
                 OnInventoryChanged?.Invoke(true);
+                PassiveManager.Instance.UpdateWeaponEffects();
                 break;
 
             case AccessoryDataSO accessoryData:
                 AddItem(AccessoryInventory, new Accessory(accessoryData));
                 OnInventoryChanged?.Invoke(false);
+                PassiveManager.Instance.UpdateAccessoryEffects();
                 break;
         }
-
-        PassiveStatManager.Instance.UpdatePassiveStats(WeaponInventory.GetAllItems(), AccessoryInventory.GetAllItems());
     }
 
     public void RemoveItemFromInventory(BaseItemDataSO item)
@@ -196,5 +197,107 @@ public class PlayerInventory : MonoBehaviour
     public void NotifySkillsChanged()
     {
         OnSkillsChanged?.Invoke();
+    }
+
+    public float GetTotalAccessoryHpAndHpRecovery()
+    {
+        HashSet<string> processedItems = new HashSet<string>();
+        float totalHpAndHpRecovery = 0f;
+
+        foreach (var accessory in AccessoryInventory.GetAllItems())
+        {
+            if (!processedItems.Contains(accessory.BaseData.itemName))
+            {
+                totalHpAndHpRecovery += accessory.PassiveHpAndHpRecoveryIncreaseRate;
+                processedItems.Add(accessory.BaseData.itemName);
+            }
+        }
+
+        return totalHpAndHpRecovery;
+    }
+
+    public float GetTotalAccessoryMpAndMpRecovery()
+    {
+        HashSet<string> processedItems = new HashSet<string>();
+        float totalMpAndMpRecovery = 0f;
+
+        foreach (var accessory in AccessoryInventory.GetAllItems())
+        {
+            if (!processedItems.Contains(accessory.BaseData.itemName))
+            {
+                totalMpAndMpRecovery += accessory.PassiveMpAndMpRecoveryIncreaseRate;
+                processedItems.Add(accessory.BaseData.itemName);
+            }
+        }
+
+        return totalMpAndMpRecovery;
+    }
+
+    public float GetTotalAccessoryAddEXPRate()
+    {
+        HashSet<string> processedItems = new HashSet<string>();
+        float totalAddEXPRate = 0f;
+
+        foreach (var accessory in AccessoryInventory.GetAllItems())
+        {
+            if (!processedItems.Contains(accessory.BaseData.itemName))
+            {
+                totalAddEXPRate += accessory.PassiveAddEXPRate;
+                processedItems.Add(accessory.BaseData.itemName);
+            }
+        }
+
+        return totalAddEXPRate;
+    }
+
+    public float GetTotalWeaponPassiveAtkIncrease()
+    {
+        HashSet<string> processedItems = new HashSet<string>();
+        float totalEquipAtkIncrease = 0f;
+
+        foreach (var weapon in WeaponInventory.GetAllItems())
+        {
+            if (!processedItems.Contains(weapon.BaseData.itemName))
+            {
+                totalEquipAtkIncrease += weapon.PassiveEquipAtkIncreaseRate;
+                processedItems.Add(weapon.BaseData.itemName);
+            }
+        }
+
+        return totalEquipAtkIncrease;
+    }
+
+    public float GetTotalWeaponCriticalDamageBonus()
+    {
+        HashSet<string> processedItems = new HashSet<string>();
+        float totalCriticalDamageBonus = 0f;
+
+        foreach (var weapon in WeaponInventory.GetAllItems())
+        {
+            if (!processedItems.Contains(weapon.BaseData.itemName))
+            {
+                totalCriticalDamageBonus += weapon.PassiveCriticalDamageBonus;
+                processedItems.Add(weapon.BaseData.itemName);
+            }
+        }
+
+        return totalCriticalDamageBonus;
+    }
+
+    public float GetTotalWeaponGoldGainRate()
+    {
+        HashSet<string> processedItems = new HashSet<string>();
+        float totalGoldGainRate = 0f;
+
+        foreach (var weapon in WeaponInventory.GetAllItems())
+        {
+            if (!processedItems.Contains(weapon.BaseData.itemName))
+            {
+                totalGoldGainRate += weapon.PassiveGoldGainRate;
+                processedItems.Add(weapon.BaseData.itemName);
+            }
+        }
+
+        return totalGoldGainRate;
     }
 }

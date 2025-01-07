@@ -26,8 +26,8 @@ public class PlayerStatCalculator : MonoBehaviour
 
     private void Start()
     {
-        stat = GetComponent<PlayerStat>();
-        equipManager = GetComponent<EquipManager>();
+        stat = PlayerObjManager.Instance.Player.stat;
+        equipManager = PlayerObjManager.Instance.Player.EquipManager;
         stat.SetDefaultStat();
         UpdateValue();
 
@@ -51,7 +51,7 @@ public class PlayerStatCalculator : MonoBehaviour
         currentMaxHealthIncreasePercentage = 0;
 
         currentManaRegenerationIncreasePercentage = 0;
-        currentMaxManaIncreasePercentage= 0;
+        currentMaxManaIncreasePercentage = 0;
 
         if (equipManager.EquippedAccessory != null)
         {
@@ -59,10 +59,18 @@ public class PlayerStatCalculator : MonoBehaviour
             currentMaxHealthIncreasePercentage = (BigInteger)equipManager.EquippedAccessory.EquipHpAndHpRecoveryIncreaseRate;
         }
 
-        adjustedMaxHealth = basicMaxHealth * (1 + currentMaxHealthIncreasePercentage / 100);
-        adjustedHealthRegeneration = basicHealthRegeneration * (1 + currentHealthRegenerationIncreasePercentage / 100);
+        float totalHpAndHpRecovery = PlayerObjManager.Instance.Player.inventory.GetTotalAccessoryHpAndHpRecovery();
 
+        float totalMpAndMpRecovery = PlayerObjManager.Instance.Player.inventory.GetTotalAccessoryMpAndMpRecovery();
 
+        BigInteger totalHealthIncreasePercentage = currentMaxHealthIncreasePercentage + (BigInteger)totalHpAndHpRecovery;
+        BigInteger totalHealthRecoveryPercentage = currentHealthRegenerationIncreasePercentage + (BigInteger)totalHpAndHpRecovery;
+
+        adjustedMaxHealth = basicMaxHealth * (totalHealthIncreasePercentage + 100) * 100 / 10000;
+        adjustedHealthRegeneration = basicHealthRegeneration * (totalHealthRecoveryPercentage + 100) * 100 / 10000;
+
+        adjustedMaxMana = basicMaxMana * (1 + totalMpAndMpRecovery / 100);
+        adjustedManaRegeneration = basicManaRegeneration * (1 + totalMpAndMpRecovery / 100);
 
         if (stat.health > adjustedMaxHealth)
         {

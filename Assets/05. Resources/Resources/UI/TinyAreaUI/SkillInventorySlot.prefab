@@ -333,9 +333,9 @@ RectTransform:
   - {fileID: 414111421955228891}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 155, y: -260}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -385, y: 700}
   m_SizeDelta: {x: 150, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7125907983045916637
@@ -358,13 +358,6 @@ MonoBehaviour:
   equippedTxt: {fileID: 3741207517349437136}
   emptyIcon: {fileID: 4840007020751909178}
   slotButton: {fileID: 6751732491949309716}
-  normalImage: {fileID: 0}
-  uncommonImage: {fileID: 0}
-  rareImage: {fileID: 0}
-  heroImage: {fileID: 0}
-  legendaryImage: {fileID: 0}
-  mythicImage: {fileID: 0}
-  ultimateImage: {fileID: 0}
 --- !u!1 &3116049506624381644
 GameObject:
   m_ObjectHideFlags: 0

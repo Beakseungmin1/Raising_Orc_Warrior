@@ -10,9 +10,9 @@ public class Accessory : IFusable
     public int StackCount { get; internal set; }
     public int RequiredCurrencyForUpgrade { get; private set; }
     public float EquipHpAndHpRecoveryIncreaseRate { get; private set; }
-    public float PassiveHpAndHpRecoveryIncreaseRate { get; private set; }
-    public float PassiveMpAndMpRecoveryIncreaseRate { get; private set; }
-    public float PassiveAddEXPRate { get; private set; }
+    public float PassiveHpAndHpRecoveryIncreaseRate { get; set; }
+    public float PassiveMpAndMpRecoveryIncreaseRate { get;  set; }
+    public float PassiveAddEXPRate { get;  set; }
 
     public Accessory(AccessoryDataSO baseData, int initialStackCount = 1)
     {
@@ -43,7 +43,7 @@ public class Accessory : IFusable
         EnhancementLevel++;
         RequiredCurrencyForUpgrade = Mathf.RoundToInt(RequiredCurrencyForUpgrade * 1.5f);
         UpdateAccessoryEffects();
-
+        PassiveManager.Instance.UpdateAccessoryEffects();
         PlayerObjManager.Instance.Player.inventory.NotifyInventoryChanged(false);
         return true;
     }

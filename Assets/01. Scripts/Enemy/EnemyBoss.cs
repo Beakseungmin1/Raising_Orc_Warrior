@@ -77,10 +77,10 @@ public class EnemyBoss : EnemyBase, IEnemy
         }
         else
         {
-            hp -= Damage;
+            hp = 0;
             Die();
         }
-        GameEventsManager.Instance.bossEvents.BossHPChanged(hp -= Damage);
+        GameEventsManager.Instance.bossEvents.BossHPChanged(hp);
     }
 
     private void EnemyAttack()
