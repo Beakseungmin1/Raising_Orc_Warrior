@@ -80,8 +80,16 @@ public class UIManager : Singleton<UIManager>
         UIBase ui = Instantiate(prefab, newCanvasObject.transform);
         ui.name = ui.name.Replace("(Clone)", "");
         ui.canvas = canvas;
-        currentSortingOrder++;
-        ui.canvas.sortingOrder = currentSortingOrder;
+
+        if(uiName == "SummonPopupUI")
+        {
+            ui.canvas.sortingOrder = 100;
+        }
+        else
+        {
+            currentSortingOrder++;
+            ui.canvas.sortingOrder = currentSortingOrder;
+        }
         return (T)ui;
     }
 
