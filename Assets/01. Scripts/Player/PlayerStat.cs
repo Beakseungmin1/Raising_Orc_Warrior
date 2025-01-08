@@ -320,12 +320,12 @@ public class PlayerStat : MonoBehaviour
         level = 0;
         exp = 0;
         needExp = 100;
-        attackPower = 20;
-        maxHealth = 200;
+        attackPower = 24;
+        maxHealth = 240;
         health = maxHealth;
-        healthRegeneration = 0;
-        criticalProbability = 0;
-        criticalIncreaseDamage = 100;
+        healthRegeneration = 4;
+        criticalProbability = 0.1f;
+        criticalIncreaseDamage = 101;
         maxMana = 200;
         mana = maxMana;
         manaRegeneration = 5;
