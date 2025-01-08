@@ -12,12 +12,11 @@ public class StageManager : Singleton<StageManager>
     public List<StageSO> stageSOs; //이 스테이지의 스테이지SO
 
     [Header("Current Chapter's BossStageSO")]
-    public BossStageSO bossStageSO;
+    public List<BossStageSO> bossStageSOs;
 
     [Header("Info")]
     public string chapterName;
     public string stageName;
-    public Sprite bgSprite;
 
     public int curChapterIndex = 0; //전체 챕터로서의 순번 ex) 99999챕터까지 가능
     public int curStageIndex = 0; //전체 스테이지로서의 순번 ex) 99999스테이지 까지 가능
@@ -25,19 +24,19 @@ public class StageManager : Singleton<StageManager>
     public int curStageIndexInThisChapter = 0; //현재 챕터에서의 스테이지 인덱스정보값 ex) 챕터5의 10번째 스테이지
     public int MaxStageIndexInThisChapter = 0; //현 챕터의 스테이지 인덱스 최대치 ex) 챕터 5에는 최대 20스테이지가 있음.
 
-    public Action OnChapterChanged;
-
     int savedCurStageIndexInThisChapter = 0;
+
+    public Action OnChapterChanged;
 
     public Timer timer;
 
+    private bool isThisBossStageFirstTry = true;
+
     private void Awake()
     {
-        bgSprite = GetComponent<Sprite>();
-
         SetChapterList();
         SetStageList();
-        SetBossStage();
+        SetBossStageList();
 
         GameEventsManager.Instance.stageEvents.onStageChange += RefreshStage;
         GameEventsManager.Instance.stageEvents.onChapterChange += RefreshChapter;
@@ -63,36 +62,56 @@ public class StageManager : Singleton<StageManager>
         MaxStageIndexInThisChapter = chapterSOs[curChapterIndex].stageSOs.Count - 1; //최대 스테이지 값 세팅. //Length는 1부터 시작. index는 0부터 시작이므로 -1.
     }
 
-    private void SetBossStage()
+    private void SetBossStageList()
     {
-        for (int i = 0; i < chapterSOs.Count; i++)
+        bossStageSOs.Clear();
+        for (int i = 0; i < chapterSOs[curChapterIndex].bossStageSOs.Count; i++)
         {
-            bossStageSO = chapterSOs[curChapterIndex].bossStageSO;
+            bossStageSOs.Add(chapterSOs[curChapterIndex].bossStageSOs[i]);
         }
     }
 
-    public void StageClear()
+    public void StageClear() //보스스테이지는 못깼고 일반스테이지까지만 꺤 경우임
     {
-        Debug.LogWarning("StageClear");
+        if(isThisBossStageFirstTry)
+        {
+            GoToBossStage();
+            isThisBossStageFirstTry = false;
+        }
+        else
+        {
+            GoToStage(); //현재 스테이지 반복
+        }
+    }
+
+    public void BossStageClear()
+    {
+        if (timer != null)
+        {
+            Destroy(timer);
+        }
 
         if (curStageIndexInThisChapter < MaxStageIndexInThisChapter) //챕터에 다음 스테이지가 남았다면 다음 스테이지로 이동
         {
             curStageIndex++;
             curStageIndexInThisChapter++;
+            isThisBossStageFirstTry = true;
             GoToStage();
         }
-        else //현재가 챕터의 마지막 스테이지라면 해당 스테이지 반복
+        else if (curChapterIndex < chapterSOs.Count - 1)
         {
-            savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
-
-            curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
-            GoToStage();
+            UIManager.Instance.Hide<BossStageInfoUI>();
+            GoToNextChapter();
+        }
+        else  //현재가 챕터의 마지막 스테이지라면 해당 스테이지 반복
+        {
+            Debug.LogWarning("업데이트가 안돼서 더이상 챕터가 없습니다. 마지막 스테이지로 돌아갑니다");
+            BackToLastStage();
         }
     }
 
     public void RefreshChapter()
     {
-        bgSprite = chapterSOs[curChapterIndex].bgSprite;
         chapterName = chapterSOs[curChapterIndex].chapterName;
     }
 
@@ -113,12 +132,11 @@ public class StageManager : Singleton<StageManager>
         UIManager.Instance.ShowFadePanel<FadeInFadeOutUI>(FadeType.FadeOutFadeIn);
         GameEventsManager.Instance.enemyEvents.ClearEnemy();
         savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
-        curStageIndex++;
         UIManager.Instance.Hide<StageInfoUI>();
         UIManager.Instance.Show<BossStageInfoUI>();
         RegenManager.Instance.CacheEnemyBoss();
         RegenManager.Instance.RegenStagesBossEnemy();
-        SetTimer(bossStageSO.bossEnemySO.bossTimeLimit);
+        SetTimer(bossStageSOs[curStageIndexInThisChapter].bossEnemySO.bossTimeLimit);
         GameEventsManager.Instance.stageEvents.ChangeStage();
     }
 
@@ -147,30 +165,12 @@ public class StageManager : Singleton<StageManager>
         curChapterIndex++;
         curStageIndexInThisChapter = 0;
         SetStageList();
-        SetBossStage();
+        SetBossStageList();
         RefreshChapter();
         RefreshStage();
         RegenManager.Instance.CacheEnemies();
         RegenManager.Instance.RegenStagesEnemy();
         GameEventsManager.Instance.stageEvents.ChangeStage();//현재 최대몬스터, 죽인 몬스터 수 정보 갱신해야하므로, RegenStagesEnemy()다음에 실행.
-    }
-
-    public void BossStageClear()
-    {
-        if (curChapterIndex < chapterSOs.Count - 1)
-        {
-            UIManager.Instance.Hide<BossStageInfoUI>();
-            GoToNextChapter();
-        }
-        else //현재가 챕터의 마지막 스테이지라면 해당 스테이지 반복
-        {
-            BackToLastStage();
-        }
-
-        if (timer != null)
-        {
-            Destroy(timer);
-        }
     }
 
     private void SetTimer(float limitTime)
