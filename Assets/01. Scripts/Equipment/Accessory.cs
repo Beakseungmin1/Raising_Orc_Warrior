@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [System.Serializable]
@@ -10,10 +11,11 @@ public class Accessory : IFusable
     public int EnhancementLevel { get; private set; }
     public int StackCount { get; internal set; }
     public int RequiredCurrencyForUpgrade { get; private set; }
-    public float EquipHpAndHpRecoveryIncreaseRate { get; private set; }
-    public float PassiveHpAndHpRecoveryIncreaseRate { get; set; }
-    public float PassiveMpAndMpRecoveryIncreaseRate { get;  set; }
-    public float PassiveAddEXPRate { get;  set; }
+    public int EquipHpAndHpRecoveryIncreaseRate { get; private set; }
+    public int PassiveHpAndHpRecoveryIncreaseRate { get; set; }
+    public int PassiveMpAndMpRecoveryIncreaseRate { get;  set; }
+    public int PassiveAddEXPRate { get;  set; }
+    public event Action OnEnhanceComplete;
 
     public Accessory(AccessoryDataSO baseData, int initialStackCount = 1)
     {
@@ -42,10 +44,11 @@ public class Accessory : IFusable
 
         CurrencyManager.Instance.SubtractCurrency(CurrencyType.Cube, RequiredCurrencyForUpgrade);
         EnhancementLevel++;
-        RequiredCurrencyForUpgrade = Mathf.RoundToInt(RequiredCurrencyForUpgrade * 1.5f);
+        RequiredCurrencyForUpgrade = Mathf.RoundToInt(RequiredCurrencyForUpgrade * 1.1f);
         UpdateAccessoryEffects();
         PassiveManager.Instance.UpdateAccessoryEffects();
         PlayerObjManager.Instance.Player.inventory.NotifyInventoryChanged(false);
+        OnEnhanceComplete?.Invoke();
         return true;
     }
 
