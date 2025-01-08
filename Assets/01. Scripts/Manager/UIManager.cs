@@ -15,6 +15,20 @@ public class UIManager : Singleton<UIManager>
 
     private int currentSortingOrder = 0;
 
+    private const int ReservedSortingOrder = 100; // 특정 UI의 고정 sortingOrder 값
+
+    private HashSet<string> reservedUISet = new HashSet<string>
+    {
+        "SummonPopupUI",
+        "Main_DungeonUI",
+        "EXPDungeonUI",
+        "CubeDungeonUI",
+        "GoldDungeonUI",
+        "EXPDungeonUI_ConfirmEnterBtnPopUpUI",
+        "CubeDungeonUI_ConfirmEnterBtnPopUpUI",
+        "GoldDungeonUI_ConfirmEnterBtnPopUpUI"
+    };
+
     public T Show<T>() where T : UIBase
     {
         string uiName = typeof(T).ToString(); // T 타입에 따라 UI 이름을 결정합니다.
@@ -62,7 +76,7 @@ public class UIManager : Singleton<UIManager>
     }
 
 
-    private T Load<T>(UIBase prefab, string uiName) where T : UIBase //조건문 같은 거라고 보면 된다. T는 UIBase이거나 UIBase를 상속받는 클래스로 제한한다.
+    private T Load<T>(UIBase prefab, string uiName) where T : UIBase
     {
         GameObject newCanvasObject = new GameObject(uiName + "Canvas");
 
@@ -81,15 +95,20 @@ public class UIManager : Singleton<UIManager>
         ui.name = ui.name.Replace("(Clone)", "");
         ui.canvas = canvas;
 
-        if(uiName == "SummonPopupUI")
+        if (reservedUISet.Contains(uiName))
         {
-            ui.canvas.sortingOrder = 100;
+            ui.canvas.sortingOrder = ReservedSortingOrder;
         }
         else
         {
             currentSortingOrder++;
+            if (currentSortingOrder >= ReservedSortingOrder)
+            {
+                currentSortingOrder = ReservedSortingOrder - 1; // ReservedSortingOrder를 넘지 않도록 보장
+            }
             ui.canvas.sortingOrder = currentSortingOrder;
         }
+
         return (T)ui;
     }
 
@@ -114,7 +133,7 @@ public class UIManager : Singleton<UIManager>
         var ui = LoadFadeController<T>(go, uiName, fadeType); // 새 UI 생성
 
         //uiDictionary[uiName] = ui; 딕셔너리에 추가하면 SortingOrder를 조회하기 때문에, 최상단에 위치하기위해 딕셔너리에 포함 안함.
-                                     //대신 그렇기때문에 HIde매서드가 통하지 않음. Destroy해야함.
+        //대신 그렇기때문에 HIde매서드가 통하지 않음. Destroy해야함.
         return (T)ui;
     }
 
@@ -142,15 +161,15 @@ public class UIManager : Singleton<UIManager>
 
         fadeController.panel = ui.gameObject;
 
-        switch(fadeType)
+        switch (fadeType)
         {
-            case(FadeType.FadeIn):
+            case (FadeType.FadeIn):
                 fadeController.isFadeIn = true;
                 break;
-            case(FadeType.FadeOut):
+            case (FadeType.FadeOut):
                 fadeController.isFadeOut = true;
                 break;
-            case(FadeType.FadeOutFadeIn):
+            case (FadeType.FadeOutFadeIn):
                 fadeController.isFadeOutFadeIn = true;
                 break;
         }
@@ -174,9 +193,11 @@ public class UIManager : Singleton<UIManager>
 
             if (uiDictionary.Count > 0)
             {
-                // 가장 높은 sortingOrder를 가진 UI를 찾음
+                // 가장 높은 sortingOrder를 가진 UI를 찾음 (ReservedSortingOrder는 제외)
                 currentSortingOrder = uiDictionary.Values
+                    .Where(ui => ui.canvas.sortingOrder < ReservedSortingOrder)
                     .Select(ui => ui.canvas.sortingOrder)
+                    .DefaultIfEmpty(0) // 딕셔너리에 값이 없으면 기본값 0
                     .Max();
             }
             else
