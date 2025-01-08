@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Numerics;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class EnemyDungeonBoss : EnemyBase, IEnemy

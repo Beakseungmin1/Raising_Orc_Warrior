@@ -15,15 +15,6 @@ public class BackgroundManager : Singleton<BackgroundManager>
         ParallaxBackground = curBackground.GetComponent<ParallaxBackground>();
     }
 
-    //public void Init()
-    //{
-    //    curBackground = Instantiate(map);
-    //    ParallaxBackground = curBackground.GetComponent<ParallaxBackground>();
-    //}
-
-
-
-
     public void ChangeBackGround(string map)
     {
         StartCoroutine(BGChangeCoroutine(map));
