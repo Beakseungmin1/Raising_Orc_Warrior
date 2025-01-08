@@ -21,12 +21,21 @@ public sealed class SoundManager : SingletonDontDestroy<SoundManager>
         //한번만 재생.(다른 음악이 실행중이여도 실행 가능)
         //play = 다른 음악이 실행중이면 종료 후 실행
 
+        sfxSource.clip = soundDictionary[type];
+
+        sfxSource.Play();
+
         //loop가 false일 경우
         //play는 기존에 음악이 재생중이면 해당 음악을 끄고 진행
         //playoneshot는 기존에 음악이 재생중이여도 겹쳐서 진행
-        
+
         //loop가 true일 경우
         //play는 음악을 끄고 재생 후 음악이 끝나면 다시 실행
+    }
+
+
+    public void PlaySFXOneShot(SFXType type)
+    {
         //playoneshot는 마찬가지로 한번만 실행하는데
         //재생중인 음악이 있어도 실행
         sfxSource.PlayOneShot(soundDictionary[type]);
