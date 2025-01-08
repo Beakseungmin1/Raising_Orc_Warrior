@@ -32,9 +32,11 @@ public class PlayerStatUpgradeUI : MonoBehaviour
         playerstat = PlayerObjManager.Instance.Player.stat;
         playerstat.UpdateAllStatUI += UpdateAllStatUI;
 
+
         //юс╫ц
         UpdateAllStatUI();
         //playerstat.UpdateAllStatUI.Invoke();
+
     }
 
     private void Update()

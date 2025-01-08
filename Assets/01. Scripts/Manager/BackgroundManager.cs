@@ -7,7 +7,6 @@ public class BackgroundManager : Singleton<BackgroundManager>
     public GameObject beforeBackground;
     public GameObject curBackground;
     public ParallaxBackground ParallaxBackground;
-    public GameObject map;
 
     public void Init()
     {
