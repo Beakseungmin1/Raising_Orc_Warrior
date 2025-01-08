@@ -194,17 +194,14 @@ public class PlayerStat : MonoBehaviour
         {
             CurrencyManager.Instance.SubtractGold(needUpgradeMoney);
             level += multiplier; // 레벨 증가
-            Stat = startStat + (level * increment); // 스탯 업데이트
+            Stat = startStat + ((level-1) * increment); // 스탯 업데이트
             totalUpgradeCost = level * baseCost;
-            OnStatChange?.Invoke(); // 건강 스탯 변경 이벤트 호출
         }
         else
         {
             Debug.Log("골드가 부족합니다");
         }
     }
-
-
 
     public void AttackLevelUp()
     {
@@ -217,6 +214,8 @@ public class PlayerStat : MonoBehaviour
         attackLevel = LevelValue;
         attackPower = (float)PowerValue;
         needAttackUpgradeMoney = upgradecost;
+
+        OnStatChange?.Invoke();
     }
 
     //스탯업그레이드시 호출되는 메서드 (스탯레벨, 스탯값, 총 업그레이드 비용, 시작스탯, 1레벨당 업그레이드 비용, 1레벨당 업그레이드값)
@@ -231,6 +230,8 @@ public class PlayerStat : MonoBehaviour
         healthLevel = LevelValue;
         maxHealth = PowerValue;
         needHealthUpgradeMoney = upgradecost;
+
+        OnStatChange?.Invoke();
     }
 
     public void HealthRegenerationLevelUp()
@@ -244,6 +245,8 @@ public class PlayerStat : MonoBehaviour
         healthRegenerationLevel = LevelValue;
         healthRegeneration = PowerValue;
         needHealthRegenerationUpgradeMoney = upgradecost;
+
+        OnStatChange?.Invoke();
     }
 
     public void CriticalIncreaseDamageLevelUp()
@@ -257,21 +260,23 @@ public class PlayerStat : MonoBehaviour
         criticalIncreaseDamageLevel = LevelValue;
         criticalIncreaseDamage = (float)PowerValue;
         needCriticalIncreaseDamageUpgradeMoney = upgradecost;
+
+        OnStatChange?.Invoke();
     }
 
     public void CriticalProbabilityLevelUp()
     {
         int multiplier = statUpgradeMultiplier == 0 ? 1 : (statUpgradeMultiplier == 1 ? 10 : 100);
-        BigInteger needUpgradeMoney = 1000 + ((criticalProbabilityLevel + 1) * 1000 * multiplier); // 레벨당 드는 업그레이드 비용
+        BigInteger needUpgradeMoney = 1000 + ((criticalProbabilityLevel + 1) * 1000 * multiplier);
         needCriticalProbabilityUpgradeMoney = needUpgradeMoney;
 
         if (CurrencyManager.Instance.GetGold() >= needUpgradeMoney)
         {
             CurrencyManager.Instance.SubtractGold(needUpgradeMoney);
-            criticalProbabilityLevel += multiplier; // 레벨 증가
-            criticalProbability = criticalProbabilityLevel * 0.1f; // 스탯 업데이트
+            criticalProbabilityLevel += multiplier;
+            criticalProbability = (criticalProbabilityLevel - 1) * 0.1f;
 
-            OnStatChange?.Invoke(); // 건강 스탯 변경 이벤트 호출
+            OnStatChange?.Invoke();
         }
         else
         {
@@ -320,12 +325,12 @@ public class PlayerStat : MonoBehaviour
         level = 0;
         exp = 0;
         needExp = 100;
-        attackPower = 24;
-        maxHealth = 240;
+        attackPower = 20;
+        maxHealth = 200;
         health = maxHealth;
-        healthRegeneration = 4;
-        criticalProbability = 0.1f;
-        criticalIncreaseDamage = 101;
+        healthRegeneration = 0;
+        criticalProbability = 0;
+        criticalIncreaseDamage = 100;
         maxMana = 200;
         mana = maxMana;
         manaRegeneration = 5;

@@ -31,7 +31,7 @@ MonoBehaviour:
   cooldown: 0
   requiredHits: 0
   damagePercent: 30
-  manaCost: 30
+  manaCost: 0
   effectRange: 3
   buffDuration: 0
   attackIncreasePercent: 0

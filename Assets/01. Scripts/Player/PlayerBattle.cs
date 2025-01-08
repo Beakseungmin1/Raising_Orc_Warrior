@@ -167,7 +167,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
             return;
         }
 
-        totalDamage = PlayerDamageCalculator.GetTotalDamage();
+        totalDamage = PlayerDamageCalculator.GetTotalDamage(true, true);
 
         currentMonster.TakeDamage(totalDamage);
 
