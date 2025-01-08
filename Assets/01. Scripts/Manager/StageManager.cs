@@ -76,12 +76,12 @@ public class StageManager : Singleton<StageManager>
         if(isThisBossStageFirstTry)
         {
             GoToBossStage();
-            isThisBossStageFirstTry = false;
         }
         else
         {
             GoToStage(); //현재 스테이지 반복
         }
+        isThisBossStageFirstTry = false;
     }
 
     public void BossStageClear()
@@ -93,6 +93,8 @@ public class StageManager : Singleton<StageManager>
 
         if (curStageIndexInThisChapter < MaxStageIndexInThisChapter) //챕터에 다음 스테이지가 남았다면 다음 스테이지로 이동
         {
+            UIManager.Instance.Hide<BossStageInfoUI>();
+            UIManager.Instance.Show<StageInfoUI>();
             curStageIndex++;
             curStageIndexInThisChapter++;
             isThisBossStageFirstTry = true;
@@ -102,11 +104,13 @@ public class StageManager : Singleton<StageManager>
         {
             UIManager.Instance.Hide<BossStageInfoUI>();
             GoToNextChapter();
+            isThisBossStageFirstTry = true;
         }
         else  //현재가 챕터의 마지막 스테이지라면 해당 스테이지 반복
         {
             Debug.LogWarning("업데이트가 안돼서 더이상 챕터가 없습니다. 마지막 스테이지로 돌아갑니다");
             BackToLastStage();
+            isThisBossStageFirstTry = false;
         }
     }
 
@@ -163,6 +167,7 @@ public class StageManager : Singleton<StageManager>
         UIManager.Instance.ShowFadePanel<FadeInFadeOutUI>(FadeType.FadeOutFadeIn);
         UIManager.Instance.Show<StageInfoUI>();
         curChapterIndex++;
+        curStageIndex++;
         curStageIndexInThisChapter = 0;
         SetStageList();
         SetBossStageList();
@@ -181,10 +186,10 @@ public class StageManager : Singleton<StageManager>
 
     public void BackToLastStage()
     {
+        UIManager.Instance.Hide<BossStageInfoUI>();
         UIManager.Instance.ShowFadePanel<FadeInFadeOutUI>(FadeType.FadeOutFadeIn);
         GameEventsManager.Instance.enemyEvents.ClearEnemy();
         curStageIndexInThisChapter = savedCurStageIndexInThisChapter;
-        UIManager.Instance.Hide<BossStageInfoUI>();
         UIManager.Instance.Show<StageInfoUI>();
         GoToStage();
     }
