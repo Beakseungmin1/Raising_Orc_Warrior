@@ -28,7 +28,7 @@ public class ProjectileHandler : MonoBehaviour
 
         if (enemy != null)
         {
-            BigInteger baseDamage = PlayerObjManager.Instance?.Player?.DamageCalculator.GetTotalDamage() ?? 0;
+            BigInteger baseDamage = PlayerObjManager.Instance?.Player?.DamageCalculator.GetTotalDamage(false, true) ?? 0;
             float damageMultiplier = effect.DamagePercent / 100f;
             double adjustedDamage = (double)baseDamage * damageMultiplier;
             BigInteger totalDamage = (BigInteger)adjustedDamage;

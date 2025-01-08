@@ -68,7 +68,6 @@ public class PlayerSkillHandler : MonoBehaviour
             {
                 case EffectType.OnPlayer:
                 case EffectType.OnMapCenter:
-                    // 범위 탐지 로직
                     targetPosition = transform.position;
                     Collider2D[] targets = Physics2D.OverlapCircleAll(targetPosition, skill.SkillData.effectRange);
 
@@ -87,7 +86,6 @@ public class PlayerSkillHandler : MonoBehaviour
 
                     if (!hasTargetInRange)
                     {
-                        Debug.Log("PlayerSkillHandler: 범위 내 적이 없습니다. 스킬 발동 취소.");
                         return;
                     }
 
@@ -101,7 +99,6 @@ public class PlayerSkillHandler : MonoBehaviour
                     break;
 
                 default:
-                    Debug.LogWarning($"PlayerSkillHandler: 알 수 없는 EffectType: {skill.SkillData.effectType}");
                     break;
             }
         }
@@ -109,14 +106,11 @@ public class PlayerSkillHandler : MonoBehaviour
 
     private void ActivateBuffSkill(BaseSkill skill)
     {
-        Debug.Log($"[PlayerSkillHandler] 버프 스킬 발동: {skill.SkillData.itemName}");
         skill.Activate(Vector3.zero);
     }
 
     private void ActivateActiveSkill(BaseSkill skill, Vector3 targetPosition, Collider2D[] targets)
     {
-        Debug.Log($"[PlayerSkillHandler] 액티브 스킬 발동: {skill.SkillData.itemName}, 쿨타임: {skill.RemainingCooldown}");
-
         // OnPlayer: 범위 내 첫 번째 적만 공격
         if (skill.SkillData.effectType == EffectType.OnPlayer)
         {
@@ -155,7 +149,6 @@ public class PlayerSkillHandler : MonoBehaviour
 
     private void ActivateProjectileSkill(BaseSkill skill, Vector3 targetPosition)
     {
-        Debug.Log($"[PlayerSkillHandler] 프로젝타일 스킬 발사: {skill.SkillData.itemName}");
         skill.Activate(targetPosition);
         skill.ResetCondition();
     }

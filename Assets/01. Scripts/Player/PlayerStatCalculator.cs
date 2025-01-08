@@ -85,25 +85,21 @@ public class PlayerStatCalculator : MonoBehaviour
 
     public BigInteger GetAdjustedMaxHealth()
     {
-        UpdateValue();
         return adjustedMaxHealth;
     }
 
     public BigInteger GetAdjustedHealthRegeneration()
     {
-        UpdateValue();
         return adjustedHealthRegeneration;
     }
 
     public float GetAdjustedMaxMana()
     {
-        UpdateValue();
         return adjustedMaxMana;
     }
 
     public float GetAdjustedManaRegeneration()
     {
-        UpdateValue();
         return adjustedManaRegeneration;
     }
 }

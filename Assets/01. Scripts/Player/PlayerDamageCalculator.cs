@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 using System;
+using System.Runtime.CompilerServices;
 
 public class PlayerDamageCalculator : MonoBehaviour
 {
@@ -63,9 +64,16 @@ public class PlayerDamageCalculator : MonoBehaviour
         PassiveCritAttackIncrease = inventory.GetTotalWeaponCriticalDamageBonus();
     }
 
-    public BigInteger GetTotalDamage()
+    public BigInteger GetTotalDamage(bool calculateMiss = false, bool calculateCritical = false)
     {
         UpdateValue();
+
+        if (calculateMiss && UnityEngine.Random.Range(0, 100) < 10)
+        {
+            rawTotalDamage = 0;
+            OnMissHit?.Invoke();
+            return 0;
+        }
 
         BigInteger baseDamage = (BigInteger)basicDamage;
         BigInteger weaponDamage = WeaponIncreaseDamage;
@@ -78,13 +86,7 @@ public class PlayerDamageCalculator : MonoBehaviour
 
         bool criticalHit = false;
 
-        if (UnityEngine.Random.Range(0, 100) < 10)
-        {
-            OnMissHit?.Invoke();
-            return 0;
-        }
-
-        if (UnityEngine.Random.Range(0, 100) < stat.criticalProbability)
+        if (calculateCritical && UnityEngine.Random.Range(0, 100) < stat.criticalProbability)
         {
             criticalHit = true;
 
@@ -160,13 +162,11 @@ public class PlayerDamageCalculator : MonoBehaviour
 
     public BigInteger GetRawTotalDamage()
     {
-        GetTotalDamage();
         return rawTotalDamage;
     }
 
     public float GetTotalCriticalDamageBonus()
     {
-        GetTotalDamage();
         return stat.criticalIncreaseDamage + PassiveCritAttackIncrease;
     }
 }
