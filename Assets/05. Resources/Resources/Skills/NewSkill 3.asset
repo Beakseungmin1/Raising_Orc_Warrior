@@ -41,5 +41,5 @@ MonoBehaviour:
   requireSkillCardsForUpgrade: 2
   maxLevel: 100
   effectPrefab: {fileID: 786883300241084630, guid: cac4d33a2db5b834db3a565dc12f8784, type: 3}
-  effectDuration: 5
+  effectDuration: 1
   isEquipped: 0
