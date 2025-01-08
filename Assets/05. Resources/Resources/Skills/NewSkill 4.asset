@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 456f28f5541ebd04681de1f21879ac32, type: 3}
   m_Name: NewSkill 4
   m_EditorClassIdentifier: 
-  itemName: "\uD0C0\uC624\uB974\uB294 \uAC80"
-  englishItemName: BurningSwordSkill
-  icon: {fileID: 21300000, guid: 61e43715f7d3f3f4fb66342b37aafe0d, type: 3}
+  itemName: "\uC804\uC0AC\uC758 \uBD84\uB178"
+  englishItemName: TheWarriorsFury
+  icon: {fileID: 21300000, guid: 7384cdd132fb8a349ba1b38b461b701f, type: 3}
   inGameImage: {fileID: 0}
   grade: 2
   gradeColor: {r: 1, g: 0.41093177, b: 0, a: 1}
   currencyIcon: {fileID: 21300000, guid: 27dd9ee893a5df146bf63f9eac175270, type: 3}
   requiredCurrencyForUpgrade: 150
   currentLevel: 1
-  description: "\uD0C0\uC624\uB974\uB294 \uAC80\uC2E0\uC740 \uC810\uC810 \uB354 \uAC15\uD574\uC9C4\uB2E4"
+  description: "\uC804\uC0AC\uC758 \uBCF8\uB178\uB85C \uC810\uC810 \uB354 \uAC15\uD574\uC9C4\uB2E4"
   effectDescription: "\uC804\uD22C \uB3CC\uC785 \uD6C4, {cooldown}\uCD08\uB9C8\uB2E4
     \uC804\uCCB4 \uACF5\uACA9\uB825 +{attackIncreasePercent}%"
   skillType: 2
@@ -39,6 +39,6 @@ MonoBehaviour:
   moveSpeedIncrease: 0
   requireSkillCardsForUpgrade: 2
   maxLevel: 100
-  effectPrefab: {fileID: 5824670795371433373, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
+  effectPrefab: {fileID: 786883300241084630, guid: d7df72cd1020b8f4aa7221ba399f629f, type: 3}
   effectDuration: 3
   isEquipped: 0

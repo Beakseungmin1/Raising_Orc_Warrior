@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 456f28f5541ebd04681de1f21879ac32, type: 3}
   m_Name: NewSkill 8
   m_EditorClassIdentifier: 
-  itemName: "\uC218\uB77C \uBC88\uAC1C \uBCA0\uAE30"
-  englishItemName: ThunderSlashSkill
-  icon: {fileID: 21300000, guid: 4c266f1fb3e502647a57e352dcd40acf, type: 3}
+  itemName: "\uB3C4\uAE68\uBE44 \uCC38\uC218"
+  englishItemName: OniDecapitation
+  icon: {fileID: 21300000, guid: 230d83c5bdd7bc849bc3f7f2a2c65467, type: 3}
   inGameImage: {fileID: 0}
   grade: 6
   gradeColor: {r: 0.89599895, g: 0, b: 1, a: 1}
   currencyIcon: {fileID: 21300000, guid: 27dd9ee893a5df146bf63f9eac175270, type: 3}
   requiredCurrencyForUpgrade: 1000000
   currentLevel: 1
-  description: "\uC804\uACA9\uC744 \uB450\uB978 \uAC80\uC744 \uD718\uB458\uB7EC \uB2E4\uC218\uC758
-    \uC801\uC5D0\uAC8C \uAC15\uD55C \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uB2E4"
+  description: "\uD544\uC0B4\uC744 \uC0AC\uC6A9\uD574 \uB2E4\uC218\uC758 \uC801\uC5D0\uAC8C
+    \uAC15\uD55C \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uB2E4"
   effectDescription: "\uBC94\uC704 {range} \uC774\uB0B4\uC758 \uC801 10\uAE30\uC5D0\uAC8C
     {damagePercent}%\uC758 \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uB2E4."
   skillType: 0
   effectType: 1
   activationCondition: 0
-  cooldown: 0
+  cooldown: 3
   requiredHits: 0
   damagePercent: 200
   manaCost: 40
@@ -40,6 +40,6 @@ MonoBehaviour:
   moveSpeedIncrease: 0
   requireSkillCardsForUpgrade: 2
   maxLevel: 100
-  effectPrefab: {fileID: 4593184484909914552, guid: 2e1e9506f5904a64b81744324fb7cd50, type: 3}
+  effectPrefab: {fileID: 786883300241084630, guid: ed8f135a74d82fc44a63bb1c1ea90a40, type: 3}
   effectDuration: 1
   isEquipped: 0
