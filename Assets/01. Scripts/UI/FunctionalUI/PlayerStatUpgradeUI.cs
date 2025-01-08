@@ -33,7 +33,8 @@ public class PlayerStatUpgradeUI : MonoBehaviour
         playerstat.UpdateAllStatUI += UpdateAllStatUI;
 
         //юс╫ц
-        playerstat.UpdateAllStatUI.Invoke();
+        UpdateAllStatUI();
+        //playerstat.UpdateAllStatUI.Invoke();
     }
 
     private void Update()

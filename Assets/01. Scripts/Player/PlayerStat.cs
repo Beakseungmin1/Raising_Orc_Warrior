@@ -188,11 +188,19 @@ public class PlayerStat : MonoBehaviour
     public void UpgradeStat(ref int level, ref BigInteger Stat, ref BigInteger totalUpgradeCost, int startStat, int baseCost, int increment)
     {
         int multiplier = statUpgradeMultiplier == 0 ? 1 : (statUpgradeMultiplier == 1 ? 10 : 100);
-        BigInteger needUpgradeMoney = level * baseCost * multiplier; // 레벨당 드는 업그레이드 비용
+        BigInteger needUpgradeMoney = level * baseCost; // 레벨당 드는 업그레이드 비용
+        BigInteger needTotalUpgradeMoney = 0;
+        int multiplierLevel = level;
 
-        if (CurrencyManager.Instance.GetGold() >= needUpgradeMoney)
+        for (int i = 0; i < multiplier; i++)
         {
-            CurrencyManager.Instance.SubtractGold(needUpgradeMoney);
+            needTotalUpgradeMoney += multiplierLevel * needUpgradeMoney;
+            multiplierLevel++;
+        }
+
+        if (CurrencyManager.Instance.GetGold() >= needTotalUpgradeMoney)
+        {
+            CurrencyManager.Instance.SubtractGold(needTotalUpgradeMoney);
             level += multiplier; // 레벨 증가
             Stat = startStat + (level * increment); // 스탯 업데이트
             totalUpgradeCost = level * baseCost;
@@ -204,7 +212,52 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
+    public void UpdateNeedMoney()
+    {
+        int LevelValue = attackLevel;
+        BigInteger upgradecost = needAttackUpgradeMoney;
+        CalculateNeedMoney(ref LevelValue, ref upgradecost, 1000);
+        attackLevel = LevelValue;
+        needAttackUpgradeMoney = upgradecost;
 
+        LevelValue = healthLevel;
+        upgradecost = needHealthUpgradeMoney;
+        CalculateNeedMoney(ref LevelValue, ref upgradecost, 1000);
+        healthLevel = LevelValue;
+        needHealthUpgradeMoney = upgradecost;
+
+        LevelValue = healthRegenerationLevel;
+        upgradecost = needHealthRegenerationUpgradeMoney;
+        CalculateNeedMoney(ref LevelValue, ref upgradecost, 1000);
+        healthRegenerationLevel = LevelValue;
+        needHealthRegenerationUpgradeMoney = upgradecost;
+
+        LevelValue = criticalIncreaseDamageLevel;
+        upgradecost = needCriticalIncreaseDamageUpgradeMoney;
+        CalculateNeedMoney(ref LevelValue, ref upgradecost, 1000);
+        criticalIncreaseDamageLevel = LevelValue;
+        needCriticalIncreaseDamageUpgradeMoney = upgradecost;
+
+        LevelValue = criticalProbabilityLevel;
+        upgradecost = needCriticalProbabilityUpgradeMoney;
+        CalculateNeedMoney(ref LevelValue, ref upgradecost, 1000);
+        criticalProbabilityLevel = LevelValue;
+        needCriticalProbabilityUpgradeMoney = upgradecost;
+    }
+
+    public void CalculateNeedMoney(ref int level,ref BigInteger totalUpgradeCost,int baseCost)
+    {
+        int multiplier = statUpgradeMultiplier == 0 ? 1 : (statUpgradeMultiplier == 1 ? 10 : 100);
+        BigInteger needUpgradeMoney = level * baseCost; // 레벨당 드는 업그레이드 비용
+        BigInteger needTotalUpgradeMoney;
+
+        for (int i = 0; i < multiplier; i++)
+        {
+            needTotalUpgradeMoney += (level + i) * needUpgradeMoney;
+        }
+
+        totalUpgradeCost = needTotalUpgradeMoney;
+    }
 
     public void AttackLevelUp()
     {
@@ -212,7 +265,7 @@ public class PlayerStat : MonoBehaviour
         BigInteger PowerValue = (BigInteger)attackPower;
         BigInteger upgradecost = needAttackUpgradeMoney;
 
-        UpgradeStat(ref LevelValue, ref PowerValue, ref upgradecost, 20,1000, 4);
+        UpgradeStat(ref LevelValue, ref PowerValue, ref upgradecost, 20, 1000, 4);
 
         attackLevel = LevelValue;
         attackPower = (float)PowerValue;
