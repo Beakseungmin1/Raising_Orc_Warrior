@@ -103,6 +103,18 @@ public class StageManager : Singleton<StageManager>
         else if (curChapterIndex < chapterSOs.Count - 1)
         {
             UIManager.Instance.Hide<BossStageInfoUI>();
+            if (curChapterIndex == 0)
+            {
+                BackgroundManager.Instance.ChangeBackGround("VineForestBG");
+            }
+            else if (curChapterIndex == 1)
+            {
+                BackgroundManager.Instance.ChangeBackGround("BeachBG");
+            }
+            else if (curChapterIndex == 2)
+            {
+                BackgroundManager.Instance.ChangeBackGround("CaveBG");
+            }
             GoToNextChapter();
             isThisBossStageFirstTry = true;
         }
@@ -176,36 +188,6 @@ public class StageManager : Singleton<StageManager>
         RegenManager.Instance.CacheEnemies();
         RegenManager.Instance.RegenStagesEnemy();
         GameEventsManager.Instance.stageEvents.ChangeStage();//현재 최대몬스터, 죽인 몬스터 수 정보 갱신해야하므로, RegenStagesEnemy()다음에 실행.
-    }
-
-    public void BossStageClear()
-    {
-        if (curChapterIndex < chapterSOs.Count - 1)
-        {
-            UIManager.Instance.Hide<BossStageInfoUI>();
-            if (curChapterIndex == 0)
-            {
-                BackgroundManager.Instance.ChangeBackGround("VineForestBG");
-            }
-            else if (curChapterIndex == 1)
-            {
-                BackgroundManager.Instance.ChangeBackGround("BeachBG");
-            }
-            else if (curChapterIndex == 2)
-            {
-                BackgroundManager.Instance.ChangeBackGround("CaveBG");
-            }
-            GoToNextChapter();
-        }
-        else //현재가 챕터의 마지막 스테이지라면 해당 스테이지 반복
-        {
-            BackToLastStage();
-        }
-
-        if (timer != null)
-        {
-            Destroy(timer);
-        }
     }
 
     private void SetTimer(float limitTime)
