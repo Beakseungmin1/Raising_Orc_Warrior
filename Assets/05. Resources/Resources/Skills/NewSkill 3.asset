@@ -40,6 +40,6 @@ MonoBehaviour:
   moveSpeedIncrease: 0
   requireSkillCardsForUpgrade: 2
   maxLevel: 100
-  effectPrefab: {fileID: 4772634663576830964, guid: e1385af346f4e624eb313ec1ea4fcd7e, type: 3}
+  effectPrefab: {fileID: 786883300241084630, guid: cac4d33a2db5b834db3a565dc12f8784, type: 3}
   effectDuration: 5
   isEquipped: 0
