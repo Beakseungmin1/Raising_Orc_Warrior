@@ -110,7 +110,6 @@ public class SkillEquipSlotManager : UIBase
             if (skill != null && skill.IsReadyToActivate())
             {
                 PlayerObjManager.Instance.Player.SkillHandler.UseSkill(skill, slot.transform.position);
-                Debug.Log($"[SkillEquipSlotManager] 자동 발동: {skill.SkillData.itemName}");
             }
         }
     }
@@ -119,7 +118,6 @@ public class SkillEquipSlotManager : UIBase
     {
         autoActivate = !autoActivate;
         UpdateAutoActivateButtonUI();
-        Debug.Log($"[SkillEquipSlotManager] 자동 발동 상태: {autoActivate}");
     }
 
     private void UpdateAutoActivateButtonUI()

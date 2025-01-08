@@ -26,6 +26,7 @@ public class SkillDataSO : BaseItemDataSO
     public float manaRecoveryAmount;
     public float hpRecoveryAmount;
     public float moveSpeedIncrease;
+    public float attackSpeedIncrease;
 
     [Header("Upgrade Info")]
     public int requireSkillCardsForUpgrade;
