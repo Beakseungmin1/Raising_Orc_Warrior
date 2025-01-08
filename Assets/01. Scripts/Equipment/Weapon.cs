@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 [System.Serializable]
 public class Weapon : IFusable
@@ -10,10 +11,11 @@ public class Weapon : IFusable
     public int EnhancementLevel { get; private set; }
     public int StackCount { get; internal set; }
     public int RequiredCurrencyForUpgrade { get; private set; }
-    public float EquipAtkIncreaseRate { get; private set; }
-    public float PassiveEquipAtkIncreaseRate { get; private set; }
-    public float PassiveCriticalDamageBonus { get; private set; }
-    public float PassiveGoldGainRate { get; private set; }
+    public int EquipAtkIncreaseRate { get; private set; }
+    public int PassiveEquipAtkIncreaseRate { get; private set; }
+    public int PassiveCriticalDamageBonus { get; private set; }
+    public int PassiveGoldGainRate { get; private set; }
+    public event Action OnEnhanceComplete;
 
     public Weapon(WeaponDataSO baseData, int initialStackCount = 1)
     {
@@ -42,10 +44,12 @@ public class Weapon : IFusable
 
         CurrencyManager.Instance.SubtractCurrency(CurrencyType.Cube, RequiredCurrencyForUpgrade);
         EnhancementLevel++;
-        RequiredCurrencyForUpgrade = Mathf.RoundToInt(RequiredCurrencyForUpgrade * 1.5f);
+        RequiredCurrencyForUpgrade = Mathf.RoundToInt(RequiredCurrencyForUpgrade * 1.1f);
         UpdateWeaponEffects();
         PassiveManager.Instance.UpdateWeaponEffects();
         PlayerObjManager.Instance.Player.inventory.NotifyInventoryChanged(true);
+        OnEnhanceComplete?.Invoke();
+        Debug.Log("이벤트발생");
         return true;
     }
 
@@ -114,7 +118,7 @@ public class Weapon : IFusable
 
         if (PassiveGoldGainRate > 0)
         {
-            PassiveGoldGainRate += EnhancementLevel * 0.5f;
+            PassiveGoldGainRate += EnhancementLevel * 1;
         }
     }
 
