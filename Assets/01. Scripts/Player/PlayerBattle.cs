@@ -45,6 +45,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private void Start()
     {
+        background = ParallaxBackground.Instance;
         PlayerDamageCalculator = GetComponent<PlayerDamageCalculator>();
         playerStat = GetComponent<PlayerStat>();
         animator = GetComponentInChildren<Animator>();
@@ -171,7 +172,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
         currentMonster.TakeDamage(totalDamage);
 
-        SoundManager.Instance.PlaySFX(SFXType.playerAttack2);
+        SoundManager.Instance.PlaySFXOneShot(SFXType.playerAttack2);
     }
 
     public void GetMonsterReward()
