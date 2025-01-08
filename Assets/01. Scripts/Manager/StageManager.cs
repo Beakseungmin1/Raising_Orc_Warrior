@@ -160,6 +160,18 @@ public class StageManager : Singleton<StageManager>
         if (curChapterIndex < chapterSOs.Count - 1)
         {
             UIManager.Instance.Hide<BossStageInfoUI>();
+            if (curChapterIndex == 0)
+            {
+                BackgroundManager.Instance.ChangeBackGround("VineForestBG");
+            }
+            else if (curChapterIndex == 1)
+            {
+                BackgroundManager.Instance.ChangeBackGround("BeachBG");
+            }
+            else if (curChapterIndex == 2)
+            {
+                BackgroundManager.Instance.ChangeBackGround("CaveBG");
+            }
             GoToNextChapter();
         }
         else //현재가 챕터의 마지막 스테이지라면 해당 스테이지 반복

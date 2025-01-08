@@ -7,6 +7,11 @@ public class StarterManager : Singleton<StarterManager>
     private bool isInitialized = false;
     private GameObject eventSystemObject;
 
+    private void Awake()
+    {
+        BackgroundManager.Instance.Init();
+    }
+
     void Start()
     {
 
@@ -15,7 +20,6 @@ public class StarterManager : Singleton<StarterManager>
         //임시
         SoundManager.Instance.Init();
         SoundManager.Instance.PlayBGM(BGMType.Title);
-        BackgroundManager.Instance.Init();
         OpenFirstDungeons();
         if (!isInitialized)
         {

@@ -55,7 +55,9 @@ public class RegenManager : Singleton<RegenManager>
 
         totalEnemies = enemySOs.Count;
         totalEnemiesForDebug += totalEnemies;
-        scrollSpeed = ParallaxBackground.Instance.GetScrollSpeed();
+
+        scrollSpeed = BackgroundManager.Instance.ParallaxBackground.scrollSpeed;
+        //scrollSpeed = ParallaxBackground.Instance.GetScrollSpeed();
     }
 
     public void CacheDungeonBoss(Dungeon dungeon)

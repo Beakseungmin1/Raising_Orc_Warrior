@@ -18,7 +18,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     private State currentState;
     private PlayerDamageCalculator PlayerDamageCalculator;
     private PlayerStat playerStat;
-    [SerializeField] private ParallaxBackground background;
+    public ParallaxBackground background;
     public Animator animator;
 
     private BigInteger totalDamage;
@@ -45,7 +45,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        background = ParallaxBackground.Instance;
+        background = BackgroundManager.Instance.ParallaxBackground;
         PlayerDamageCalculator = GetComponent<PlayerDamageCalculator>();
         playerStat = GetComponent<PlayerStat>();
         animator = GetComponentInChildren<Animator>();
