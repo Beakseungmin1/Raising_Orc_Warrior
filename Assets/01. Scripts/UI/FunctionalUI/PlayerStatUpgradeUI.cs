@@ -29,7 +29,11 @@ public class PlayerStatUpgradeUI : MonoBehaviour
 
     private void Start()
     {
-        UpdateAllStatUI();
+        playerstat = PlayerObjManager.Instance.Player.stat;
+        playerstat.UpdateAllStatUI += UpdateAllStatUI;
+
+        //юс╫ц
+        playerstat.UpdateAllStatUI.Invoke();
     }
 
     private void Update()
@@ -70,7 +74,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
 
     public void OnAttackLevelUpButton()
     {
-        PlayerObjManager.Instance.Player.stat.AttackLevelUp();
+        playerstat.AttackLevelUp();
         attackUi.UpdateAttackStatUI();
     }
 
@@ -88,7 +92,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
 
     public void OnHealthLevelUpButton()
     {
-        PlayerObjManager.Instance.Player.stat.HealthLevelUp();
+        playerstat.HealthLevelUp();
         healthUi.UpdateHealthStatUI();
     }
 
@@ -107,7 +111,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
 
     public void OnHealthRegenLevelUpButton()
     {
-        PlayerObjManager.Instance.Player.stat.HealthRegenerationLevelUp();
+        playerstat.HealthRegenerationLevelUp();
         healthRegenUi.UpdateHealthRegenerationUI();
     }
 
@@ -125,7 +129,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
 
     public void OnCriticalDamageLevelUpButton()
     {
-        PlayerObjManager.Instance.Player.stat.CriticalIncreaseDamageLevelUp();
+        playerstat.CriticalIncreaseDamageLevelUp();
         criticalDamageUi.UpdateCriticalIncreaseDamageUI();
     }
 
@@ -143,7 +147,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
 
     public void OnCriticalProbabilityLevelUpButton()
     {
-        PlayerObjManager.Instance.Player.stat.CriticalProbabilityLevelUp();
+        playerstat.CriticalProbabilityLevelUp();
         criticalProbabilityUi.UpdateCriticalProbabilityUI();
     }
 
@@ -162,7 +166,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
 
     public void OnBlueCriticalDamageLevelUpButton()
     {
-        PlayerObjManager.Instance.Player.stat.BlueCriticalIncreaseDamageLevelUp();
+        playerstat.BlueCriticalIncreaseDamageLevelUp();
         blueCriticalDamageUi.UpdateblueCriticalIncreaseDamageStatUI();
     }
 
@@ -180,7 +184,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
 
     public void OnBlueCriticalProbabilityLevelUpButton()
     {
-        PlayerObjManager.Instance.Player.stat.BlueCriticalProbabilityLevelUp();
+        playerstat.BlueCriticalProbabilityLevelUp();
         blueCriticalProbabilityUi.UpdateblueCriticalProbabilityStatUI();
     }
 

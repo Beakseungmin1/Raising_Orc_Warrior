@@ -6,6 +6,7 @@ public class Weapon : IFusable
     public WeaponDataSO BaseData { get; private set; }
     BaseItemDataSO IEnhanceable.BaseData => BaseData;
     public int Rank => BaseData.rank;
+    public Grade Grade => BaseData.grade;
     public int EnhancementLevel { get; private set; }
     public int StackCount { get; internal set; }
     public int RequiredCurrencyForUpgrade { get; private set; }
@@ -50,8 +51,61 @@ public class Weapon : IFusable
 
     private void UpdateWeaponEffects()
     {
-        EquipAtkIncreaseRate += EnhancementLevel * 2;
-        PassiveEquipAtkIncreaseRate = Mathf.RoundToInt(EquipAtkIncreaseRate / 3f);
+        switch (Grade)
+        {
+            case Grade.Normal:
+                EquipAtkIncreaseRate += EnhancementLevel * 1;
+                PassiveEquipAtkIncreaseRate += EnhancementLevel * 1;
+                break;
+
+            case Grade.Uncommon:
+                EquipAtkIncreaseRate += EnhancementLevel * 10;
+                PassiveEquipAtkIncreaseRate += EnhancementLevel * 2;
+                break;
+
+            case Grade.Rare:
+                EquipAtkIncreaseRate += EnhancementLevel * 30;
+                PassiveEquipAtkIncreaseRate += EnhancementLevel * 10;
+                break;
+
+            case Grade.Hero:
+                EquipAtkIncreaseRate += EnhancementLevel * 200;
+                PassiveEquipAtkIncreaseRate += EnhancementLevel * 50;
+                break;
+
+            case Grade.Legendary:
+                EquipAtkIncreaseRate += EnhancementLevel * 2000;
+                PassiveEquipAtkIncreaseRate += EnhancementLevel * 700;
+                break;
+
+            case Grade.Mythic:
+                if (Rank == 4)
+                {
+                    EquipAtkIncreaseRate += EnhancementLevel * 100000;
+                    PassiveEquipAtkIncreaseRate += EnhancementLevel * 10000;
+                }
+                else if (Rank == 3)
+                {
+                    EquipAtkIncreaseRate += EnhancementLevel * 300000;
+                    PassiveEquipAtkIncreaseRate += EnhancementLevel * 100000;
+                }
+                else if (Rank == 2)
+                {
+                    EquipAtkIncreaseRate += EnhancementLevel * 700000;
+                    PassiveEquipAtkIncreaseRate += EnhancementLevel * 200000;
+                }
+                else if (Rank == 1)
+                {
+                    EquipAtkIncreaseRate += EnhancementLevel * 1000000;
+                    PassiveEquipAtkIncreaseRate += EnhancementLevel * 300000;
+                }
+                break;
+
+            case Grade.Ultimate:
+                EquipAtkIncreaseRate += EnhancementLevel * 10000000;
+                PassiveEquipAtkIncreaseRate += EnhancementLevel * 1000000;
+                break;
+        }
 
         if (PassiveCriticalDamageBonus > 0)
         {

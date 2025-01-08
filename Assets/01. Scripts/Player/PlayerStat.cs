@@ -41,13 +41,15 @@ public class PlayerStat : MonoBehaviour
     public BigInteger needBlueCriticalIncreaseDamageUpgradeMoney { get; private set; }
     public BigInteger needBlueCriticalProbabilityUpgradeMoney { get; private set; }
 
-    private int statUpgradeMultiplier = 0; // 스탯 업그레이드 배율 , 0 = 1배, 1 = 10배, 2 = 100배
+    public int statUpgradeMultiplier = 0; // 스탯 업그레이드 배율 , 0 = 1배, 1 = 10배, 2 = 100배
 
     public Action UpdateLevelStatUI;
 
     public Action UpdateUserInformationUI;
 
     public Action OnStatChange;
+
+    public Action UpdateAllStatUI;
 
     [Header("Multiplier")]
     public BigInteger healthMultiplier = 1;
@@ -67,6 +69,8 @@ public class PlayerStat : MonoBehaviour
         {
             PlayerStatCalculator = GetComponent<PlayerStatCalculator>();
         }
+
+        OnStatChange += PassiveManager.Instance.TotalEffects;
     }
 
     private void Update()
@@ -184,16 +188,15 @@ public class PlayerStat : MonoBehaviour
     public void UpgradeStat(ref int level, ref BigInteger Stat, ref BigInteger totalUpgradeCost, int startStat, int baseCost, int increment)
     {
         int multiplier = statUpgradeMultiplier == 0 ? 1 : (statUpgradeMultiplier == 1 ? 10 : 100);
-        BigInteger needUpgradeMoney = baseCost + ((level+1) * baseCost * multiplier); // 레벨당 드는 업그레이드 비용
-        totalUpgradeCost = needUpgradeMoney; // 합산한 비용을 스탯당 업그레이드 비용으로 전달
+        BigInteger needUpgradeMoney = level * baseCost * multiplier; // 레벨당 드는 업그레이드 비용
 
         if (CurrencyManager.Instance.GetGold() >= needUpgradeMoney)
         {
             CurrencyManager.Instance.SubtractGold(needUpgradeMoney);
             level += multiplier; // 레벨 증가
             Stat = startStat + (level * increment); // 스탯 업데이트
-
-           OnStatChange?.Invoke(); // 건강 스탯 변경 이벤트 호출
+            totalUpgradeCost = level * baseCost;
+            OnStatChange?.Invoke(); // 건강 스탯 변경 이벤트 호출
         }
         else
         {
@@ -320,7 +323,7 @@ public class PlayerStat : MonoBehaviour
         attackPower = 20;
         maxHealth = 200;
         health = maxHealth;
-        healthRegeneration = 1;
+        healthRegeneration = 0;
         criticalProbability = 0;
         criticalIncreaseDamage = 100;
         maxMana = 200;
@@ -333,11 +336,11 @@ public class PlayerStat : MonoBehaviour
         attackSpeed = 0;
         normalMonsterIncreaseDamage = 0;
         bossMonsterIncreaseDamage = 0;
-        attackLevel = 0;
-        healthLevel = 0;
-        healthRegenerationLevel = 0;
-        criticalIncreaseDamageLevel = 0;
-        criticalProbabilityLevel = 0;
+        attackLevel = 1;
+        healthLevel = 1;
+        healthRegenerationLevel = 1;
+        criticalIncreaseDamageLevel = 1;
+        criticalProbabilityLevel = 1;
         bluecriticalIncreaseDamageLevel = 1;
         bluecriticalProbabilityLevel = 1;
         needAttackUpgradeMoney = 1000;

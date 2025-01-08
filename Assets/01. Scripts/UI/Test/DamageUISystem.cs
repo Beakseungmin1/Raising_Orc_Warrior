@@ -91,12 +91,12 @@ public class DamageUISystem : Singleton<DamageUISystem>
 
         damageText.transform.position = adjustedPosition;
 
-        StartCoroutine(FollowEnemy(damageText, adjustedPosition));
+        StartCoroutine(FollowEnemy(damageText, adjustedPosition, enemyTransform));
 
         Destroy(damageText.gameObject, 0.5f);
     }
 
-    private IEnumerator FollowEnemy(TextMeshPro damageText, UnityEngine.Vector3 initialWorldPosition)
+    private IEnumerator FollowEnemy(TextMeshPro damageText, UnityEngine.Vector3 initialWorldPosition, Transform enemyTransform)
     {
         float timeElapsed = 0f;
 
@@ -105,7 +105,17 @@ public class DamageUISystem : Singleton<DamageUISystem>
             if (damageText == null)
                 yield break;
 
-            damageText.transform.position = initialWorldPosition;
+            UnityEngine.Vector3 enemyPosition = enemyTransform.position;
+            float heightMultiplier = 1.0f;
+
+            if (enemyTransform.GetComponent<EnemyBase>() is EnemyBoss)
+            {
+                heightMultiplier = 2.0f;
+            }
+
+            UnityEngine.Vector3 adjustedPosition = enemyPosition + UnityEngine.Vector3.up * heightMultiplier;
+
+            damageText.transform.position = adjustedPosition;
 
             timeElapsed += Time.deltaTime;
             yield return null;

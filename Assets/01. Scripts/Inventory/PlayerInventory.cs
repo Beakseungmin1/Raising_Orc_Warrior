@@ -199,105 +199,50 @@ public class PlayerInventory : MonoBehaviour
         OnSkillsChanged?.Invoke();
     }
 
-    public float GetTotalAccessoryHpAndHpRecovery()
+    private float CalculateTotalEffect<T>(GenericInventory<T> inventory, Func<T, float> effectSelector) where T : class, IEnhanceable
     {
         HashSet<string> processedItems = new HashSet<string>();
-        float totalHpAndHpRecovery = 0f;
+        float totalEffect = 0f;
 
-        foreach (var accessory in AccessoryInventory.GetAllItems())
+        foreach (var item in inventory.GetAllItems())
         {
-            if (!processedItems.Contains(accessory.BaseData.itemName))
+            if (!processedItems.Contains(item.BaseData.itemName))
             {
-                totalHpAndHpRecovery += accessory.PassiveHpAndHpRecoveryIncreaseRate;
-                processedItems.Add(accessory.BaseData.itemName);
+                totalEffect += effectSelector(item);
+                processedItems.Add(item.BaseData.itemName);
             }
         }
 
-        return totalHpAndHpRecovery;
+        return totalEffect;
+    }
+
+    public float GetTotalAccessoryHpAndHpRecovery()
+    {
+        return CalculateTotalEffect(AccessoryInventory, item => item.PassiveHpAndHpRecoveryIncreaseRate);
     }
 
     public float GetTotalAccessoryMpAndMpRecovery()
     {
-        HashSet<string> processedItems = new HashSet<string>();
-        float totalMpAndMpRecovery = 0f;
-
-        foreach (var accessory in AccessoryInventory.GetAllItems())
-        {
-            if (!processedItems.Contains(accessory.BaseData.itemName))
-            {
-                totalMpAndMpRecovery += accessory.PassiveMpAndMpRecoveryIncreaseRate;
-                processedItems.Add(accessory.BaseData.itemName);
-            }
-        }
-
-        return totalMpAndMpRecovery;
+        return CalculateTotalEffect(AccessoryInventory, item => item.PassiveMpAndMpRecoveryIncreaseRate);
     }
 
     public float GetTotalAccessoryAddEXPRate()
     {
-        HashSet<string> processedItems = new HashSet<string>();
-        float totalAddEXPRate = 0f;
-
-        foreach (var accessory in AccessoryInventory.GetAllItems())
-        {
-            if (!processedItems.Contains(accessory.BaseData.itemName))
-            {
-                totalAddEXPRate += accessory.PassiveAddEXPRate;
-                processedItems.Add(accessory.BaseData.itemName);
-            }
-        }
-
-        return totalAddEXPRate;
+        return CalculateTotalEffect(AccessoryInventory, item => item.PassiveAddEXPRate);
     }
 
     public float GetTotalWeaponPassiveAtkIncrease()
     {
-        HashSet<string> processedItems = new HashSet<string>();
-        float totalEquipAtkIncrease = 0f;
-
-        foreach (var weapon in WeaponInventory.GetAllItems())
-        {
-            if (!processedItems.Contains(weapon.BaseData.itemName))
-            {
-                totalEquipAtkIncrease += weapon.PassiveEquipAtkIncreaseRate;
-                processedItems.Add(weapon.BaseData.itemName);
-            }
-        }
-
-        return totalEquipAtkIncrease;
+        return CalculateTotalEffect(WeaponInventory, item => item.PassiveEquipAtkIncreaseRate);
     }
 
     public float GetTotalWeaponCriticalDamageBonus()
     {
-        HashSet<string> processedItems = new HashSet<string>();
-        float totalCriticalDamageBonus = 0f;
-
-        foreach (var weapon in WeaponInventory.GetAllItems())
-        {
-            if (!processedItems.Contains(weapon.BaseData.itemName))
-            {
-                totalCriticalDamageBonus += weapon.PassiveCriticalDamageBonus;
-                processedItems.Add(weapon.BaseData.itemName);
-            }
-        }
-
-        return totalCriticalDamageBonus;
+        return CalculateTotalEffect(WeaponInventory, item => item.PassiveCriticalDamageBonus);
     }
 
     public float GetTotalWeaponGoldGainRate()
     {
-        HashSet<string> processedItems = new HashSet<string>();
-        float totalGoldGainRate = 0f;
-
-        foreach (var weapon in WeaponInventory.GetAllItems())
-        {
-            if (!processedItems.Contains(weapon.BaseData.itemName))
-            {
-                totalGoldGainRate += weapon.PassiveGoldGainRate;
-                processedItems.Add(weapon.BaseData.itemName);
-            }
-        }
-
-        return totalGoldGainRate;
+        return CalculateTotalEffect(WeaponInventory, item => item.PassiveGoldGainRate);
     }
 }
