@@ -19,11 +19,11 @@ MonoBehaviour:
   grade: 5
   gradeColor: {r: 0, g: 0, b: 0, a: 0}
   currencyIcon: {fileID: 0}
-  requiredCurrencyForUpgrade: 0
+  requiredCurrencyForUpgrade: 1500
   currentLevel: 1
-  equipAtkIncreaseRate: 270000
+  equipAtkIncreaseRate: 700000
   passiveEquipAtkIncreaseRate: 0
-  passiveCriticalDamageBonus: 0
-  passiveGoldGainRate: 0
+  passiveCriticalDamageBonus: 10
+  passiveGoldGainRate: 9
   rank: 2
   requireFuseItemCount: 5

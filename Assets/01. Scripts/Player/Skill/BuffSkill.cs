@@ -14,12 +14,16 @@ public class BuffSkill : BaseSkill
 
         ApplySpeedBoost();
         ApplyManaBoost();
+        ApplyAttackBoost();
         StartCoroutine(EndBuffAfterDuration());
     }
 
     private void ApplySpeedBoost()
     {
-        ParallaxBackground.Instance.scrollSpeed *= 1 + (skillData.moveSpeedIncrease / 100f);
+        if (skillData.moveSpeedIncrease > 0)
+        {
+            ParallaxBackground.Instance.scrollSpeed *= 1 + (skillData.moveSpeedIncrease / 100f);
+        }
     }
 
     private void ApplyManaBoost()
@@ -27,6 +31,14 @@ public class BuffSkill : BaseSkill
         if (skillData.manaRecoveryAmount > 0)
         {
             playerStat.setMana(skillData.manaRecoveryAmount);
+        }
+    }
+
+    private void ApplyAttackBoost()
+    {
+        if (skillData.attackSpeedIncrease > 0)
+        {
+            player.ChangeAnimatorSpeed(skillData.attackSpeedIncrease);
         }
     }
 
@@ -41,6 +53,8 @@ public class BuffSkill : BaseSkill
         base.EndEffect();
 
         ParallaxBackground.Instance.scrollSpeed /= 1 + (skillData.moveSpeedIncrease / 100f);
+
+        player.ChangeAnimatorSpeed(0.8f);
     }
 
     protected override void EnhanceSkill() { }

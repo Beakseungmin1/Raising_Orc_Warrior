@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public PlayerSkillHandler SkillHandler;
     public PlayerDamageCalculator DamageCalculator;
     public PlayerStatCalculator StatCalculator;
+    public Animator animator;
 
     [Header("UI Elements")]
     public Image hpBar;
@@ -30,10 +31,22 @@ public class Player : MonoBehaviour
         PlayerObjManager.Instance.Player = this;
     }
 
+    private void Start()
+    {
+        Transform playerModelTransform = transform.GetChild(1);
+        Transform unitRootTransform = playerModelTransform.GetChild(0);
+        animator = unitRootTransform.GetComponent<Animator>();
+    }
+
     private void Update()
     {
         UpdateHealthBar();
         UpdateManaBar();
+    }
+
+    public void ChangeAnimatorSpeed(float value)
+    {
+        animator.speed = value;
     }
 
     public void UpdateHealthBar()

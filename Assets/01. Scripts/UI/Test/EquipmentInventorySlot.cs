@@ -10,7 +10,6 @@ public class EquipmentInventorySlot : UIBase
     [SerializeField] private TextMeshProUGUI rankTxt;
     [SerializeField] private Slider itemCountGauge;
     [SerializeField] private TextMeshProUGUI requiredItemCountTxt;
-    [SerializeField] private TextMeshProUGUI currentItemCountTxt;
     [SerializeField] private Button slotButton;
 
     private IEnhanceable item;
@@ -21,7 +20,7 @@ public class EquipmentInventorySlot : UIBase
 
     public IEnhanceable Item => item;
     public bool IsWeaponSlot => isWeaponSlot;
-
+    
     public void AssignItem(IEnhanceable newItem, bool isWeapon)
     {
         item = newItem;
@@ -29,6 +28,23 @@ public class EquipmentInventorySlot : UIBase
 
         UpdateSlotState(0);
         UpdateEquipState(false);
+
+        if (item is Weapon weapon)
+        {
+            weapon.OnEnhanceComplete += OnWeaponEnhanceComplete;
+            Debug.Log("Weapon OnEnhanceComplete event subscribed.");
+        }
+
+        if (item is Accessory accessory)
+        {
+            accessory.OnEnhanceComplete += OnWeaponEnhanceComplete;
+            Debug.Log("Accessory OnEnhanceComplete event subscribed.");
+        }
+    }
+
+    private void OnWeaponEnhanceComplete()
+    {
+        UpdateSlotState(0);
     }
 
     public void ClearSlot()
@@ -38,7 +54,6 @@ public class EquipmentInventorySlot : UIBase
         rankTxt.text = string.Empty;
         currentLevelTxt.text = string.Empty;
         requiredItemCountTxt.text = "0";
-        currentItemCountTxt.text = "0";
         itemCountGauge.value = 0;
 
         UpdateSlotColor(0);
@@ -54,8 +69,8 @@ public class EquipmentInventorySlot : UIBase
         if (item != null)
         {
             equipmentIcon.sprite = item.BaseData.icon;
-            rankTxt.text = item.BaseData is WeaponDataSO weapon ? weapon.rank.ToString() :
-                           item.BaseData is AccessoryDataSO accessory ? accessory.rank.ToString() : string.Empty;
+            rankTxt.text = item.BaseData is WeaponDataSO weapon ? $"{weapon.rank} 등급" :
+                           item.BaseData is AccessoryDataSO accessory ? $"{accessory.rank} 등급" : "N/A";
             currentLevelTxt.text = $"+{item.EnhancementLevel}";
         }
         else
@@ -65,8 +80,7 @@ public class EquipmentInventorySlot : UIBase
             currentLevelTxt.text = "N/A";
         }
 
-        currentItemCountTxt.text = displayedItemCount.ToString();
-        requiredItemCountTxt.text = requiredItemCount.ToString();
+        requiredItemCountTxt.text = $"{displayedItemCount} / {requiredItemCount}";
         itemCountGauge.value = Mathf.Clamp01((float)displayedItemCount / requiredItemCount);
 
         UpdateSlotColor(totalItemCount);

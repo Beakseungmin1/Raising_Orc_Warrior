@@ -26,19 +26,20 @@ MonoBehaviour:
     \uAE30\uC220"
   effectDescription: "\uC804\uD22C \uB3CC\uC785 {cooldown}\uCD08 \uB4A4 5\uCD08\uAC04
     \uC804\uCCB4 \uACF5\uACA9\uB825 \uC99D\uAC00 {attackIncreasePercent}%"
-  skillType: 2
+  skillType: 1
   effectType: 0
   activationCondition: 0
-  cooldown: 10
+  cooldown: 5
   requiredHits: 0
   damagePercent: 0
-  manaCost: 100
+  manaCost: 30
   effectRange: 0
   buffDuration: 5
-  attackIncreasePercent: 90
+  attackIncreasePercent: 0
   manaRecoveryAmount: 0
   hpRecoveryAmount: 0
   moveSpeedIncrease: 0
+  attackSpeedIncrease: 2
   requireSkillCardsForUpgrade: 2
   maxLevel: 100
   effectPrefab: {fileID: 786883300241084630, guid: e718b3bdcf5d8f940bb72340d769a4c7, type: 3}

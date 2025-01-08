@@ -34,6 +34,7 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
     private int requireSkillCardsForUpgrade;
     private bool isEquipped;
     private PlayerBattle playerBattle;
+    protected Player player;
 
     public bool IsEquipped
     {
@@ -51,6 +52,8 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
     {
         skillData = data;
         playerStat = stat;
+
+        player = PlayerObjManager.Instance?.Player;
 
         requireSkillCardsForUpgrade = skillData.requireSkillCardsForUpgrade;
         isEquipped = skillData.isEquipped;
