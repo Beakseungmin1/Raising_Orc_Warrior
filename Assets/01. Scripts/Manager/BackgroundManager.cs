@@ -29,6 +29,7 @@ public class BackgroundManager : Singleton<BackgroundManager>
         yield return new WaitForSeconds(0.8f);
         returnBG();
         curBackground.SetActive(true);
+        PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateIdle();
     }
 
     public void returnBG()

@@ -33,15 +33,15 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private IEnemy currentMonster;
 
-    private void OnEnable()
-    {
-        GameEventsManager.Instance.stageEvents.onStageChange += SetPlayerStateIdle;
-    }
+    //private void OnEnable()
+    //{
+    //    GameEventsManager.Instance.stageEvents.onStageChange += SetPlayerStateIdle;
+    //}
 
-    private void OnDisable()
-    {
-        GameEventsManager.Instance.stageEvents.onStageChange -= SetPlayerStateIdle;
-    }
+    //private void OnDisable()
+    //{
+    //    GameEventsManager.Instance.stageEvents.onStageChange -= SetPlayerStateIdle;
+    //}
 
     private void Start()
     {
@@ -207,10 +207,10 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         }
     }
 
-    private void SetCurrentMonsterNull()
-    {
-        currentMonster = null;
-    }
+    //private void SetCurrentMonsterNull()
+    //{
+    //    currentMonster = null;
+    //}
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -224,6 +224,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
             {
                 if (!isDead)
                 {
+                    currentMonster = null;
                     currentState = State.Idle;
                 }
             }
@@ -282,6 +283,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         animator.SetBool("2_Attack", false);
         currentState = State.Idle;
         animator.Play("IDLE");
+        currentMonster = null;
 
     }
 
