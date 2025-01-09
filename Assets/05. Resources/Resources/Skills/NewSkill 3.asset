@@ -21,7 +21,7 @@ MonoBehaviour:
   currencyIcon: {fileID: 21300000, guid: 27dd9ee893a5df146bf63f9eac175270, type: 3}
   requiredCurrencyForUpgrade: 100
   currentLevel: 1
-  description: "\uC804\uC0AC\uC758 \uC758\uC9C0\uB97C \uB2F4\uC544 \uACF5\uACA9\uB825\uC744
+  description: "\uC804\uC0AC\uC758 \uC758\uC9C0\uB97C \uB2F4\uC544 \uACF5\uACA9\uB825\uC744           
     \uAE09\uACA9\uD788 \uC62C\uB9AC\uB294 \uAE30\uC220"
   effectDescription: "{buffDuration}\uCD08\uAC04 \uC804\uCCB4 \uACF5\uACA9\uB825
     +{attackIncreasePercent}%"
@@ -38,6 +38,7 @@ MonoBehaviour:
   manaRecoveryAmount: 0
   hpRecoveryAmount: 0
   moveSpeedIncrease: 0
+  attackSpeedIncrease: 0
   requireSkillCardsForUpgrade: 2
   maxLevel: 100
   effectPrefab: {fileID: 786883300241084630, guid: cac4d33a2db5b834db3a565dc12f8784, type: 3}

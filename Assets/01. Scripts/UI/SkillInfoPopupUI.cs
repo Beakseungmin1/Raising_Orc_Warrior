@@ -100,7 +100,7 @@ public class SkillInfoPopupUI : UIBase
 
         skillNameTxt.text = skillDataSO.itemName;
         descriptionTxt.text = skillDataSO.description;
-        currentLevelTxt.text = "N/A";
+        currentLevelTxt.text = 1.ToString();
 
         gradeTxt.text = $"[{TranslateGrade(skillDataSO.grade)}]";
         gradeTxt.color = skillDataSO.gradeColor;

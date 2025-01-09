@@ -21,7 +21,7 @@ MonoBehaviour:
   currencyIcon: {fileID: 21300000, guid: 27dd9ee893a5df146bf63f9eac175270, type: 3}
   requiredCurrencyForUpgrade: 10000
   currentLevel: 1
-  description: "\uBC14\uB78C \uC815\uB839\uC758 \uAC00\uD638\uB85C \uC774\uB3D9\uC18D\uB3C4\uAC00
+  description: "\uBC14\uB78C \uC815\uB839\uC758 \uAC00\uD638\uB85C \uC774\uB3D9\uC18D\uB3C4\uAC00         
     \uAE09\uACA9\uD788 \uC0C1\uC2B9\uD55C\uB2E4"
   effectDescription: "{buffDuration}\uCD08\uAC04 \uC774\uB3D9\uC18D\uB3C4 +{moveSpeedIncrease}%"
   skillType: 1
@@ -37,6 +37,7 @@ MonoBehaviour:
   manaRecoveryAmount: 0
   hpRecoveryAmount: 0
   moveSpeedIncrease: 100
+  attackSpeedIncrease: 0
   requireSkillCardsForUpgrade: 2
   maxLevel: 100
   effectPrefab: {fileID: 786883300241084630, guid: b975c1cd3bbc22c439c5f14307101ff6, type: 3}
