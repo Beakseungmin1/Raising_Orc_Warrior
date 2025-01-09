@@ -192,10 +192,15 @@ public class PlayerStat : MonoBehaviour
         BigInteger needTotalUpgradeMoney = 0;
         int multiplierLevel = level;
 
+        //for (int i = 0; i < multiplier; i++)
+        //{
+        //    needTotalUpgradeMoney += multiplierLevel * needUpgradeMoney;
+        //    multiplierLevel++;
+        //}
+
         for (int i = 0; i < multiplier; i++)
         {
-            needTotalUpgradeMoney += multiplierLevel * needUpgradeMoney;
-            multiplierLevel++;
+            needTotalUpgradeMoney += needUpgradeMoney + (i * baseCost);
         }
 
         if (CurrencyManager.Instance.GetGold() >= needTotalUpgradeMoney)
@@ -247,15 +252,23 @@ public class PlayerStat : MonoBehaviour
     public void CalculateNeedMoney(ref int level,ref BigInteger totalUpgradeCost,int baseCost)
     {
         int multiplier = statUpgradeMultiplier == 0 ? 1 : (statUpgradeMultiplier == 1 ? 10 : 100);
-        BigInteger needUpgradeMoney = level * baseCost; // 레벨당 드는 업그레이드 비용
-        BigInteger needTotalUpgradeMoney;
+        BigInteger needUpgradeMoney = level * baseCost; // 레벨당 드는 업그레이드 비용 50000
+        BigInteger needTotalUpgradeMoney = 0;
 
         for (int i = 0; i < multiplier; i++)
         {
-            needTotalUpgradeMoney += (level + i) * needUpgradeMoney;
+            needTotalUpgradeMoney += needUpgradeMoney + (i * baseCost);
         }
 
-        totalUpgradeCost = needTotalUpgradeMoney;
+
+        if (multiplier == 0)
+        {
+            totalUpgradeCost = needUpgradeMoney;
+        }
+        else
+        {
+            totalUpgradeCost = needTotalUpgradeMoney;
+        }
     }
 
     public void AttackLevelUp()
