@@ -3,6 +3,7 @@ using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Unity.Collections;
 
 public class Enemy : EnemyBase, IEnemy
 {
@@ -123,10 +124,10 @@ public class Enemy : EnemyBase, IEnemy
     public void SetupEnemy()
     {
         enemyCode = enemySO.enemyCode;
-        hp = enemySO.hp;
-        maxHp = enemySO.maxHp;
-        giveExp = enemySO.giveExp;
-        giveMoney = enemySO.giveMoney;
+        hp = BigInteger.Parse(enemySO.hpString);
+        maxHp = BigInteger.Parse(enemySO.maxHpString);
+        giveExp = BigInteger.Parse(enemySO.giveExpString);
+        giveMoney = BigInteger.Parse(enemySO.giveMoneyString);
 
         if (model == null)
         {
