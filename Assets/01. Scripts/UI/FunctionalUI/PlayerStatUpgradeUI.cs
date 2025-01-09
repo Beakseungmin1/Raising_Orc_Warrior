@@ -78,6 +78,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
     public void OnAttackLevelUpButton()
     {
         playerstat.AttackLevelUp();
+        PlayerObjManager.Instance.Player.stat.UpdateNeedMoney();
         attackUi.UpdateAttackStatUI();
     }
 
@@ -96,6 +97,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
     public void OnHealthLevelUpButton()
     {
         playerstat.HealthLevelUp();
+        PlayerObjManager.Instance.Player.stat.UpdateNeedMoney();
         healthUi.UpdateHealthStatUI();
     }
 
@@ -115,6 +117,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
     public void OnHealthRegenLevelUpButton()
     {
         playerstat.HealthRegenerationLevelUp();
+        PlayerObjManager.Instance.Player.stat.UpdateNeedMoney();
         healthRegenUi.UpdateHealthRegenerationUI();
     }
 
@@ -133,6 +136,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
     public void OnCriticalDamageLevelUpButton()
     {
         playerstat.CriticalIncreaseDamageLevelUp();
+        PlayerObjManager.Instance.Player.stat.UpdateNeedMoney();
         criticalDamageUi.UpdateCriticalIncreaseDamageUI();
     }
 
@@ -151,6 +155,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
     public void OnCriticalProbabilityLevelUpButton()
     {
         playerstat.CriticalProbabilityLevelUp();
+        PlayerObjManager.Instance.Player.stat.UpdateNeedMoney();
         criticalProbabilityUi.UpdateCriticalProbabilityUI();
     }
 
@@ -170,6 +175,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
     public void OnBlueCriticalDamageLevelUpButton()
     {
         playerstat.BlueCriticalIncreaseDamageLevelUp();
+        PlayerObjManager.Instance.Player.stat.UpdateNeedMoney();
         blueCriticalDamageUi.UpdateblueCriticalIncreaseDamageStatUI();
     }
 
@@ -188,6 +194,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
     public void OnBlueCriticalProbabilityLevelUpButton()
     {
         playerstat.BlueCriticalProbabilityLevelUp();
+        PlayerObjManager.Instance.Player.stat.UpdateNeedMoney();
         blueCriticalProbabilityUi.UpdateblueCriticalProbabilityStatUI();
     }
 

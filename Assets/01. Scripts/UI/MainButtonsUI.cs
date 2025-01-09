@@ -7,7 +7,7 @@ public class MainButtonsUI : UIBase
     private void OnEnable()
     {
         UIBase ui = this;
-        ui.canvas.sortingOrder = 7;
+        //ui.canvas.sortingOrder = 7;
     }
 
     public void ShowMainUI(int index)
