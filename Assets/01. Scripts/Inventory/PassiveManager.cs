@@ -1,4 +1,8 @@
+using System.Diagnostics;
 using System.Numerics;
+using UnityEngine;
+using Debug = UnityEngine.Debug;
+
 public class PassiveManager : Singleton<PassiveManager>
 {
     private float totalHpRecoveryIncreaseRate = 0f;
@@ -30,6 +34,16 @@ public class PassiveManager : Singleton<PassiveManager>
         if (inventory == null)
         {
             inventory = PlayerObjManager.Instance.Player.inventory;
+        }
+
+        if (statCalculator == null)
+        {
+            statCalculator = PlayerObjManager.Instance.Player.StatCalculator;
+        }
+
+        if (damageCalculator == null)
+        {
+            damageCalculator = PlayerObjManager.Instance.Player.DamageCalculator;
         }
     }
 
