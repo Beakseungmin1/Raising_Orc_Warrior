@@ -103,6 +103,18 @@ public class StageManager : Singleton<StageManager>
         else if (curChapterIndex < chapterSOs.Count - 1)
         {
             UIManager.Instance.Hide<BossStageInfoUI>();
+            if (curChapterIndex == 0)
+            {
+                BackgroundManager.Instance.ChangeBackGround("VineForestBG");
+            }
+            else if (curChapterIndex == 1)
+            {
+                BackgroundManager.Instance.ChangeBackGround("BeachBG");
+            }
+            else if (curChapterIndex == 2)
+            {
+                BackgroundManager.Instance.ChangeBackGround("CaveBG");
+            }
             GoToNextChapter();
             isThisBossStageFirstTry = true;
         }

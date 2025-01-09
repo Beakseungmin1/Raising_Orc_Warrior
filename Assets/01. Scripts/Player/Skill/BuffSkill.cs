@@ -22,7 +22,8 @@ public class BuffSkill : BaseSkill
     {
         if (skillData.moveSpeedIncrease > 0)
         {
-            ParallaxBackground.Instance.scrollSpeed *= 1 + (skillData.moveSpeedIncrease / 100f);
+            BackgroundManager.Instance.ParallaxBackground.scrollSpeed *= 1 + (skillData.moveSpeedIncrease / 100f);
+            //ParallaxBackground.Instance.scrollSpeed *= 1 + (skillData.moveSpeedIncrease / 100f);
         }
     }
 
@@ -52,7 +53,8 @@ public class BuffSkill : BaseSkill
     {
         base.EndEffect();
 
-        ParallaxBackground.Instance.scrollSpeed /= 1 + (skillData.moveSpeedIncrease / 100f);
+        BackgroundManager.Instance.ParallaxBackground.scrollSpeed /= 1 + (skillData.moveSpeedIncrease / 100f);
+        //ParallaxBackground.Instance.scrollSpeed /= 1 + (skillData.moveSpeedIncrease / 100f);
 
         player.ChangeAnimatorSpeed(0.8f);
     }

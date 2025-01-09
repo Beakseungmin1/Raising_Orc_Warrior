@@ -48,9 +48,24 @@ MonoBehaviour:
   - prefabName: Enemy
     prefab: {fileID: 822938190782927294, guid: ba18f6829388ed54380ecab078ccfe5c, type: 3}
     initialSize: 10
+  - prefabName: ForestBG
+    prefab: {fileID: 4996350026959308300, guid: 80c6140c8a675124888f1b1a16ba591c, type: 3}
+    initialSize: 1
   - prefabName: EnemyBoss
     prefab: {fileID: 822938190782927294, guid: 007782c8cc21a614ba93f51085f4a5be, type: 3}
     initialSize: 1
   - prefabName: DungeonBoss
     prefab: {fileID: 3187110840222732715, guid: 190ac41ace9e25e408d830f5c0ba29bd, type: 3}
+    initialSize: 1
+  - prefabName: BeachBG
+    prefab: {fileID: 2782945938907752604, guid: e59e7f622dfb4854899a3367c1df8b9f, type: 3}
+    initialSize: 1
+  - prefabName: CaveBG
+    prefab: {fileID: 4432446656451804653, guid: c303453474b81bf44a5439a66ed16ac6, type: 3}
+    initialSize: 1
+  - prefabName: ElfCityBG
+    prefab: {fileID: 1288840663492833070, guid: 3fd3d7a09373b2c4ea437fb038e3341f, type: 3}
+    initialSize: 1
+  - prefabName: VineForestBG
+    prefab: {fileID: 8928819118819824712, guid: 504877d622dd2bd42adf828dbe3786b1, type: 3}
     initialSize: 1

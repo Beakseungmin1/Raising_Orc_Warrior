@@ -17,7 +17,11 @@ public class EnemyMover : MonoBehaviour
         BattleManager.Instance.OnBattleStart += StopMovement;
         BattleManager.Instance.OnBattleEnd += ResumeMovement;
 
-        ParallaxBackground.Instance.OnKnockback += TriggerKnockback;
+        if (BackgroundManager.Instance != null)
+        {
+            BackgroundManager.Instance.ParallaxBackground.OnKnockback += TriggerKnockback;
+        }
+        //ParallaxBackground.Instance.OnKnockback += TriggerKnockback;
 
         canMove = !BattleManager.Instance.IsBattleActive;
     }
@@ -30,15 +34,21 @@ public class EnemyMover : MonoBehaviour
             BattleManager.Instance.OnBattleEnd -= ResumeMovement;
         }
 
-        if (ParallaxBackground.Instance != null)
+        //if (ParallaxBackground.Instance != null)
+        //{
+        //    //ParallaxBackground.Instance.OnKnockback -= TriggerKnockback;
+        //}
+
+        if (BackgroundManager.Instance != null)
         {
-            ParallaxBackground.Instance.OnKnockback -= TriggerKnockback;
+            BackgroundManager.Instance.ParallaxBackground.OnKnockback -= TriggerKnockback;
         }
     }
 
     private void Update()
     {
-        moveSpeed = ParallaxBackground.Instance.scrollSpeed;
+        moveSpeed = BackgroundManager.Instance.ParallaxBackground.scrollSpeed;
+        //moveSpeed = ParallaxBackground.Instance.scrollSpeed;
 
         if (isKnockback)
         {

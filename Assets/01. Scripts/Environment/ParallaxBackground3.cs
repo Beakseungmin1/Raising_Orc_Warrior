@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParallaxBackground3 : Singleton<ParallaxBackground>
+public class ParallaxBackground3 : MonoBehaviour
 {
     [SerializeField]
     private float scrollSpeed = 2f;
