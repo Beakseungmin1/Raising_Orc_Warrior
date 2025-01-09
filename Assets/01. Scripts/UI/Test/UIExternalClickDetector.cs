@@ -25,7 +25,7 @@ public class UIExternalClickDetector : MonoBehaviour
 
     private void HandleClick(Vector3 position)
     {
-        if (EventSystem.current.IsPointerOverGameObject())
+        if (EventSystem.current.IsPointerOverGameObject(Input.touchCount > 0 ? Input.GetTouch(0).fingerId : -1))
         {
             if (IsEquipSlotUI())
             {
