@@ -95,9 +95,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
                 {
                     currentState = State.StoppedIdle;
                     CancelInvoke("PlayerAttack");
-                    animator.SetBool("isDeath", false);
-                    animator.SetBool("2_Attack", false);
-                    animator.Play("IDLE");
                     BattleManager.Instance.StartBattle();
                 }
                 break;
@@ -210,6 +207,11 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         }
     }
 
+    private void SetCurrentMonsterNull()
+    {
+        currentMonster = null;
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Monster"))
@@ -274,9 +276,13 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     public void SetPlayerStateIdle()
     {
         isDead = false;
+        animator.ResetTrigger("7_Skill");
+        animator.ResetTrigger("3_Damaged");
         animator.SetBool("isDeath", false);
+        animator.SetBool("2_Attack", false);
         currentState = State.Idle;
         animator.Play("IDLE");
+
     }
 
     public void SetPlayerStateStoppedIdle()
