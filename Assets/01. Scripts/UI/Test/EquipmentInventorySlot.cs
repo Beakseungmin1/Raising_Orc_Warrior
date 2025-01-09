@@ -20,7 +20,7 @@ public class EquipmentInventorySlot : UIBase
 
     public IEnhanceable Item => item;
     public bool IsWeaponSlot => isWeaponSlot;
-    
+
     public void AssignItem(IEnhanceable newItem, bool isWeapon)
     {
         item = newItem;
@@ -28,18 +28,6 @@ public class EquipmentInventorySlot : UIBase
 
         UpdateSlotState(0);
         UpdateEquipState(false);
-
-        if (item is Weapon weapon)
-        {
-            weapon.OnEnhanceComplete += OnWeaponEnhanceComplete;
-            Debug.Log("Weapon OnEnhanceComplete event subscribed.");
-        }
-
-        if (item is Accessory accessory)
-        {
-            accessory.OnEnhanceComplete += OnWeaponEnhanceComplete;
-            Debug.Log("Accessory OnEnhanceComplete event subscribed.");
-        }
     }
 
     private void OnWeaponEnhanceComplete()
@@ -57,7 +45,7 @@ public class EquipmentInventorySlot : UIBase
         itemCountGauge.value = 0;
 
         UpdateSlotColor(0);
-        equipTxt.gameObject.SetActive(false); // ÀåÂø »óÅÂ ¼û±è
+        equipTxt.gameObject.SetActive(false);
         slotButton.onClick.RemoveAllListeners();
     }
 
@@ -131,5 +119,5 @@ public class EquipmentInventorySlot : UIBase
         {
             equipmentIcon.color = defaultColor;
         }
-    }    
+    }
 }

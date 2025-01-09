@@ -8,14 +8,13 @@ public class Accessory : IFusable
     BaseItemDataSO IEnhanceable.BaseData => BaseData;
     public int Rank => BaseData.rank;
     public Grade Grade => BaseData.grade;
-    public int EnhancementLevel { get; private set; }
+    public int EnhancementLevel { get; set; }
     public int StackCount { get; internal set; }
     public int RequiredCurrencyForUpgrade { get; private set; }
     public int EquipHpAndHpRecoveryIncreaseRate { get; private set; }
     public int PassiveHpAndHpRecoveryIncreaseRate { get; set; }
     public int PassiveMpAndMpRecoveryIncreaseRate { get;  set; }
     public int PassiveAddEXPRate { get;  set; }
-    public event Action OnEnhanceComplete;
 
     public Accessory(AccessoryDataSO baseData, int initialStackCount = 1)
     {
@@ -48,7 +47,6 @@ public class Accessory : IFusable
         UpdateAccessoryEffects();
         PassiveManager.Instance.UpdateAccessoryEffects();
         PlayerObjManager.Instance.Player.inventory.NotifyInventoryChanged(false);
-        OnEnhanceComplete?.Invoke();
         return true;
     }
 

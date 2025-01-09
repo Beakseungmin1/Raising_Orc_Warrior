@@ -5,7 +5,7 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
     protected SkillDataSO skillData;
     public SkillDataSO SkillData => skillData;
     public BaseItemDataSO BaseData => skillData;
-    public int EnhancementLevel { get; protected set; } = 1;
+    public int EnhancementLevel { get; set; } = 1;
     public int RequiredCurrencyForUpgrade => skillData.requiredCurrencyForUpgrade;
     public int StackCount { get; private set; } = 1;
     public float RemainingCooldown

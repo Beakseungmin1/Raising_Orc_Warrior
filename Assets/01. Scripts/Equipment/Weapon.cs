@@ -8,14 +8,13 @@ public class Weapon : IFusable
     BaseItemDataSO IEnhanceable.BaseData => BaseData;
     public int Rank => BaseData.rank;
     public Grade Grade => BaseData.grade;
-    public int EnhancementLevel { get; private set; }
+    public int EnhancementLevel { get; set; }
     public int StackCount { get; internal set; }
     public int RequiredCurrencyForUpgrade { get; private set; }
     public int EquipAtkIncreaseRate { get; private set; }
     public int PassiveEquipAtkIncreaseRate { get; private set; }
     public int PassiveCriticalDamageBonus { get; private set; }
     public int PassiveGoldGainRate { get; private set; }
-    public event Action OnEnhanceComplete;
 
     public Weapon(WeaponDataSO baseData, int initialStackCount = 1)
     {
@@ -48,8 +47,6 @@ public class Weapon : IFusable
         UpdateWeaponEffects();
         PassiveManager.Instance.UpdateWeaponEffects();
         PlayerObjManager.Instance.Player.inventory.NotifyInventoryChanged(true);
-        OnEnhanceComplete?.Invoke();
-        Debug.Log("이벤트발생");
         return true;
     }
 
