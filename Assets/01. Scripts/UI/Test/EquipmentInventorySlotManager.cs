@@ -95,13 +95,35 @@ public class EquipmentInventorySlotManager : UIBase
 
         foreach (var weaponData in weaponDataList)
         {
-            inventorySlots[slotIndex].AssignItem(new Weapon(weaponData), true);
+            var existingWeapon = playerInventory.WeaponInventory.GetItem(weaponData.itemName);
+
+            if (existingWeapon == null)
+            {
+                inventorySlots[slotIndex].AssignItem(new Weapon(weaponData), true);
+            }
+
+            else
+            {
+                inventorySlots[slotIndex].AssignItem(existingWeapon, true);
+            }
+
             slotIndex++;
         }
 
         foreach (var accessoryData in accessoryDataList)
         {
-            inventorySlots[slotIndex].AssignItem(new Accessory(accessoryData), false);
+            var existingAccessory = playerInventory.AccessoryInventory.GetItem(accessoryData.itemName);
+
+            if (existingAccessory == null)
+            {
+                inventorySlots[slotIndex].AssignItem(new Accessory(accessoryData), false);
+            }
+            
+            else
+            {
+                inventorySlots[slotIndex].AssignItem(existingAccessory, false);
+            }
+            
             slotIndex++;
         }
 

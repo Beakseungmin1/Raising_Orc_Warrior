@@ -168,4 +168,24 @@ public class DataManager : SingletonDontDestroy<DataManager>
 
         return allSkills;
     }
+
+    public WeaponDataSO GetDefaultWeapon()
+    {
+        var allWeapons = GetAllWeapons();
+        if (allWeapons.Count > 0)
+        {
+            return allWeapons[0];
+        }
+        return null;
+    }
+
+    public AccessoryDataSO GetDefaultAccessory()
+    {
+        var allAccessories = GetAllAccessories();
+        if (allAccessories.Count > 0)
+        {
+            return allAccessories[0];
+        }
+        return null;
+    }
 }
