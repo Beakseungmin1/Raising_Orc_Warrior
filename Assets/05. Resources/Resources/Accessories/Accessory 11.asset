@@ -19,11 +19,11 @@ MonoBehaviour:
   grade: 2
   gradeColor: {r: 0, g: 0, b: 0, a: 0}
   currencyIcon: {fileID: 0}
-  requiredCurrencyForUpgrade: 0
+  requiredCurrencyForUpgrade: 110
   currentLevel: 1
-  equipHpAndHpRecoveryIncreaseRate: 0
+  equipHpAndHpRecoveryIncreaseRate: 500
   passiveHpAndHpRecoveryIncreaseRate: 0
-  passiveMpAndMpRecoveryIncreaseRate: 0
+  passiveMpAndMpRecoveryIncreaseRate: 1
   passiveAddEXPRate: 0
   rank: 1
   requireFuseItemCount: 5
