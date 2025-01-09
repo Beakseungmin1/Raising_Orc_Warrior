@@ -148,7 +148,8 @@ public class UIManager : Singleton<UIManager>
         var canvasScaler = newCanvasObject.AddComponent<CanvasScaler>();
         canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         canvasScaler.referenceResolution = new Vector2(ScreenWidth, ScreenHeight);
-        canvasScaler.matchWidthOrHeight = 1;
+        canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+        canvasScaler.referencePixelsPerUnit = 100;
 
         newCanvasObject.AddComponent<GraphicRaycaster>();
 
