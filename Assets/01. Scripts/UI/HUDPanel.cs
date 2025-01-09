@@ -43,7 +43,7 @@ public class HUDPanel : UIBase
 
     public void RefreshUI()
     {
-        playerNameTxt.text = PlayerObjManager.Instance.Player.playerInformation.playerName;
+        //playerNameTxt.text = PlayerObjManager.Instance.Player.playerInformation.playerName;
         emeraldTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Emerald).ToString();
         diamondTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Diamond).ToString();
     }
@@ -60,7 +60,7 @@ public class HUDPanel : UIBase
     {
         if (stat != null)
         {
-            playerlevelTxt.text = "Lv." + stat.level.ToString();
+            playerlevelTxt.text = "Lv." + (stat.level + 1).ToString();
 
             BigInteger currentExp = stat.exp;
             BigInteger needExp = stat.needExp;
@@ -75,7 +75,7 @@ public class HUDPanel : UIBase
 
             expBar.value = percentage / 100;
 
-            expTxt.text = ExppercentTxt.ToString("F2");
+            expTxt.text = ExppercentTxt.ToString("F2") + " %";
 
         }
     }

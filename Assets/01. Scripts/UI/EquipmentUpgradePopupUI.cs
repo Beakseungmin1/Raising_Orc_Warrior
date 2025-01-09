@@ -34,7 +34,6 @@ public class EquipmentUpgradePopupUI : UIBase
     [SerializeField] private Button equipBtn;
     [SerializeField] private TextMeshProUGUI upgradeCostTxt;
     [SerializeField] private TextMeshProUGUI curCubeAmountTxt;
-    [SerializeField] private Image curCubeIcon;
     [SerializeField] private Button fusionBtn;
     [SerializeField] private Button exitBtn;
 
@@ -141,7 +140,6 @@ public class EquipmentUpgradePopupUI : UIBase
 
         upgradeCostTxt.text = currentItem.RequiredCurrencyForUpgrade.ToString();
         curCubeAmountTxt.text = CurrencyManager.Instance.GetCurrency(CurrencyType.Cube).ToString();
-        curCubeIcon.sprite = currentItem.BaseData.currencyIcon;
 
         UpdateEquipButtonState();
         UpdatePossessEffects();
