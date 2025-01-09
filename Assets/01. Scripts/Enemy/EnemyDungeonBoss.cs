@@ -158,9 +158,9 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
     public void SetupEnemy()
     {
         enemyCode = enemySO.enemyCode;
-        hp = enemySO.hp;
-        maxHp = enemySO.maxHp;
-        giveExp = enemySO.giveExp;
+        hp = BigInteger.Parse(enemySO.hpString);
+        maxHp = BigInteger.Parse(enemySO.maxHpString);
+        giveExp = BigInteger.Parse(enemySO.giveExpString);
         animator = GetComponentInChildren<Animator>();
 
         cooldown = enemySO.cooldown;
