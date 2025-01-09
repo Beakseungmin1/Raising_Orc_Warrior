@@ -18,7 +18,7 @@ MonoBehaviour:
   inGameImage: {fileID: 0}
   grade: 0
   gradeColor: {r: 1, g: 1, b: 1, a: 1}
-  currencyIcon: {fileID: 21300000, guid: 27dd9ee893a5df146bf63f9eac175270, type: 3}
+  currencyIcon: {fileID: 21300000, guid: f926f2f6a7fc39b4b9803f98b90bfcc2, type: 3}
   requiredCurrencyForUpgrade: 50
   currentLevel: 1
   description: "\uC801\uC744 \uB450\uBC88 \uBCA0\uC5B4\uBC84\uB9B0\uB2E4."
@@ -26,9 +26,9 @@ MonoBehaviour:
     {damagePercent}%\uB85C 1\uD68C \uACF5\uACA9"
   skillType: 0
   effectType: 0
-  activationCondition: 0
-  cooldown: 3
-  requiredHits: 0
+  activationCondition: 1
+  cooldown: 0
+  requiredHits: 5
   damagePercent: 200
   manaCost: 0
   effectRange: 3
@@ -37,6 +37,7 @@ MonoBehaviour:
   manaRecoveryAmount: 0
   hpRecoveryAmount: 0
   moveSpeedIncrease: 0
+  attackSpeedIncrease: 0
   requireSkillCardsForUpgrade: 2
   maxLevel: 100
   effectPrefab: {fileID: 786883300241084630, guid: e2a7f42656a3cef4ba8ab06132cc649f, type: 3}

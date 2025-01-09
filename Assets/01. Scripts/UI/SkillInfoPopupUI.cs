@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -149,7 +150,8 @@ public class SkillInfoPopupUI : UIBase
         { "attackIncreasePercent", skill.SkillData.attackIncreasePercent },
         { "cooldown", skill.SkillData.cooldown },
         { "manaRecoveryAmount", skill.SkillData.manaRecoveryAmount },
-        { "moveSpeedIncrease", skill.SkillData.moveSpeedIncrease }
+        { "moveSpeedIncrease", skill.SkillData.moveSpeedIncrease },
+        { "attackSpeedIncrease", skill.SkillData.attackSpeedIncrease }
     };
 
         foreach (var pair in values)
@@ -176,7 +178,8 @@ public class SkillInfoPopupUI : UIBase
         { "attackIncreasePercent", skillDataSO.attackIncreasePercent },
         { "cooldown", skillDataSO.cooldown },
         { "manaRecoveryAmount", skillDataSO.manaRecoveryAmount },
-        { "moveSpeedIncrease", skillDataSO.moveSpeedIncrease }
+        { "moveSpeedIncrease", skillDataSO.moveSpeedIncrease },
+        { "attackSpeedIncrease", skillDataSO.attackSpeedIncrease }
     };
 
         foreach (var pair in values)

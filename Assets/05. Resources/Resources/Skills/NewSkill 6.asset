@@ -18,7 +18,7 @@ MonoBehaviour:
   inGameImage: {fileID: 0}
   grade: 4
   gradeColor: {r: 0.029804826, g: 1, b: 0, a: 1}
-  currencyIcon: {fileID: 21300000, guid: 27dd9ee893a5df146bf63f9eac175270, type: 3}
+  currencyIcon: {fileID: 21300000, guid: f926f2f6a7fc39b4b9803f98b90bfcc2, type: 3}
   requiredCurrencyForUpgrade: 10000
   currentLevel: 1
   description: "\uBC14\uB78C \uC815\uB839\uC758 \uAC00\uD638\uB85C \uC774\uB3D9\uC18D\uB3C4\uAC00         
@@ -27,10 +27,10 @@ MonoBehaviour:
   skillType: 1
   effectType: 0
   activationCondition: 0
-  cooldown: 10
+  cooldown: 7
   requiredHits: 0
   damagePercent: 0
-  manaCost: 40
+  manaCost: 50
   effectRange: 0
   buffDuration: 5
   attackIncreasePercent: 0
