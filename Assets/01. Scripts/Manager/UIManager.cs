@@ -16,6 +16,7 @@ public class UIManager : Singleton<UIManager>
     private int currentSortingOrder = 0;
 
     private const int ReservedSortingOrder = 100; // 특정 UI의 고정 sortingOrder 값
+    private const int PopupSortingOrder = 110;
 
     private HashSet<string> reservedUISet = new HashSet<string>
     {
@@ -24,6 +25,10 @@ public class UIManager : Singleton<UIManager>
         "EXPDungeonUI",
         "CubeDungeonUI",
         "GoldDungeonUI",
+    };
+
+    private HashSet<string> dungeonPopupUISet = new HashSet<string>
+    {
         "EXPDungeonUI_ConfirmEnterBtnPopUpUI",
         "CubeDungeonUI_ConfirmEnterBtnPopUpUI",
         "GoldDungeonUI_ConfirmEnterBtnPopUpUI"
@@ -97,10 +102,17 @@ public class UIManager : Singleton<UIManager>
 
         if (reservedUISet.Contains(uiName))
         {
+            // 고정된 UI는 ReservedSortingOrder를 사용
             ui.canvas.sortingOrder = ReservedSortingOrder;
+        }
+        else if (dungeonPopupUISet.Contains(uiName))
+        {
+            // 팝업 UI는 PopupSortingOrder를 사용
+            ui.canvas.sortingOrder = PopupSortingOrder;
         }
         else
         {
+            // 일반 UI는 currentSortingOrder를 사용
             currentSortingOrder++;
             if (currentSortingOrder >= ReservedSortingOrder)
             {
@@ -194,7 +206,7 @@ public class UIManager : Singleton<UIManager>
 
             if (uiDictionary.Count > 0)
             {
-                // 가장 높은 sortingOrder를 가진 UI를 찾음 (ReservedSortingOrder는 제외)
+                // 가장 높은 sortingOrder를 가진 UI를 찾음 (ReservedSortingOrder와 PopupSortingOrder는 제외)
                 currentSortingOrder = uiDictionary.Values
                     .Where(ui => ui.canvas.sortingOrder < ReservedSortingOrder)
                     .Select(ui => ui.canvas.sortingOrder)
