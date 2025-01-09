@@ -5,7 +5,7 @@ using System.Numerics; // BigInteger 사용
 
 public class CurrencyManager : Singleton<CurrencyManager>
 {
-    private BigInteger gold = 99999999999; // 능력치 강화용 (전역 변수)
+    private BigInteger gold = 1000000; // 능력치 강화용 (전역 변수)
 
     private Dictionary<CurrencyType, float> currencies; // float 타입만 사용
     private PlayerStat stat;
@@ -15,9 +15,9 @@ public class CurrencyManager : Singleton<CurrencyManager>
         // 딕셔너리 초기화
         currencies = new Dictionary<CurrencyType, float>
         {
-            { CurrencyType.Emerald, 99999f }, // float
+            { CurrencyType.Emerald, 0f }, // float
             { CurrencyType.Cube, 99999f },    // float
-            { CurrencyType.Diamond, 99999f }, // float
+            { CurrencyType.Diamond, 999999f }, // float
             { CurrencyType.DungeonTicket, 10f } // float
         };
     }
