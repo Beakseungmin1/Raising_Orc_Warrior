@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4156671969698125121}
   - component: {fileID: 405254321215528237}
   - component: {fileID: 1936966129128661843}
+  - component: {fileID: 3051958772687751617}
   m_Layer: 0
   m_Name: PlayerSkill_WaveOfBlade
   m_TagString: Untagged
@@ -96,6 +97,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &3051958772687751617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786883300241084630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d536e20df9ca3347b499ce6ec0e4907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3013517633872563113
 GameObject:
   m_ObjectHideFlags: 0

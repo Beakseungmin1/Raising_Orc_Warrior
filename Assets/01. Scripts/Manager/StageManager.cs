@@ -81,6 +81,7 @@ public class StageManager : Singleton<StageManager>
         {
             GoToStage(); //현재 스테이지 반복
         }
+        BattleManager.Instance.EndBattle();
         isThisBossStageFirstTry = false;
     }
 
@@ -171,6 +172,7 @@ public class StageManager : Singleton<StageManager>
         SetTimer(dungeon.info.dungeonBoss.bossTimeLimit);
         GameEventsManager.Instance.stageEvents.ChangeStage();
         DungeonManager.Instance.playerIsInDungeon = true;
+        BattleManager.Instance.EndBattle();
     }
 
 
