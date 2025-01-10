@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ParallaxBackground : MonoBehaviour
@@ -15,6 +14,7 @@ public class ParallaxBackground : MonoBehaviour
     private bool isScrolling = true;
     private bool isBattlePaused = false;
     private bool isKnockback = false;
+    private float defaultSpeed;
 
     public event Action<float> OnKnockback;
 
@@ -22,6 +22,8 @@ public class ParallaxBackground : MonoBehaviour
     {
         if (backgrounds.Length > 0)
         {
+            defaultSpeed = scrollSpeed;
+
             SpriteRenderer spriteRenderer = backgrounds[0].GetComponent<SpriteRenderer>();
             if (spriteRenderer != null)
             {
@@ -61,9 +63,14 @@ public class ParallaxBackground : MonoBehaviour
         }
     }
 
-    public float GetScrollSpeed()
+    public float GetdefaultSpeedSpeed()
     {
-        return scrollSpeed;
+        return defaultSpeed;
+    }
+
+    public void ChangeScrollSpeed()
+    {
+        scrollSpeed = defaultSpeed;
     }
 
     private void ScrollBackground(Vector3 direction)
