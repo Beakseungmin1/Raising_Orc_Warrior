@@ -4,7 +4,7 @@ using UnityEngine;
 public class WeaponDataSO : BaseItemDataSO
 {
     [Header("Equip Effects")] // 착용 효과
-    public int equipAtkIncreaseRate; // 공격력 증가율 (장착 효과)
+    public double equipAtkIncreaseRate; // 공격력 증가율 (장착 효과)
 
     [Header("Ownership Effects")] // 보유 효과
     public int passiveEquipAtkIncreaseRate; // 보유 효과 공격력 증가율 (장착 효과의 1/3)

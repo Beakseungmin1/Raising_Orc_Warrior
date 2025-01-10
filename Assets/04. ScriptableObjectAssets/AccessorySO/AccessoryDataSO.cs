@@ -4,7 +4,7 @@ using UnityEngine;
 public class AccessoryDataSO : BaseItemDataSO
 {
     [Header("Equip Effects")] // 착용 효과
-    public int equipHpAndHpRecoveryIncreaseRate; // 체력 및 체력 회복량 증가율 (장착 효과)
+    public double equipHpAndHpRecoveryIncreaseRate; // 체력 및 체력 회복량 증가율 (장착 효과)
 
     [Header("Ownership Effects")] // 보유 효과
     public int passiveHpAndHpRecoveryIncreaseRate;

@@ -10,7 +10,8 @@ public class SkillEquipSlot : UIBase
     [SerializeField] private Image cooldownImage;
     [SerializeField] private TextMeshProUGUI conditionText;
     [SerializeField] private Sprite defaultSprite;
-    [SerializeField] private GameObject highlightEffect; // 반짝임 효과 오브젝트
+    [SerializeField] private GameObject highlightEffect;
+    [SerializeField] private GameObject highlightEffect2;
 
     private Image skillIconImage;
     private BaseSkill equippedSkill;
@@ -90,7 +91,7 @@ public class SkillEquipSlot : UIBase
                 conditionText.text = $"{equippedSkill.RemainingCooldown:F1} 초";
             }
 
-            skillIcon.color = equippedSkill.IsReadyToActivate() ? equippedColor : defaultColor;
+            skillIcon.color = equippedSkill != null ? equippedColor : defaultColor;
         }
         else if (equippedSkill.SkillData.activationCondition == ActivationCondition.HitBased)
         {
@@ -107,7 +108,7 @@ public class SkillEquipSlot : UIBase
                 conditionText.text = $"{equippedSkill.CurrentHits} / {equippedSkill.SkillData.requiredHits}";
             }
 
-            skillIcon.color = equippedSkill.IsReadyToActivate() ? equippedColor : defaultColor;
+            skillIcon.color = equippedSkill != null ? equippedColor : defaultColor;
         }
     }
 
@@ -128,10 +129,11 @@ public class SkillEquipSlot : UIBase
         var playerSkillHandler = PlayerObjManager.Instance.Player?.SkillHandler;
         if (playerSkillHandler != null && equippedSkill != null)
         {
-            Debug.Log($"[SkillEquipSlot] RequestSkillActivation: {equippedSkill.SkillData.itemName}");
             playerSkillHandler.UseSkill(equippedSkill, transform.position);
 
             StartCoroutine(ReactivateTextAfterDelay());
+
+            StartCoroutine(ActivateHighlightEffect());
         }
     }
 
@@ -165,13 +167,31 @@ public class SkillEquipSlot : UIBase
 
             if (skillIconImage != null)
             {
-                skillIconImage.type = Image.Type.Simple;
+                skillIconImage.type = Image.Type.Filled;
             }
         }
 
         if (highlightEffect != null)
         {
             highlightEffect.SetActive(false);
+        }
+    }
+
+    
+    private IEnumerator ActivateHighlightEffect()
+    {
+        if (highlightEffect2 != null)
+        {
+            highlightEffect2.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(equippedSkill.SkillData.buffDuration);
+
+        Debug.Log(equippedSkill.SkillData.buffDuration);
+
+        if (highlightEffect2 != null)
+        {
+            highlightEffect2.SetActive(false);
         }
     }
 }
