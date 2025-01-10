@@ -11,7 +11,7 @@ public class Weapon : IFusable
     public int EnhancementLevel { get; set; }
     public int StackCount { get; internal set; }
     public int RequiredCurrencyForUpgrade { get; private set; }
-    public int EquipAtkIncreaseRate { get; private set; }
+    public double EquipAtkIncreaseRate { get; private set; }
     public int PassiveEquipAtkIncreaseRate { get; private set; }
     public int PassiveCriticalDamageBonus { get; private set; }
     public int PassiveGoldGainRate { get; private set; }
@@ -23,7 +23,7 @@ public class Weapon : IFusable
         StackCount = initialStackCount;
         RequiredCurrencyForUpgrade = baseData.requiredCurrencyForUpgrade;
         EquipAtkIncreaseRate = baseData.equipAtkIncreaseRate;
-        PassiveEquipAtkIncreaseRate = Mathf.RoundToInt(baseData.equipAtkIncreaseRate / 10f);
+        PassiveEquipAtkIncreaseRate = Mathf.RoundToInt((float)baseData.equipAtkIncreaseRate / 10f);
         PassiveCriticalDamageBonus = baseData.passiveCriticalDamageBonus;
         PassiveGoldGainRate = baseData.passiveGoldGainRate;
     }

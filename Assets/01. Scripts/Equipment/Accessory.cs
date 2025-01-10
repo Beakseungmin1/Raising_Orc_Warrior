@@ -11,7 +11,7 @@ public class Accessory : IFusable
     public int EnhancementLevel { get; set; }
     public int StackCount { get; internal set; }
     public int RequiredCurrencyForUpgrade { get; private set; }
-    public int EquipHpAndHpRecoveryIncreaseRate { get; private set; }
+    public double EquipHpAndHpRecoveryIncreaseRate { get; private set; }
     public int PassiveHpAndHpRecoveryIncreaseRate { get; set; }
     public int PassiveMpAndMpRecoveryIncreaseRate { get;  set; }
     public int PassiveAddEXPRate { get;  set; }
@@ -23,7 +23,7 @@ public class Accessory : IFusable
         StackCount = initialStackCount;
         RequiredCurrencyForUpgrade = baseData.requiredCurrencyForUpgrade;
         EquipHpAndHpRecoveryIncreaseRate = baseData.equipHpAndHpRecoveryIncreaseRate;
-        PassiveHpAndHpRecoveryIncreaseRate = Mathf.RoundToInt(baseData.equipHpAndHpRecoveryIncreaseRate / 3f);
+        PassiveHpAndHpRecoveryIncreaseRate = Mathf.RoundToInt((float)baseData.equipHpAndHpRecoveryIncreaseRate / 3f);
         PassiveMpAndMpRecoveryIncreaseRate = baseData.passiveMpAndMpRecoveryIncreaseRate;
         PassiveAddEXPRate = baseData.passiveAddEXPRate;
     }
