@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Numerics;
 
 public class BuffSkill : BaseSkill
-{
+{   
     public override void Activate(UnityEngine.Vector3 targetPosition)
     {
         if (!IsReadyToActivate() || !ConsumeMana()) return;
@@ -23,7 +23,6 @@ public class BuffSkill : BaseSkill
         if (skillData.moveSpeedIncrease > 0)
         {
             BackgroundManager.Instance.ParallaxBackground.scrollSpeed *= 1 + (skillData.moveSpeedIncrease / 100f);
-            //ParallaxBackground.Instance.scrollSpeed *= 1 + (skillData.moveSpeedIncrease / 100f);
         }
     }
 
@@ -53,8 +52,7 @@ public class BuffSkill : BaseSkill
     {
         base.EndEffect();
 
-        BackgroundManager.Instance.ParallaxBackground.scrollSpeed /= 1 + (skillData.moveSpeedIncrease / 100f);
-        //ParallaxBackground.Instance.scrollSpeed /= 1 + (skillData.moveSpeedIncrease / 100f);
+        BackgroundManager.Instance.ParallaxBackground.ChangeScrollSpeed();
 
         player.ChangeAnimatorSpeed(0.8f);
     }
