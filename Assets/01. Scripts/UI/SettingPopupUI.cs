@@ -19,6 +19,7 @@ public class SettingPopupUI : UIBase
 
         Hide();
         UIManager.Instance.Hide<DimmedUI>();
+        SoundManager.Instance.PlaySFXOneShot(SFXType.Button);
     }
 
     public void OnBGMScrollbar()

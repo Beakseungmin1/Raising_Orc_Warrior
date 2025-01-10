@@ -14,6 +14,7 @@ public class GolemBossBattle : MonoBehaviour
         {
             Instantiate(paticle,hand);
             enemy.GiveKnockDamageToPlayer();
+            SoundManager.Instance.PlaySFX(SFXType.Boss1);
         }
     }
 

@@ -84,6 +84,7 @@ public class HUDPanel : UIBase
     {
         UIManager.Instance.Show<DimmedUI>();
         UIManager.Instance.Show<SettingPopupUI>();
+        SoundManager.Instance.PlaySFXOneShot(SFXType.Button);
     }
 
 

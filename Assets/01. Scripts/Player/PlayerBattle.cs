@@ -169,7 +169,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
         currentMonster.TakeDamage(totalDamage);
 
-        SoundManager.Instance.PlaySFXOneShot(SFXType.playerAttack2);
+        SoundManager.Instance.PlaySFXOneShot(SFXType.playerAttack1);
     }
 
     public void GetMonsterReward()

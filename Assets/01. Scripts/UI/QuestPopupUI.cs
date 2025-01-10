@@ -7,6 +7,7 @@ public class QuestPopupUI : UIBase
     public void ExitBtn()
     {
         UIManager.Instance.Hide<DimmedUI>();
+        SoundManager.Instance.PlaySFXOneShot(SFXType.Button);
         Hide();
     }
 }

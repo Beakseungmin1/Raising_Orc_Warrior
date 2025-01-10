@@ -5,36 +5,61 @@ using UnityEngine;
 
 public class UpgrademultiplieBtn : MonoBehaviour
 {
-    public GameObject OneMultiplieBtn;
-    public GameObject TenMultiplieBtn;
-    public GameObject HunMultiplieBtn;
+    public TextMeshProUGUI MultiplieTxt;
+    private PlayerStat stat;
 
-
-    public void OnOneMultiplieBtn()
+    private void Start()
     {
-        PlayerObjManager.Instance.Player.stat.ChangeUpgradeMultiplier(1);
-        PlayerObjManager.Instance.Player.stat.UpdateNeedMoney();
-        PlayerObjManager.Instance.Player.stat.UpdateAllStatUI.Invoke();
-        OneMultiplieBtn.SetActive(false);
-        TenMultiplieBtn.SetActive(true);
+        stat = PlayerObjManager.Instance.Player.stat;
+        stat.UpdateAllStatUI += UpdateBtnUI;
     }
 
-    public void OnTenMultiplieBtn()
+    public void OnMultiplieBtn()
     {
-        PlayerObjManager.Instance.Player.stat.ChangeUpgradeMultiplier(2);
-        PlayerObjManager.Instance.Player.stat.UpdateNeedMoney();
-        PlayerObjManager.Instance.Player.stat.UpdateAllStatUI.Invoke();
-        TenMultiplieBtn.SetActive(false);
-        HunMultiplieBtn.SetActive(true);
+        if (stat.statUpgradeMultiplier == 0)
+        {
+            stat.ChangeUpgradeMultiplier(1);
+            stat.UpdateNeedMoney();
+            stat.UpdateAllStatUI.Invoke();
+        }
+        else if (stat.statUpgradeMultiplier == 1)
+        {
+            stat.ChangeUpgradeMultiplier(2);
+            stat.UpdateNeedMoney();
+            stat.UpdateAllStatUI.Invoke();
+        }
+        else
+        {
+            stat.ChangeUpgradeMultiplier(0);
+            stat.UpdateNeedMoney();
+            stat.UpdateAllStatUI.Invoke();
+        }
     }
+
+    public void UpdateBtnUI()
+    {
+        if (PlayerObjManager.Instance.Player.stat.statUpgradeMultiplier == 0)
+        {
+            MultiplieTxt.text = "1x";
+        }
+        else if (PlayerObjManager.Instance.Player.stat.statUpgradeMultiplier == 1)
+        {
+            MultiplieTxt.text = "10x";
+        }
+        else
+        {
+            MultiplieTxt.text = "100x";
+        }
+    }
+
 
     public void OnHunMultiplieBtn()
     {
         PlayerObjManager.Instance.Player.stat.ChangeUpgradeMultiplier(0);
         PlayerObjManager.Instance.Player.stat.UpdateNeedMoney();
         PlayerObjManager.Instance.Player.stat.UpdateAllStatUI.Invoke();
-        HunMultiplieBtn.SetActive(false);
-        OneMultiplieBtn.SetActive(true);
+        //HunMultiplieBtn.SetActive(false);
+        //OneMultiplieBtn.SetActive(true);
     }
 
 }

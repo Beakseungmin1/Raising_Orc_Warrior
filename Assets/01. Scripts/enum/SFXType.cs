@@ -6,14 +6,13 @@ public enum SFXType
     PopUp1,
     PopDown1,
     LevelUp,
+    StatUp,
+    QuestReward,
 
     //플레이어 효과음
     playerAttack1 = 10,
-    playerAttack2,
-    playerAttack3,
     playerDie,
     playerHit,
-    playerJump,
     playerWalk,
 
 
@@ -34,6 +33,6 @@ public enum SFXType
 
     //몬스터 효과음
     monsterDie = 50,
-    monesterHit
-
+    monesterHit,
+    Boss1
 }

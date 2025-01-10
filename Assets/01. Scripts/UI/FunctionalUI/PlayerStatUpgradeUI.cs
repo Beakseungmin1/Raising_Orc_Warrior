@@ -34,8 +34,7 @@ public class PlayerStatUpgradeUI : MonoBehaviour
 
 
         //юс╫ц
-        UpdateAllStatUI();
-        //playerstat.UpdateAllStatUI.Invoke();
+        playerstat.UpdateAllStatUI.Invoke();
 
     }
 
