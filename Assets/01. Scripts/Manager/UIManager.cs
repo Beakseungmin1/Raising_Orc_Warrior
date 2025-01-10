@@ -20,11 +20,18 @@ public class UIManager : Singleton<UIManager>
 
     private HashSet<string> reservedUISet = new HashSet<string>
     {
+        "EquipmentUpgradePopupUI",
+        "DungeonRewardPopupUI",
+        "EquipmentFusionPopupUI",
+        "PlayerInfoPopupUI",
+        "QuestPopupUI",
+        "SettingPopupUI",
+        "SkillInfoPopupUI",
         "SummonPopupUI",
         "Main_DungeonUI",
         "EXPDungeonUI",
         "CubeDungeonUI",
-        "GoldDungeonUI",
+        "GoldDungeonUI"
     };
 
     private HashSet<string> dungeonPopupUISet = new HashSet<string>
