@@ -32,7 +32,7 @@ MonoBehaviour:
   requiredHits: 0
   damagePercent: 250
   manaCost: 100
-  effectRange: 2
+  effectRange: 4
   buffDuration: 0
   attackIncreasePercent: 0
   manaRecoveryAmount: 0
