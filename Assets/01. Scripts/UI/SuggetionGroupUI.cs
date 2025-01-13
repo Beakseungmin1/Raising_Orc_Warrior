@@ -6,6 +6,9 @@ using System.Collections;
 
 public class SuggetionGroupUI : UIBase
 {
+    public delegate void EquipCompleteHandler();
+    public static event EquipCompleteHandler OnEquipComplete;
+
     [Header("Weapon UI")]
     [SerializeField] private GameObject weaponUI;
     [SerializeField] private Image weaponIcon;
@@ -66,12 +69,14 @@ public class SuggetionGroupUI : UIBase
     private void OnEquippedChanged()
     {
         bool isWeapon = equipManager.EquippedWeapon != null;
+        bool isAccessory = equipManager.EquippedAccessory != null;
 
         if (isWeapon)
         {
             HandleWeaponSuggestion();
         }
-        else
+
+        if (isAccessory)
         {
             HandleAccessorySuggestion();
         }
@@ -158,6 +163,7 @@ public class SuggetionGroupUI : UIBase
         {
             equipManager.EquipWeapon(bestWeapon);
             HideWeaponUI();
+            OnEquipComplete?.Invoke();
         }
     }
 
@@ -183,6 +189,7 @@ public class SuggetionGroupUI : UIBase
         {
             equipManager.EquipAccessory(bestAccessory);
             HideAccessoryUI();
+            OnEquipComplete?.Invoke();
         }
     }
 
