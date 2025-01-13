@@ -1,7 +1,4 @@
-using System.Diagnostics;
 using System.Numerics;
-using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 public class PassiveManager : Singleton<PassiveManager>
 {
