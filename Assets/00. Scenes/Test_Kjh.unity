@@ -270,7 +270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6798184018873239610, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.93
+      value: 6.75
       objectReference: {fileID: 0}
     - target: {fileID: 6798184018873239610, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -720,11 +720,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 972c452da9aaf49439b404fc31dc7dfc, type: 3}
---- !u!4 &1454491446 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 850088974580134644, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
-  m_PrefabInstance: {fileID: 1143699028}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1472243174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -946,7 +941,7 @@ PrefabInstance:
     - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: mapCenter
       value: 
-      objectReference: {fileID: 1454491446}
+      objectReference: {fileID: 1823932295}
     - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: playerPosition
       value: 
@@ -954,7 +949,7 @@ PrefabInstance:
     - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: playerWeaponPosition
       value: 
-      objectReference: {fileID: 1454491446}
+      objectReference: {fileID: 1823932295}
     - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: projectileSpawnPoint
       value: 

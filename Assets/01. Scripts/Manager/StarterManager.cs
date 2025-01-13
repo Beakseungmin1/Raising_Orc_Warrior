@@ -72,6 +72,7 @@ public class StarterManager : Singleton<StarterManager>
         UIManager.Instance.Show<RightSideBtnsAreaUI>();
         UIManager.Instance.Show<MainButtonsUI>();
         UIManager.Instance.Show<SkillEquipSlotManager>();
+        UIManager.Instance.Show<SuggetionGroupUI>();
     }
 
     private void CreateEventSystem()

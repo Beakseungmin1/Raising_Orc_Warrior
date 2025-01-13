@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using UnityEngine;
+using System.Collections;
 
 public class EnemyBoss : EnemyBase, IEnemy
 {
@@ -14,6 +15,7 @@ public class EnemyBoss : EnemyBase, IEnemy
     [SerializeField] private BigInteger giveMoney; // 주는 돈
     [SerializeField] private GameObject model; //적 모델
     [SerializeField] private Animator animator;
+    private Collider2D enemyBossCollider;
     public float timeLimit = 50f;
 
     [Header("Skill Properties")]
@@ -116,9 +118,10 @@ public class EnemyBoss : EnemyBase, IEnemy
     {
         GameEventsManager.Instance.bossEvents.TimerStop();
         animator.SetTrigger("4_Death");
-        ObjectPool.Instance.ReturnObject(gameObject);
+        enemyBossCollider.enabled = false;
 
-        StageManager.Instance.BossStageClear();
+        GameEventsManager.Instance.StartCoroutine(DelayedReturnToPool());
+        
     }
 
     public bool GetActive()
@@ -142,7 +145,9 @@ public class EnemyBoss : EnemyBase, IEnemy
         //    model = Instantiate(model, transform);
         //}
         animator = GetComponentInChildren<Animator>();
+        enemyBossCollider = GetComponent<Collider2D>();
 
+        enemyBossCollider.enabled = true;
         cooldown = enemySO.cooldown;
 
         skillEffectPrefab = enemySO.skillEffectPrefab;
@@ -171,5 +176,12 @@ public class EnemyBoss : EnemyBase, IEnemy
     public void ClearEnemy()
     {
         ObjectPool.Instance.ReturnObject(gameObject);
+    }
+
+    private IEnumerator DelayedReturnToPool()
+    {
+        yield return new WaitForSeconds(1.0f);
+        ObjectPool.Instance.ReturnObject(gameObject);
+        StageManager.Instance.BossStageClear();
     }
 }

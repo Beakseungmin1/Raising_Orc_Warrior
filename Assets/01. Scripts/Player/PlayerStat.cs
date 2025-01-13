@@ -209,6 +209,7 @@ public class PlayerStat : MonoBehaviour
             level += multiplier; // 레벨 증가
             Stat = startStat + ((level-1) * increment); // 스탯 업데이트
             totalUpgradeCost = level * baseCost;
+            SoundManager.Instance.PlaySFX(SFXType.StatUp);
         }
         else
         {

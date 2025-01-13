@@ -85,6 +85,16 @@ public class EquipmentUpgradePopupUI : UIBase
 
         var nextEquipment = GetNextEquipmentData(currentItem as IFusable);
         fusionBtn.gameObject.SetActive(nextEquipment != null);
+
+
+        if (isWeapon && currentItem is Weapon selectedWeapon)
+        {
+            gradeTxt.color = selectedWeapon.GradeColor;
+        }
+        else if (!isWeapon && currentItem is Accessory selectedAccessory)
+        {
+            gradeTxt.color = selectedAccessory.GradeColor;
+        }
     }
 
     private BaseItemDataSO GetNextEquipmentData(IFusable equipment)
@@ -132,7 +142,7 @@ public class EquipmentUpgradePopupUI : UIBase
         equipmentIcon.sprite = currentItem.BaseData.icon;
         equipmentIcon.color = isItemAvailable ? Color.white : new Color(0.2f, 0.2f, 0.2f, 1f);
         nameTxt.text = currentItem.BaseData.itemName;
-        gradeTxt.text = $"[{currentItem.BaseData.grade}]";
+        gradeTxt.text = $"[{currentItem.BaseData.grade.ToLocalizedString()}]";
 
         currentAmountTxt.text = Mathf.Max(0, actualStackCount - 1).ToString();
         neededAmountTxt.text = requiredAmount.ToString();

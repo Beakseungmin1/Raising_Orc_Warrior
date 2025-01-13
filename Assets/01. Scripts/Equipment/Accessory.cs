@@ -11,10 +11,11 @@ public class Accessory : IFusable
     public int EnhancementLevel { get; set; }
     public int StackCount { get; internal set; }
     public int RequiredCurrencyForUpgrade { get; private set; }
-    public int EquipHpAndHpRecoveryIncreaseRate { get; private set; }
+    public double EquipHpAndHpRecoveryIncreaseRate { get; private set; }
     public int PassiveHpAndHpRecoveryIncreaseRate { get; set; }
     public int PassiveMpAndMpRecoveryIncreaseRate { get;  set; }
     public int PassiveAddEXPRate { get;  set; }
+    public Color GradeColor { get; private set; }
 
     public Accessory(AccessoryDataSO baseData, int initialStackCount = 1)
     {
@@ -23,9 +24,25 @@ public class Accessory : IFusable
         StackCount = initialStackCount;
         RequiredCurrencyForUpgrade = baseData.requiredCurrencyForUpgrade;
         EquipHpAndHpRecoveryIncreaseRate = baseData.equipHpAndHpRecoveryIncreaseRate;
-        PassiveHpAndHpRecoveryIncreaseRate = Mathf.RoundToInt(baseData.equipHpAndHpRecoveryIncreaseRate / 3f);
+        PassiveHpAndHpRecoveryIncreaseRate = Mathf.RoundToInt((float)baseData.equipHpAndHpRecoveryIncreaseRate / 3f);
         PassiveMpAndMpRecoveryIncreaseRate = baseData.passiveMpAndMpRecoveryIncreaseRate;
         PassiveAddEXPRate = baseData.passiveAddEXPRate;
+        GradeColor = GetGradeColor(Grade);
+    }
+
+    private Color GetGradeColor(Grade grade)
+    {
+        switch (grade)
+        {
+            case Grade.Normal: return new Color(0.53f, 0.53f, 0.53f);
+            case Grade.Uncommon: return new Color(0.22f, 0.92f, 0.54f);
+            case Grade.Rare: return new Color(1f, 0.62f, 0.28f);
+            case Grade.Hero: return new Color(0.24f, 0.58f, 1f);
+            case Grade.Legendary: return new Color(0.75f, 0.25f, 1f);
+            case Grade.Mythic: return new Color(1f, 0.2f, 0.2f);
+            case Grade.Ultimate: return new Color(1f, 1f, 0.24f);
+            default: return Color.white;
+        }
     }
 
     public bool CanEnhance()

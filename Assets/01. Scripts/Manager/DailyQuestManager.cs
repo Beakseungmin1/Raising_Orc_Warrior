@@ -52,6 +52,7 @@ public class DailyQuestManager : Singleton<DailyQuestManager>
             if (questIds[i] == id && currentQuestStates[i].Equals(QuestState.CAN_FINISH))
             {
                 GameEventsManager.Instance.questEvents.FinishQuest(questIds[i]);
+                SoundManager.Instance.PlaySFX(SFXType.QuestReward);
             }
         }
     }

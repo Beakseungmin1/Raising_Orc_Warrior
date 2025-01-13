@@ -8,5 +8,6 @@ public class QuestBtnUI : UIBase
     {
         UIManager.Instance.Show<DimmedUI>();
         UIManager.Instance.Show<QuestPopupUI>();
+        SoundManager.Instance.PlaySFXOneShot(SFXType.Button);
     }
 }

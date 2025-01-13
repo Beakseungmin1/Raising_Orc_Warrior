@@ -158,6 +158,7 @@ public class Enemy : EnemyBase, IEnemy
             damageCoroutine = null;
         }
 
+        enemyCollider.enabled = false;
         BattleManager.Instance.StartBattle();
         GameEventsManager.Instance.StartCoroutine(ClearAndReturnToPool());
     }
