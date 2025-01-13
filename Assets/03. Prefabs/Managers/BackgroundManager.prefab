@@ -47,4 +47,3 @@ MonoBehaviour:
   beforeBackground: {fileID: 0}
   curBackground: {fileID: 0}
   ParallaxBackground: {fileID: 7660628838365028919, guid: 80c6140c8a675124888f1b1a16ba591c, type: 3}
-  map: {fileID: 4996350026959308300, guid: 80c6140c8a675124888f1b1a16ba591c, type: 3}

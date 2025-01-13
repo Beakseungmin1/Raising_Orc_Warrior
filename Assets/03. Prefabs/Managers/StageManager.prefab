@@ -46,11 +46,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chapterSOs: []
   stageSOs: []
-  bossStageSO: {fileID: 0}
+  bossStageSOs: []
   chapterName: 
   stageName: 
-  bgSprite: {fileID: 0}
   curChapterIndex: 0
   curStageIndex: 0
   curStageIndexInThisChapter: 0
   MaxStageIndexInThisChapter: 0
+  timer: {fileID: 0}

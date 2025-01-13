@@ -865,8 +865,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1909,7 +1909,6 @@ MonoBehaviour:
   equipBtn: {fileID: 8541578261380294318}
   upgradeCostTxt: {fileID: 2372828401270943514}
   curCubeAmountTxt: {fileID: 1202861498809843763}
-  curCubeIcon: {fileID: 7988808063009745700}
   fusionBtn: {fileID: 392460958152943511}
   exitBtn: {fileID: 6876223895582085829}
   leftArrowBtn: {fileID: 3201560823754880327}

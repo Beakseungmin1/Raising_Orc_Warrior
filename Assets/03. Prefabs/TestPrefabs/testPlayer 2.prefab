@@ -441,7 +441,6 @@ MonoBehaviour:
   background: {fileID: 0}
   animator: {fileID: 0}
   activeBuffSkills: []
-  isStopped: 0
 --- !u!114 &1201181367610977052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,6 +513,7 @@ MonoBehaviour:
   SkillHandler: {fileID: 0}
   DamageCalculator: {fileID: 0}
   StatCalculator: {fileID: 0}
+  animator: {fileID: 0}
   hpBar: {fileID: 7387941599714733976}
   manaBar: {fileID: 8958338355040510154}
 --- !u!114 &8219078698626856518
@@ -528,7 +528,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 089daacc2b3cf954daf7100948978195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponImage: {fileID: 5794303463570115573}
+  WeaponLImage: {fileID: 2750894196997263196}
+  WeaponRImage: {fileID: 5794303463570115573}
 --- !u!114 &4365298221228220091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,6 +542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99b0d6ee24fca56479a58a48f83bbb01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statUpgradeMultiplier: 0
 --- !u!114 &7265899195095097864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -578,6 +580,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56a85f23e7215d142a51c5347ea87b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  basicManaRegeneration: 0
+  basicMaxMana: 0
 --- !u!1 &5440593672448997053
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,6 +738,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerModel
       objectReference: {fileID: 0}
+    - target: {fileID: 4153982834274721678, guid: c0bda75594cb6584e94d98eed8b3d60d, type: 3}
+      propertyPath: m_Size.x
+      value: 2.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153982834274721678, guid: c0bda75594cb6584e94d98eed8b3d60d, type: 3}
+      propertyPath: m_Size.y
+      value: 2.26
+      objectReference: {fileID: 0}
     - target: {fileID: 5029199488942323556, guid: c0bda75594cb6584e94d98eed8b3d60d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -822,6 +834,11 @@ PrefabInstance:
 --- !u!224 &901335709359848653 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5029199488942323556, guid: c0bda75594cb6584e94d98eed8b3d60d, type: 3}
+  m_PrefabInstance: {fileID: 5280890882705263529}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &2750894196997263196 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8026643746144355573, guid: c0bda75594cb6584e94d98eed8b3d60d, type: 3}
   m_PrefabInstance: {fileID: 5280890882705263529}
   m_PrefabAsset: {fileID: 0}
 --- !u!212 &5794303463570115573 stripped
