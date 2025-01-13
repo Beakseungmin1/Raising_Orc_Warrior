@@ -7,14 +7,14 @@ public class StarterManager : Singleton<StarterManager>
     private bool isInitialized = false;
     private GameObject eventSystemObject;
 
-    private void Awake()
-    {
-        BackgroundManager.Instance.Init();
-    }
+    //private void Awake()
+    //{
+    //    BackgroundManager.Instance.Init();
+    //}
 
     void Start()
     {
-
+        BackgroundManager.Instance.Init();
         CreateInitialUI();
         CreateEventSystem();
         //임시
