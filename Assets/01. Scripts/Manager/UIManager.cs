@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -9,13 +9,13 @@ using Vector2 = UnityEngine.Vector2;
 
 public class UIManager : Singleton<UIManager>
 {
-    private Dictionary<string, UIBase> uiDictionary = new Dictionary<string, UIBase>(); //ÀÌ¹Ì »ı¼ºµÈ ¸®½ºÆ®
+    private Dictionary<string, UIBase> uiDictionary = new Dictionary<string, UIBase>(); //ì´ë¯¸ ìƒì„±ëœ ë¦¬ìŠ¤íŠ¸
     public static float ScreenWidth = 1080;
     public static float ScreenHeight = 1920;
 
     private int currentSortingOrder = 0;
 
-    private const int ReservedSortingOrder = 100; // Æ¯Á¤ UIÀÇ °íÁ¤ sortingOrder °ª
+    private const int ReservedSortingOrder = 100; // íŠ¹ì • UIì˜ ê³ ì • sortingOrder ê°’
     private const int PopupSortingOrder = 110;
 
     private HashSet<string> reservedUISet = new HashSet<string>
@@ -43,46 +43,109 @@ public class UIManager : Singleton<UIManager>
 
     public T Show<T>() where T : UIBase
     {
-        string uiName = typeof(T).ToString(); // T Å¸ÀÔ¿¡ µû¶ó UI ÀÌ¸§À» °áÁ¤ÇÕ´Ï´Ù.
+        string uiName = typeof(T).ToString(); // T íƒ€ì…ì— ë”°ë¼ UI ì´ë¦„ì„ ê²°ì •í•©ë‹ˆë‹¤.
 
-        // µñ¼Å³Ê¸®¿¡¼­ UI°¡ ÀÌ¹Ì »ı¼ºµÇ¾ú´ÂÁö È®ÀÎ
+        // ë”•ì…”ë„ˆë¦¬ì—ì„œ UIê°€ ì´ë¯¸ ìƒì„±ë˜ì—ˆëŠ”ì§€ í™•ì¸
         if (uiDictionary.TryGetValue(uiName, out UIBase existingUI))
         {
-            return (T)existingUI; // ÀÌ¹Ì Á¸ÀçÇÏ´Â UI ÀÎ½ºÅÏ½º¸¦ ¹İÈ¯
+            return (T)existingUI; // ì´ë¯¸ ì¡´ì¬í•˜ëŠ” UI ì¸ìŠ¤í„´ìŠ¤ë¥¼ ë°˜í™˜
         }
 
-        // UI°¡ Á¸ÀçÇÏÁö ¾ÊÀ» °æ¿ì »õ·Î »ı¼º
-        UIBase go = Resources.Load<UIBase>("UI/" + uiName); // UI ¸®¼Ò½º¸¦ ·ÎµåÇÕ´Ï´Ù.
+        // UIê°€ ì¡´ì¬í•˜ì§€ ì•Šì„ ê²½ìš° ìƒˆë¡œ ìƒì„±
+        UIBase go = Resources.Load<UIBase>("UI/" + uiName); // UI ë¦¬ì†ŒìŠ¤ë¥¼ ë¡œë“œí•©ë‹ˆë‹¤.
         if (go == null)
         {
-            throw new System.Exception($"UI Resource not found: {uiName}"); // ·Îµå ½ÇÆĞ Ã³¸®
+            throw new System.Exception($"UI ë¦¬ì†ŒìŠ¤ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: {uiName}"); // ë¡œë“œ ì‹¤íŒ¨ ì²˜ë¦¬
         }
 
-        var ui = Load<T>(go, uiName); // »õ UI »ı¼º
-        uiDictionary[uiName] = ui; // »ı¼ºµÈ UI¸¦ µñ¼Å³Ê¸®¿¡ Ãß°¡
+        var ui = Load<T>(go, uiName); // ìƒˆ UI ìƒì„±
+        uiDictionary[uiName] = ui; // ìƒì„±ëœ UIë¥¼ ë”•ì…”ë„ˆë¦¬ì— ì¶”ê°€
+
+        // ìŠ¤í¬ë¦° ë¹„ìœ¨ì— ë”°ë¼ UI ìœ„ì¹˜ ì¡°ì •
+        RectTransform rectTransform = ui.GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            // ê¸°ì¡´ ìœ„ì¹˜ê°’ ê°€ì ¸ì˜¤ê¸°
+            Vector2 currentPosition = rectTransform.anchoredPosition;
+
+            // ìŠ¤í¬ë¦° ë¹„ìœ¨ ê³„ì‚°
+            float targetAspect = 9f / 16f; // ëª©í‘œ ë¹„ìœ¨
+            float screenAspect = (float)Screen.width / Screen.height;
+            float scaleHeight = screenAspect / targetAspect; //ëª©í‘œë¹„ìœ¨ ëŒ€ë¹„ ì–¼ë§ˆë‚˜ ì»¤ì¡ŒëŠ”ê°€.(í¬ê¸°ê°€ ì–¼ë§ˆë‚˜ ì»¤ì¡ŒëŠ”ì§€ í™•ì¸)
+
+            if (scaleHeight < 1)
+            {
+                // ìŠ¤í¬ë¦°ì´ ê¸¸ì–´ì¡Œì„ ë•Œ - ê¸°ì¡´ Y ìœ„ì¹˜ì—ì„œ ì¶”ê°€ë¡œ ì´ë™
+                currentPosition.y -= (1f - scaleHeight) * Screen.height / 2f;
+            }
+            else
+            {
+                // ìŠ¤í¬ë¦°ì´ ì§§ì•„ì¡Œì„ ë•Œ - ê¸°ì¡´ ìœ„ì¹˜ ìœ ì§€
+                currentPosition.y += 0; // í•„ìš” ì‹œ ë¡œì§ ì¶”ê°€ ê°€ëŠ¥
+            }
+
+            // ì¡°ì •ëœ ìœ„ì¹˜ë¥¼ ë‹¤ì‹œ ì ìš©
+            rectTransform.anchoredPosition = currentPosition;
+        }
+        else
+        {
+            Debug.LogWarning($"UIì— RectTransformì´ ì—†ìŠµë‹ˆë‹¤: {uiName}");
+        }
 
         return (T)ui;
     }
 
+
     public T Show<T>(DungeonInfoSO dungeonInfoSO) where T : UIBase
     {
-        string uiName = typeof(T).ToString(); // T Å¸ÀÔ¿¡ µû¶ó UI ÀÌ¸§À» °áÁ¤ÇÕ´Ï´Ù.
+        string uiName = typeof(T).ToString(); // T íƒ€ì…ì— ë”°ë¼ UI ì´ë¦„ì„ ê²°ì •í•©ë‹ˆë‹¤.
 
-        // µñ¼Å³Ê¸®¿¡¼­ UI°¡ ÀÌ¹Ì »ı¼ºµÇ¾ú´ÂÁö È®ÀÎ
+        // ë”•ì…”ë„ˆë¦¬ì—ì„œ UIê°€ ì´ë¯¸ ìƒì„±ë˜ì—ˆëŠ”ì§€ í™•ì¸
         if (uiDictionary.TryGetValue(uiName, out UIBase existingUI))
         {
-            return (T)existingUI; // ÀÌ¹Ì Á¸ÀçÇÏ´Â UI ÀÎ½ºÅÏ½º¸¦ ¹İÈ¯
+            return (T)existingUI; // ì´ë¯¸ ì¡´ì¬í•˜ëŠ” UI ì¸ìŠ¤í„´ìŠ¤ë¥¼ ë°˜í™˜
         }
 
-        // UI°¡ Á¸ÀçÇÏÁö ¾ÊÀ» °æ¿ì »õ·Î »ı¼º
-        UIBase go = Resources.Load<UIBase>("UI/" + uiName); // UI ¸®¼Ò½º¸¦ ·ÎµåÇÕ´Ï´Ù.
+        // UIê°€ ì¡´ì¬í•˜ì§€ ì•Šì„ ê²½ìš° ìƒˆë¡œ ìƒì„±
+        UIBase go = Resources.Load<UIBase>("UI/" + uiName); // UI ë¦¬ì†ŒìŠ¤ë¥¼ ë¡œë“œí•©ë‹ˆë‹¤.
         if (go == null)
         {
-            throw new System.Exception($"UI Resource not found: {uiName}"); // ·Îµå ½ÇÆĞ Ã³¸®
+            throw new System.Exception($"UI ë¦¬ì†ŒìŠ¤ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: {uiName}"); // ë¡œë“œ ì‹¤íŒ¨ ì²˜ë¦¬
         }
 
-        var ui = Load<T>(go, uiName); // »õ UI »ı¼º
-        uiDictionary[uiName] = ui; // »ı¼ºµÈ UI¸¦ µñ¼Å³Ê¸®¿¡ Ãß°¡
+        var ui = Load<T>(go, uiName); // ìƒˆ UI ìƒì„±
+        uiDictionary[uiName] = ui; // ìƒì„±ëœ UIë¥¼ ë”•ì…”ë„ˆë¦¬ì— ì¶”ê°€
+
+        // ìŠ¤í¬ë¦° ë¹„ìœ¨ì— ë”°ë¼ UI ìœ„ì¹˜ ì¡°ì •
+        RectTransform rectTransform = ui.GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            // ê¸°ì¡´ ìœ„ì¹˜ê°’ ê°€ì ¸ì˜¤ê¸°
+            Vector2 currentPosition = rectTransform.anchoredPosition;
+
+            // ìŠ¤í¬ë¦° ë¹„ìœ¨ ê³„ì‚°
+            float targetAspect = 9f / 16f; // ëª©í‘œ ë¹„ìœ¨
+            float screenAspect = (float)Screen.width / Screen.height;
+            float scaleHeight = screenAspect / targetAspect; //ëª©í‘œë¹„ìœ¨ ëŒ€ë¹„ ì–¼ë§ˆë‚˜ ì»¤ì¡ŒëŠ”ê°€.(í¬ê¸°ê°€ ì–¼ë§ˆë‚˜ ì»¤ì¡ŒëŠ”ì§€ í™•ì¸)
+
+            if (scaleHeight < 1)
+            {
+                // ìŠ¤í¬ë¦°ì´ ê¸¸ì–´ì¡Œì„ ë•Œ - ê¸°ì¡´ Y ìœ„ì¹˜ì—ì„œ ì¶”ê°€ë¡œ ì´ë™
+                currentPosition.y -= (1f - scaleHeight) * Screen.height / 2f;
+            }
+            else
+            {
+                // ìŠ¤í¬ë¦°ì´ ì§§ì•„ì¡Œì„ ë•Œ - ê¸°ì¡´ ìœ„ì¹˜ ìœ ì§€
+                currentPosition.y += 0; // í•„ìš” ì‹œ ë¡œì§ ì¶”ê°€ ê°€ëŠ¥
+            }
+
+            // ì¡°ì •ëœ ìœ„ì¹˜ë¥¼ ë‹¤ì‹œ ì ìš©
+            rectTransform.anchoredPosition = currentPosition;
+        }
+        else
+        {
+            Debug.LogWarning($"UIì— RectTransformì´ ì—†ìŠµë‹ˆë‹¤: {uiName}");
+        }
 
         return (T)ui;
     }
@@ -109,21 +172,21 @@ public class UIManager : Singleton<UIManager>
 
         if (reservedUISet.Contains(uiName))
         {
-            // °íÁ¤µÈ UI´Â ReservedSortingOrder¸¦ »ç¿ë
+            // ê³ ì •ëœ UIëŠ” ReservedSortingOrderë¥¼ ì‚¬ìš©
             ui.canvas.sortingOrder = ReservedSortingOrder;
         }
         else if (dungeonPopupUISet.Contains(uiName))
         {
-            // ÆË¾÷ UI´Â PopupSortingOrder¸¦ »ç¿ë
+            // íŒì—… UIëŠ” PopupSortingOrderë¥¼ ì‚¬ìš©
             ui.canvas.sortingOrder = PopupSortingOrder;
         }
         else
         {
-            // ÀÏ¹İ UI´Â currentSortingOrder¸¦ »ç¿ë
+            // ì¼ë°˜ UIëŠ” currentSortingOrderë¥¼ ì‚¬ìš©
             currentSortingOrder++;
             if (currentSortingOrder >= ReservedSortingOrder)
             {
-                currentSortingOrder = ReservedSortingOrder - 1; // ReservedSortingOrder¸¦ ³ÑÁö ¾Êµµ·Ï º¸Àå
+                currentSortingOrder = ReservedSortingOrder - 1; // ReservedSortingOrderë¥¼ ë„˜ì§€ ì•Šë„ë¡ ë³´ì¥
             }
             ui.canvas.sortingOrder = currentSortingOrder;
         }
@@ -134,30 +197,60 @@ public class UIManager : Singleton<UIManager>
 
     public T ShowFadePanel<T>(FadeType fadeType) where T : UIBase
     {
-        string uiName = typeof(T).ToString(); // T Å¸ÀÔ¿¡ µû¶ó UI ÀÌ¸§À» °áÁ¤ÇÕ´Ï´Ù.
+        string uiName = typeof(T).ToString(); // T íƒ€ì…ì— ë”°ë¼ UI ì´ë¦„ì„ ê²°ì •í•©ë‹ˆë‹¤.
 
-        // µñ¼Å³Ê¸®¿¡¼­ UI°¡ ÀÌ¹Ì »ı¼ºµÇ¾ú´ÂÁö È®ÀÎ
+        // ë”•ì…”ë„ˆë¦¬ì—ì„œ UIê°€ ì´ë¯¸ ìƒì„±ë˜ì—ˆëŠ”ì§€ í™•ì¸
         if (uiDictionary.TryGetValue(uiName, out UIBase existingUI))
         {
-            return (T)existingUI; // ÀÌ¹Ì Á¸ÀçÇÏ´Â UI ÀÎ½ºÅÏ½º¸¦ ¹İÈ¯
+            return (T)existingUI; // ì´ë¯¸ ì¡´ì¬í•˜ëŠ” UI ì¸ìŠ¤í„´ìŠ¤ë¥¼ ë°˜í™˜
         }
 
-        // UI°¡ Á¸ÀçÇÏÁö ¾ÊÀ» °æ¿ì »õ·Î »ı¼º
-        UIBase go = Resources.Load<UIBase>("UI/" + uiName); // UI ¸®¼Ò½º¸¦ ·ÎµåÇÕ´Ï´Ù.
+        // UIê°€ ì¡´ì¬í•˜ì§€ ì•Šì„ ê²½ìš° ìƒˆë¡œ ìƒì„±
+        UIBase go = Resources.Load<UIBase>("UI/" + uiName); // UI ë¦¬ì†ŒìŠ¤ë¥¼ ë¡œë“œí•©ë‹ˆë‹¤.
         if (go == null)
         {
-            throw new System.Exception($"UI Resource not found: {uiName}"); // ·Îµå ½ÇÆĞ Ã³¸®
+            throw new System.Exception($"UI ë¦¬ì†ŒìŠ¤ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: {uiName}"); // ë¡œë“œ ì‹¤íŒ¨ ì²˜ë¦¬
         }
 
-        var ui = LoadFadeController<T>(go, uiName, fadeType); // »õ UI »ı¼º
+        var ui = LoadFadeController<T>(go, uiName, fadeType); // ìƒˆ UI ìƒì„±
 
-        //uiDictionary[uiName] = ui; µñ¼Å³Ê¸®¿¡ Ãß°¡ÇÏ¸é SortingOrder¸¦ Á¶È¸ÇÏ±â ¶§¹®¿¡, ÃÖ»ó´Ü¿¡ À§Ä¡ÇÏ±âÀ§ÇØ µñ¼Å³Ê¸®¿¡ Æ÷ÇÔ ¾ÈÇÔ.
-        //´ë½Å ±×·¸±â¶§¹®¿¡ HIde¸Å¼­µå°¡ ÅëÇÏÁö ¾ÊÀ½. DestroyÇØ¾ßÇÔ.
+        // ìŠ¤í¬ë¦° ë¹„ìœ¨ì— ë”°ë¼ UI ìœ„ì¹˜ ì¡°ì •
+        RectTransform rectTransform = ui.GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            // ê¸°ì¡´ ìœ„ì¹˜ê°’ ê°€ì ¸ì˜¤ê¸°
+            Vector2 currentPosition = rectTransform.anchoredPosition;
+
+            // ìŠ¤í¬ë¦° ë¹„ìœ¨ ê³„ì‚°
+            float targetAspect = 9f / 16f; // ëª©í‘œ ë¹„ìœ¨
+            float screenAspect = (float)Screen.width / Screen.height;
+            float scaleHeight = screenAspect / targetAspect; //ëª©í‘œë¹„ìœ¨ ëŒ€ë¹„ ì–¼ë§ˆë‚˜ ì»¤ì¡ŒëŠ”ê°€.(í¬ê¸°ê°€ ì–¼ë§ˆë‚˜ ì»¤ì¡ŒëŠ”ì§€ í™•ì¸)
+
+            if (scaleHeight < 1)
+            {
+                // ìŠ¤í¬ë¦°ì´ ê¸¸ì–´ì¡Œì„ ë•Œ - ê¸°ì¡´ Y ìœ„ì¹˜ì—ì„œ ì¶”ê°€ë¡œ ì´ë™
+                currentPosition.y -= (1f - scaleHeight) * Screen.height / 2f;
+            }
+            else
+            {
+                // ìŠ¤í¬ë¦°ì´ ì§§ì•„ì¡Œì„ ë•Œ - ê¸°ì¡´ ìœ„ì¹˜ ìœ ì§€
+                currentPosition.y += 0; // í•„ìš” ì‹œ ë¡œì§ ì¶”ê°€ ê°€ëŠ¥
+            }
+
+            // ì¡°ì •ëœ ìœ„ì¹˜ë¥¼ ë‹¤ì‹œ ì ìš©
+            rectTransform.anchoredPosition = currentPosition;
+        }
+        else
+        {
+            Debug.LogWarning($"UIì— RectTransformì´ ì—†ìŠµë‹ˆë‹¤: {uiName}");
+        }
+
         return (T)ui;
     }
 
 
-    private T LoadFadeController<T>(UIBase prefab, string uiName, FadeType fadeType) where T : UIBase //Á¶°Ç¹® °°Àº °Å¶ó°í º¸¸é µÈ´Ù. T´Â UIBaseÀÌ°Å³ª UIBase¸¦ »ó¼Ó¹Ş´Â Å¬·¡½º·Î Á¦ÇÑÇÑ´Ù.
+
+    private T LoadFadeController<T>(UIBase prefab, string uiName, FadeType fadeType) where T : UIBase //ì¡°ê±´ë¬¸ ê°™ì€ ê±°ë¼ê³  ë³´ë©´ ëœë‹¤. TëŠ” UIBaseì´ê±°ë‚˜ UIBaseë¥¼ ìƒì†ë°›ëŠ” í´ë˜ìŠ¤ë¡œ ì œí•œí•œë‹¤.
     {
         GameObject newCanvasObject = new GameObject(uiName + "Canvas");
 
@@ -205,24 +298,24 @@ public class UIManager : Singleton<UIManager>
 
     public void Hide(string uiName)
     {
-        // µñ¼Å³Ê¸®¿¡¼­ UI°¡ Á¸ÀçÇÏ´ÂÁö È®ÀÎ
+        // ë”•ì…”ë„ˆë¦¬ì—ì„œ UIê°€ ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸
         if (uiDictionary.TryGetValue(uiName, out UIBase go))
         {
-            uiDictionary.Remove(uiName); // µñ¼Å³Ê¸®¿¡¼­ UI Á¦°Å
-            Destroy(go.canvas.gameObject); // UI ¿ÀºêÁ§Æ® ÆÄ±«
+            uiDictionary.Remove(uiName); // ë”•ì…”ë„ˆë¦¬ì—ì„œ UI ì œê±°
+            Destroy(go.canvas.gameObject); // UI ì˜¤ë¸Œì íŠ¸ íŒŒê´´
 
             if (uiDictionary.Count > 0)
             {
-                // °¡Àå ³ôÀº sortingOrder¸¦ °¡Áø UI¸¦ Ã£À½ (ReservedSortingOrder¿Í PopupSortingOrder´Â Á¦¿Ü)
+                // ê°€ì¥ ë†’ì€ sortingOrderë¥¼ ê°€ì§„ UIë¥¼ ì°¾ìŒ (ReservedSortingOrderì™€ PopupSortingOrderëŠ” ì œì™¸)
                 currentSortingOrder = uiDictionary.Values
                     .Where(ui => ui.canvas.sortingOrder < ReservedSortingOrder)
                     .Select(ui => ui.canvas.sortingOrder)
-                    .DefaultIfEmpty(0) // µñ¼Å³Ê¸®¿¡ °ªÀÌ ¾øÀ¸¸é ±âº»°ª 0
+                    .DefaultIfEmpty(0) // ë”•ì…”ë„ˆë¦¬ì— ê°’ì´ ì—†ìœ¼ë©´ ê¸°ë³¸ê°’ 0
                     .Max();
             }
             else
             {
-                currentSortingOrder = 0; // UI°¡ ¾øÀ¸¸é ±âº» sortingOrder·Î ¼³Á¤
+                currentSortingOrder = 0; // UIê°€ ì—†ìœ¼ë©´ ê¸°ë³¸ sortingOrderë¡œ ì„¤ì •
             }
         }
     }

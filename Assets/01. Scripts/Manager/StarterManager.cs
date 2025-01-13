@@ -7,14 +7,10 @@ public class StarterManager : Singleton<StarterManager>
     private bool isInitialized = false;
     private GameObject eventSystemObject;
 
-    //private void Awake()
-    //{
-    //    BackgroundManager.Instance.Init();
-    //}
-
     void Start()
     {
         BackgroundManager.Instance.Init();
+
         CreateInitialUI();
         CreateEventSystem();
         //임시
@@ -71,8 +67,9 @@ public class StarterManager : Singleton<StarterManager>
         UIManager.Instance.Show<Main_PlayerUpgradeUI>();
         UIManager.Instance.Show<RightSideBtnsAreaUI>();
         UIManager.Instance.Show<MainButtonsUI>();
-        UIManager.Instance.Show<SkillEquipSlotManager>();
         UIManager.Instance.Show<SuggetionGroupUI>();
+        UIManager.Instance.Show<EquipCompleteUI>();
+        UIManager.Instance.Show<SkillEquipSlotManager>();        
     }
 
     private void CreateEventSystem()
