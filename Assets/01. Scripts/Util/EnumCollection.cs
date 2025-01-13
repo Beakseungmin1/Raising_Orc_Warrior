@@ -110,3 +110,21 @@ public enum FadeType
     FadeOut, //¹àÀºÈ­¸é¿¡¼­ Á¡Á¡ ¾îµÎ¿öÁü
     FadeOutFadeIn //¹àÀºÈ­¸é -> ¾îµÎ¿öÁü -> ¹à¾ÆÁü
 }
+
+public static class GradeHelper
+{
+    public static string ToLocalizedString(this Grade grade)
+    {
+        switch (grade)
+        {
+            case Grade.Normal: return "ÀÏ¹İ";
+            case Grade.Uncommon: return "Èñ±Í";
+            case Grade.Rare: return "·¹¾î";
+            case Grade.Hero: return "¿µ¿õ";
+            case Grade.Legendary: return "Àü¼³";
+            case Grade.Mythic: return "½ÅÈ­";
+            case Grade.Ultimate: return "ºÒ¸ê";
+            default: return grade.ToString();
+        }
+    }
+}
