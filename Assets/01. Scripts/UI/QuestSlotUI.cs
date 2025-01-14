@@ -16,6 +16,8 @@ public class QuestSlotUI : UIBase
     public Slider slider;
 
     public GameObject completeImage;
+    public GameObject dimmedImage;
+    public Button questClearBtn;
 
     private void Awake()
     {
@@ -27,18 +29,23 @@ public class QuestSlotUI : UIBase
             rewardAmountTxt.text = questInfo.rewardAmount.ToString();
             rewardImage.sprite = questInfo.rewardImage;
         }
+
+        dimmedImage.SetActive(true);
+        questClearBtn.interactable = false;
     }
 
     private void OnEnable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged += RefreshUI;
-        GameEventsManager.Instance.questEvents.onFinishQuest += ManageCompleteUI;
+        GameEventsManager.Instance.questEvents.onFinishQuest += RefreshUI;
+        //GameEventsManager.Instance.questEvents.onCompleteQuest += ManageCompleteUI;
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged -= RefreshUI;
-        GameEventsManager.Instance.questEvents.onFinishQuest -= ManageCompleteUI;
+        GameEventsManager.Instance.questEvents.onFinishQuest -= RefreshUI;
+        //GameEventsManager.Instance.questEvents.onCompleteQuest -= ManageCompleteUI;
     }
 
     private void Start()
@@ -55,10 +62,10 @@ public class QuestSlotUI : UIBase
         switch (questInfo.questType)
         {
             case QuestType.Daily:
-                DailyQuestManager.Instance.FinishQuest(questInfo.id);
+                Debug.Log("데일리 퀘스트 미구현");
                 break;
             case QuestType.Repeat:
-                Debug.Log("반복퀘스트 미구현");
+                RepeatQuestManager.Instance.FinishQuest(questInfo.id);
                 break;
             default: //QuestType.Achievement
                 Debug.Log("업적퀘스트 미구현");
@@ -79,6 +86,18 @@ public class QuestSlotUI : UIBase
                     progressCountTxt.text = $"{questStep.count} / {questStep.countToComplete}";
                     slider.value = (float)questStep.count / questStep.countToComplete;
                     levelTxt.text = questStep.level.ToString();
+
+                    Quest quest = QuestManager.Instance.GetQuestById(id);
+                    if (quest.state.Equals(QuestState.CAN_FINISH) && quest.info.id == questInfo.id)
+                    {
+                        dimmedImage.SetActive(false);
+                        questClearBtn.interactable = true;
+                    }
+                    else
+                    {
+                        dimmedImage.SetActive(true);
+                        questClearBtn.interactable = false;
+                    }
                 }
             }
         }
@@ -109,7 +128,5 @@ public class QuestSlotUI : UIBase
                 }
             }
         }
-
-
     }
 }

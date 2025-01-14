@@ -31,6 +31,16 @@ public class QuestEvents
         }
     }
 
+    public event Action<string> onReStartQuest;
+
+    public void ReStartQuest(string id)
+    {
+        if (onReStartQuest != null)
+        {
+            onReStartQuest(id);
+        }
+    }
+
     public event Action<Quest> onQuestStateChange;
     public void QuestStateChange(Quest quest)
     {
