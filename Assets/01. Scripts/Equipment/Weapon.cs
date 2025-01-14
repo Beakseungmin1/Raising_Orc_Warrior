@@ -35,7 +35,7 @@ public class Weapon : IFusable
     {
         switch (grade)
         {
-            case Grade.Normal: return new Color(0.53f, 0.53f, 0.53f);
+            case Grade.Normal: return Color.white;
             case Grade.Uncommon: return new Color(0.22f, 0.92f, 0.54f);
             case Grade.Rare: return new Color(1f, 0.62f, 0.28f);
             case Grade.Hero: return new Color(0.24f, 0.58f, 1f);
