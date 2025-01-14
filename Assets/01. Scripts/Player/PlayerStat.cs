@@ -126,6 +126,7 @@ public class PlayerStat : MonoBehaviour
 
     private void Awake()
     {
+        save = SaveManager.Instance;
         GameEventsManager.Instance.stageEvents.onStageChange += RefillHpAndMp;
     }
 
