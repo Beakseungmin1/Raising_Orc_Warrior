@@ -52,14 +52,4 @@ public class UpgrademultiplieBtn : MonoBehaviour
         }
     }
 
-
-    public void OnHunMultiplieBtn()
-    {
-        PlayerObjManager.Instance.Player.stat.ChangeUpgradeMultiplier(0);
-        PlayerObjManager.Instance.Player.stat.UpdateNeedMoney();
-        PlayerObjManager.Instance.Player.stat.UpdateAllStatUI.Invoke();
-        //HunMultiplieBtn.SetActive(false);
-        //OneMultiplieBtn.SetActive(true);
-    }
-
 }

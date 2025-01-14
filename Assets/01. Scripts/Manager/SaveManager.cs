@@ -41,6 +41,13 @@ public class Datas
     public BigInteger needCriticalProbabilityUpgradeMoney = 1000;
     public BigInteger needBlueCriticalIncreaseDamageUpgradeMoney = 1000;
     public BigInteger needBlueCriticalProbabilityUpgradeMoney = 1000;
+    public BigInteger gold = 0;
+    public float Emerald = 0;
+    public float Cube = 0;
+    public float Diamond = 0;
+    public float DungeonTicket = 0;
+    public int curChapter = 0;
+    public int curStageIndex = 0;
 }
 
 public class SaveManager : Singleton<SaveManager>
@@ -52,9 +59,9 @@ public class SaveManager : Singleton<SaveManager>
     private string fileName = "SaveFile.es3";
 
     PlayerStat stat;
+    CurrencyManager currency;
 
-
-    void Start()
+    private void Awake()
     {
         stat = PlayerObjManager.Instance.Player.stat;
     }
@@ -91,6 +98,15 @@ public class SaveManager : Singleton<SaveManager>
         datas.needCriticalProbabilityUpgradeMoney = stat.needCriticalProbabilityUpgradeMoney;
         datas.needBlueCriticalIncreaseDamageUpgradeMoney = stat.needBlueCriticalIncreaseDamageUpgradeMoney;
         datas.needBlueCriticalProbabilityUpgradeMoney= stat.needBlueCriticalProbabilityUpgradeMoney;
+        datas.gold = CurrencyManager.Instance.GetGold();
+        datas.Emerald = CurrencyManager.Instance.GetCurrency(CurrencyType.Emerald);
+        datas.Cube = CurrencyManager.Instance.GetCurrency(CurrencyType.Cube);
+        datas.Diamond = CurrencyManager.Instance.GetCurrency(CurrencyType.Diamond);
+        datas.DungeonTicket = CurrencyManager.Instance.GetCurrency(CurrencyType.DungeonTicket);
+        datas.curChapter = StageManager.Instance.curChapterIndex;
+        datas.curStageIndex = StageManager.Instance.curStageIndex;
+
+
         ES3.Save("Datas", datas);
     }
 
@@ -101,13 +117,25 @@ public class SaveManager : Singleton<SaveManager>
             ES3.LoadInto(KeyName, datas);
             stat.StatDataLoad();
             stat.UpdateNeedMoney();
-            stat.UpdateAllStatUI.Invoke();
+            CurrencyManager.Instance.SetGold(datas.gold);
+            CurrencyManager.Instance.SetCurrency(CurrencyType.Emerald, datas.Emerald);
+            CurrencyManager.Instance.SetCurrency(CurrencyType.Cube, datas.Cube);
+            CurrencyManager.Instance.SetCurrency(CurrencyType.Diamond, datas.Diamond);
+            CurrencyManager.Instance.SetCurrency(CurrencyType.DungeonTicket, datas.DungeonTicket);
+            //StageManager.Instance.curChapterIndex = datas.curChapter;
+            //StageManager.Instance.curStageIndex = datas.curStageIndex;
+
         }
         else
         {
             DataSave();
         }
 
+    }
+
+    public void DataDelete()
+    {
+        ES3.DeleteKey(KeyName);
     }
 
 

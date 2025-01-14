@@ -437,6 +437,8 @@ MonoBehaviour:
     attackPower: 20
     criticalProbability: 0
     criticalIncreaseDamage: 100
+    bluecriticalIncreaseDamage: 0
+    bluecriticalProbability: 0
     maxMana: 200
     mana: 200
     manaRegeneration: 5
@@ -452,6 +454,12 @@ MonoBehaviour:
     criticalProbabilityLevel: 1
     bluecriticalIncreaseDamageLevel: 1
     bluecriticalProbabilityLevel: 1
+    Emerald: 0
+    Cube: 0
+    Diamond: 0
+    DungeonTicket: 0
+    curChapter: 0
+    curStageIndex: 0
 --- !u!4 &849495715
 Transform:
   m_ObjectHideFlags: 0
