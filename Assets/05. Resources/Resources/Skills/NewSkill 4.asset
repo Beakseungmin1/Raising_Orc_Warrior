@@ -17,7 +17,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 7384cdd132fb8a349ba1b38b461b701f, type: 3}
   inGameImage: {fileID: 0}
   grade: 2
-  gradeColor: {r: 1, g: 0.41093177, b: 0, a: 1}
+  gradeColor: {r: 1, g: 0.6156863, b: 0.2784314, a: 1}
   currencyIcon: {fileID: 21300000, guid: f926f2f6a7fc39b4b9803f98b90bfcc2, type: 3}
   requiredCurrencyForUpgrade: 150
   currentLevel: 1
@@ -39,7 +39,7 @@ MonoBehaviour:
   moveSpeedIncrease: 0
   attackSpeedIncrease: 0
   requireSkillCardsForUpgrade: 2
-  maxLevel: 100
+  maxLevel: 10
   effectPrefab: {fileID: 786883300241084630, guid: d7df72cd1020b8f4aa7221ba399f629f, type: 3}
   effectDuration: 3
   isEquipped: 0

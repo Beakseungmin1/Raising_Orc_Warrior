@@ -15,5 +15,12 @@ public class PassiveSkill : BaseSkill
         base.EndEffect();
     }
 
-    protected override void EnhanceSkill() { }
+    protected override void EnhanceSkill()
+    {
+        if (skillEffect.AttackIncreasePercent > 0)
+        {
+            skillEffect.AttackIncreasePercent *= 1.05f;
+            skillEffect.AttackIncreasePercent = Mathf.RoundToInt(skillEffect.AttackIncreasePercent);
+        }
+    }
 }

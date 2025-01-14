@@ -121,7 +121,6 @@ public class EquipManager : MonoBehaviour
     {
         if (slotIndex < 0 || slotIndex >= EquippedSkills.Count)
         {
-            Debug.LogWarning($"[EquipManager] 슬롯 인덱스 {slotIndex}가 유효하지 않습니다.");
             return;
         }
 
@@ -131,8 +130,6 @@ public class EquipManager : MonoBehaviour
         skill.Deactivate();
         EquippedSkills[slotIndex] = null;
         skill.IsEquipped = false;
-
-        Debug.Log($"[EquipManager] 슬롯 {slotIndex}에서 스킬 {skill.SkillData.itemName}이 제거되었습니다.");
 
         skillHandler.SyncWithEquipManager();
 

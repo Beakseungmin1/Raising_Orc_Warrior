@@ -135,22 +135,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CurrencyManager
       objectReference: {fileID: 0}
-    - target: {fileID: 3927537478683793254, guid: 9deb5255de3a04b4e8e09b436d68951a, type: 3}
-      propertyPath: curCube
-      value: 100000000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927537478683793254, guid: 9deb5255de3a04b4e8e09b436d68951a, type: 3}
-      propertyPath: curGold
-      value: 100000000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927537478683793254, guid: 9deb5255de3a04b4e8e09b436d68951a, type: 3}
-      propertyPath: curDiamond
-      value: 100000000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927537478683793254, guid: 9deb5255de3a04b4e8e09b436d68951a, type: 3}
-      propertyPath: curEmerald
-      value: 100000000
-      objectReference: {fileID: 0}
     - target: {fileID: 4769595420833800993, guid: 9deb5255de3a04b4e8e09b436d68951a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -204,66 +188,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: field
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: initialSpawnX
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: spawnDistance
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: spawnYPosition
-      value: 1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: enemyRegenPoss.Array.size
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: enemyRegenPoss.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: enemyRegenPoss.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: enemyRegenPoss.Array.data[2]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: enemyRegenPoss.Array.data[3]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: enemyRegenPoss.Array.data[4]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: enemyRegenPoss.Array.data[5]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: enemyRegenPoss.Array.data[6]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: enemyRegenPoss.Array.data[7]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: enemyRegenPoss.Array.data[8]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: enemyRegenPoss.Array.data[9]
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1894558700181277466, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
       propertyPath: m_Name
       value: RegenManager
@@ -435,10 +359,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4520383135767064401, guid: bcb60ee84447f6a4e921670e0a9428e2, type: 3}
-      propertyPath: chapterSOs.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5372603423987100375, guid: bcb60ee84447f6a4e921670e0a9428e2, type: 3}
       propertyPath: m_Name
       value: StageManager
@@ -535,10 +455,6 @@ PrefabInstance:
     - target: {fileID: 951958769847937792, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3124620342091247500, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
-      propertyPath: background
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5242343083079520144, guid: 83f496602ee69e243857d5de5df01bda, type: 3}
       propertyPath: m_Name
@@ -768,22 +684,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1773905168374146265, guid: 98eaf5341c0d0c14eb335bb5edf05570, type: 3}
-      propertyPath: questInfos.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1773905168374146265, guid: 98eaf5341c0d0c14eb335bb5edf05570, type: 3}
-      propertyPath: questInfos.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 5b0446ff3fecea34181cf9c7260506b3, type: 2}
-    - target: {fileID: 1773905168374146265, guid: 98eaf5341c0d0c14eb335bb5edf05570, type: 3}
-      propertyPath: questInfos.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 1a7555db1ff452f43b987ea45a5133a7, type: 2}
-    - target: {fileID: 1773905168374146265, guid: 98eaf5341c0d0c14eb335bb5edf05570, type: 3}
-      propertyPath: questInfos.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 05a310617fc97f948b48aeddf099404f, type: 2}
     - target: {fileID: 3544765790054530863, guid: 98eaf5341c0d0c14eb335bb5edf05570, type: 3}
       propertyPath: m_Name
       value: QuestManager
@@ -943,15 +843,7 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1823932295}
     - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
-      propertyPath: playerPosition
-      value: 
-      objectReference: {fileID: 1823932295}
-    - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
       propertyPath: playerWeaponPosition
-      value: 
-      objectReference: {fileID: 1823932295}
-    - target: {fileID: 1846668857801359868, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}
-      propertyPath: projectileSpawnPoint
       value: 
       objectReference: {fileID: 1823932295}
     - target: {fileID: 2886391991821839703, guid: 6801e156146ab9f4c9496d50a2056b9b, type: 3}

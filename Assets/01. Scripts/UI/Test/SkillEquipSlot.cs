@@ -8,6 +8,7 @@ public class SkillEquipSlot : UIBase
     [SerializeField] private Image skillIcon;
     [SerializeField] private Button slotButton;
     [SerializeField] private Image cooldownImage;
+    [SerializeField] private Image IconImage;
     [SerializeField] private TextMeshProUGUI conditionText;
     [SerializeField] private Sprite defaultSprite;
     [SerializeField] private GameObject highlightEffect;
@@ -26,6 +27,11 @@ public class SkillEquipSlot : UIBase
         if (skillIcon != null)
         {
             skillIconImage = skillIcon.GetComponent<Image>();
+
+            if (skillIconImage != null)
+            {
+                skillIconImage.type = Image.Type.Sliced;
+            }
         }
     }
 
@@ -72,6 +78,17 @@ public class SkillEquipSlot : UIBase
             cooldownImage.fillAmount = 1;
             conditionText.text = "";
             conditionText.gameObject.SetActive(false);
+
+            if (IconImage != null)
+            {
+                IconImage.gameObject.SetActive(false);
+            }
+
+            if (skillIconImage != null)
+            {
+                skillIconImage.type = Image.Type.Sliced;
+            }
+
             return;
         }
 
@@ -82,8 +99,22 @@ public class SkillEquipSlot : UIBase
             float cooldownRatio = Mathf.Clamp01(equippedSkill.RemainingCooldown / equippedSkill.SkillData.cooldown);
             cooldownImage.fillAmount = 1 - cooldownRatio;
 
+            if (IconImage != null)
+            {
+                IconImage.gameObject.SetActive(true);
+                IconImage.sprite = equippedSkill.SkillData.icon;
+            }
+            if (skillIconImage != null)
+            {
+                skillIconImage.type = Image.Type.Filled;
+            }
             if (equippedSkill.IsReadyToActivate())
             {
+                if (IconImage != null)
+                {
+                    IconImage.gameObject.SetActive(false);
+                }
+
                 conditionText.gameObject.SetActive(false);
             }
             else
@@ -98,8 +129,22 @@ public class SkillEquipSlot : UIBase
             float hitRatio = Mathf.Clamp01((float)equippedSkill.CurrentHits / equippedSkill.SkillData.requiredHits);
             cooldownImage.fillAmount = hitRatio;
 
+            if (IconImage != null)
+            {
+                IconImage.gameObject.SetActive(true);
+                IconImage.sprite = equippedSkill.SkillData.icon;
+            }
+            if (skillIconImage != null)
+            {
+                skillIconImage.type = Image.Type.Filled;
+            }
             if (equippedSkill.IsReadyToActivate())
             {
+                if (IconImage != null)
+                {
+                    IconImage.gameObject.SetActive(false);
+                }
+
                 conditionText.text = $"{equippedSkill.SkillData.requiredHits} / {equippedSkill.SkillData.requiredHits}";
                 conditionText.gameObject.SetActive(false);
             }

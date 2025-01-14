@@ -34,7 +34,7 @@ public class Accessory : IFusable
     {
         switch (grade)
         {
-            case Grade.Normal: return new Color(0.53f, 0.53f, 0.53f);
+            case Grade.Normal: return Color.white;
             case Grade.Uncommon: return new Color(0.22f, 0.92f, 0.54f);
             case Grade.Rare: return new Color(1f, 0.62f, 0.28f);
             case Grade.Hero: return new Color(0.24f, 0.58f, 1f);
@@ -48,7 +48,7 @@ public class Accessory : IFusable
     public bool CanEnhance()
     {
         return CurrencyManager.Instance.GetCurrency(CurrencyType.Cube) >= RequiredCurrencyForUpgrade
-               && EnhancementLevel < 100;
+               && EnhancementLevel < BaseData.maxLevel;
     }
 
     public bool Enhance()
