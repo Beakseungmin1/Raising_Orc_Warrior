@@ -14,4 +14,5 @@ public abstract class BaseItemDataSO : ScriptableObject
     public Sprite currencyIcon;
     public int requiredCurrencyForUpgrade;
     public int currentLevel;
+    public int maxLevel = 100;
 }
