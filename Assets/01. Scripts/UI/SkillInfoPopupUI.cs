@@ -39,8 +39,6 @@ public class SkillInfoPopupUI : UIBase
 
     public void DisplaySkillDetails(BaseSkill skill, int currentMaterialCount, int requiredMaterials)
     {
-        Debug.Log($"Displaying details for skill: {skill.SkillData.itemName}");
-
         currentSkill = skill;
 
         skillNameTxt.text = skill.SkillData.itemName;
@@ -102,8 +100,6 @@ public class SkillInfoPopupUI : UIBase
 
     public void DisplaySkillDetails(SkillDataSO skillDataSO)
     {
-        Debug.Log($"Displaying details for skill: {skillDataSO.itemName}");
-
         currentSkill = null;
 
         skillNameTxt.text = skillDataSO.itemName;
@@ -202,7 +198,6 @@ public class SkillInfoPopupUI : UIBase
     {
         if (currentSkill == null)
         {
-            Debug.LogWarning("강화할 스킬이 없습니다.");
             return;
         }
 

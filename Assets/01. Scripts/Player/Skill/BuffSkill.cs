@@ -1,9 +1,8 @@
 using System.Collections;
 using UnityEngine;
-using System.Numerics;
 
 public class BuffSkill : BaseSkill
-{   
+{
     public override void Activate(UnityEngine.Vector3 targetPosition)
     {
         if (!IsReadyToActivate() || !ConsumeMana()) return;
@@ -12,39 +11,39 @@ public class BuffSkill : BaseSkill
         SkillEffectManager.Instance.TriggerEffect(this, UnityEngine.Vector3.zero);
         ResetCondition();
 
-        ApplySpeedBoost();
-        ApplyManaBoost();
-        ApplyAttackBoost();
+        ApplySpeedBoost(effect);
+        ApplyManaBoost(effect);
+        ApplyAttackBoost(effect);
         StartCoroutine(EndBuffAfterDuration());
     }
 
-    private void ApplySpeedBoost()
+    private void ApplySpeedBoost(SkillEffect effect)
     {
-        if (skillData.moveSpeedIncrease > 0)
+        if (effect.MoveSpeedIncrease > 0)
         {
-            BackgroundManager.Instance.ParallaxBackground.scrollSpeed *= 1 + (skillData.moveSpeedIncrease / 100f);
+            BackgroundManager.Instance.ParallaxBackground.scrollSpeed *= 1 + (effect.MoveSpeedIncrease / 100f);
         }
     }
 
-    private void ApplyManaBoost()
+    private void ApplyManaBoost(SkillEffect effect)
     {
-        if (skillData.manaRecoveryAmount > 0)
+        if (effect.ManaRecoveryAmount > 0)
         {
-            playerStat.setMana(skillData.manaRecoveryAmount);
+            playerStat.setMana(effect.ManaRecoveryAmount);
         }
     }
 
-    private void ApplyAttackBoost()
+    private void ApplyAttackBoost(SkillEffect effect)
     {
-        if (skillData.attackSpeedIncrease > 0)
+        if (effect.AttackSpeedIncrease > 0)
         {
-            player.ChangeAnimatorSpeed(skillData.attackSpeedIncrease);
+            player.ChangeAnimatorSpeed(effect.AttackSpeedIncrease);
         }
     }
 
     private IEnumerator EndBuffAfterDuration()
     {
-        yield return new WaitForSeconds(skillData.buffDuration);
+        yield return new WaitForSeconds(skillEffect.BuffDuration);
         EndEffect();
     }
 
