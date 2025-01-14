@@ -57,5 +57,30 @@ public class BuffSkill : BaseSkill
         player.ChangeAnimatorSpeed(0.8f);
     }
 
-    protected override void EnhanceSkill() { }
+    protected override void EnhanceSkill()
+    {
+        if (skillEffect.AttackIncreasePercent > 0)
+        {
+            skillEffect.AttackIncreasePercent *= 1.05f;
+            skillEffect.AttackIncreasePercent = Mathf.RoundToInt(skillEffect.AttackIncreasePercent);
+        }
+
+        if (skillEffect.ManaRecoveryAmount > 0)
+        {
+            skillEffect.ManaRecoveryAmount += 10;
+            skillEffect.ManaRecoveryAmount = Mathf.RoundToInt(skillEffect.ManaRecoveryAmount);
+        }
+
+        if (skillEffect.MoveSpeedIncrease > 0)
+        {
+            skillEffect.MoveSpeedIncrease += 10f;
+            skillEffect.MoveSpeedIncrease = Mathf.RoundToInt(skillEffect.MoveSpeedIncrease);
+        }
+
+        if (skillEffect.AttackSpeedIncrease > 0)
+        {
+            skillEffect.AttackSpeedIncrease += 0.1f;
+            skillEffect.AttackSpeedIncrease = Mathf.RoundToInt(skillEffect.AttackSpeedIncrease);
+        }
+    }
 }

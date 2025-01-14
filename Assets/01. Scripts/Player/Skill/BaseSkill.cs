@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class BaseSkill : MonoBehaviour, IEnhanceable
 {
     protected SkillDataSO skillData;
+    public SkillEffect skillEffect;
     public SkillDataSO SkillData => skillData;
     public BaseItemDataSO BaseData => skillData;
     public int EnhancementLevel { get; set; } = 1;
@@ -46,6 +47,23 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
                 isEquipped = value;
             }
         }
+    }
+
+    private void Start()
+    {
+        skillEffect = new SkillEffect(
+            skillPrefab: skillData.effectPrefab,
+            damagePercent: skillData.damagePercent,
+            buffDuration: skillData.buffDuration,
+            effectRange: skillData.effectRange,
+            effectType: skillData.effectType,
+            effectDuration: skillData.effectDuration,
+            attackIncreasePercent: skillData.attackIncreasePercent,
+            manaRecoveryAmount: skillData.manaRecoveryAmount,
+            hpRecoveryAmount: skillData.hpRecoveryAmount,
+            moveSpeedIncrease: skillData.moveSpeedIncrease,
+            attackSpeedIncrease: skillData.attackSpeedIncrease
+        );
     }
 
     public virtual void Initialize(SkillDataSO data, PlayerStat stat)
@@ -122,19 +140,7 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
 
     public virtual SkillEffect GetSkillEffect(Vector3 targetPosition)
     {
-        return new SkillEffect(
-            skillData.effectPrefab,
-            skillData.damagePercent,
-            skillData.buffDuration,
-            skillData.effectRange,
-            skillData.effectType,
-            targetPosition,
-            skillData.effectDuration,
-            skillData.attackIncreasePercent,
-            skillData.manaRecoveryAmount,
-            skillData.hpRecoveryAmount,
-            skillData.moveSpeedIncrease
-        );
+        return skillEffect;
     }
 
     public abstract void Activate(Vector3 targetPosition);
