@@ -155,6 +155,11 @@ public abstract class BaseSkill : MonoBehaviour, IEnhanceable
     {
         if (!CanEnhance()) return false;
 
+        if (EnhancementLevel >= skillData.maxLevel)
+        {
+            return false;
+        }
+
         CurrencyManager.Instance.SubtractCurrency(CurrencyType.Emerald, RequiredCurrencyForUpgrade);
         PlayerObjManager.Instance.Player.inventory.RemoveItemFromInventory(skillData, requireSkillCardsForUpgrade);
 
