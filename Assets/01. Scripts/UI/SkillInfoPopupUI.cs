@@ -45,7 +45,15 @@ public class SkillInfoPopupUI : UIBase
 
         skillNameTxt.text = skill.SkillData.itemName;
         descriptionTxt.text = skill.SkillData.description;
-        currentLevelTxt.text = skill.EnhancementLevel.ToString();
+
+        if (skill.EnhancementLevel >= skill.SkillData.maxLevel)
+        {
+            currentLevelTxt.text = "Max";
+        }
+        else
+        {
+            currentLevelTxt.text = skill.EnhancementLevel.ToString();
+        }
 
         gradeTxt.text = $"[{TranslateGrade(skill.SkillData.grade)}]";
         gradeTxt.color = skill.SkillData.gradeColor;
