@@ -69,4 +69,21 @@ public class QuestEvents
         }
     }
 
+    public event Action<string> onFinishQuestStep;
+    public void FinishQuestStep(string id)
+    {
+        if (onFinishQuestStep != null)
+        {
+            onFinishQuestStep(id);
+        }
+    }
+
+    public event Action<string> onRestartQuestStep;
+    public void RestartQuestStep(string id)
+    {
+        if (onRestartQuestStep != null)
+        {
+            onRestartQuestStep(id);
+        }
+    }
 }

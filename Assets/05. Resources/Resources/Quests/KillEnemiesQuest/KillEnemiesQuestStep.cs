@@ -6,13 +6,15 @@ public class KillEnemiesQuestStep : QuestStep
 {
     public QuestInfoSO questInfo;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         GameEventsManager.Instance.enemyEvents.onEnemyKilled += EnemyKilled;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         GameEventsManager.Instance.enemyEvents.onEnemyKilled -= EnemyKilled;
     }
 
@@ -29,7 +31,7 @@ public class KillEnemiesQuestStep : QuestStep
 
         if (this.count >= countToComplete)
         {
-            FinishQuestStep();
+            CanFinishQuestStep();
             GameEventsManager.Instance.questEvents.QuestProgressCountChange(questId);
         }
     }

@@ -121,19 +121,20 @@ public class QuestManager : Singleton<QuestManager>
         Quest quest = GetQuestById(id);
         ClaimRewards(quest);
         ChangeQuestState(quest.info.id, QuestState.FINISHED);
+        GameEventsManager.Instance.questEvents.QuestProgressCountChange(id);
     }
 
     private void RestartQuest(string id)
     {
         Quest quest = GetQuestById(id);
-        
-        Destroy(GetQuestStepObjById(id));
-        questStepObjMap.Remove(quest.info.id, out questStepObj);
 
-        GameObject newQuestStepObj = quest.InstatiateCurrentQuestStep(this.transform);
-        questStepObjMap.Add(quest.info.id, newQuestStepObj);
+        //Äù½ºÆ® ½ºÅÜ ÇÁ¸®ÆÕ Ã³¸®
+        QuestStep step = GetQuestStepObjById(id).GetComponent<QuestStep>();
+        GameEventsManager.Instance.questEvents.FinishQuestStep(id);
 
+        GameEventsManager.Instance.questEvents.RestartQuestStep(id);
         ChangeQuestState(quest.info.id, QuestState.IN_PROGRESS);
+        GameEventsManager.Instance.questEvents.QuestProgressCountChange(id);
     }
 
     private void ClaimRewards(Quest quest)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,18 @@ public abstract class QuestStep : MonoBehaviour
     public int count = 0;
     public int countToComplete = 10;
 
+    protected virtual void OnEnable()
+    {
+        GameEventsManager.Instance.questEvents.onFinishQuestStep += FinishQuestStep;
+        GameEventsManager.Instance.questEvents.onRestartQuestStep += RestartQuestStep;
+    }
+
+    protected virtual void OnDisable()
+    {
+        GameEventsManager.Instance.questEvents.onFinishQuestStep -= FinishQuestStep;
+        GameEventsManager.Instance.questEvents.onRestartQuestStep -= RestartQuestStep;
+    }
+
     public void InitializeQuestStep(string questId, int stepIndex, string questStepState)
     {
         this.questId = questId;
@@ -22,16 +35,32 @@ public abstract class QuestStep : MonoBehaviour
         }
     }
 
-    protected void FinishQuestStep()
+    protected void CanFinishQuestStep()
     {
-        if (!isFinished)
+        GameEventsManager.Instance.questEvents.AdvanceQuest(questId);
+    }
+
+    protected void FinishQuestStep(string id)
+    {
+        if (!isFinished && this.questId == id)
         {
-            isFinished = true; 
+            isFinished = true;
+            count = 0;
             GameEventsManager.Instance.questEvents.AdvanceQuest(questId);
-            //Destroy(this.gameObject);
+            GameEventsManager.Instance.questEvents.QuestProgressCountChange(questId);
         }
     }
-    
+
+    protected void RestartQuestStep(string id)
+    {
+        if (isFinished && this.questId == id)
+        {
+            isFinished = false;
+            GameEventsManager.Instance.questEvents.AdvanceQuest(questId);
+            GameEventsManager.Instance.questEvents.QuestProgressCountChange(questId);
+        }
+    }
+
     protected void ChangeState(string newState)
     {
         GameEventsManager.Instance.questEvents.QuestStepStateChange(questId, stepIndex, new QuestStepState(newState));

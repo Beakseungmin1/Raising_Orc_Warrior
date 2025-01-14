@@ -37,14 +37,12 @@ public class QuestSlotUI : UIBase
     private void OnEnable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged += RefreshUI;
-        GameEventsManager.Instance.questEvents.onFinishQuest += RefreshUI;
         //GameEventsManager.Instance.questEvents.onCompleteQuest += ManageCompleteUI;
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged -= RefreshUI;
-        GameEventsManager.Instance.questEvents.onFinishQuest -= RefreshUI;
         //GameEventsManager.Instance.questEvents.onCompleteQuest -= ManageCompleteUI;
     }
 
@@ -88,12 +86,12 @@ public class QuestSlotUI : UIBase
                     levelTxt.text = questStep.level.ToString();
 
                     Quest quest = QuestManager.Instance.GetQuestById(id);
-                    if (quest.state.Equals(QuestState.CAN_FINISH) && quest.info.id == questInfo.id)
+                    if (quest.state.Equals(QuestState.CAN_FINISH))
                     {
                         dimmedImage.SetActive(false);
                         questClearBtn.interactable = true;
                     }
-                    else
+                    else //피니쉬 아닌 상태면 무조건 
                     {
                         dimmedImage.SetActive(true);
                         questClearBtn.interactable = false;

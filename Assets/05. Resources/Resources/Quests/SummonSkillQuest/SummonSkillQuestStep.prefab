@@ -47,5 +47,5 @@ MonoBehaviour:
   questId: 
   level: 1
   count: 0
-  countToComplete: 10
+  countToComplete: 5
   questInfo: {fileID: 11400000, guid: 1a7555db1ff452f43b987ea45a5133a7, type: 2}
