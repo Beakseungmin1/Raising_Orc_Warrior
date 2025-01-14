@@ -48,7 +48,7 @@ public class Accessory : IFusable
     public bool CanEnhance()
     {
         return CurrencyManager.Instance.GetCurrency(CurrencyType.Cube) >= RequiredCurrencyForUpgrade
-               && EnhancementLevel < 100;
+               && EnhancementLevel < BaseData.maxLevel;
     }
 
     public bool Enhance()
