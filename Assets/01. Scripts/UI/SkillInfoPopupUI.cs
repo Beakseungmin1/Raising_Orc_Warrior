@@ -141,17 +141,18 @@ public class SkillInfoPopupUI : UIBase
         string template = skill.SkillData.effectDescription;
 
         var values = new Dictionary<string, object>
-    {
-        { "range", skill.SkillData.effectRange },
-        { "damagePercent", skill.SkillData.damagePercent },
-        { "requiredHits", skill.SkillData.requiredHits },
-        { "buffDuration", skill.SkillData.buffDuration },
-        { "attackIncreasePercent", skill.SkillData.attackIncreasePercent },
-        { "cooldown", skill.SkillData.cooldown },
-        { "manaRecoveryAmount", skill.SkillData.manaRecoveryAmount },
-        { "moveSpeedIncrease", skill.SkillData.moveSpeedIncrease },
-        { "attackSpeedIncrease", skill.SkillData.attackSpeedIncrease }
-    };
+        {
+            { "range", skill.SkillData.effectRange },
+            { "damagePercent", skill.skillEffect.DamagePercent },
+            { "requiredHits", skill.SkillData.requiredHits },
+            { "buffDuration", skill.SkillData.buffDuration },
+            { "attackIncreasePercent", skill.skillEffect.AttackIncreasePercent },
+            { "cooldown", skill.SkillData.cooldown },
+            { "manaRecoveryAmount", skill.skillEffect.ManaRecoveryAmount },
+            { "moveSpeedIncrease", skill.skillEffect.MoveSpeedIncrease },
+            { "attackSpeedIncrease", skill.skillEffect.AttackSpeedIncrease }
+        };
+    
 
         foreach (var pair in values)
         {
