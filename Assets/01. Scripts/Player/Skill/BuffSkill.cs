@@ -80,7 +80,6 @@ public class BuffSkill : BaseSkill
         if (skillEffect.AttackSpeedIncrease > 0)
         {
             skillEffect.AttackSpeedIncrease += 0.1f;
-            skillEffect.AttackSpeedIncrease = Mathf.RoundToInt(skillEffect.AttackSpeedIncrease);
         }
     }
 }
