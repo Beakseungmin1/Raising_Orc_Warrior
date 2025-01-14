@@ -122,8 +122,8 @@ public class SaveManager : Singleton<SaveManager>
             CurrencyManager.Instance.SetCurrency(CurrencyType.Cube, datas.Cube);
             CurrencyManager.Instance.SetCurrency(CurrencyType.Diamond, datas.Diamond);
             CurrencyManager.Instance.SetCurrency(CurrencyType.DungeonTicket, datas.DungeonTicket);
-            //StageManager.Instance.curChapterIndex = datas.curChapter;
-            //StageManager.Instance.curStageIndex = datas.curStageIndex;
+            StageManager.Instance.curChapterIndex = datas.curChapter;
+            StageManager.Instance.curStageIndex = datas.curStageIndex;
 
         }
         else
