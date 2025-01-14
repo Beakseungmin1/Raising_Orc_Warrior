@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <id>k__BackingField: SummonSkillQuest
   displayName: "\uC2A4\uD0AC\uC18C\uD658"
-  questType: 0
+  questType: 1
   levelRequirement: 1
   questPrerequisites: []
   questStepPrefabs:

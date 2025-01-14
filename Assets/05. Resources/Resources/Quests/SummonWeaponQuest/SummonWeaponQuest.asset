@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <id>k__BackingField: SummonWeaponQuest
   displayName: "\uBB34\uAE30 \uC18C\uD658"
-  questType: 0
+  questType: 1
   levelRequirement: 1
   questPrerequisites: []
   questStepPrefabs:
