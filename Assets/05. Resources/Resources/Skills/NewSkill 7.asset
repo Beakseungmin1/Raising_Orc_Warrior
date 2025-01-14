@@ -17,15 +17,16 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: e0bf69c71b1f9b449aea2644134dc16b, type: 3}
   inGameImage: {fileID: 0}
   grade: 5
-  gradeColor: {r: 0, g: 0.016850948, b: 1, a: 1}
+  gradeColor: {r: 1, g: 0.23921569, b: 0.23921569, a: 1}
   currencyIcon: {fileID: 21300000, guid: f926f2f6a7fc39b4b9803f98b90bfcc2, type: 3}
-  requiredCurrencyForUpgrade: 100000
+  requiredCurrencyForUpgrade: 700
   currentLevel: 1
+  maxLevel: 10
   description: "\uBD09\uC778\uB41C \uC624\uD06C\uC2E0\uC758 \uD798\uC744 \uAE68\uC6CC
     \uC7A0\uC2DC\uB3D9\uC548 \uCD08\uC6D4\uC801\uC778 \uD798\uC744 \uD3ED\uBC1C\uC2DC\uD0A4\uB294
     \uAE30\uC220"
   effectDescription: "\uC804\uD22C \uB3CC\uC785 \uD6C4, {buffDuration}\uB3D9\uC548
-    \uC804\uCCB4 \uACF5\uACA9\uB825 \uC18D\uB3C4 {attackSpeedIncrease}\uBC30 \uC99D\uAC00"
+    \uC804\uCCB4 \uACF5\uACA9\uC18D\uB3C4 {attackSpeedIncrease}\uBC30 \uC99D\uAC00"
   skillType: 1
   effectType: 0
   activationCondition: 1
@@ -41,7 +42,7 @@ MonoBehaviour:
   moveSpeedIncrease: 0
   attackSpeedIncrease: 2
   requireSkillCardsForUpgrade: 2
-  maxLevel: 100
+  maxLevel: 10
   effectPrefab: {fileID: 786883300241084630, guid: e718b3bdcf5d8f940bb72340d769a4c7, type: 3}
   effectDuration: 2
   isEquipped: 0

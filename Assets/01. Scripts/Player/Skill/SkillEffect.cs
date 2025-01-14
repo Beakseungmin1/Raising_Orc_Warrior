@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public struct SkillEffect
+public class SkillEffect
 {
     public GameObject SkillPrefab;
     public float DamagePercent;
@@ -8,11 +8,11 @@ public struct SkillEffect
     public float EffectRange;
     public float EffectDuration;
     public EffectType EffectType;
-    public Vector3 TargetPosition;
     public float AttackIncreasePercent;
     public float ManaRecoveryAmount;
     public float HpRecoveryAmount;
     public float MoveSpeedIncrease;
+    public float AttackSpeedIncrease;
 
     public SkillEffect(
         GameObject skillPrefab,
@@ -20,23 +20,23 @@ public struct SkillEffect
         float buffDuration,
         float effectRange,
         EffectType effectType,
-        Vector3 targetPosition,
         float effectDuration,
         float attackIncreasePercent,
         float manaRecoveryAmount,
         float hpRecoveryAmount,
-        float moveSpeedIncrease)
+        float moveSpeedIncrease,
+        float attackSpeedIncrease)
     {
         SkillPrefab = skillPrefab;
         DamagePercent = damagePercent;
         BuffDuration = buffDuration;
         EffectRange = effectRange;
         EffectType = effectType;
-        TargetPosition = targetPosition;
         EffectDuration = effectDuration;
         AttackIncreasePercent = attackIncreasePercent;
         ManaRecoveryAmount = manaRecoveryAmount;
         HpRecoveryAmount = hpRecoveryAmount;
         MoveSpeedIncrease = moveSpeedIncrease;
+        AttackSpeedIncrease = attackSpeedIncrease;
     }
 }

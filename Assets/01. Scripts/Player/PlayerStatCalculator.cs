@@ -28,7 +28,14 @@ public class PlayerStatCalculator : MonoBehaviour
     {
         stat = PlayerObjManager.Instance.Player.stat;
         equipManager = PlayerObjManager.Instance.Player.EquipManager;
-        stat.SetDefaultStat();
+        if (ES3.FileExists("SaveFile.es3"))
+        {
+            SaveManager.Instance.DataLoad();
+        }
+        else
+        {
+            stat.SetDefaultStat();
+        }
         UpdateValue();
 
         stat.OnStatChange += UpdateValue;

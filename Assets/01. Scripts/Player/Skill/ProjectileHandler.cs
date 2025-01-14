@@ -17,8 +17,6 @@ public class ProjectileHandler : MonoBehaviour
             Debug.Log($"ProjectileHandler: 몬스터에 명중 - 데미지 전달 시작");
 
             ApplyDamageToMonster(collision.gameObject);
-
-            Destroy(gameObject);
         }
     }
 

@@ -45,6 +45,12 @@ public class CurrencyManager : Singleton<CurrencyManager>
         GameEventsManager.Instance.currencyEvents.GoldChanged();
     }
 
+    public void SetGold(BigInteger amount)
+    {
+        gold = amount;
+        GameEventsManager.Instance.currencyEvents.GoldChanged();
+    }
+
     // Gold 조회
     public BigInteger GetGold()
     {
@@ -71,6 +77,16 @@ public class CurrencyManager : Singleton<CurrencyManager>
         }
         GameEventsManager.Instance.currencyEvents.CallCurrencyAsFloatChangedMathod(type);
     }
+
+    public void SetCurrency(CurrencyType type, float amount)
+    {
+        if (currencies.ContainsKey(type))
+        {
+            currencies[type] = amount;
+        }
+        GameEventsManager.Instance.currencyEvents.CallCurrencyAsFloatChangedMathod(type);
+    }
+
 
     // 재화 조회
     public float GetCurrency(CurrencyType type)

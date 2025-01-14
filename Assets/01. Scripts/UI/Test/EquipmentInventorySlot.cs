@@ -59,7 +59,14 @@ public class EquipmentInventorySlot : UIBase
             equipmentIcon.sprite = item.BaseData.icon;
             rankTxt.text = item.BaseData is WeaponDataSO weapon ? $"{weapon.rank} 등급" :
                            item.BaseData is AccessoryDataSO accessory ? $"{accessory.rank} 등급" : "N/A";
-            currentLevelTxt.text = $"+{item.EnhancementLevel}";
+            if (item.EnhancementLevel >= item.BaseData.maxLevel)
+            {
+                currentLevelTxt.text = "Max";
+            }
+            else
+            {
+                currentLevelTxt.text = $"+{item.EnhancementLevel}";
+            }
         }
         else
         {

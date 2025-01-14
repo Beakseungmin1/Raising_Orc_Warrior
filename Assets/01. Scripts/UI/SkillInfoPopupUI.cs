@@ -39,13 +39,19 @@ public class SkillInfoPopupUI : UIBase
 
     public void DisplaySkillDetails(BaseSkill skill, int currentMaterialCount, int requiredMaterials)
     {
-        Debug.Log($"Displaying details for skill: {skill.SkillData.itemName}");
-
         currentSkill = skill;
 
         skillNameTxt.text = skill.SkillData.itemName;
         descriptionTxt.text = skill.SkillData.description;
-        currentLevelTxt.text = skill.EnhancementLevel.ToString();
+
+        if (skill.EnhancementLevel >= skill.SkillData.maxLevel)
+        {
+            currentLevelTxt.text = "Max";
+        }
+        else
+        {
+            currentLevelTxt.text = skill.EnhancementLevel.ToString();
+        }
 
         gradeTxt.text = $"[{TranslateGrade(skill.SkillData.grade)}]";
         gradeTxt.color = skill.SkillData.gradeColor;
@@ -94,8 +100,6 @@ public class SkillInfoPopupUI : UIBase
 
     public void DisplaySkillDetails(SkillDataSO skillDataSO)
     {
-        Debug.Log($"Displaying details for skill: {skillDataSO.itemName}");
-
         currentSkill = null;
 
         skillNameTxt.text = skillDataSO.itemName;
@@ -141,17 +145,18 @@ public class SkillInfoPopupUI : UIBase
         string template = skill.SkillData.effectDescription;
 
         var values = new Dictionary<string, object>
-    {
-        { "range", skill.SkillData.effectRange },
-        { "damagePercent", skill.SkillData.damagePercent },
-        { "requiredHits", skill.SkillData.requiredHits },
-        { "buffDuration", skill.SkillData.buffDuration },
-        { "attackIncreasePercent", skill.SkillData.attackIncreasePercent },
-        { "cooldown", skill.SkillData.cooldown },
-        { "manaRecoveryAmount", skill.SkillData.manaRecoveryAmount },
-        { "moveSpeedIncrease", skill.SkillData.moveSpeedIncrease },
-        { "attackSpeedIncrease", skill.SkillData.attackSpeedIncrease }
-    };
+        {
+            { "range", skill.SkillData.effectRange },
+            { "damagePercent", skill.skillEffect.DamagePercent },
+            { "requiredHits", skill.SkillData.requiredHits },
+            { "buffDuration", skill.SkillData.buffDuration },
+            { "attackIncreasePercent", skill.skillEffect.AttackIncreasePercent },
+            { "cooldown", skill.SkillData.cooldown },
+            { "manaRecoveryAmount", skill.skillEffect.ManaRecoveryAmount },
+            { "moveSpeedIncrease", skill.skillEffect.MoveSpeedIncrease },
+            { "attackSpeedIncrease", skill.skillEffect.AttackSpeedIncrease }
+        };
+    
 
         foreach (var pair in values)
         {
@@ -193,7 +198,6 @@ public class SkillInfoPopupUI : UIBase
     {
         if (currentSkill == null)
         {
-            Debug.LogWarning("강화할 스킬이 없습니다.");
             return;
         }
 

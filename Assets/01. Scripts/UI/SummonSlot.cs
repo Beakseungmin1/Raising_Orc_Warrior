@@ -50,7 +50,8 @@ public class SummonSlot : UIBase
 
     private void SetWeaponSlot(WeaponDataSO weaponDataSO)
     {
-        gradeTxt.text = weaponDataSO.grade.ToString();
+        gradeTxt.text = TranslateGrade(weaponDataSO.grade);
+        gradeTxt.color = weaponDataSO.GetGradeColor(weaponDataSO.grade);
         rankTxt.text = weaponDataSO.rank.ToString();
         image.sprite = weaponDataSO.icon;
         EnableUI();
@@ -58,7 +59,8 @@ public class SummonSlot : UIBase
 
     private void SetAccessorySlot(AccessoryDataSO accessoryDataSO)
     {
-        gradeTxt.text = accessoryDataSO.grade.ToString();
+        gradeTxt.text = TranslateGrade(accessoryDataSO.grade);
+        gradeTxt.color = accessoryDataSO.GetGradeColor(accessoryDataSO.grade);
         rankTxt.text = accessoryDataSO.rank.ToString();
         image.sprite = accessoryDataSO.icon;
         EnableUI();
@@ -66,7 +68,8 @@ public class SummonSlot : UIBase
 
     private void SetSkillSlot(SkillDataSO skillDataSO)
     {
-        gradeTxt.text = skillDataSO.grade.ToString();
+        gradeTxt.text = TranslateGrade(skillDataSO.grade);
+        gradeTxt.color = skillDataSO.gradeColor;
         image.sprite = skillDataSO.icon;
         EnableUI();
     }
@@ -90,5 +93,20 @@ public class SummonSlot : UIBase
         gradeTxt.gameObject.SetActive(false);
         rankTxt.gameObject.SetActive(false);
         rankLabel.gameObject.SetActive(false);
+    }
+
+    private string TranslateGrade(Grade grade)
+    {
+        return grade switch
+        {
+            Grade.Normal => "일반",
+            Grade.Uncommon => "희귀",
+            Grade.Rare => "레어",
+            Grade.Hero => "영웅",
+            Grade.Legendary => "전설",
+            Grade.Mythic => "신화",
+            Grade.Ultimate => "불멸",
+            _ => "알 수 없음"
+        };
     }
 }

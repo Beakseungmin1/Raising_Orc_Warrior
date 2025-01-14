@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
@@ -43,6 +44,8 @@ public class PlayerStat : MonoBehaviour
 
     public int statUpgradeMultiplier = 0; // 스탯 업그레이드 배율 , 0 = 1배, 1 = 10배, 2 = 100배
 
+    public SaveManager save;
+
     public Action UpdateLevelStatUI;
 
     public Action UpdateUserInformationUI;
@@ -69,7 +72,6 @@ public class PlayerStat : MonoBehaviour
         {
             PlayerStatCalculator = GetComponent<PlayerStatCalculator>();
         }
-
         OnStatChange += PassiveManager.Instance.TotalEffects;
     }
 
@@ -124,6 +126,7 @@ public class PlayerStat : MonoBehaviour
 
     private void Awake()
     {
+        save = SaveManager.Instance;
         GameEventsManager.Instance.stageEvents.onStageChange += RefillHpAndMp;
     }
 
@@ -387,6 +390,40 @@ public class PlayerStat : MonoBehaviour
         {
             Debug.Log("골드가 부족합니다");
         }
+    }
+
+    public void StatDataLoad()
+    {
+        level = save.datas.level;
+        exp = save.datas.exp;
+        needExp = save.datas.needExp;
+        attackPower = save.datas.attackPower;
+        health = save.datas.health;
+        maxHealth = save.datas.maxHealth;
+        healthRegeneration = save.datas.healthRegeneration;
+        criticalProbability = save.datas.criticalProbability;
+        criticalIncreaseDamage = save.datas.criticalIncreaseDamage;
+        bluecriticalIncreaseDamage = save.datas.bluecriticalIncreaseDamage;
+        bluecriticalProbability = save.datas.bluecriticalProbability;
+        mana = save.datas.mana;
+        maxMana = save.datas.maxMana;
+        manaRegeneration = save.datas.manaRegeneration;
+        hitLate = save.datas.hitLate;
+        avoid = save.datas.avoid;
+        attackLevel = save.datas.attackLevel;
+        healthLevel = save.datas.healthLevel;
+        healthRegenerationLevel = save.datas.healthRegenerationLevel;
+        criticalIncreaseDamageLevel = save.datas.criticalIncreaseDamageLevel;
+        criticalProbabilityLevel = save.datas.criticalProbabilityLevel;
+        bluecriticalIncreaseDamageLevel = save.datas.bluecriticalIncreaseDamageLevel;
+        bluecriticalProbabilityLevel = save.datas.bluecriticalProbabilityLevel;
+        needAttackUpgradeMoney = save.datas.needAttackUpgradeMoney;
+        needHealthUpgradeMoney = save.datas.needHealthUpgradeMoney;
+        needHealthRegenerationUpgradeMoney = save.datas.needHealthRegenerationUpgradeMoney;
+        needCriticalIncreaseDamageUpgradeMoney = save.datas.needCriticalIncreaseDamageUpgradeMoney;
+        needCriticalProbabilityUpgradeMoney = save.datas.needCriticalProbabilityUpgradeMoney;
+        needBlueCriticalIncreaseDamageUpgradeMoney = save.datas.needBlueCriticalIncreaseDamageUpgradeMoney;
+        needBlueCriticalProbabilityUpgradeMoney = save.datas.needBlueCriticalProbabilityUpgradeMoney;
     }
 
     public void SetDefaultStat()
