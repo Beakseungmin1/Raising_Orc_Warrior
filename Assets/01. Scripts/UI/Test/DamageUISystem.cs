@@ -56,7 +56,7 @@ public class DamageUISystem : Singleton<DamageUISystem>
 
         if (enemyBaseComponent is Enemy)
         {
-            heightMultiplier = 1.0f;
+            heightMultiplier = 1.2f;
         }
         else if (enemyBaseComponent is EnemyBoss)
         {
@@ -68,7 +68,7 @@ public class DamageUISystem : Singleton<DamageUISystem>
         }
 
         TextMeshPro damageText = Instantiate(damageTextPrefab, enemyTransform);
-        damageText.text = damage.ToString();
+        damageText.text = damage.ToString("#,0");
 
         if (isMissHit)
         {
@@ -76,7 +76,7 @@ public class DamageUISystem : Singleton<DamageUISystem>
             damageText.text = "Miss";
             isMissHit = false;
         }
-        else if(isCriticalHit)
+        else if (isCriticalHit)
         {
             damageText.color = Color.red;
             isCriticalHit = false;
@@ -91,34 +91,82 @@ public class DamageUISystem : Singleton<DamageUISystem>
 
         damageText.transform.position = adjustedPosition;
 
-        StartCoroutine(FollowEnemy(damageText, adjustedPosition, enemyTransform));
-
-        Destroy(damageText.gameObject, 0.5f);
+        StartCoroutine(AnimateDamageText(damageText, adjustedPosition));
     }
 
-    private IEnumerator FollowEnemy(TextMeshPro damageText, UnityEngine.Vector3 initialWorldPosition, Transform enemyTransform)
+    private IEnumerator AnimateDamageText(TextMeshPro damageText, UnityEngine.Vector3 initialWorldPosition)
     {
+        float growDuration = 0.05f;
+        float shrinkDuration = 0.2f;
+        float holdDuration = 0.3f;
+        float fadeDuration = 0.3f;
+        float fastMoveDistance = 1.0f;
+
         float timeElapsed = 0f;
 
-        while (timeElapsed < 0.5f)
+        Color initialColor = damageText.color;
+        UnityEngine.Vector3 startScale = damageText.transform.localScale;
+        UnityEngine.Vector3 maxScale = startScale * 2f;
+
+        while (timeElapsed < growDuration)
         {
             if (damageText == null)
                 yield break;
 
-            UnityEngine.Vector3 enemyPosition = enemyTransform.position;
-            float heightMultiplier = 1.0f;
-
-            if (enemyTransform.GetComponent<EnemyBase>() is EnemyBoss)
-            {
-                heightMultiplier = 2.0f;
-            }
-
-            UnityEngine.Vector3 adjustedPosition = enemyPosition + UnityEngine.Vector3.up * heightMultiplier;
-
-            damageText.transform.position = adjustedPosition;
+            float progress = timeElapsed / growDuration;
+            damageText.transform.localScale = UnityEngine.Vector3.Lerp(startScale, maxScale, progress);
 
             timeElapsed += Time.deltaTime;
             yield return null;
+        }
+
+        timeElapsed = 0f;
+        while (timeElapsed < shrinkDuration)
+        {
+            if (damageText == null)
+                yield break;
+
+            float progress = timeElapsed / shrinkDuration;
+            damageText.transform.localScale = UnityEngine.Vector3.Lerp(maxScale, startScale, progress);
+
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        timeElapsed = 0f;
+        while (timeElapsed < holdDuration)
+        {
+            if (damageText == null)
+                yield break;
+
+            damageText.transform.localScale = startScale;
+
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        timeElapsed = 0f;
+        UnityEngine.Vector3 targetPosition = initialWorldPosition + UnityEngine.Vector3.up * fastMoveDistance;
+        while (timeElapsed < fadeDuration)
+        {
+            if (damageText == null)
+                yield break;
+
+            float progress = timeElapsed / fadeDuration;
+
+            damageText.transform.position = UnityEngine.Vector3.Lerp(initialWorldPosition, targetPosition, progress);
+
+            Color fadedColor = initialColor;
+            fadedColor.a = Mathf.Lerp(1.0f, 0.0f, progress);
+            damageText.color = fadedColor;
+
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        if (damageText != null)
+        {
+            Destroy(damageText.gameObject);
         }
     }
 }
