@@ -86,4 +86,14 @@ public class QuestEvents
             onRestartQuestStep(id);
         }
     }
+
+    public event Action<string> onCompleteQuestBtnClick;
+
+    public void CompleteQuestBtnClick(string id)
+    {
+        if (onCompleteQuestBtnClick != null)
+        {
+            onCompleteQuestBtnClick(id);
+        }
+    }
 }

@@ -54,6 +54,7 @@ public class RepeatQuestManager : Singleton<RepeatQuestManager>
                 SoundManager.Instance.PlaySFX(SFXType.QuestReward);
 
                 GameEventsManager.Instance.questEvents.ReStartQuest(questIds[i]);
+                GameEventsManager.Instance.questEvents.CompleteQuestBtnClick(questIds[i]);
             }
         }
     }

@@ -37,13 +37,13 @@ public class QuestSlotUI : UIBase
     private void OnEnable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged += RefreshUI;
-        //GameEventsManager.Instance.questEvents.onCompleteQuest += ManageCompleteUI;
+        GameEventsManager.Instance.questEvents.onCompleteQuestBtnClick += SetBtnDimmed;
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged -= RefreshUI;
-        //GameEventsManager.Instance.questEvents.onCompleteQuest -= ManageCompleteUI;
+        GameEventsManager.Instance.questEvents.onCompleteQuestBtnClick -= SetBtnDimmed;
     }
 
     private void Start()
@@ -51,7 +51,6 @@ public class QuestSlotUI : UIBase
         if (questInfo != null)
         {
             RefreshUI(questInfo.id);
-            ManageCompleteUI(questInfo.id);
         }
     }
 
@@ -88,20 +87,19 @@ public class QuestSlotUI : UIBase
                     Quest quest = QuestManager.Instance.GetQuestById(id);
                     if (quest.state.Equals(QuestState.CAN_FINISH))
                     {
-                        dimmedImage.SetActive(false);
-                        questClearBtn.interactable = true;
-                    }
-                    else //피니쉬 아닌 상태면 무조건 
-                    {
-                        dimmedImage.SetActive(true);
-                        questClearBtn.interactable = false;
+                        if (questInfo.id == id)
+                        {
+                            dimmedImage.SetActive(false);
+                            questClearBtn.interactable = true;
+                        }
                     }
                 }
             }
         }
     }
 
-    public void ManageCompleteUI(string id)
+
+    public void SetBtnDimmed(string id)
     {
         foreach (var obj in QuestManager.Instance.questGameObjs)
         {
@@ -112,16 +110,13 @@ public class QuestSlotUI : UIBase
                 if (questStep.questId == questInfo.id)
                 {
                     Quest quest = QuestManager.Instance.GetQuestById(id);
-                    if (quest.state.Equals(QuestState.FINISHED))
+                    if (quest.state.Equals(QuestState.IN_PROGRESS))
                     {
                         if (questInfo.id == id)
                         {
-                            completeImage.SetActive(true);
+                            dimmedImage.SetActive(true);
+                            questClearBtn.interactable = false;
                         }
-                    }
-                    else
-                    {
-                        completeImage.SetActive(false);
                     }
                 }
             }
