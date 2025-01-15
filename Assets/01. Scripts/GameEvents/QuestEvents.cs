@@ -22,22 +22,12 @@ public class QuestEvents
         }
     }
 
-    public event Action<string> onFinishQuest;
-    public void FinishQuest(string id)
+    public event Action<string, QuestType> onFinishQuest;
+    public void FinishQuest(string id, QuestType questType)
     {
         if (onFinishQuest != null)
         {
-            onFinishQuest(id);
-        }
-    }
-
-    public event Action<string> onReStartQuest;
-
-    public void ReStartQuest(string id)
-    {
-        if (onReStartQuest != null)
-        {
-            onReStartQuest(id);
+            onFinishQuest(id, questType);
         }
     }
 

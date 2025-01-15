@@ -44,20 +44,6 @@ public class RepeatQuestManager : Singleton<RepeatQuestManager>
         }
     }
 
-    public void FinishQuest(string id)
-    {
-        for (int i = 0; i < questInfos.Length; i++)
-        {
-            if (questIds[i] == id && currentQuestStates[i].Equals(QuestState.CAN_FINISH))
-            {
-                GameEventsManager.Instance.questEvents.FinishQuest(questIds[i]);
-                SoundManager.Instance.PlaySFX(SFXType.QuestReward);
-
-                GameEventsManager.Instance.questEvents.ReStartQuest(questIds[i]);
-            }
-        }
-    }
-
     private void QuestStateChange(Quest quest)
     {
         for (int i = 0; i < questIds.Length; i++)
