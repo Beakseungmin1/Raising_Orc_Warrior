@@ -6,27 +6,32 @@ public class SummonWeaponQuestStep : QuestStep
 {
     public QuestInfoSO questInfo;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         GameEventsManager.Instance.summonEvents.onWeaponSummoned += WeaponSummoned;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         GameEventsManager.Instance.summonEvents.onWeaponSummoned -= WeaponSummoned;
     }
 
     public void WeaponSummoned(int count)
     {
+        this.count += count;
+
         if (this.count < countToComplete)
         {
-            this.count += count;
             UpdateState();
+            GameEventsManager.Instance.questEvents.QuestProgressCountChange(questId);
         }
 
         if (this.count >= countToComplete)
         {
-            FinishQuestStep();
+            CanFinishQuestStep();
+            GameEventsManager.Instance.questEvents.QuestProgressCountChange(questId);
         }
     }
 

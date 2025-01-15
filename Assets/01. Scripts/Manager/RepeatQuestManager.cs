@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Numerics; // BigInteger »ç¿ë
 using UnityEngine;
 
-public class DailyQuestManager : Singleton<DailyQuestManager>
+public class RepeatQuestManager : Singleton<RepeatQuestManager>
 {
-
-    private const string LastQuestResetKey = "LastQuestResetDate";
-    private DateTime nextResetTime;
+    //private const string LastQuestResetKey = "LastQuestResetDate";
+    //private DateTime nextResetTime;
 
     [SerializeField] private QuestInfoSO[] questInfos;
 
@@ -34,7 +33,7 @@ public class DailyQuestManager : Singleton<DailyQuestManager>
         GameEventsManager.Instance.questEvents.onQuestStateChange -= QuestStateChange;
     }
 
-    private void StartDailyQuest()
+    public void StartQuest()
     {
         for (int i = 0; i < questInfos.Length; i++)
         {
@@ -53,6 +52,8 @@ public class DailyQuestManager : Singleton<DailyQuestManager>
             {
                 GameEventsManager.Instance.questEvents.FinishQuest(questIds[i]);
                 SoundManager.Instance.PlaySFX(SFXType.QuestReward);
+
+                GameEventsManager.Instance.questEvents.ReStartQuest(questIds[i]);
             }
         }
     }
@@ -74,11 +75,12 @@ public class DailyQuestManager : Singleton<DailyQuestManager>
         {
             currentQuestStates[i] = QuestState.CAN_START;
         }
-        StartDailyQuest();
-        CalculateNextResetTime();
-        CheckAndResetQuests();
+        StartQuest();
+        //CalculateNextResetTime();
+        //CheckAndResetQuests();
     }
 
+    /*
     private void Update()
     {
         if (DateTime.Now >= nextResetTime)
@@ -113,6 +115,7 @@ public class DailyQuestManager : Singleton<DailyQuestManager>
         }
     }
 
+
     private void ResetDailyQuests()
     {
         for (int i = 0; i < questInfos.Length; i++)
@@ -124,4 +127,5 @@ public class DailyQuestManager : Singleton<DailyQuestManager>
         PlayerPrefs.SetString(LastQuestResetKey, DateTime.Now.Date.ToString());
         PlayerPrefs.Save();
     }
+    */
 }

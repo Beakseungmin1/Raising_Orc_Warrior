@@ -12,6 +12,10 @@ public class QuestManager : Singleton<QuestManager>
 
     public List<GameObject> questGameObjs = new List<GameObject>();
 
+    private GameObject questStepObj;
+
+    private Dictionary<string, GameObject> questStepObjMap = new Dictionary<string, GameObject>();
+
     private void Awake()
     {
         questMap = CreateQuestMap();
@@ -22,6 +26,7 @@ public class QuestManager : Singleton<QuestManager>
         GameEventsManager.Instance.questEvents.onStartQuest += StartQuest;
         GameEventsManager.Instance.questEvents.onAdvanceQuest += AdvanceQuest;
         GameEventsManager.Instance.questEvents.onFinishQuest += FinishQuest;
+        GameEventsManager.Instance.questEvents.onReStartQuest += RestartQuest;
 
         GameEventsManager.Instance.questEvents.onQuestStepStateChange += QuestStepStateChange;
     }
@@ -30,6 +35,7 @@ public class QuestManager : Singleton<QuestManager>
         GameEventsManager.Instance.questEvents.onStartQuest -= StartQuest;
         GameEventsManager.Instance.questEvents.onAdvanceQuest -= AdvanceQuest;
         GameEventsManager.Instance.questEvents.onFinishQuest -= FinishQuest;
+        GameEventsManager.Instance.questEvents.onReStartQuest -= RestartQuest;
 
         GameEventsManager.Instance.questEvents.onQuestStepStateChange -= QuestStepStateChange;
     }
@@ -40,7 +46,9 @@ public class QuestManager : Singleton<QuestManager>
         {
             if(quest.state == QuestState.IN_PROGRESS)
             {
-                quest.InstatiateCurrentQuestStep(this.transform);
+                questStepObj = quest.InstatiateCurrentQuestStep(this.transform);
+                Debug.Log(questStepObj);
+                questStepObjMap.Add(quest.info.id, questStepObj);
 
                 foreach (Transform child in this.transform)
                 {
@@ -100,6 +108,7 @@ public class QuestManager : Singleton<QuestManager>
         if (quest.CurrentStepExists())
         {
             quest.InstatiateCurrentQuestStep(this.transform);
+            questStepObjMap.Add(quest.info.id, questStepObj);
         }
         else
         {
@@ -112,6 +121,20 @@ public class QuestManager : Singleton<QuestManager>
         Quest quest = GetQuestById(id);
         ClaimRewards(quest);
         ChangeQuestState(quest.info.id, QuestState.FINISHED);
+        GameEventsManager.Instance.questEvents.QuestProgressCountChange(id);
+    }
+
+    private void RestartQuest(string id)
+    {
+        Quest quest = GetQuestById(id);
+
+        //퀘스트 스텝 프리팹 처리
+        QuestStep step = GetQuestStepObjById(id).GetComponent<QuestStep>();
+        GameEventsManager.Instance.questEvents.FinishQuestStep(id);
+
+        GameEventsManager.Instance.questEvents.RestartQuestStep(id);
+        ChangeQuestState(quest.info.id, QuestState.IN_PROGRESS);
+        GameEventsManager.Instance.questEvents.QuestProgressCountChange(id);
     }
 
     private void ClaimRewards(Quest quest)
@@ -157,6 +180,16 @@ public class QuestManager : Singleton<QuestManager>
             Debug.LogError("퀘스트맵에서 ID를 찾을 수 없습니다: " + id);
         }
         return quest;
+    }
+
+    public GameObject GetQuestStepObjById(string id)
+    {
+        GameObject questStepObj = questStepObjMap[id];
+        if (questStepObj == null)
+        {
+            Debug.LogError("퀘스트맵에서 ID를 찾을 수 없습니다: " + id);
+        }
+        return questStepObj;
     }
 
     private void OnApplicationQuit()

@@ -6,27 +6,32 @@ public class SummonSkillQuestStep : QuestStep
 {
     public QuestInfoSO questInfo;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         GameEventsManager.Instance.summonEvents.onSkillSummoned += SkillSummoned;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         GameEventsManager.Instance.summonEvents.onSkillSummoned -= SkillSummoned;
     }
 
     public void SkillSummoned(int count)
     {
+        this.count += count;
+
         if (this.count < countToComplete)
         {
-            this.count += count;
             UpdateState();
+            GameEventsManager.Instance.questEvents.QuestProgressCountChange(questId);
         }
 
         if (this.count >= countToComplete)
         {
-            FinishQuestStep();
+            CanFinishQuestStep();
+            GameEventsManager.Instance.questEvents.QuestProgressCountChange(questId);
         }
     }
 

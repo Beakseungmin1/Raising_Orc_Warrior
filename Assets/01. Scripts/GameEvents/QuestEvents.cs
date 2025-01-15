@@ -31,6 +31,16 @@ public class QuestEvents
         }
     }
 
+    public event Action<string> onReStartQuest;
+
+    public void ReStartQuest(string id)
+    {
+        if (onReStartQuest != null)
+        {
+            onReStartQuest(id);
+        }
+    }
+
     public event Action<Quest> onQuestStateChange;
     public void QuestStateChange(Quest quest)
     {
@@ -59,4 +69,21 @@ public class QuestEvents
         }
     }
 
+    public event Action<string> onFinishQuestStep;
+    public void FinishQuestStep(string id)
+    {
+        if (onFinishQuestStep != null)
+        {
+            onFinishQuestStep(id);
+        }
+    }
+
+    public event Action<string> onRestartQuestStep;
+    public void RestartQuestStep(string id)
+    {
+        if (onRestartQuestStep != null)
+        {
+            onRestartQuestStep(id);
+        }
+    }
 }
