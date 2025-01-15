@@ -12,15 +12,20 @@ public class SkillEquipSlot : UIBase
     [SerializeField] private TextMeshProUGUI conditionText;
     [SerializeField] private Sprite defaultSprite;
     [SerializeField] private GameObject highlightEffect;
-    [SerializeField] private GameObject highlightEffect2;
+    [SerializeField] private Image buffDurationImage;
 
     private Image skillIconImage;
     private BaseSkill equippedSkill;
     private int slotIndex;
     private EquipManager equipManager;
+    private PlayerSkillHandler playerSkillHandler;
 
     private Color defaultColor = new Color32(50, 50, 50, 255);
     private Color equippedColor = Color.white;
+
+    private float buffDuration = 10f;
+    private float currentBuffTime = 0f;
+    private bool isBuffActive = false;
 
     private void Start()
     {
@@ -31,6 +36,101 @@ public class SkillEquipSlot : UIBase
             if (skillIconImage != null)
             {
                 skillIconImage.type = Image.Type.Sliced;
+            }
+        }
+
+        EnsureSkillHandler();
+    }
+
+    private void EnsureSkillHandler()
+    {
+        if (playerSkillHandler == null)
+        {
+            var player = PlayerObjManager.Instance?.Player;
+            if (player != null)
+            {
+                playerSkillHandler = player.SkillHandler;
+            }
+
+            if (playerSkillHandler == null)
+            {
+                Debug.LogWarning("[SkillEquipSlot] PlayerSkillHandler is not initialized yet.");
+            }
+        }
+    }
+
+    private void OnEnable()
+    {
+        EnsureSkillHandler();
+        if (playerSkillHandler != null)
+        {
+            playerSkillHandler.OnSkillUsed += HandleSkillUsed;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (playerSkillHandler != null)
+        {
+            playerSkillHandler.OnSkillUsed -= HandleSkillUsed;
+        }
+    }
+
+    private void HandleSkillUsed(BaseSkill usedSkill)
+    {
+        // 버프 스킬 또는 패시브 스킬일 경우 지속 시간 처리
+        if (equippedSkill != null && usedSkill == equippedSkill)
+        {
+            ActivateSkillDuration(usedSkill);
+        }
+    }
+
+    private void ActivateSkillDuration(BaseSkill skill)
+    {
+        if (skill == null) return;
+
+        // 스킬의 지속 시간 설정
+        buffDuration = skill.SkillData.buffDuration; // SkillData에서 지속 시간 가져오기
+        currentBuffTime = buffDuration;
+        isBuffActive = true;
+
+        // 지속 시간 UI 활성화
+        if (buffDurationImage != null)
+        {
+            buffDurationImage.fillAmount = 1f;
+            buffDurationImage.gameObject.SetActive(true);
+        }
+
+        // 기존 코루틴 중단 후 새 코루틴 시작
+        StopAllCoroutines();
+        StartCoroutine(HandleSkillDuration());
+    }
+
+    private IEnumerator HandleSkillDuration()
+    {
+        while (isBuffActive && currentBuffTime > 0)
+        {
+            yield return null;
+
+            // 지속 시간 감소
+            currentBuffTime -= Time.deltaTime;
+
+            // 지속 시간 UI 업데이트
+            if (buffDurationImage != null)
+            {
+                buffDurationImage.fillAmount = Mathf.Clamp01(currentBuffTime / buffDuration);
+            }
+        }
+
+        // 스킬 효과 종료 처리
+        if (currentBuffTime <= 0)
+        {
+            isBuffActive = false;
+
+            if (buffDurationImage != null)
+            {
+                buffDurationImage.fillAmount = 0;
+                buffDurationImage.gameObject.SetActive(false);
             }
         }
     }
@@ -177,8 +277,6 @@ public class SkillEquipSlot : UIBase
             playerSkillHandler.UseSkill(equippedSkill, transform.position);
 
             StartCoroutine(ReactivateTextAfterDelay());
-
-            StartCoroutine(ActivateHighlightEffect());
         }
     }
 
@@ -220,23 +318,10 @@ public class SkillEquipSlot : UIBase
         {
             highlightEffect.SetActive(false);
         }
-    }
 
-    
-    private IEnumerator ActivateHighlightEffect()
-    {
-        if (highlightEffect2 != null)
+        if (buffDurationImage != null)
         {
-            highlightEffect2.SetActive(true);
-        }
-
-        yield return new WaitForSeconds(equippedSkill.SkillData.buffDuration);
-
-        Debug.Log(equippedSkill.SkillData.buffDuration);
-
-        if (highlightEffect2 != null)
-        {
-            highlightEffect2.SetActive(false);
+            buffDurationImage.fillAmount = 0;
         }
     }
 }

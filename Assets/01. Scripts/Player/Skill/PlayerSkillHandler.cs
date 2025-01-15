@@ -32,6 +32,7 @@ public class PlayerSkillHandler : MonoBehaviour
             {
                 Debug.Log($"[PlayerSkillHandler] 패시브 스킬 자동 발동: {skill.SkillData.itemName}");
                 skill.Activate(Vector3.zero);
+                OnSkillUsed.Invoke(skill);
             }
         }
     }
