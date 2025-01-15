@@ -225,6 +225,21 @@ public class QuestManager : Singleton<QuestManager>
         return questStepObjMap[id];
     }
 
+    public bool GetIsAnyQuestCanFinish()
+    {
+        bool isGetIsAnyQuestCanFinish = false;
+
+        foreach (Quest quest in questMap.Values)
+        {
+            if (quest.state == QuestState.CAN_FINISH)
+            {
+                isGetIsAnyQuestCanFinish = true;
+                break;
+            }
+        }
+        return isGetIsAnyQuestCanFinish;
+    }
+
     private void OnApplicationQuit()
     {
         foreach (Quest quest in questMap.Values)
