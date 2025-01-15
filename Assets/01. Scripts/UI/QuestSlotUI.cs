@@ -60,7 +60,7 @@ public class QuestSlotUI : UIBase
                 Debug.Log("데일리 퀘스트 미구현");
                 break;
             case QuestType.Repeat:
-                RepeatQuestManager.Instance.FinishQuest(questInfo.id);
+                QuestManager.Instance.FinishQuest(questInfo.id, questInfo.questType);
                 break;
             default: //QuestType.Achievement
                 Debug.Log("업적퀘스트 미구현");
@@ -70,36 +70,37 @@ public class QuestSlotUI : UIBase
 
     public void RefreshUI(string id)
     {
-        foreach (var obj in QuestManager.Instance.questGameObjs)
+        // 가져온 GameObject에서 QuestStep 컴포넌트를 얻음
+        QuestStep questStep = QuestManager.Instance.GetQuestStepObjById(id).GetComponent<QuestStep>();
+        Debug.Log($"{questStep}: {questStep.count}");
+        Debug.Log($"{questStep}: {questStep.countToComplete}");
+
+        if (questStep != null)
         {
-            QuestStep questStep = obj.GetComponent<QuestStep>();
-
-            if (questStep != null)
+            // UI 업데이트
+            if (questStep.questId == questInfo.id)
             {
-                if (questStep.questId == questInfo.id)
+                progressCountTxt.text = $"{questStep.count} / {questStep.countToComplete}";
+                slider.value = (float)questStep.count / questStep.countToComplete;
+                levelTxt.text = questStep.level.ToString();
+
+                // Quest 상태 확인
+                Quest quest = QuestManager.Instance.GetQuestById(id);
+                if (quest.state.Equals(QuestState.CAN_FINISH))
                 {
-                    progressCountTxt.text = $"{questStep.count} / {questStep.countToComplete}";
-                    slider.value = (float)questStep.count / questStep.countToComplete;
-                    levelTxt.text = questStep.level.ToString();
-
-                    Quest quest = QuestManager.Instance.GetQuestById(id);
-                    if (quest.state.Equals(QuestState.CAN_FINISH))
+                    if (questInfo.id == id)
                     {
-                        if (questInfo.id == id)
-                        {
-                            dimmedImage.SetActive(false);
-                            questClearBtn.interactable = true;
-                        }
+                        dimmedImage.SetActive(false);
+                        questClearBtn.interactable = true;
                     }
-                    else
+                }
+                else
+                {
+                    if (questInfo.id == id)
                     {
-                        if (questInfo.id == id)
-                        {
-                            dimmedImage.SetActive(true);
-                            questClearBtn.interactable = false;
-                        }
+                        dimmedImage.SetActive(true);
+                        questClearBtn.interactable = false;
                     }
-
                 }
             }
         }
