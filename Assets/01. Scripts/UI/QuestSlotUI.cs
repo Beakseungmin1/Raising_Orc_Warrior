@@ -37,13 +37,11 @@ public class QuestSlotUI : UIBase
     private void OnEnable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged += RefreshUI;
-        GameEventsManager.Instance.questEvents.onCompleteQuestBtnClick += SetBtnDimmed;
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged -= RefreshUI;
-        GameEventsManager.Instance.questEvents.onCompleteQuestBtnClick -= SetBtnDimmed;
     }
 
     private void Start()
@@ -93,24 +91,7 @@ public class QuestSlotUI : UIBase
                             questClearBtn.interactable = true;
                         }
                     }
-                }
-            }
-        }
-    }
-
-
-    public void SetBtnDimmed(string id)
-    {
-        foreach (var obj in QuestManager.Instance.questGameObjs)
-        {
-            QuestStep questStep = obj.GetComponent<QuestStep>();
-
-            if (questStep != null)
-            {
-                if (questStep.questId == questInfo.id)
-                {
-                    Quest quest = QuestManager.Instance.GetQuestById(id);
-                    if (quest.state.Equals(QuestState.IN_PROGRESS))
+                    else
                     {
                         if (questInfo.id == id)
                         {
@@ -118,6 +99,7 @@ public class QuestSlotUI : UIBase
                             questClearBtn.interactable = false;
                         }
                     }
+
                 }
             }
         }
