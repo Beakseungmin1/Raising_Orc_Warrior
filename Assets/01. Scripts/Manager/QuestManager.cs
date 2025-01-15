@@ -84,6 +84,22 @@ public class QuestManager : Singleton<QuestManager>
         if (quest.CurrentStepExists())
         {
             GameObject newStepObj = quest.InstatiateCurrentQuestStep(this.transform);
+            // Transform의 자식들을 순회하면서 quest.info.id에 해당하는 GameObject를 찾고 추가
+            foreach (Transform child in this.transform)
+            {
+                if (child.name == quest.info.id + "Step(Clone)")
+                {
+                    // 이미 questStepObjMap에 등록된 경우, 중복 체크
+                    if (!questStepObjMap.ContainsKey(quest.info.id))
+                    {
+                        questStepObjMap.Add(quest.info.id, child.gameObject);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Duplicate entry detected for quest ID {quest.info.id} in transform children.");
+                    }
+                }
+            }
             questStepObjMap.Add(quest.info.id, newStepObj);
         }
         else
@@ -97,9 +113,9 @@ public class QuestManager : Singleton<QuestManager>
         Quest quest = GetQuestById(id);
         ClaimRewards(quest);
         ChangeQuestState(quest.info.id, QuestState.FINISHED);
-        GameEventsManager.Instance.questEvents.QuestProgressCountChange(id);
 
         GameEventsManager.Instance.questEvents.FinishQuestStep(id);
+        GameEventsManager.Instance.questEvents.QuestProgressCountChange(id);
 
         if (questType == QuestType.Repeat)
         {
@@ -110,8 +126,13 @@ public class QuestManager : Singleton<QuestManager>
             {
                 GameEventsManager.Instance.questEvents.RestartQuestStep(id);
                 ChangeQuestState(quest.info.id, QuestState.CAN_FINISH);
-                GameEventsManager.Instance.questEvents.QuestProgressCountChange(id);
             }
+            else
+            {
+                ChangeQuestState(quest.info.id, QuestState.IN_PROGRESS);
+            }
+            GameEventsManager.Instance.questEvents.QuestProgressCountChange(id);
+
         }
     }
 
