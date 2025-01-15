@@ -45,7 +45,7 @@ public abstract class QuestStep : MonoBehaviour
         if (!isFinished && this.questId == id)
         {
             isFinished = true;
-            count = 0;
+            count -= countToComplete;
             GameEventsManager.Instance.questEvents.AdvanceQuest(questId);
             GameEventsManager.Instance.questEvents.QuestProgressCountChange(questId);
         }
