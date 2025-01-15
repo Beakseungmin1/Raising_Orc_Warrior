@@ -44,7 +44,7 @@ public class PlayerStat : MonoBehaviour
 
     public int statUpgradeMultiplier = 0; // 스탯 업그레이드 배율 , 0 = 1배, 1 = 10배, 2 = 100배
 
-    public SaveManager save;
+    public Datas savedata;
 
     public Action UpdateLevelStatUI;
 
@@ -393,37 +393,37 @@ public class PlayerStat : MonoBehaviour
 
     public void StatDataLoad()
     {
-        save = SaveManager.Instance;
-        level = save.datas.level;
-        exp = save.datas.exp;
-        needExp = save.datas.needExp;
-        attackPower = save.datas.attackPower;
-        health = save.datas.health;
-        maxHealth = save.datas.maxHealth;
-        healthRegeneration = save.datas.healthRegeneration;
-        criticalProbability = save.datas.criticalProbability;
-        criticalIncreaseDamage = save.datas.criticalIncreaseDamage;
-        bluecriticalIncreaseDamage = save.datas.bluecriticalIncreaseDamage;
-        bluecriticalProbability = save.datas.bluecriticalProbability;
-        mana = save.datas.mana;
-        maxMana = save.datas.maxMana;
-        manaRegeneration = save.datas.manaRegeneration;
-        hitLate = save.datas.hitLate;
-        avoid = save.datas.avoid;
-        attackLevel = save.datas.attackLevel;
-        healthLevel = save.datas.healthLevel;
-        healthRegenerationLevel = save.datas.healthRegenerationLevel;
-        criticalIncreaseDamageLevel = save.datas.criticalIncreaseDamageLevel;
-        criticalProbabilityLevel = save.datas.criticalProbabilityLevel;
-        bluecriticalIncreaseDamageLevel = save.datas.bluecriticalIncreaseDamageLevel;
-        bluecriticalProbabilityLevel = save.datas.bluecriticalProbabilityLevel;
-        needAttackUpgradeMoney = save.datas.needAttackUpgradeMoney;
-        needHealthUpgradeMoney = save.datas.needHealthUpgradeMoney;
-        needHealthRegenerationUpgradeMoney = save.datas.needHealthRegenerationUpgradeMoney;
-        needCriticalIncreaseDamageUpgradeMoney = save.datas.needCriticalIncreaseDamageUpgradeMoney;
-        needCriticalProbabilityUpgradeMoney = save.datas.needCriticalProbabilityUpgradeMoney;
-        needBlueCriticalIncreaseDamageUpgradeMoney = save.datas.needBlueCriticalIncreaseDamageUpgradeMoney;
-        needBlueCriticalProbabilityUpgradeMoney = save.datas.needBlueCriticalProbabilityUpgradeMoney;
+        savedata = SaveManager.Instance.datas;
+        level = savedata.level;
+        exp = savedata.exp;
+        needExp = savedata.needExp;
+        attackPower = savedata.attackPower;
+        health = savedata.health;
+        maxHealth = savedata.maxHealth;
+        healthRegeneration = savedata.healthRegeneration;
+        criticalProbability = savedata.criticalProbability;
+        criticalIncreaseDamage = savedata.criticalIncreaseDamage;
+        bluecriticalIncreaseDamage = savedata.bluecriticalIncreaseDamage;
+        bluecriticalProbability = savedata.bluecriticalProbability;
+        mana = savedata.mana;
+        maxMana = savedata.maxMana;
+        manaRegeneration = savedata.manaRegeneration;
+        hitLate = savedata.hitLate;
+        avoid = savedata.avoid;
+        attackLevel = savedata.attackLevel;
+        healthLevel = savedata.healthLevel;
+        healthRegenerationLevel = savedata.healthRegenerationLevel;
+        criticalIncreaseDamageLevel = savedata.criticalIncreaseDamageLevel;
+        criticalProbabilityLevel = savedata.criticalProbabilityLevel;
+        bluecriticalIncreaseDamageLevel = savedata.bluecriticalIncreaseDamageLevel;
+        bluecriticalProbabilityLevel = savedata.bluecriticalProbabilityLevel;
+        needAttackUpgradeMoney = savedata.needAttackUpgradeMoney;
+        needHealthUpgradeMoney = savedata.needHealthUpgradeMoney;
+        needHealthRegenerationUpgradeMoney = savedata.needHealthRegenerationUpgradeMoney;
+        needCriticalIncreaseDamageUpgradeMoney = savedata.needCriticalIncreaseDamageUpgradeMoney;
+        needCriticalProbabilityUpgradeMoney = savedata.needCriticalProbabilityUpgradeMoney;
+        needBlueCriticalIncreaseDamageUpgradeMoney = savedata.needBlueCriticalIncreaseDamageUpgradeMoney;
+        needBlueCriticalProbabilityUpgradeMoney = savedata.needBlueCriticalProbabilityUpgradeMoney;
     }
 
     public void SetDefaultStat()

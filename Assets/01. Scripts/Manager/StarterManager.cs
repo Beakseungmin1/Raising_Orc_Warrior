@@ -10,14 +10,14 @@ public class StarterManager : Singleton<StarterManager>
     void Start()
     {
         SaveManager.Instance.Init();
-        Debug.Log(PlayerObjManager.Instance.Player.stat.health);
-        Debug.Log(PlayerObjManager.Instance.Player.stat.mana);
         StageManager.Instance.ResetStage();
 
+        PlayerObjManager.Instance.Player.StatCalculator.UpdateValue();
         BackgroundManager.Instance.Init();
-
+        
         CreateInitialUI();
         CreateEventSystem();
+
         //임시
         SoundManager.Instance.Init();
         SoundManager.Instance.PlayBGM(BGMType.Title);
