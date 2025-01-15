@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Numerics;
+using Vector3 = UnityEngine.Vector3;
 
 public class DungeonManager : Singleton<DungeonManager>
 {
@@ -163,6 +164,10 @@ public class DungeonManager : Singleton<DungeonManager>
         StageManager.Instance.GoToStage();
         currentDungeonInfo = null;
         playerIsInDungeon = false;
+
+        SetCamera camera = Camera.main.gameObject.GetComponent<SetCamera>();
+        camera.SetCameraPosY(0f);
+        camera.SetCameraSize(5f);
     }
 
     public void ChangeDungeonState(DungeonType dungeonType, int level, DungeonState state)
