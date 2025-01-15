@@ -37,13 +37,11 @@ public class QuestSlotUI : UIBase
     private void OnEnable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged += RefreshUI;
-        //GameEventsManager.Instance.questEvents.onCompleteQuest += ManageCompleteUI;
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged -= RefreshUI;
-        //GameEventsManager.Instance.questEvents.onCompleteQuest -= ManageCompleteUI;
     }
 
     private void Start()
@@ -51,7 +49,6 @@ public class QuestSlotUI : UIBase
         if (questInfo != null)
         {
             RefreshUI(questInfo.id);
-            ManageCompleteUI(questInfo.id);
         }
     }
 
@@ -63,7 +60,7 @@ public class QuestSlotUI : UIBase
                 Debug.Log("데일리 퀘스트 미구현");
                 break;
             case QuestType.Repeat:
-                RepeatQuestManager.Instance.FinishQuest(questInfo.id);
+                QuestManager.Instance.FinishQuest(questInfo.id, questInfo.questType);
                 break;
             default: //QuestType.Achievement
                 Debug.Log("업적퀘스트 미구현");
@@ -73,55 +70,36 @@ public class QuestSlotUI : UIBase
 
     public void RefreshUI(string id)
     {
-        foreach (var obj in QuestManager.Instance.questGameObjs)
+        // 가져온 GameObject에서 QuestStep 컴포넌트를 얻음
+        QuestStep questStep = QuestManager.Instance.GetQuestStepObjById(id).GetComponent<QuestStep>();
+        Debug.Log($"{questStep}: {questStep.count}");
+        Debug.Log($"{questStep}: {questStep.countToComplete}");
+
+        if (questStep != null)
         {
-            QuestStep questStep = obj.GetComponent<QuestStep>();
-
-            if (questStep != null)
+            // UI 업데이트
+            if (questStep.questId == questInfo.id)
             {
-                if (questStep.questId == questInfo.id)
-                {
-                    progressCountTxt.text = $"{questStep.count} / {questStep.countToComplete}";
-                    slider.value = (float)questStep.count / questStep.countToComplete;
-                    levelTxt.text = questStep.level.ToString();
+                progressCountTxt.text = $"{questStep.count} / {questStep.countToComplete}";
+                slider.value = (float)questStep.count / questStep.countToComplete;
+                levelTxt.text = questStep.level.ToString();
 
-                    Quest quest = QuestManager.Instance.GetQuestById(id);
-                    if (quest.state.Equals(QuestState.CAN_FINISH))
+                // Quest 상태 확인
+                Quest quest = QuestManager.Instance.GetQuestById(id);
+                if (quest.state.Equals(QuestState.CAN_FINISH))
+                {
+                    if (questInfo.id == id)
                     {
                         dimmedImage.SetActive(false);
                         questClearBtn.interactable = true;
                     }
-                    else //피니쉬 아닌 상태면 무조건 
+                }
+                else
+                {
+                    if (questInfo.id == id)
                     {
                         dimmedImage.SetActive(true);
                         questClearBtn.interactable = false;
-                    }
-                }
-            }
-        }
-    }
-
-    public void ManageCompleteUI(string id)
-    {
-        foreach (var obj in QuestManager.Instance.questGameObjs)
-        {
-            QuestStep questStep = obj.GetComponent<QuestStep>();
-
-            if (questStep != null)
-            {
-                if (questStep.questId == questInfo.id)
-                {
-                    Quest quest = QuestManager.Instance.GetQuestById(id);
-                    if (quest.state.Equals(QuestState.FINISHED))
-                    {
-                        if (questInfo.id == id)
-                        {
-                            completeImage.SetActive(true);
-                        }
-                    }
-                    else
-                    {
-                        completeImage.SetActive(false);
                     }
                 }
             }

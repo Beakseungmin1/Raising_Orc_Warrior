@@ -148,6 +148,10 @@ public class StageManager : Singleton<StageManager>
 
     public void GoToDungeonStage(DungeonType dungeonType, int level)
     {
+        SetCamera camera = Camera.main.gameObject.GetComponent<SetCamera>();
+        camera.SetCameraPosY(-0.2f);
+        camera.SetCameraSize(6f);
+
         UIManager.Instance.ShowFadePanel<FadeInFadeOutUI>(FadeType.FadeOutFadeIn);
         GameEventsManager.Instance.enemyEvents.ClearEnemy();
         //던전으로 이동하기 전 마지막 챕터와 스테이지 정보 세이브
