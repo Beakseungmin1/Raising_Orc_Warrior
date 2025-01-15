@@ -48,6 +48,11 @@ public class Datas
     public float DungeonTicket = 0;
     public int curChapter = 0;
     public int curStageIndex = 0;
+    public int curStageIndexInThisChapter = 0;
+    public int MaxStageIndexInThisChapter = 0;
+    public SummonLevelProgress WeaponSummon;
+    public SummonLevelProgress SkillSummon;
+    public SummonLevelProgress AccessorySummon;
 }
 
 public class SaveManager : Singleton<SaveManager>
@@ -61,10 +66,20 @@ public class SaveManager : Singleton<SaveManager>
     PlayerStat stat;
     CurrencyManager currency;
 
-    private void Awake()
+    public void Init()
     {
         stat = PlayerObjManager.Instance.Player.stat;
+
+        if (ES3.FileExists(fileName))
+        {
+            DataLoad();
+        }
+        else
+        {
+            stat.SetDefaultStat();
+        }
     }
+
 
     public void DataSave()
     {
@@ -105,7 +120,11 @@ public class SaveManager : Singleton<SaveManager>
         datas.DungeonTicket = CurrencyManager.Instance.GetCurrency(CurrencyType.DungeonTicket);
         datas.curChapter = StageManager.Instance.curChapterIndex;
         datas.curStageIndex = StageManager.Instance.curStageIndex;
-
+        datas.curStageIndexInThisChapter = StageManager.Instance.curStageIndexInThisChapter;
+        datas.MaxStageIndexInThisChapter = StageManager.Instance.MaxStageIndexInThisChapter;
+        datas.WeaponSummon = SummonDataManager.Instance.GetProgress(ItemType.Weapon);
+        datas.SkillSummon = SummonDataManager.Instance.GetProgress(ItemType.Skill);
+        datas.AccessorySummon = SummonDataManager.Instance.GetProgress(ItemType.Accessory);
 
         ES3.Save("Datas", datas);
     }
@@ -124,6 +143,11 @@ public class SaveManager : Singleton<SaveManager>
             CurrencyManager.Instance.SetCurrency(CurrencyType.DungeonTicket, datas.DungeonTicket);
             StageManager.Instance.curChapterIndex = datas.curChapter;
             StageManager.Instance.curStageIndex = datas.curStageIndex;
+            StageManager.Instance.curStageIndexInThisChapter = datas.curStageIndexInThisChapter;
+            StageManager.Instance.MaxStageIndexInThisChapter = datas.MaxStageIndexInThisChapter;
+            SummonDataManager.Instance.SetProgress(ItemType.Weapon, datas.WeaponSummon);
+            SummonDataManager.Instance.SetProgress(ItemType.Skill, datas.SkillSummon);
+            SummonDataManager.Instance.SetProgress(ItemType.Accessory, datas.AccessorySummon);
 
         }
         else

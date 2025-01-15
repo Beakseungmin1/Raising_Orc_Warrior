@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6590644007314367563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4813002462695077700}
+  - component: {fileID: 2505072118745137214}
+  m_Layer: 0
+  m_Name: SaveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4813002462695077700
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6590644007314367563}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 765.50287, y: 1252.2802, z: 5.8093376}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2505072118745137214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6590644007314367563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39ed3025c6ead304abe5cd11357af2e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  datas:
+    level: 0
+    attackPower: 20
+    criticalProbability: 0
+    criticalIncreaseDamage: 100
+    bluecriticalIncreaseDamage: 0
+    bluecriticalProbability: 0
+    maxMana: 200
+    mana: 200
+    manaRegeneration: 5
+    hitLate: 0
+    avoid: 0
+    attackSpeed: 0
+    normalMonsterIncreaseDamage: 0
+    bossMonsterIncreaseDamage: 0
+    attackLevel: 1
+    healthLevel: 1
+    healthRegenerationLevel: 1
+    criticalIncreaseDamageLevel: 1
+    criticalProbabilityLevel: 1
+    bluecriticalIncreaseDamageLevel: 1
+    bluecriticalProbabilityLevel: 1
+    Emerald: 0
+    Cube: 0
+    Diamond: 0
+    DungeonTicket: 0
+    curChapter: 0
+    curStageIndex: 0
+    curStageIndexInThisChapter: 0
+    MaxStageIndexInThisChapter: 0

@@ -66,6 +66,11 @@ public class PlayerStat : MonoBehaviour
         PlayerStatCalculator = GetComponent<PlayerStatCalculator>();
     }
 
+    private void Awake()
+    {
+        GameEventsManager.Instance.stageEvents.onStageChange += RefillHpAndMp;
+    }
+
     private void Start()
     {
         if (PlayerStatCalculator == null)
@@ -122,12 +127,6 @@ public class PlayerStat : MonoBehaviour
             statUpgradeMultiplier = number;
 
         }
-    }
-
-    private void Awake()
-    {
-        save = SaveManager.Instance;
-        GameEventsManager.Instance.stageEvents.onStageChange += RefillHpAndMp;
     }
 
     public void AddExpFromMonsters(IEnemy enemy)
@@ -394,6 +393,7 @@ public class PlayerStat : MonoBehaviour
 
     public void StatDataLoad()
     {
+        save = SaveManager.Instance;
         level = save.datas.level;
         exp = save.datas.exp;
         needExp = save.datas.needExp;
@@ -433,12 +433,12 @@ public class PlayerStat : MonoBehaviour
         needExp = 100;
         attackPower = 20;
         maxHealth = 200;
-        health = maxHealth;
+        health = 200;
         healthRegeneration = 0;
         criticalProbability = 0;
         criticalIncreaseDamage = 100;
         maxMana = 200;
-        mana = maxMana;
+        mana = 200;
         manaRegeneration = 5;
         hitLate = 0;
         avoid = 0;
