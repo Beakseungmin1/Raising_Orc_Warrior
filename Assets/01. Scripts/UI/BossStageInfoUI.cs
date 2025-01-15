@@ -78,5 +78,12 @@ public class BossStageInfoUI : UIBase
     public void OnRunBtnClick()
     {
         StageManager.Instance.BackToLastStage();
+
+        if (DungeonManager.Instance.playerIsInDungeon == true)
+        {
+            SetCamera camera = Camera.main.gameObject.GetComponent<SetCamera>();
+            camera.SetCameraPosY(0f);
+            camera.SetCameraSize(5f);
+        }
     }
 }
