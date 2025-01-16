@@ -38,13 +38,15 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
     private PlayerBattle player;
 
     float patternTime = 4f; // 패턴 유지시간
-    float toTime = 2.5f; // 패턴 시간 계산용 변수
+    float toTime = 4f; // 패턴 시간 계산용 변수
 
     public bool canAttack = true;
 
     private void OnEnable()
     {
         canAttack = true;
+        enemyPattern = Pattern.Idle;
+        InvokeRepeating("SwitchPattern", 2.3f, patternTime);
         SetupEnemy();
         GameEventsManager.Instance.bossEvents.BossHPSet(maxHp);
         GameEventsManager.Instance.enemyEvents.onEnemyCleared += ClearEnemy;
@@ -53,13 +55,9 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
 
     private void OnDisable()
     {
+        CancelInvoke("SwitchPattern");
         GameEventsManager.Instance.enemyEvents.onEnemyCleared -= ClearEnemy;
         GameEventsManager.Instance.dungeonEvents.onPlayerDeadOrTimeEndInDungeon -= FinishDungeon;
-    }
-
-    public void Start()
-    {
-        InvokeRepeating("SwitchPattern", 0f, patternTime);
     }
 
     private void Update()
@@ -70,6 +68,9 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
         {
             switch (enemyPattern)
             {
+                case Pattern.Idle:
+                    SetfalseAnimation();
+                    break;
                 case Pattern.Pattern1:
                     SetfalseAnimation();
                     animator.SetBool("Pattern1", true);
