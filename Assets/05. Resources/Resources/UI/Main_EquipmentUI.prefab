@@ -50,6 +50,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
+  openedTabSprite: {fileID: 21300000, guid: 9c8668f437e5f1f4bb56980667274984, type: 3}
+  closedTabSprite: {fileID: 21300000, guid: 63a14f9e2ecc96f41962d08d93f26e45, type: 3}
+  weaponTab: {fileID: 7748438167120852129}
+  accTab: {fileID: 8177333102023830516}
+  weaponLabel: {fileID: 1969924127534231346}
+  accLabel: {fileID: 6156824547556124848}
 --- !u!1 &1716859220992578680
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,7 +655,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8177333102023830516}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2400038416083343081}
+        m_TargetAssemblyTypeName: Main_EquipmentUI, Assembly-CSharp
+        m_MethodName: OnClickAccTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4395370843041805972
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,7 +1105,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7748438167120852129}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2400038416083343081}
+        m_TargetAssemblyTypeName: Main_EquipmentUI, Assembly-CSharp
+        m_MethodName: OnClickWeaponTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7278050089427123519
 GameObject:
   m_ObjectHideFlags: 0

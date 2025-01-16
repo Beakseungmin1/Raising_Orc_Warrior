@@ -18,6 +18,7 @@ public class QuestSlotUI : UIBase
     public GameObject completeImage;
     public GameObject dimmedImage;
     public Button questClearBtn;
+    public GameObject btnHighLight;
 
     private void Awake()
     {
@@ -37,11 +38,13 @@ public class QuestSlotUI : UIBase
     private void OnEnable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged += RefreshUI;
+        btnHighLight.SetActive(false);
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.questEvents.onQuestProgressCountChanged -= RefreshUI;
+        btnHighLight.SetActive(false);
     }
 
     private void Start()
@@ -54,6 +57,7 @@ public class QuestSlotUI : UIBase
 
     public void OnRewardBtnClick()
     {
+        btnHighLight.SetActive(true);
         switch (questInfo.questType)
         {
             case QuestType.Daily:

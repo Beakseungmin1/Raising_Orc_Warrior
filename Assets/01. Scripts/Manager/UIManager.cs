@@ -18,6 +18,8 @@ public class UIManager : Singleton<UIManager>
     private const int ReservedSortingOrder = 100; // 특정 UI의 고정 sortingOrder 값
     private const int PopupSortingOrder = 110;
 
+    public UIBase currentMainUI = new UIBase();
+
     private HashSet<string> reservedUISet = new HashSet<string>
     {
         "EquipmentUpgradePopupUI",
@@ -48,6 +50,12 @@ public class UIManager : Singleton<UIManager>
         // 딕셔너리에서 UI가 이미 생성되었는지 확인
         if (uiDictionary.TryGetValue(uiName, out UIBase existingUI))
         {
+            // Key가 "Main_"으로 시작하는 경우 currentMainUI에 할당
+            if (uiName.StartsWith("Main_"))
+            {
+                currentMainUI = existingUI;
+            }
+
             return (T)existingUI; // 이미 존재하는 UI 인스턴스를 반환
         }
 
@@ -60,6 +68,12 @@ public class UIManager : Singleton<UIManager>
 
         var ui = Load<T>(go, uiName); // 새 UI 생성
         uiDictionary[uiName] = ui; // 생성된 UI를 딕셔너리에 추가
+
+        // Key가 "Main_"으로 시작하는 경우 currentMainUI에 할당
+        if (uiName.StartsWith("Main_"))
+        {
+            currentMainUI = ui;
+        }
 
         // 스크린 비율에 따라 UI 위치 조정
         RectTransform rectTransform = ui.GetComponent<RectTransform>();
@@ -103,6 +117,12 @@ public class UIManager : Singleton<UIManager>
         // 딕셔너리에서 UI가 이미 생성되었는지 확인
         if (uiDictionary.TryGetValue(uiName, out UIBase existingUI))
         {
+            // Key가 "Main_"으로 시작하는 경우 currentMainUI에 할당
+            if (uiName.StartsWith("Main_"))
+            {
+                currentMainUI = existingUI;
+            }
+
             return (T)existingUI; // 이미 존재하는 UI 인스턴스를 반환
         }
 
@@ -115,6 +135,12 @@ public class UIManager : Singleton<UIManager>
 
         var ui = Load<T>(go, uiName); // 새 UI 생성
         uiDictionary[uiName] = ui; // 생성된 UI를 딕셔너리에 추가
+
+        // Key가 "Main_"으로 시작하는 경우 currentMainUI에 할당
+        if (uiName.StartsWith("Main_"))
+        {
+            currentMainUI = ui;
+        }
 
         // 스크린 비율에 따라 UI 위치 조정
         RectTransform rectTransform = ui.GetComponent<RectTransform>();
@@ -293,6 +319,13 @@ public class UIManager : Singleton<UIManager>
     public void Hide<T>() where T : UIBase
     {
         string uiName = typeof(T).ToString();
+        Hide(uiName);
+    }
+
+    public void Hide(UIBase uiBase)
+    {
+        // 매개변수로 전달된 객체의 타입 이름을 가져옴
+        string uiName = uiBase.GetType().ToString();
         Hide(uiName);
     }
 

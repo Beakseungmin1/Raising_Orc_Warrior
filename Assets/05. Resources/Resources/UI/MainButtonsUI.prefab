@@ -1836,3 +1836,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
+  playerLevelupUIBtn: {fileID: 6941546527841396579}
+  skillUIBtn: {fileID: 8349815811682565002}
+  equipmentUIBtn: {fileID: 2168447052248145712}
+  dungeonUIBtn: {fileID: 7758039035663345604}
+  shopUIBtn: {fileID: 1585486468714605743}
+  playerLevelupUIBtnLabel: {fileID: 19807486656458584}
+  skillUIBtnLabel: {fileID: 9159451717127713765}
+  equipmentUIBtnLabel: {fileID: 5935163512204436489}
+  dungeonUIBtnLabel: {fileID: 7213541143695184191}
+  shopUIBtnLabel: {fileID: 8727640897787059049}

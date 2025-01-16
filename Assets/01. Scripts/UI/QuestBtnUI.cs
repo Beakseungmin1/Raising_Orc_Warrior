@@ -5,15 +5,13 @@ using UnityEngine.UI;
 
 public class QuestBtnUI : UIBase
 {
-    public Animation redDotAnim;
-    public Image redDotImage;
+    public GameObject redDot;
 
     private void OnEnable()
     {
         GameEventsManager.Instance.questEvents.onQuestStateChange += RefreshRedDot;
 
-        redDotImage.enabled = QuestManager.Instance.GetIsAnyQuestCanFinish();
-        redDotAnim.enabled = QuestManager.Instance.GetIsAnyQuestCanFinish();
+        redDot.SetActive(QuestManager.Instance.GetIsAnyQuestCanFinish());
     }
 
     private void OnDisable()
@@ -30,10 +28,9 @@ public class QuestBtnUI : UIBase
 
     public void RefreshRedDot(Quest quest)
     {
-        if (redDotImage != null && redDotAnim != null)
+        if (redDot != null)
         {
-            redDotImage.enabled = QuestManager.Instance.GetIsAnyQuestCanFinish();
-            redDotAnim.enabled = QuestManager.Instance.GetIsAnyQuestCanFinish();
+            redDot.SetActive(QuestManager.Instance.GetIsAnyQuestCanFinish());
         }
     }
 }
