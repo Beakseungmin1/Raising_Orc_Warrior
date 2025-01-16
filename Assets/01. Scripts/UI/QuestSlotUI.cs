@@ -76,8 +76,6 @@ public class QuestSlotUI : UIBase
     {
         // 가져온 GameObject에서 QuestStep 컴포넌트를 얻음
         QuestStep questStep = QuestManager.Instance.GetQuestStepObjById(id).GetComponent<QuestStep>();
-        Debug.Log($"{questStep}: {questStep.count}");
-        Debug.Log($"{questStep}: {questStep.countToComplete}");
 
         if (questStep != null)
         {
