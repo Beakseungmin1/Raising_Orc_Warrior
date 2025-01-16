@@ -9,6 +9,11 @@ public class StarterManager : Singleton<StarterManager>
 
     void Start()
     {
+        SaveManager.Instance.Init();
+        Debug.Log(PlayerObjManager.Instance.Player.stat.health);
+        Debug.Log(PlayerObjManager.Instance.Player.stat.mana);
+        StageManager.Instance.ResetStage();
+
         BackgroundManager.Instance.Init();
 
         CreateInitialUI();

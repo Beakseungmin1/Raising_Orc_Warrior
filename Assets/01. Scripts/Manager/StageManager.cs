@@ -200,4 +200,13 @@ public class StageManager : Singleton<StageManager>
         UIManager.Instance.Show<StageInfoUI>();
         GoToStage();
     }
+
+    public void ResetStage()
+    {
+        SetStageList();
+        SetBossStageList();
+        RefreshChapter();
+        RefreshStage();
+    }
+
 }
