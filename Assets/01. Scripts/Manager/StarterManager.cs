@@ -73,7 +73,7 @@ public class StarterManager : Singleton<StarterManager>
         UIManager.Instance.Show<RightSideBtnsAreaUI>();
         UIManager.Instance.Show<MainButtonsUI>();
         UIManager.Instance.Show<SuggetionGroupUI>();
-        UIManager.Instance.Show<EquipCompleteUI>();
+        UIManager.Instance.Show<MessagePopupUI>();
         UIManager.Instance.Show<SkillEquipSlotManager>();        
     }
 

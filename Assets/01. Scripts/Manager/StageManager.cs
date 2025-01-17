@@ -24,13 +24,15 @@ public class StageManager : Singleton<StageManager>
     public int curStageIndexInThisChapter = 0; //현재 챕터에서의 스테이지 인덱스정보값 ex) 챕터5의 10번째 스테이지
     public int MaxStageIndexInThisChapter = 0; //현 챕터의 스테이지 인덱스 최대치 ex) 챕터 5에는 최대 20스테이지가 있음.
 
-    int savedCurStageIndexInThisChapter = 0;
+    public int savedCurStageIndexInThisChapter = 0;
 
     public Action OnChapterChanged;
 
     public Timer timer;
 
     private bool isThisBossStageFirstTry = true;
+
+    public bool isPlayerInBossStage = false;
 
     private void Awake()
     {
@@ -87,6 +89,8 @@ public class StageManager : Singleton<StageManager>
 
     public void BossStageClear()
     {
+        isPlayerInBossStage = false;
+
         if (timer != null)
         {
             Destroy(timer);
@@ -134,6 +138,8 @@ public class StageManager : Singleton<StageManager>
 
     public void GoToBossStage()
     {
+        isPlayerInBossStage = true;
+
         UIManager.Instance.ShowFadePanel<FadeInFadeOutUI>(FadeType.FadeOutFadeIn);
         GameEventsManager.Instance.enemyEvents.ClearEnemy();
         savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
@@ -163,7 +169,7 @@ public class StageManager : Singleton<StageManager>
         RegenManager.Instance.RegenStagesEnemyDungeonBoss(dungeon.info);
         SetTimer(dungeon.info.dungeonBoss.bossTimeLimit);
         GameEventsManager.Instance.stageEvents.ChangeStage();
-        DungeonManager.Instance.playerIsInDungeon = true;
+        DungeonManager.Instance.isPlayerInDungeon = true;
         BattleManager.Instance.EndBattle();
     }
 

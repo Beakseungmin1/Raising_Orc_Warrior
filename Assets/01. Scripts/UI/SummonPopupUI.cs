@@ -105,17 +105,86 @@ public class SummonPopupUI : UIBase
         SetBtnInteractable(false);
 
         summonDataMapping[typeof(T)] = dataSOs; // 데이터 매핑
+
+        float delayBetweenSlots = 0.05f; // 각 슬롯 시작 간격 (중첩 정도를 조정)
+        Vector3 initialScale = Vector3.one * 12f; // 12배 크기
+        Vector3 finalScale = Vector3.one; // 1배 크기
+        Color transparentColor = new Color(1f, 1f, 1f, 0f); // 투명
+        Color opaqueColor = new Color(1f, 1f, 1f, 1f); // 불투명
+
         for (int i = 0; i < summonSlotObjs.Count; i++)
         {
             if (i < dataSOs.Count && dataSOs[i] != null)
             {
+                // 슬롯 데이터 설정
                 summonSlotObjs[i].GetComponent<SummonSlot>().SetSlot(dataSOs[i]);
-                yield return new WaitForSeconds(0.03f);
+
+                // 슬롯별 코루틴을 시작하여 애니메이션 실행
+                StartCoroutine(AnimateSlot(summonSlotObjs[i], initialScale, finalScale, transparentColor, opaqueColor));
+
+                // 다음 슬롯 시작까지 대기 시간 (슬롯 간 중첩 정도 조정)
+                yield return new WaitForSeconds(delayBetweenSlots);
             }
         }
-
-        SetBtnInteractable(true); // 코루틴 진행 동안 버튼 비활성화
+        
+        float summonAnimationDuration = 0.1f;
+        // 모든 슬롯 애니메이션 완료 후 버튼 활성화
+        yield return new WaitForSeconds(summonAnimationDuration); // 마지막 슬롯 애니메이션 대기
+        SetBtnInteractable(true);
     }
+
+    // 슬롯 하나에 대한 애니메이션 처리
+    private IEnumerator AnimateSlot(GameObject slotObj, Vector3 initialScale, Vector3 finalScale, Color transparentColor, Color opaqueColor)
+    {
+        Image image = slotObj.GetComponent<Image>();
+        Image whiteImage = slotObj.GetComponent<SummonSlot>().whiteImage;
+
+        // 1. 초기 상태 설정 (투명한 흰색, 12배 크기)
+        whiteImage.rectTransform.localScale = initialScale;
+        whiteImage.color = transparentColor;
+
+        float summonAnimationDuration = 0.2f;
+
+        // 2. 애니메이션: 투명한 흰색(12배 크기) -> 불투명한 흰색(1배 크기)
+        float elapsedTime = 0f;
+        while (elapsedTime < summonAnimationDuration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float progress = elapsedTime / summonAnimationDuration;
+            whiteImage.rectTransform.localScale = Vector3.Lerp(initialScale, finalScale, progress);
+            whiteImage.color = Color.Lerp(transparentColor, opaqueColor, progress);
+
+            yield return null;
+        }
+
+        // 최종 상태 보정 (불투명한 흰색, 1배 크기)
+        whiteImage.rectTransform.localScale = finalScale;
+        whiteImage.color = transparentColor;
+
+        // 3. 애니메이션: 불투명한 흰색(1배 크기) -> 투명한 흰색(1배 크기)
+        elapsedTime = 0f;
+        while (elapsedTime < summonAnimationDuration)
+        {
+            yield return new WaitForSeconds(0.01f);
+
+            elapsedTime += Time.deltaTime;
+
+            // 진행률 (0~1)
+            float progress = elapsedTime / summonAnimationDuration;
+
+            // Ease 효과 (SmoothStep)
+            float easedProgress = Mathf.SmoothStep(0f, 1f, progress);
+
+            // 색상을 보간 (크기는 유지)
+            whiteImage.color = Color.Lerp(opaqueColor, transparentColor, easedProgress);
+
+            yield return null;
+        }
+    }
+
+
+
 
     private void SetBtnInteractable(bool canInteractable)
     {

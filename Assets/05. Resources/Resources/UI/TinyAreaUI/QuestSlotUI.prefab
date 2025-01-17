@@ -1388,6 +1388,7 @@ GameObject:
   - component: {fileID: 4390398901481142705}
   - component: {fileID: 7094987306976915748}
   - component: {fileID: 6280156137264721259}
+  - component: {fileID: 5013364711361903075}
   m_Layer: 5
   m_Name: ButtonHighlightSecondImage
   m_TagString: Untagged
@@ -1473,6 +1474,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5013364711361903075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7148598402438911728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f54b3f6ac3243514d92c722282dff7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7344642933998460552
 GameObject:
   m_ObjectHideFlags: 0

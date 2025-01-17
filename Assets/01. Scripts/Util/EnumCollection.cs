@@ -128,3 +128,9 @@ public static class GradeHelper
         }
     }
 }
+
+public enum MessageTextType
+{
+    DungeonEntryBlocked, //던전입장이 불가합니다.
+    Equipped //장착을 완료했습니다.
+}
