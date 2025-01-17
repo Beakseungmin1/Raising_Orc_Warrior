@@ -169,12 +169,15 @@ public class DungeonManager : Singleton<DungeonManager>
         UIManager.Instance.Hide<BossStageInfoUI>();
         UIManager.Instance.Show<StageInfoUI>();
         StageManager.Instance.GoToStage();
+
         currentDungeonInfo = null;
         isPlayerInDungeon = false;
 
         SetCamera camera = Camera.main.gameObject.GetComponent<SetCamera>();
         camera.SetCameraPosY(0f);
         camera.SetCameraSize(5f);
+
+        PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateIdle();
     }
 
 
