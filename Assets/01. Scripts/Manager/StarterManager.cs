@@ -9,9 +9,9 @@ public class StarterManager : Singleton<StarterManager>
 
     void Start()
     {
-        //SaveManager.Instance.Init();
-        //StageManager.Instance.ResetStage();
-        PlayerObjManager.Instance.Player.stat.SetDefaultStat();
+        SaveManager.Instance.Init();
+        StageManager.Instance.ResetStage();
+        //PlayerObjManager.Instance.Player.stat.SetDefaultStat();
         PlayerObjManager.Instance.Player.StatCalculator.UpdateValue();
         BackgroundManager.Instance.Init();
         

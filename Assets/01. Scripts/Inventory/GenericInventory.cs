@@ -52,6 +52,16 @@ public class GenericInventory<T> : IInventory<T> where T : class, IEnhanceable
         return new List<T>(items);
     }
 
+    public List<T> GetRealItems()
+    {
+        return items;
+    }
+
+    public void SetItems(List<T> saveitems)
+    {
+        items = saveitems;
+    }
+
     public int GetTotalItemCount()
     {
         return items.Count;

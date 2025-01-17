@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -53,6 +54,67 @@ public class PlayerInventory : MonoBehaviour
                 break;
         }
     }
+
+    public GenericInventory<BaseSkill> GetSkillInventory()
+    {
+        return SkillInventory;
+    }
+
+    public GenericInventory<Weapon> GetWeaponInventory()
+    {
+        return WeaponInventory;
+    }
+
+    public GenericInventory<Accessory> GetAccessoryInventory()
+    {
+        return AccessoryInventory;
+    }
+
+
+
+    public void SetSkillInventory(List<BaseSkill> skillInven)
+    {
+        foreach (BaseSkill item in skillInven)
+        {
+            for (int i = 0; i < item.StackCount; i++)
+            {
+                AddItem(SkillInventory, CreateSkillInstance(item.SkillData));
+            }
+            Debug.Log("씨발");
+        }
+        OnSkillsChanged?.Invoke();
+    }
+
+    public void SetTestSkillInventory(SkillSaveData skills)
+    {
+        for(int i = 0; i < skills.StackCount; i++)
+        {
+            AddItem(SkillInventory, CreateSkillInstance(skills.skillData));
+            //인챈트레벨 넣는법도 구상
+        }
+        OnSkillsChanged?.Invoke();
+    }
+
+    public void SetWeaponInventory(GenericInventory<Weapon> weaponInven)
+    {
+        foreach (var item in weaponInven.GetRealItems())
+        {
+            AddItem(WeaponInventory, item);
+        }
+        OnInventoryChanged?.Invoke(true);
+        PassiveManager.Instance.UpdateWeaponEffects();
+    }
+
+    public void SetAccessoryInventory(GenericInventory<Accessory> accessoryinven)
+    {
+        foreach (var item in accessoryinven.GetRealItems())
+        {
+            AddItem(AccessoryInventory, item);
+        }
+        OnInventoryChanged?.Invoke(false);
+        PassiveManager.Instance.UpdateAccessoryEffects();
+    }
+
 
     public void RemoveItemFromInventory(BaseItemDataSO item)
     {
