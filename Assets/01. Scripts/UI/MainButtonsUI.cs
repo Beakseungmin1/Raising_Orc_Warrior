@@ -78,7 +78,11 @@ public class MainButtonsUI : UIBase
                 UIManager.Instance.Show<Main_EquipmentUI>();
                 break;
             case 3:
-                if (!DungeonManager.Instance.playerIsInDungeon)
+                if (DungeonManager.Instance.isPlayerInDungeon || StageManager.Instance.isPlayerInBossStage)
+                {
+                    GameEventsManager.Instance.messageEvents.ShowMessage(MessageTextType.DungeonEntryBlocked);
+                }
+                else
                 {
                     UIManager.Instance.Hide(UIManager.Instance.currentMainUI);
                     UIManager.Instance.Show<Main_DungeonUI>();
