@@ -20,6 +20,8 @@ public class GameEventsManager : Singleton<GameEventsManager>
 
     public StageEvents stageEvents;
 
+    public MessageEvents messageEvents;
+
     private void Awake()
     {
         enemyEvents = new EnemyEvents();
@@ -30,5 +32,6 @@ public class GameEventsManager : Singleton<GameEventsManager>
         bossEvents = new BossEvents();
         dungeonEvents = new DungeonEvents();
         stageEvents = new StageEvents();
+        messageEvents = new MessageEvents();
     }
 }
