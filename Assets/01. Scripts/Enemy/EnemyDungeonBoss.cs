@@ -138,17 +138,16 @@ public class EnemyDungeonBoss : EnemyBase, IEnemy
     public void Die()
     {
         bool isCleared = true;
-        bool isPlayerDead = false;
-        FinishDungeon(isCleared, isPlayerDead);
+        FinishDungeon(isCleared);
     }
 
-    public void FinishDungeon(bool isCleared, bool isPlayerDead)
+    public void FinishDungeon(bool isCleared)
     {
         this.canAttack = false;
         animator.SetBool("Pattern1", false);
         animator.SetBool("Pattern3", false);
         animator.SetBool("Pattern2", true);
-        DungeonManager.Instance.FinishDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp, isCleared, isPlayerDead, this);
+        DungeonManager.Instance.FinishDungeon(dungeonInfo.type, dungeonInfo.level, maxHp, hp, isCleared, this);
     }
 
     public bool GetActive()

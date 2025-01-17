@@ -1,10 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using TMPro;
 
-public class EquipCompleteUI : UIBase
+public class MessagePopupUI : UIBase
 {
-    [SerializeField] private GameObject equipCompleteMessage;
+    [SerializeField] private GameObject messageObj;
+    [SerializeField] private TextMeshProUGUI messageTxt;
     [SerializeField] private float displayDuration = 0.5f;
     [SerializeField] private float fadeInDuration = 0.25f;
     [SerializeField] private float fadeOutDuration = 0.25f;
@@ -13,19 +15,31 @@ public class EquipCompleteUI : UIBase
 
     private void Awake()
     {
-        SuggetionGroupUI.OnEquipComplete += ShowEquipCompleteMessage;
+        GameEventsManager.Instance.messageEvents.onShowMessage += ShowMessage;
     }
 
     private void Start()
     {
-        equipCompleteMessage.SetActive(false);
+        messageObj.SetActive(false);
     }
 
-    public void ShowEquipCompleteMessage()
+    public void ShowMessage(MessageTextType messageType)
     {
         if (!gameObject.activeInHierarchy)
         {
             gameObject.SetActive(true);
+        }
+
+        switch (messageType)
+        {
+            case MessageTextType.Equipped:
+                messageTxt.text = "장착을 완료했습니다.";
+                break;
+            case MessageTextType.DungeonEntryBlocked:
+                messageTxt.text = "전투 중 던전 입장이 불가합니다.";
+                break ;
+            default:
+                break;
         }
 
         if (displayCoroutine != null)
@@ -37,25 +51,25 @@ public class EquipCompleteUI : UIBase
 
     private IEnumerator DisplayMessageCoroutine()
     {
-        equipCompleteMessage.SetActive(true);
+        messageObj.SetActive(true);
         SetMessageAlpha(0f);
         yield return FadeInMessage();
         yield return new WaitForSeconds(displayDuration);
         yield return FadeOutMessage();
-        equipCompleteMessage.SetActive(false);
+        messageObj.SetActive(false);
         displayCoroutine = null;
     }
 
     private void SetMessageAlpha(float alpha)
     {
-        SpriteRenderer spriteRenderer = equipCompleteMessage.GetComponent<SpriteRenderer>();
+        SpriteRenderer spriteRenderer = messageObj.GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
         {
             spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, alpha);
         }
         else
         {
-            Image image = equipCompleteMessage.GetComponent<Image>();
+            Image image = messageObj.GetComponent<Image>();
             if (image != null)
             {
                 image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);

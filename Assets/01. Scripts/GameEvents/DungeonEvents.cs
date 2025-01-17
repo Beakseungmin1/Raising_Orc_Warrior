@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class DungeonEvents
 {
-    public event Action<bool, bool> onPlayerDeadOrTimeEndInDungeon;
+    public event Action<bool> onPlayerDeadOrTimeEndInDungeon;
 
-    public void PlayerDeadOrTimeEndInDungeon(bool isCleared, bool isPlayerDead)
+    public void PlayerDeadOrTimeEndInDungeon(bool isCleared)
     {
         if (onPlayerDeadOrTimeEndInDungeon != null)
         {
-            onPlayerDeadOrTimeEndInDungeon(isCleared, isPlayerDead);
+            onPlayerDeadOrTimeEndInDungeon(isCleared);
         }
     }
 }

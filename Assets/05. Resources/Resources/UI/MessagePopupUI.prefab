@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8242344963796263136}
   - component: {fileID: 6550046205333006072}
   m_Layer: 5
-  m_Name: EquipText
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC7A5\uCC29\uC744 \uC644\uB8CC\uD588\uC2B5\uB2C8\uB2E4"
+  m_text: "\uBA54\uC2DC\uC9C0\uAC00 \uCD9C\uB825\uB429\uB2C8\uB2E4."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 79ee000067f477c4c9879e8a6fcb51b2, type: 2}
   m_sharedMaterial: {fileID: -3795136696553960580, guid: 79ee000067f477c4c9879e8a6fcb51b2, type: 2}
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 7214127998642266431}
   - component: {fileID: 4510115713860901351}
   m_Layer: 5
-  m_Name: EquipCompleteUI
+  m_Name: MessagePopupUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -239,7 +239,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
-  equipCompleteMessage: {fileID: 5211056893978965570}
+  messageObj: {fileID: 5211056893978965570}
+  messageTxt: {fileID: 8242344963796263136}
   displayDuration: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.5

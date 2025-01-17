@@ -12,6 +12,7 @@ public class SummonSlot : UIBase
     public TextMeshProUGUI rankTxt;
     public TextMeshProUGUI rankLabel;
     public Image image;
+    public Image whiteImage;
 
     public bool isSkillSummoning = false;
 
