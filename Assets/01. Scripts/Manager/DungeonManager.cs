@@ -10,7 +10,7 @@ public class DungeonManager : Singleton<DungeonManager>
 
     public DungeonInfoSO currentDungeonInfo;
 
-    public bool playerIsInDungeon = false;
+    public bool isPlayerInDungeon = false;
 
     private void Awake()
     {
@@ -119,13 +119,13 @@ public class DungeonManager : Singleton<DungeonManager>
         return lastRewardAmount;
     }
 
- 
-    public void FinishDungeon(DungeonType dungeonType, int level, BigInteger maxHP, BigInteger hp, bool isCleared, bool isPlayerDead, EnemyDungeonBoss enemyDungeonBoss)
+
+    public void FinishDungeon(DungeonType dungeonType, int level, BigInteger maxHP, BigInteger hp, bool isCleared, EnemyDungeonBoss enemyDungeonBoss)
     {
         GameEventsManager.Instance.bossEvents.TimerStop();
         enemyDungeonBoss.canAttack = false;
 
-        if (!isPlayerDead)
+        if (!PlayerObjManager.Instance.Player.PlayerBattle.GetIsDead()) //죽지 않았다면
         {
             PlayerObjManager.Instance.Player.PlayerBattle.SetPlayerStateStoppedIdle();
         }
@@ -136,12 +136,11 @@ public class DungeonManager : Singleton<DungeonManager>
         {
             ChangeDungeonState(dungeon.type, level, DungeonState.CLEARED);
 
-            //다음 레벨 던전 오픈
+            // 다음 레벨 던전 오픈
             if (GetDungeonByTypeAndLevel(dungeonType, level + 1) != null)
             {
                 ChangeDungeonState(dungeon.type, level + 1, DungeonState.OPENED);
             }
-
         }
 
         // BigInteger를 double로 변환하여 비율 계산
@@ -158,6 +157,11 @@ public class DungeonManager : Singleton<DungeonManager>
 
     public void ExitDungeon()
     {
+        if (PlayerObjManager.Instance.Player.PlayerBattle.GetIsDead() == true)
+        {
+            StartCoroutine(PlayerObjManager.Instance.Player.PlayerBattle.DelayBeforeResurrection(2f));
+        }
+
         StageManager.Instance.curStageIndexInThisChapter = StageManager.Instance.savedCurStageIndexInThisChapter;
 
         GameEventsManager.Instance.enemyEvents.ClearEnemy();
@@ -166,12 +170,13 @@ public class DungeonManager : Singleton<DungeonManager>
         UIManager.Instance.Show<StageInfoUI>();
         StageManager.Instance.GoToStage();
         currentDungeonInfo = null;
-        playerIsInDungeon = false;
+        isPlayerInDungeon = false;
 
         SetCamera camera = Camera.main.gameObject.GetComponent<SetCamera>();
         camera.SetCameraPosY(0f);
         camera.SetCameraSize(5f);
     }
+
 
     public void ChangeDungeonState(DungeonType dungeonType, int level, DungeonState state)
     {
