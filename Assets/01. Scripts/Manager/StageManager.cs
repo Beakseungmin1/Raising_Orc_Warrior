@@ -32,6 +32,8 @@ public class StageManager : Singleton<StageManager>
 
     private bool isThisBossStageFirstTry = true;
 
+    public bool isPlayerInBossStage = false;
+
     private void Awake()
     {
         SetChapterList();
@@ -87,6 +89,8 @@ public class StageManager : Singleton<StageManager>
 
     public void BossStageClear()
     {
+        isPlayerInBossStage = false;
+
         if (timer != null)
         {
             Destroy(timer);
@@ -134,6 +138,8 @@ public class StageManager : Singleton<StageManager>
 
     public void GoToBossStage()
     {
+        isPlayerInBossStage = true;
+
         UIManager.Instance.ShowFadePanel<FadeInFadeOutUI>(FadeType.FadeOutFadeIn);
         GameEventsManager.Instance.enemyEvents.ClearEnemy();
         savedCurStageIndexInThisChapter = curStageIndexInThisChapter;
@@ -163,7 +169,7 @@ public class StageManager : Singleton<StageManager>
         RegenManager.Instance.RegenStagesEnemyDungeonBoss(dungeon.info);
         SetTimer(dungeon.info.dungeonBoss.bossTimeLimit);
         GameEventsManager.Instance.stageEvents.ChangeStage();
-        DungeonManager.Instance.playerIsInDungeon = true;
+        DungeonManager.Instance.isPlayerInDungeon = true;
         BattleManager.Instance.EndBattle();
     }
 
