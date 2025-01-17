@@ -158,6 +158,9 @@ public class DungeonManager : Singleton<DungeonManager>
 
     public void ExitDungeon()
     {
+        StageManager.Instance.curStageIndexInThisChapter = StageManager.Instance.savedCurStageIndexInThisChapter;
+
+        GameEventsManager.Instance.enemyEvents.ClearEnemy();
         UIManager.Instance.ShowFadePanel<FadeInFadeOutUI>(FadeType.FadeOutFadeIn);
         UIManager.Instance.Hide<BossStageInfoUI>();
         UIManager.Instance.Show<StageInfoUI>();

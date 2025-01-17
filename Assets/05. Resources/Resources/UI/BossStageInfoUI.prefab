@@ -266,6 +266,7 @@ MonoBehaviour:
   hpSlider: {fileID: 833466558319329410}
   remainingCountTxt: {fileID: 1726605264485312363}
   dungeonNameLabel: {fileID: 3616652284396273150}
+  exitBtn: {fileID: 8635279619508449677}
   maxLimitTime: 0
 --- !u!1 &1637731595757221779
 GameObject:
@@ -481,7 +482,7 @@ GameObject:
   - component: {fileID: 705223453004766483}
   - component: {fileID: 3120201612718117572}
   m_Layer: 5
-  m_Name: RunLabel
+  m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1405,7 +1406,7 @@ GameObject:
   - component: {fileID: 9141039458158509182}
   - component: {fileID: 6915773968941930609}
   m_Layer: 5
-  m_Name: RunButton
+  m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1515,7 +1516,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1348099380721434454}
         m_TargetAssemblyTypeName: BossStageInfoUI, Assembly-CSharp
-        m_MethodName: OnRunBtnClick
+        m_MethodName: OnExitBtnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -11,6 +11,7 @@ public class BossStageInfoUI : UIBase
     public Slider hpSlider;
     public TextMeshProUGUI remainingCountTxt;
     public TextMeshProUGUI dungeonNameLabel;
+    public GameObject exitBtn;
 
     private BigInteger bossMaxHP;
 
@@ -50,6 +51,7 @@ public class BossStageInfoUI : UIBase
 
         if (DungeonManager.Instance.currentDungeonInfo != null)
         {
+            exitBtn.SetActive(true);
             switch (DungeonManager.Instance.currentDungeonInfo.type)
             {
                 case DungeonType.GoldDungeon:
@@ -65,6 +67,7 @@ public class BossStageInfoUI : UIBase
         }
         else
         {
+            exitBtn.SetActive(false);
             dungeonNameLabel.text = StageManager.Instance.stageName;
         }
     }
@@ -75,17 +78,13 @@ public class BossStageInfoUI : UIBase
         remainingCountTxt.text = $"{curHP}/{bossMaxHP}";
     }
 
-    public void OnRunBtnClick()
+    public void OnExitBtnClick()
     {
-        StageManager.Instance.BackToLastStage();
+        DungeonManager.Instance.ExitDungeon();
         GameEventsManager.Instance.bossEvents.TimerStop();
 
-        if (DungeonManager.Instance.playerIsInDungeon == true)
-        {
-            DungeonManager.Instance.playerIsInDungeon = false;
-            SetCamera camera = Camera.main.gameObject.GetComponent<SetCamera>();
-            camera.SetCameraPosY(0f);
-            camera.SetCameraSize(5f);
-        }
+        SetCamera camera = Camera.main.gameObject.GetComponent<SetCamera>();
+        camera.SetCameraPosY(0f);
+        camera.SetCameraSize(5f);
     }
 }

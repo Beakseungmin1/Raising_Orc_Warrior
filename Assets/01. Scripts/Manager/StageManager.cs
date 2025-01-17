@@ -24,7 +24,7 @@ public class StageManager : Singleton<StageManager>
     public int curStageIndexInThisChapter = 0; //현재 챕터에서의 스테이지 인덱스정보값 ex) 챕터5의 10번째 스테이지
     public int MaxStageIndexInThisChapter = 0; //현 챕터의 스테이지 인덱스 최대치 ex) 챕터 5에는 최대 20스테이지가 있음.
 
-    int savedCurStageIndexInThisChapter = 0;
+    public int savedCurStageIndexInThisChapter = 0;
 
     public Action OnChapterChanged;
 
