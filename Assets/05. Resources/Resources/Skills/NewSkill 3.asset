@@ -21,6 +21,8 @@ MonoBehaviour:
   currencyIcon: {fileID: 21300000, guid: f926f2f6a7fc39b4b9803f98b90bfcc2, type: 3}
   requiredCurrencyForUpgrade: 100
   currentLevel: 1
+  maxLevel: 10
+  SkillId: 3
   description: "\uC804\uC0AC\uC758 \uC758\uC9C0\uB97C \uB2F4\uC544 \uACF5\uACA9\uB825\uC744           
     \uAE09\uACA9\uD788 \uC62C\uB9AC\uB294 \uAE30\uC220"
   effectDescription: "{buffDuration}\uCD08\uAC04 \uC804\uCCB4 \uACF5\uACA9\uB825

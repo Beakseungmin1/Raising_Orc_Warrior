@@ -22,6 +22,7 @@ MonoBehaviour:
   requiredCurrencyForUpgrade: 700
   currentLevel: 1
   maxLevel: 10
+  SkillId: 7
   description: "\uBD09\uC778\uB41C \uC624\uD06C\uC2E0\uC758 \uD798\uC744 \uAE68\uC6CC
     \uC7A0\uC2DC\uB3D9\uC548 \uCD08\uC6D4\uC801\uC778 \uD798\uC744 \uD3ED\uBC1C\uC2DC\uD0A4\uB294
     \uAE30\uC220"

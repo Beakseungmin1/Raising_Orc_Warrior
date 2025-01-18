@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public abstract class BaseItemDataSO : ScriptableObject
+[ES3Serializable]
+public class BaseItemDataSO : ScriptableObject
 {
     [Header("Basic Information")]
     public string itemName;
