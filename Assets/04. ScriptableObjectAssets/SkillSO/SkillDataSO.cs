@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Skill", menuName = "Skill/New Skill")]
+[ES3Serializable]
 public class SkillDataSO : BaseItemDataSO
 {
     [Header("Skill Details")]
+    public int SkillId;
     public string description;
     public string effectDescription;
     public SkillType skillType;
