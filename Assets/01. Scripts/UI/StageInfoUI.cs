@@ -10,6 +10,7 @@ public class StageInfoUI : UIBase
     public TextMeshProUGUI stageNumTxt;
     public Slider stageProgressSlider;
     public TextMeshProUGUI currentGoldTxt;
+    public GameObject redDot;
 
     private void OnEnable()
     {
@@ -17,6 +18,15 @@ public class StageInfoUI : UIBase
         RegenManager.Instance.OnEnemyCountDown += RefreshUI;
         RegenManager.Instance.OnEnemyCountZero += RefreshUI;
         GameEventsManager.Instance.currencyEvents.onGoldChanged += RefreshUI;
+
+        if (!StageManager.Instance.isThisBossStageFirstTry) //두번째이상 도전이라면 redDot true
+        {
+            redDot.SetActive(true);
+        }
+        else
+        {
+            redDot.SetActive(false);
+        }
     }
 
     private void OnDisable()

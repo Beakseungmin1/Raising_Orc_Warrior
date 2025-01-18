@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -80,16 +81,18 @@ public class PlayerInventory : MonoBehaviour
             {
                 AddItem(SkillInventory, CreateSkillInstance(item.SkillData));
             }
-            Debug.Log("씨발");
         }
         OnSkillsChanged?.Invoke();
     }
 
     public void SetTestSkillInventory(SkillSaveData skills)
     {
-        for(int i = 0; i < skills.StackCount; i++)
+        SkillDataSO skillData = new SkillDataSO();
+
+        skillData = skills.SkillDataSO;
+        for (int i = 0; i < skills.StackCount; i++)
         {
-            AddItem(SkillInventory, CreateSkillInstance(skills.skillData));
+            AddItem(SkillInventory, CreateSkillInstance(skillData));
             //인챈트레벨 넣는법도 구상
         }
         OnSkillsChanged?.Invoke();
@@ -276,43 +279,6 @@ public class PlayerInventory : MonoBehaviour
         }
 
         return totalEffect;
-    }
-
-    /// <summary>
-    /// 아이템 소지 여부 체크
-    /// </summary>
-    public bool HasRequiredItem(string itemKey, bool isWeapon)
-    {
-        // 아이템 소지 여부를 확인. 예: "Rare3"를 얻으려면 "Rare4"가 있어야 함
-        string[] parts = itemKey.Split(new[] { "Normal", "Uncommon", "Rare", "Hero", "Legendary", "Mythic", "Ultimate" }, StringSplitOptions.RemoveEmptyEntries);
-        if (parts.Length < 1) return true; // 잘못된 입력 처리
-
-        string grade = itemKey.Substring(0, itemKey.Length - 1); // 등급 추출 (예: "Rare")
-        int rank = int.Parse(parts[0]); // 랭크 추출 (예: "3")
-
-        // 노말, 언커먼, 레어 등급 아이템은 이전 단계가 없어도 소환 가능
-        if (grade == "Normal" || grade == "Uncommon" || grade == "Rare")
-        {
-            return true;
-        }
-
-        // Rank4는 최상위 단계이므로 제한 없음
-        if (rank == 4) return true;
-
-        // 이전 단계 아이템 이름 생성
-        string requiredItem = $"{grade}{rank + 1}";
-
-        // 무기 또는 악세서리에 따라 소지 여부 확인
-        if (isWeapon)
-        {
-            // 무기 인벤토리에서 이전 등급 확인
-            return PlayerObjManager.Instance.Player.inventory.WeaponInventory.GetItem(requiredItem) != null;
-        }
-        else
-        {
-            // 악세서리 인벤토리에서 이전 등급 확인
-            return PlayerObjManager.Instance.Player.inventory.AccessoryInventory.GetItem(requiredItem) != null;
-        }
     }
 
     public float GetTotalAccessoryHpAndHpRecovery()

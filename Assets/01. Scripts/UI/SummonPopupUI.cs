@@ -138,10 +138,17 @@ public class SummonPopupUI : UIBase
     {
         Image image = slotObj.GetComponent<Image>();
         Image whiteImage = slotObj.GetComponent<SummonSlot>().whiteImage;
+        TextMeshProUGUI gradeTxt = slotObj.GetComponent<SummonSlot>().gradeTxt;
+        TextMeshProUGUI rankTxt = slotObj.GetComponent<SummonSlot>().rankTxt;
+        TextMeshProUGUI rankLabel = slotObj.GetComponent<SummonSlot>().rankLabel;
 
-        // 1. 초기 상태 설정 (투명한 흰색, 12배 크기)
+        // 1. 초기 상태 설정 (투명한 흰색, 12배 크기, image는 꺼져있음)
         whiteImage.rectTransform.localScale = initialScale;
         whiteImage.color = transparentColor;
+        image.enabled = false;
+        gradeTxt.enabled = false;
+        rankTxt.enabled = false;
+        rankLabel.enabled = false;
 
         float summonAnimationDuration = 0.2f;
 
@@ -158,15 +165,23 @@ public class SummonPopupUI : UIBase
             yield return null;
         }
 
+        SoundManager.Instance.PlaySFXOneShot(SFXType.Button);
+
         // 최종 상태 보정 (불투명한 흰색, 1배 크기)
         whiteImage.rectTransform.localScale = finalScale;
         whiteImage.color = transparentColor;
+
+        // 아이콘 이미지 켬
+        image.enabled = true;
+        gradeTxt.enabled = true;
+        rankTxt.enabled = true;
+        rankLabel.enabled = true;
 
         // 3. 애니메이션: 불투명한 흰색(1배 크기) -> 투명한 흰색(1배 크기)
         elapsedTime = 0f;
         while (elapsedTime < summonAnimationDuration)
         {
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.03f);
 
             elapsedTime += Time.deltaTime;
 

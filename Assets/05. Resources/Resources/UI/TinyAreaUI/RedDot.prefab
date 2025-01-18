@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 34, y: 35}
+  m_SizeDelta: {x: 55, y: 59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5635526666054361841
 CanvasRenderer:
@@ -85,7 +85,7 @@ Animation:
   m_GameObject: {fileID: 1480492623600354543}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 0}
+  m_Animation: {fileID: 7400000, guid: 5b40a94df01748145a3f315f6355c4d3, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 5b40a94df01748145a3f315f6355c4d3, type: 2}
   m_WrapMode: 0
