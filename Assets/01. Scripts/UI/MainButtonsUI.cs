@@ -44,6 +44,43 @@ public class MainButtonsUI : UIBase
         GameEventsManager.Instance.dungeonEvents.onDungeonUIChanged -= UpdateButtonColors;
     }
 
+    /*
+    public void RefreshDungeonRedDotUI()
+    {
+        // 티켓이 남아있다면
+        if (CurrencyManager.Instance.GetCurrency(CurrencyType.DungeonTicket) > 0)
+        {
+            dungeonRedDot.SetActive(true);
+        }
+        else
+        {
+            dungeonRedDot.SetActive(false);
+        }
+    }
+
+    public void RefreshEquipmentRedDot()
+    {
+        if ( 융합할 게 있거나, + 장착할 게 있다면 )
+        {
+            dungeonRedDot.SetActive(true);
+        }
+        else
+        {
+            dungeonRedDot.SetActive(false);
+        }
+    }
+
+    public void RefreshSummonRedDot()
+    {
+        //소환할 보석이 있다면
+    }
+
+    public void RefreshSkillRedDot()
+    {
+        //스킬슬롯 칸을 보유중인 스킬 개수 만큼 채우지 못했을 때
+    }
+    */
+
     public void UpdateButtonColors()
     {
         // 현재 활성화된 UI 이름 가져오기
