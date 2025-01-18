@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -60,15 +61,17 @@ public class Datas
     public int SkillSummonLevel = 1;
     public float SkillSummonExp = 0f;
     public float SkillSummonNextExp = 100f;
-    public List<SkillSaveData> SkillInventory;
     public List<Weapon> WeaponInventory;
     public List<Accessory> AccessoryInventory;
 }
+
 
 public class SaveManager : Singleton<SaveManager>
 {
 
     public Datas datas;
+    public List<SkillSaveData> SkillInventory;
+
 
     private string KeyName = "Datas";
     private string fileName = "SaveFile.es3";
@@ -81,6 +84,7 @@ public class SaveManager : Singleton<SaveManager>
     public void Init()
     {
         datas = new Datas();
+        SkillInventory = new List<SkillSaveData>();
 
         stat = PlayerObjManager.Instance.Player.stat;
         inventory = PlayerObjManager.Instance.Player.inventory;
@@ -149,23 +153,29 @@ public class SaveManager : Singleton<SaveManager>
         datas.SkillSummonExp = SummonDataManager.Instance.GetExp(ItemType.Skill);
         datas.SkillSummonNextExp = SummonDataManager.Instance.GetExpToNextLevel(ItemType.Skill);
 
-        datas.SkillInventory = new List<SkillSaveData>();
+
+        SkillInventory = new List<SkillSaveData>();
         List<BaseSkill> skills = inventory.GetSkillInventory().GetAllItems();
         foreach (BaseSkill skill in skills)
         {
             SkillSaveData newSkillData = new SkillSaveData();
 
-            newSkillData.skillData = skill.SkillData;
+
+            newSkillData.Skillid = skill.SkillData.SkillId;
             newSkillData.EnhancementLevel = skill.EnhancementLevel;
             newSkillData.StackCount = skill.StackCount;
 
-            datas.SkillInventory.Add(newSkillData);
-        }
-        //Debug.Log(datas.SkillInventory[0].skillData.itemName);
 
-        datas.WeaponInventory = inventory.GetWeaponInventory().GetAllItems();
-        datas.AccessoryInventory = inventory.GetAccessoryInventory().GetAllItems();
+            SkillInventory.Add(newSkillData);
+        }
+        //Debug.Log(SkillInventory[0].skillData);
+
+        //datas.WeaponInventory = inventory.GetWeaponInventory().GetAllItems();
+        //datas.AccessoryInventory = inventory.GetAccessoryInventory().GetAllItems();
         // 필요한 필드만 가지고 있는 클래스를 하나 만들면 어떨까 직렬화 가능하게
+
+        //Unity에서 UnityEngine.Object 타입의 필드(예: Component, ScriptableObject, Texture2D 등)는 참조로 저장되서 따로 저장하고 불러야함
+        ES3.Save("SkillInventory", SkillInventory);
 
         ES3.Save("Datas", datas);
     }
@@ -174,6 +184,9 @@ public class SaveManager : Singleton<SaveManager>
     {
         if (ES3.FileExists(fileName))
         {
+            // 리스트 로드 할려면 무조건 이렇게 해야한다 시발 조금이라도 다른명령어 쓰면 절대안됌
+            List<SkillSaveData> skillSaveDatas = ES3.Load<List<SkillSaveData>>("SkillInventory");
+
             ES3.LoadInto(KeyName, datas);
             stat.StatDataLoad();
             stat.UpdateNeedMoney();
@@ -196,12 +209,22 @@ public class SaveManager : Singleton<SaveManager>
             SummonDataManager.Instance.SetExp(ItemType.Skill, datas.SkillSummonExp);
             SummonDataManager.Instance.SetExpToNextLevel(ItemType.Skill, datas.SkillSummonNextExp);
 
-            //하..시벌거..
-            //Debug.Log(datas.SkillInventory[0].skillData.itemName);
-            //foreach (var skill in datas.SkillInventory)
-            //{
-            //    inventory.SetTestSkillInventory(skill);
-            //}
+
+            List<SkillDataSO> allSkills = DataManager.Instance.GetAllSkills();
+
+            //저장해놓은 스킬데이터들을 모두 살펴봄
+            foreach (SkillSaveData skill in skillSaveDatas)
+            {
+                //찾은 저장스킬데이터를 모든 스킬데이터들이랑 비교후 같은걸 집어넣음
+                foreach (SkillDataSO data in allSkills)
+                {
+                    if (skill.Skillid == data.SkillId)
+                    {
+                        skill.SkillDataSO = data;
+                    }
+                }
+                inventory.SetTestSkillInventory(skill);
+            }
 
             //inventory.SetSkillInventory(datas.SkillInventory);
             //inventory.SetWeaponInventory(datas.WeaponInventory);

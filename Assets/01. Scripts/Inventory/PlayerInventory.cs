@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -80,16 +81,18 @@ public class PlayerInventory : MonoBehaviour
             {
                 AddItem(SkillInventory, CreateSkillInstance(item.SkillData));
             }
-            Debug.Log("씨발");
         }
         OnSkillsChanged?.Invoke();
     }
 
     public void SetTestSkillInventory(SkillSaveData skills)
     {
-        for(int i = 0; i < skills.StackCount; i++)
+        SkillDataSO skillData = new SkillDataSO();
+
+        skillData = skills.SkillDataSO;
+        for (int i = 0; i < skills.StackCount; i++)
         {
-            AddItem(SkillInventory, CreateSkillInstance(skills.skillData));
+            AddItem(SkillInventory, CreateSkillInstance(skillData));
             //인챈트레벨 넣는법도 구상
         }
         OnSkillsChanged?.Invoke();
