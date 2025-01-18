@@ -57,7 +57,6 @@ public class SkillInfoPopupUI : UIBase
         gradeTxt.color = skill.SkillData.gradeColor;
 
         skillImage.sprite = skill.SkillData.icon;
-        currencyIcon.sprite = skill.SkillData.currencyIcon;
 
         effectDescriptionTxt.text = GenerateEffectDescription(skill);
 
@@ -110,7 +109,6 @@ public class SkillInfoPopupUI : UIBase
         gradeTxt.color = skillDataSO.gradeColor;
 
         skillImage.sprite = skillDataSO.icon;
-        currencyIcon.sprite = skillDataSO.currencyIcon;
 
         effectDescriptionTxt.text = GenerateEffectDescription(skillDataSO);
 
