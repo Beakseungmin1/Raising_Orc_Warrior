@@ -14,4 +14,14 @@ public class DungeonEvents
             onPlayerDeadOrTimeEndInDungeon(isCleared);
         }
     }
+
+    public event Action onDungeonUIChanged;
+    public void DungeonUIChanged()
+    {
+        if (onDungeonUIChanged != null)
+        {
+            onDungeonUIChanged();
+        }
+    }
+
 }

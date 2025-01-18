@@ -35,7 +35,13 @@ public class MainButtonsUI : UIBase
 
     private void OnEnable()
     {
+        GameEventsManager.Instance.dungeonEvents.onDungeonUIChanged += UpdateButtonColors;
         UpdateButtonColors();
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.dungeonEvents.onDungeonUIChanged -= UpdateButtonColors;
     }
 
     public void UpdateButtonColors()
