@@ -186,15 +186,15 @@ public class SaveManager : Singleton<SaveManager>
             StageManager.Instance.curStageIndex = datas.curStageIndex;
             StageManager.Instance.curStageIndexInThisChapter = datas.curStageIndexInThisChapter;
             StageManager.Instance.MaxStageIndexInThisChapter = datas.MaxStageIndexInThisChapter;
-            //SummonDataManager.Instance.SetLevel(ItemType.Weapon, datas.WeaponSummonLevel);
-            //SummonDataManager.Instance.SetExp(ItemType.Weapon, datas.WeaponSummonExp);
-            //SummonDataManager.Instance.SetExpToNextLevel(ItemType.Weapon, datas.WeaponSummonNextExp);
-            //SummonDataManager.Instance.SetLevel(ItemType.Accessory, datas.AccessorySummonLevel);
-            //SummonDataManager.Instance.SetExp(ItemType.Accessory, datas.AccessorySummonExp);
-            //SummonDataManager.Instance.SetExpToNextLevel(ItemType.Accessory, datas.AccessorySummonNextExp);
-            //SummonDataManager.Instance.SetLevel(ItemType.Skill, datas.SkillSummonLevel);
-            //SummonDataManager.Instance.SetExp(ItemType.Skill, datas.SkillSummonExp);
-            //SummonDataManager.Instance.SetExpToNextLevel(ItemType.Skill, datas.SkillSummonNextExp);
+            SummonDataManager.Instance.SetLevel(ItemType.Weapon, datas.WeaponSummonLevel);
+            SummonDataManager.Instance.SetExp(ItemType.Weapon, datas.WeaponSummonExp);
+            SummonDataManager.Instance.SetExpToNextLevel(ItemType.Weapon, datas.WeaponSummonNextExp);
+            SummonDataManager.Instance.SetLevel(ItemType.Accessory, datas.AccessorySummonLevel);
+            SummonDataManager.Instance.SetExp(ItemType.Accessory, datas.AccessorySummonExp);
+            SummonDataManager.Instance.SetExpToNextLevel(ItemType.Accessory, datas.AccessorySummonNextExp);
+            SummonDataManager.Instance.SetLevel(ItemType.Skill, datas.SkillSummonLevel);
+            SummonDataManager.Instance.SetExp(ItemType.Skill, datas.SkillSummonExp);
+            SummonDataManager.Instance.SetExpToNextLevel(ItemType.Skill, datas.SkillSummonNextExp);
 
             //го..╫ц╧З╟е..
             //Debug.Log(datas.SkillInventory[0].skillData.itemName);
