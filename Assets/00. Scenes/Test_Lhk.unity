@@ -861,7 +861,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1773905168374146265, guid: 98eaf5341c0d0c14eb335bb5edf05570, type: 3}
       propertyPath: questInfos.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1773905168374146265, guid: 98eaf5341c0d0c14eb335bb5edf05570, type: 3}
       propertyPath: questInfos.Array.data[0]
@@ -875,6 +875,10 @@ PrefabInstance:
       propertyPath: questInfos.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: 05a310617fc97f948b48aeddf099404f, type: 2}
+    - target: {fileID: 1773905168374146265, guid: 98eaf5341c0d0c14eb335bb5edf05570, type: 3}
+      propertyPath: questInfos.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3cc466af6109f414cac96a6e208fc22f, type: 2}
     - target: {fileID: 3544765790054530863, guid: 98eaf5341c0d0c14eb335bb5edf05570, type: 3}
       propertyPath: m_Name
       value: QuestManager
