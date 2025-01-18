@@ -131,22 +131,23 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     public void Die()
     {
-        GameEventsManager.Instance.bossEvents.TimerStop(); //던전일 경우 타이머 멈추기.
+        GameEventsManager.Instance.bossEvents.TimerStop();
+        
+        StageManager.Instance.isPlayerInBossStage = false;
 
         isDead = true;
         animator.SetTrigger("4_Death");
         animator.SetBool("isDeath", true);
         currentState = State.Dead;
 
-        if (DungeonManager.Instance.playerIsInDungeon)
+        if (DungeonManager.Instance.isPlayerInDungeon)
         {
             bool isCleared = false;
-            bool isPlayerDead = true;
-            GameEventsManager.Instance.dungeonEvents.PlayerDeadOrTimeEndInDungeon(isCleared, isPlayerDead);
+            GameEventsManager.Instance.dungeonEvents.PlayerDeadOrTimeEndInDungeon(isCleared);
         }
         else
         {
-            StartCoroutine(DelayBeforeResurrection());
+            StartCoroutine(DelayBeforeResurrection(2f));
         }
     }
 
@@ -265,13 +266,21 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         }
     }
 
-    private IEnumerator DelayBeforeResurrection()
+    public IEnumerator DelayBeforeResurrection(float delayTime)
     {
-        yield return new WaitForSeconds(5f);
+        BattleManager.Instance.StartBattle();
+        yield return new WaitForSeconds(delayTime);
 
-        StageManager.Instance.BackToLastStage();
+        if (!DungeonManager.Instance.isPlayerInDungeon)
+        {
+            StageManager.Instance.BackToLastStage();
+            yield return new WaitForSeconds(1f);
+        }
+
         currentState = State.Idle;
         animator.Play("IDLE");
+
+        isDead = false;
     }
 
     public void SetPlayerStateIdle()
@@ -289,7 +298,13 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     public void SetPlayerStateStoppedIdle()
     {
+        animator.ResetTrigger("7_Skill");
+        animator.ResetTrigger("3_Damaged");
+        animator.SetBool("isDeath", false);
+        animator.SetBool("2_Attack", false);
         currentState = State.StoppedIdle;
+        animator.Play("IDLE");
+        currentMonster = null;
     }
 
     public bool GetIsDead()
