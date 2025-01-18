@@ -65,13 +65,30 @@ public class SummonDataManager : Singleton<SummonDataManager>
     }
 
 
-    public void SetProgress(ItemType type, SummonLevelProgress value)
+    public void SetLevel(ItemType type, int value)
     {
         var progress = summonLevelProgressDictionary[type];
-        progress = value;
+        progress.Level = value;
         OnExpChanged?.Invoke();
         OnLevelChanged?.Invoke();
     }
+
+    public void SetExp(ItemType type, float value)
+    {
+        var progress = summonLevelProgressDictionary[type];
+        progress.Exp = value;
+        OnExpChanged?.Invoke();
+        OnLevelChanged?.Invoke();
+    }
+
+    public void SetExpToNextLevel(ItemType type, float value)
+    {
+        var progress = summonLevelProgressDictionary[type];
+        progress.ExpToNextLevel = value;
+        OnExpChanged?.Invoke();
+        OnLevelChanged?.Invoke();
+    }
+
 
     public int GetLevel(ItemType type)
     {
