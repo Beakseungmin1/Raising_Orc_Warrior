@@ -30,7 +30,7 @@ public class StageManager : Singleton<StageManager>
 
     public Timer timer;
 
-    private bool isThisBossStageFirstTry = true;
+    public bool isThisBossStageFirstTry = true;
 
     public bool isPlayerInBossStage = false;
 
@@ -98,24 +98,25 @@ public class StageManager : Singleton<StageManager>
 
         if (curStageIndexInThisChapter < MaxStageIndexInThisChapter) //챕터에 다음 스테이지가 남았다면 다음 스테이지로 이동
         {
-            UIManager.Instance.Hide<BossStageInfoUI>();
-            UIManager.Instance.Show<StageInfoUI>();
             curStageIndex++;
             curStageIndexInThisChapter++;
             isThisBossStageFirstTry = true;
+
+            UIManager.Instance.Hide<BossStageInfoUI>();
+            UIManager.Instance.Show<StageInfoUI>();
             GoToStage();
         }
         else if (curChapterIndex < chapterSOs.Count - 1)
         {
             UIManager.Instance.Hide<BossStageInfoUI>();
-            GoToNextChapter();
             isThisBossStageFirstTry = true;
+            GoToNextChapter();
         }
         else  //현재가 챕터의 마지막 스테이지라면 해당 스테이지 반복
         {
             Debug.LogWarning("업데이트가 안돼서 더이상 챕터가 없습니다. 마지막 스테이지로 돌아갑니다");
-            BackToLastStage();
             isThisBossStageFirstTry = false;
+            BackToLastStage();
         }
     }
 
