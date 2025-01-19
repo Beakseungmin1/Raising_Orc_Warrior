@@ -15,14 +15,28 @@ public class UIManager : Singleton<UIManager>
 
     private int currentSortingOrder = 0;
 
-    private const int ReservedSortingOrder = 100; // 특정 UI의 고정 sortingOrder 값
-    private const int MainButtonSortingOrder = 105;
-    private const int PopupSortingOrder = 110;
+    private const int depthOneSortingOrder = 110; // 특정 UI의 고정 sortingOrder 값
+    private const int depthTwoSortingOrder = 120;
+    private const int depthThreeSortingOrder = 130;
+    private const int depthFourSortingOrder = 140;
 
     public UIBase currentMainUI = new UIBase();
 
-    private HashSet<string> reservedUISet = new HashSet<string>
+    private HashSet<string> depthOneUIset = new HashSet<string> //110
     {
+        "Main_DungeonUI",
+    };
+
+    private HashSet<string> depthTwoUIset = new HashSet<string> //120
+    {
+        "MainButtonsUI",
+    };
+
+    private HashSet<string> depthThreeUIset = new HashSet<string> //130
+    {
+        "EXPDungeonUI",
+        "CubeDungeonUI",
+        "GoldDungeonUI",
         "EquipmentUpgradePopupUI",
         "DungeonRewardPopupUI",
         "EquipmentFusionPopupUI",
@@ -31,13 +45,9 @@ public class UIManager : Singleton<UIManager>
         "SettingPopupUI",
         "SkillInfoPopupUI",
         "SummonPopupUI",
-        "Main_DungeonUI",
-        "EXPDungeonUI",
-        "CubeDungeonUI",
-        "GoldDungeonUI"
     };
 
-    private HashSet<string> dungeonPopupUISet = new HashSet<string>
+    private HashSet<string> depthFourUIset = new HashSet<string> //140
     {
         "EXPDungeonUI_ConfirmEnterBtnPopUpUI",
         "CubeDungeonUI_ConfirmEnterBtnPopUpUI",
@@ -197,28 +207,32 @@ public class UIManager : Singleton<UIManager>
         ui.name = ui.name.Replace("(Clone)", "");
         ui.canvas = canvas;
 
-        if (uiName == "MainButtonsUI")
-        {
-            ui.canvas.sortingOrder = MainButtonSortingOrder;
-        }
-
-        else if (reservedUISet.Contains(uiName))
+        if (depthOneUIset.Contains(uiName))
         {
             // 고정된 UI는 ReservedSortingOrder를 사용
-            ui.canvas.sortingOrder = ReservedSortingOrder;
+            ui.canvas.sortingOrder = depthOneSortingOrder;
         }
-        else if (dungeonPopupUISet.Contains(uiName))
+        else if (depthTwoUIset.Contains(uiName))
+        {
+            ui.canvas.sortingOrder = depthTwoSortingOrder;
+        }
+        else if (depthThreeUIset.Contains(uiName))
+        {
+            // 고정된 UI는 ReservedSortingOrder를 사용
+            ui.canvas.sortingOrder = depthThreeSortingOrder;
+        }
+        else if (depthFourUIset.Contains(uiName))
         {
             // 팝업 UI는 PopupSortingOrder를 사용
-            ui.canvas.sortingOrder = PopupSortingOrder;
+            ui.canvas.sortingOrder = depthFourSortingOrder;
         }
         else
         {
             // 일반 UI는 currentSortingOrder를 사용
             currentSortingOrder++;
-            if (currentSortingOrder >= ReservedSortingOrder)
+            if (currentSortingOrder >= depthOneSortingOrder)
             {
-                currentSortingOrder = ReservedSortingOrder - 1; // MainButtonSortingOrder을 넘지 않도록 보장
+                currentSortingOrder = depthOneSortingOrder - 1; // DepthOneSortingOrder을 넘지 않도록 보장
             }
             ui.canvas.sortingOrder = currentSortingOrder;
         }
@@ -226,6 +240,98 @@ public class UIManager : Singleton<UIManager>
         return (T)ui;
     }
 
+
+    //sortOrder 임의로 설정할 수 있는 매서드
+    public T Show<T>(int sortOrder) where T : UIBase
+    {
+        string uiName = typeof(T).ToString(); // T 타입에 따라 UI 이름을 결정합니다.
+
+        // 딕셔너리에서 UI가 이미 생성되었는지 확인
+        if (uiDictionary.TryGetValue(uiName, out UIBase existingUI))
+        {
+            // Key가 "Main_"으로 시작하는 경우 currentMainUI에 할당
+            if (uiName.StartsWith("Main_"))
+            {
+                currentMainUI = existingUI;
+            }
+
+            return (T)existingUI; // 이미 존재하는 UI 인스턴스를 반환
+        }
+
+        // UI가 존재하지 않을 경우 새로 생성
+        UIBase go = Resources.Load<UIBase>("UI/" + uiName); // UI 리소스를 로드합니다.
+        if (go == null)
+        {
+            throw new System.Exception($"UI 리소스를 찾을 수 없습니다: {uiName}"); // 로드 실패 처리
+        }
+
+        var ui = Load<T>(go, uiName, sortOrder); // 새 UI 생성
+        uiDictionary[uiName] = ui; // 생성된 UI를 딕셔너리에 추가
+
+        // Key가 "Main_"으로 시작하는 경우 currentMainUI에 할당
+        if (uiName.StartsWith("Main_"))
+        {
+            currentMainUI = ui;
+        }
+
+        // 스크린 비율에 따라 UI 위치 조정
+        RectTransform rectTransform = ui.GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            // 기존 위치값 가져오기
+            Vector2 currentPosition = rectTransform.anchoredPosition;
+
+            // 스크린 비율 계산
+            float targetAspect = 9f / 16f; // 목표 비율
+            float screenAspect = (float)Screen.width / Screen.height;
+            float scaleHeight = screenAspect / targetAspect; //목표비율 대비 얼마나 커졌는가.(크기가 얼마나 커졌는지 확인)
+
+            if (scaleHeight < 1)
+            {
+                // 스크린이 길어졌을 때 - 기존 Y 위치에서 추가로 이동
+                currentPosition.y -= (1f - scaleHeight) * Screen.height / 2f;
+            }
+            else
+            {
+                // 스크린이 짧아졌을 때 - 기존 위치 유지
+                currentPosition.y += 0; // 필요 시 로직 추가 가능
+            }
+
+            // 조정된 위치를 다시 적용
+            rectTransform.anchoredPosition = currentPosition;
+        }
+        else
+        {
+            Debug.LogWarning($"UI에 RectTransform이 없습니다: {uiName}");
+        }
+
+        return (T)ui;
+    }
+
+    //sortOrder 임의로 설정할 수 있는 매서드
+    private T Load<T>(UIBase prefab, string uiName, int sortOrder) where T : UIBase
+    {
+        GameObject newCanvasObject = new GameObject(uiName + "Canvas");
+
+        var canvas = newCanvasObject.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+
+        var canvasScaler = newCanvasObject.AddComponent<CanvasScaler>();
+        canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        canvasScaler.referenceResolution = new Vector2(ScreenWidth, ScreenHeight);
+        canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+        canvasScaler.referencePixelsPerUnit = 100;
+
+        newCanvasObject.AddComponent<GraphicRaycaster>();
+
+        UIBase ui = Instantiate(prefab, newCanvasObject.transform);
+        ui.name = ui.name.Replace("(Clone)", "");
+        ui.canvas = canvas;
+
+        ui.canvas.sortingOrder = sortOrder;
+
+        return (T)ui;
+    }
 
     public T ShowFadePanel<T>(FadeType fadeType) where T : UIBase
     {
@@ -281,7 +387,6 @@ public class UIManager : Singleton<UIManager>
     }
 
 
-
     private T LoadFadeController<T>(UIBase prefab, string uiName, FadeType fadeType) where T : UIBase //조건문 같은 거라고 보면 된다. T는 UIBase이거나 UIBase를 상속받는 클래스로 제한한다.
     {
         GameObject newCanvasObject = new GameObject(uiName + "Canvas");
@@ -302,7 +407,7 @@ public class UIManager : Singleton<UIManager>
         UIBase ui = Instantiate(prefab, newCanvasObject.transform);
         ui.name = ui.name.Replace("(Clone)", "");
         ui.canvas = canvas;
-        ui.canvas.sortingOrder = 99;
+        ui.canvas.sortingOrder = depthOneSortingOrder - 1; 
 
         fadeController.panel = ui.gameObject;
 
@@ -347,7 +452,7 @@ public class UIManager : Singleton<UIManager>
             {
                 // 가장 높은 sortingOrder를 가진 UI를 찾음 (ReservedSortingOrder와 PopupSortingOrder는 제외)
                 currentSortingOrder = uiDictionary.Values
-                    .Where(ui => ui.canvas.sortingOrder < ReservedSortingOrder)
+                    .Where(ui => ui.canvas.sortingOrder < depthOneSortingOrder)
                     .Select(ui => ui.canvas.sortingOrder)
                     .DefaultIfEmpty(0) // 딕셔너리에 값이 없으면 기본값 0
                     .Max();
