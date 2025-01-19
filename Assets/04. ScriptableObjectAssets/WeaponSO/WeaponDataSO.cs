@@ -12,6 +12,7 @@ public class WeaponDataSO : BaseItemDataSO
     public int passiveGoldGainRate; // °ñµå È¹µæ·® Áõ°¡À² (º¸À¯ È¿°ú)
 
     [Header("General Info")]
+    public int weaponId;
     public int rank;
 
     [Header("Fuse Info")]

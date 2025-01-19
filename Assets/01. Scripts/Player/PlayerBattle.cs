@@ -68,7 +68,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
                 CancelInvoke("PlayerAttack");
                 animator.SetBool("2_Attack", false);
                 BattleManager.Instance.EndBattle();
-                Debug.LogWarning("아이들전환");
                 break;
 
             case State.Attacking:
