@@ -40,7 +40,6 @@ public class DungeonRewardPopupUI : UIBase
 
     public void ExitDungeonBtn()
     {
-        UIManager.Instance.Hide<DimmedUI>();
         UIManager.Instance.Hide<DungeonRewardPopupUI>();
 
         DungeonManager.Instance.ExitDungeon();

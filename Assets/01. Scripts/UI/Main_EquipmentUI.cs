@@ -28,7 +28,6 @@ public class Main_EquipmentUI : UIBase
 
     public void ShowEquipmentUpgradePopupUI()
     {
-        UIManager.Instance.Show<DimmedUI>();
         UIManager.Instance.Show<EquipmentUpgradePopupUI>();
     }
 

@@ -219,12 +219,10 @@ public class SkillInfoPopupUI : UIBase
         equipManager.SetWaitingSkillForEquip(currentSkill);
 
         UIManager.Instance.Hide<SkillInfoPopupUI>();
-        UIManager.Instance.Hide<DimmedUI>();
     }
 
     public void ExitBtn()
     {
-        UIManager.Instance.Hide<DimmedUI>();
         Hide();
     }
 

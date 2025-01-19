@@ -133,8 +133,8 @@ public class MainButtonsUI : UIBase
             case 3:
                 if (DungeonManager.Instance.isPlayerInDungeon || StageManager.Instance.isPlayerInBossStage)
                 {
-                    //Debug.Log("isPlayerInDungeon:" + DungeonManager.Instance.isPlayerInDungeon);
-                    //Debug.Log("isPlayerInBossStage:" + StageManager.Instance.isPlayerInBossStage);
+                    Debug.Log("isPlayerInDungeon:" + DungeonManager.Instance.isPlayerInDungeon);
+                    Debug.Log("isPlayerInBossStage:" + StageManager.Instance.isPlayerInBossStage);
                     GameEventsManager.Instance.messageEvents.ShowMessage(MessageTextType.DungeonEntryBlocked, 0.4f, 100);
                 }
                 else

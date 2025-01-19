@@ -102,8 +102,6 @@ public class Main_ShopUI : UIBase
             // 다이아몬드 차감
             CurrencyManager.Instance.SubtractCurrency(CurrencyType.Diamond, price);
 
-            // UI 처리
-            UIManager.Instance.Hide<MainButtonsUI>();
             SummonPopupUI summonPopupUI = UIManager.Instance.Show<SummonPopupUI>();
             summonPopupUI.curSummoningItemType = itemType;
             summonPopupUI.SetSlotAsCount(summonCount);

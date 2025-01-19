@@ -18,7 +18,6 @@ public class DungeonUI_ConfirmEnterBtnPopUpUI : UIBase
     public void ExitBtn()
     {
         Hide();
-        UIManager.Instance.Hide<DimmedUI>();
     }
 
     public void OnGoToDungeonBtnClick()
@@ -30,7 +29,6 @@ public class DungeonUI_ConfirmEnterBtnPopUpUI : UIBase
             Hide();
             UIManager.Instance.Hide(uiName);
             UIManager.Instance.Hide<StageInfoUI>();
-            UIManager.Instance.Hide<DimmedUI>();
             UIManager.Instance.Show<Main_PlayerUpgradeUI>();
             UIManager.Instance.Show<BossStageInfoUI>();
 
@@ -41,7 +39,7 @@ public class DungeonUI_ConfirmEnterBtnPopUpUI : UIBase
         }
         else
         {
-            GameEventsManager.Instance.messageEvents.ShowMessage(MessageTextType.DungeonTicketNotEnough, 0.4f, 120);
+            GameEventsManager.Instance.messageEvents.ShowMessage(MessageTextType.DungeonTicketNotEnough, 0.4f, 145);
         }
     }
 }

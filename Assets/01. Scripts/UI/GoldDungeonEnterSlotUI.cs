@@ -31,7 +31,6 @@ public class GoldDungeonEnterSlotUI : UIBase
 
     public void ShowGoldDungeonUI_ConfirmEnterBtnPopUpUI()
     {
-        UIManager.Instance.Show<DimmedUI>();
         GoldDungeonUI_ConfirmEnterBtnPopUpUI btnPopupUI = UIManager.Instance.Show<GoldDungeonUI_ConfirmEnterBtnPopUpUI>(dungeonInfoSO);
         btnPopupUI.dungeonInfoSO = null;
         btnPopupUI.dungeonInfoSO = this.dungeonInfoSO;
