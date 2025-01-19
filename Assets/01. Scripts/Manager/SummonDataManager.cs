@@ -104,11 +104,22 @@ public class SummonDataManager : Singleton<SummonDataManager>
     /// <summary>
     /// 소환 가능한 모든 아이템의 초기 확률을 설정
     /// </summary>
-    public Dictionary<string, float> GetAdjustedSummonRates(int summonLevel, bool isWeapon)
+    public Dictionary<string, float> GetAdjustedSummonRates(int summonLevel, bool isWeapon, bool isSkill = false)
     {
         // 기본 확률 (레벨 1)
-        Dictionary<string, float> baseRates = new Dictionary<string, float>
-        {
+        Dictionary<string, float> baseRates = isSkill
+            ? new Dictionary<string, float> // Skill 전용 확률 테이블
+            {
+            { "Normal", 30f },
+            { "Uncommon", 20f },
+            { "Rare", 18f },
+            { "Hero", 15f },
+            { "Legendary", 12f },
+            { "Mythic", 8f },
+            { "Ultimate", 5f }
+            }
+            : new Dictionary<string, float> // Weapon/Accessory 확률 테이블
+            {
             { "Normal4", 15f }, { "Normal3", 10f }, { "Normal2", 8f }, { "Normal1", 7f },
             { "Uncommon4", 10f }, { "Uncommon3", 8f }, { "Uncommon2", 7f }, { "Uncommon1", 5f },
             { "Rare4", 8f }, { "Rare3", 5f }, { "Rare2", 4f }, { "Rare1", 3f },
@@ -116,11 +127,22 @@ public class SummonDataManager : Singleton<SummonDataManager>
             { "Legendary4", 1f }, { "Legendary3", 0.8f }, { "Legendary2", 0.7f }, { "Legendary1", 0.5f },
             { "Mythic4", 0.76f }, { "Mythic3", 0.57f }, { "Mythic2", 0.38f }, { "Mythic1", 0.19f },
             { "Ultimate1", 0.1f }
-        };
+            };
 
         // 소환 레벨 50의 목표 확률
-        Dictionary<string, float> maxRates = new Dictionary<string, float>
-        {
+        Dictionary<string, float> maxRates = isSkill
+            ? new Dictionary<string, float> // Skill 전용 확률 테이블 (레벨 50 목표)
+            {
+            { "Normal", 5f },
+            { "Uncommon", 10f },
+            { "Rare", 30f },
+            { "Hero", 25f },
+            { "Legendary", 20f },
+            { "Mythic", 9f },
+            { "Ultimate", 10f }
+            }
+            : new Dictionary<string, float> // Weapon/Accessory 확률 테이블
+            {
             { "Normal4", 10f }, { "Normal3", 7f }, { "Normal2", 5f }, { "Normal1", 3f },
             { "Uncommon4", 15f }, { "Uncommon3", 10f }, { "Uncommon2", 7f }, { "Uncommon1", 5f },
             { "Rare4", 20f }, { "Rare3", 15f }, { "Rare2", 10f }, { "Rare1", 5f },
@@ -128,7 +150,7 @@ public class SummonDataManager : Singleton<SummonDataManager>
             { "Legendary4", 2f }, { "Legendary3", 1.5f }, { "Legendary2", 1f }, { "Legendary1", 0.8f },
             { "Mythic4", 1f }, { "Mythic3", 0.8f }, { "Mythic2", 0.6f }, { "Mythic1", 0.5f },
             { "Ultimate1", 0.2f }
-        };
+            };
 
         // 레벨 진행도 계산
         float levelProgress = Mathf.Clamp01(summonLevel / 50f);
@@ -148,6 +170,7 @@ public class SummonDataManager : Singleton<SummonDataManager>
         // 확률 재분배
         return NormalizeRates(adjustedRates);
     }
+
 
     /// <summary>
     /// 확률 재분배 (합계가 100%가 되도록 조정)

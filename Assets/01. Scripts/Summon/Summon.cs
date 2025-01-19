@@ -7,14 +7,15 @@ public class Summon : MonoBehaviour
     /// <summary>
     /// 소환 확률에 따라 등급과 랭크 반환
     /// </summary>
-    private (Grade grade, int rank) GetGradeAndRankBySummonRate(ItemType itemType, bool isWeapon)
+    private (Grade grade, int rank) GetGradeAndRankBySummonRate(ItemType itemType, bool isWeapon, bool isSkill = false)
     {
         float totalRate = 0f;
 
         // 전체 확률 계산
         var adjustedRates = SummonDataManager.Instance.GetAdjustedSummonRates(
             SummonDataManager.Instance.GetLevel(itemType),
-            isWeapon
+            isWeapon,
+            isSkill
         );
 
         foreach (var rate in adjustedRates.Values)
@@ -32,13 +33,22 @@ public class Summon : MonoBehaviour
             accumulatedRate += adjustedRates[itemKey];
             if (randomValue <= accumulatedRate)
             {
-                // itemKey는 "GradeRank" 형식 (예: "Rare3")
+                // Skill인 경우 Rank는 필요 없으므로 기본값 반환
+                if (isSkill)
+                {
+                    if (System.Enum.TryParse(itemKey, out Grade grade))
+                    {
+                        return (grade, 0); // Rank는 0으로 고정
+                    }
+                }
+
+                // Weapon/Accessory는 기존 방식대로 처리
                 string gradeString = itemKey.Substring(0, itemKey.Length - 1); // 등급 (예: "Rare")
                 int rank = int.Parse(itemKey[^1].ToString()); // 랭크 (예: "3")
 
-                if (System.Enum.TryParse(gradeString, out Grade grade))
+                if (System.Enum.TryParse(gradeString, out Grade gradeResult))
                 {
-                    return (grade, rank);
+                    return (gradeResult, rank);
                 }
             }
         }
@@ -46,6 +56,7 @@ public class Summon : MonoBehaviour
         // 기본값 반환 (문제 발생 시)
         return (Grade.Normal, 4); // 기본 등급과 랭크
     }
+
 
     /// <summary>
     /// 무기 소환
@@ -78,7 +89,8 @@ public class Summon : MonoBehaviour
 
         for (int i = 0; i < summonCount; i++)
         {
-            var (grade, _) = GetGradeAndRankBySummonRate(ItemType.Skill, isWeapon: false); // 랭크는 스킬에 필요 없음
+            // Skill은 Rank가 없으므로 isSkill = true로 호출
+            var (grade, _) = GetGradeAndRankBySummonRate(ItemType.Skill, isWeapon: false, isSkill: true);
             SkillDataSO skillDataSO = DataManager.Instance.GetRandomSkillByGrade(grade);
 
             // 스킬을 소환하고 인벤토리에 추가
@@ -90,6 +102,7 @@ public class Summon : MonoBehaviour
         GameEventsManager.Instance.summonEvents.SkillSummoned(summonCount);
         return skillDataSOs;
     }
+
 
     /// <summary>
     /// 악세서리 소환
