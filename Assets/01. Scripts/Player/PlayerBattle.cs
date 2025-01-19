@@ -68,7 +68,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
                 CancelInvoke("PlayerAttack");
                 animator.SetBool("2_Attack", false);
                 BattleManager.Instance.EndBattle();
-                Debug.LogWarning("아이들전환");
                 break;
 
             case State.Attacking:
@@ -181,7 +180,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         CurrencyManager.Instance.AddGold(monsterGold);
         currentMonster = null;
 
-        if (!isDead) 
+        if (!isDead)
         {
             StartCoroutine(DelayBeforeReturningToIdle());
         }
@@ -189,6 +188,10 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private IEnumerator DelayBeforeReturningToIdle()
     {
+        bool isDead = false;
+        animator.ResetTrigger("7_Skill");
+        animator.ResetTrigger("3_Damaged");
+        animator.SetBool("isDeath", false);
         animator.SetBool("2_Attack", false);
         yield return new WaitForSeconds(0.5f);
         currentState = State.Idle;
@@ -204,6 +207,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     {
         if (collision.CompareTag("Monster"))
         {
+            Debug.Log("OnTriggerEnter2D");
             currentMonster = collision.GetComponent<IEnemy>();
             currentState = State.Attacking;
         }
@@ -220,12 +224,19 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         {
             if (!currentMonster.GetActive())
             {
+                Debug.Log("OnTriggerExit2D: GetMonsterReward");
                 GetMonsterReward();
             }
             else
             {
                 if (!isDead)
                 {
+                    Debug.Log("OnTriggerExit2D: !isDead");
+
+                    animator.ResetTrigger("7_Skill");
+                    animator.ResetTrigger("3_Damaged");
+                    animator.SetBool("2_Attack", false);
+                    animator.Play("IDLE");
                     currentMonster = null;
                     currentState = State.Idle;
                 }
@@ -241,7 +252,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
             {
                 return;
             }
-
+            Debug.Log("HandleSkillUsed");
             currentState = State.Skill;
             animator.SetTrigger("7_Skill");
             StartCoroutine(ResetToIdleAfterSkill());
@@ -260,7 +271,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         {
             // 애니메이션이 끝날 때까지 기다리고 상태 전환
             animator.Play("IDLE");
-            yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
             currentState = State.Idle;
         }
         else
