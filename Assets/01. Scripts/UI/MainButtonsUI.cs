@@ -43,6 +43,7 @@ public class MainButtonsUI : UIBase
     {
         GameEventsManager.Instance.dungeonEvents.onDungeonUIChanged += UpdateButtonColors;
         GameEventsManager.Instance.currencyEvents.onDungeonTicketChanged += ShowOrHideRedDot;
+        GameEventsManager.Instance.currencyEvents.onDiamondChanged += ShowOrHideRedDot;
         UpdateButtonColors();
         ShowOrHideRedDot();
     }
@@ -50,7 +51,7 @@ public class MainButtonsUI : UIBase
     private void OnDisable()
     {
         GameEventsManager.Instance.dungeonEvents.onDungeonUIChanged -= UpdateButtonColors;
-        GameEventsManager.Instance.currencyEvents.onDungeonTicketChanged -= ShowOrHideRedDot;
+        GameEventsManager.Instance.currencyEvents.onDiamondChanged -= ShowOrHideRedDot;
     }
 
     /*
@@ -168,6 +169,7 @@ public class MainButtonsUI : UIBase
     private void ShowOrHideRedDot()
     {
         dungeonRedDot.SetActive(CurrencyManager.Instance.GetCurrency(CurrencyType.DungeonTicket) > 0);
+        shopRedDot.SetActive(CurrencyManager.Instance.GetCurrency(CurrencyType.Diamond) >= 50); //50원은 최소 소환 다이아몬드
     }
 
 }
