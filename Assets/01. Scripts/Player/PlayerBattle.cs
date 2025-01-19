@@ -33,16 +33,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private IEnemy currentMonster;
 
-    //private void OnEnable()
-    //{
-    //    GameEventsManager.Instance.stageEvents.onStageChange += SetPlayerStateIdle;
-    //}
-
-    //private void OnDisable()
-    //{
-    //    GameEventsManager.Instance.stageEvents.onStageChange -= SetPlayerStateIdle;
-    //}
-
     private void Start()
     {
         background = BackgroundManager.Instance.ParallaxBackground;
@@ -68,7 +58,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
                 CancelInvoke("PlayerAttack");
                 animator.SetBool("2_Attack", false);
                 BattleManager.Instance.EndBattle();
-                Debug.LogWarning("아이들전환");
                 break;
 
             case State.Attacking:
@@ -208,11 +197,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
             currentState = State.Attacking;
         }
     }
-
-    //private void SetCurrentMonsterNull()
-    //{
-    //    currentMonster = null;
-    //}
 
     private void OnTriggerExit2D(Collider2D collision)
     {
