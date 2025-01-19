@@ -112,7 +112,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 5}
+  m_AnchoredPosition: {x: 10, y: 5}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &4319481065098903865
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e5d6644fd62cecf439bcf52812b9f0d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2e4ce7f8813899c4785c563c56301c61, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -451,7 +451,7 @@ GameObject:
   - component: {fileID: 870118944255029042}
   - component: {fileID: 5080777212566847796}
   m_Layer: 5
-  m_Name: ExpDungeonPopupBtn
+  m_Name: EmeraldDungeonPopupBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -477,7 +477,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 180, y: -500}
-  m_SizeDelta: {x: 220, y: 80}
+  m_SizeDelta: {x: 238.9, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5218207250697496029
 CanvasRenderer:
@@ -500,7 +500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.7411765, b: 0.07058824, a: 1}
+  m_Color: {r: 0.023529414, g: 0.909804, b: 0.13333334, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -563,7 +563,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7171581943793515933}
         m_TargetAssemblyTypeName: Main_DungeonUI, Assembly-CSharp
-        m_MethodName: ShowEXPDungeonUI
+        m_MethodName: ShowEmeraldDungeonUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -715,7 +715,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uACBD\uD5D8\uCE58 \uB358\uC804"
+  m_text: "\uC5D0\uBA54\uB784\uB4DC \uB358\uC804"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 79ee000067f477c4c9879e8a6fcb51b2, type: 2}
   m_sharedMaterial: {fileID: -3795136696553960580, guid: 79ee000067f477c4c9879e8a6fcb51b2, type: 2}
@@ -778,7 +778,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -21.309387, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -970,7 +970,7 @@ MonoBehaviour:
   canvas: {fileID: 0}
   goldRedDot: {fileID: 5393796254899182}
   cubeRedDot: {fileID: 8550235744484751497}
-  expRedDot: {fileID: 2447793084700038527}
+  emeraldRedDot: {fileID: 2447793084700038527}
 --- !u!1 &7866204984747474324
 GameObject:
   m_ObjectHideFlags: 0

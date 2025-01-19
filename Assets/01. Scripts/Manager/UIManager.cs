@@ -34,7 +34,7 @@ public class UIManager : Singleton<UIManager>
 
     private HashSet<string> depthThreeUIset = new HashSet<string> //130
     {
-        "EXPDungeonUI",
+        "EmeraldDungeonUI",
         "CubeDungeonUI",
         "GoldDungeonUI",
         "EquipmentUpgradePopupUI",
@@ -49,7 +49,7 @@ public class UIManager : Singleton<UIManager>
 
     private HashSet<string> depthFourUIset = new HashSet<string> //140
     {
-        "EXPDungeonUI_ConfirmEnterBtnPopUpUI",
+        "EmeraldDungeonUI_ConfirmEnterBtnPopUpUI",
         "CubeDungeonUI_ConfirmEnterBtnPopUpUI",
         "GoldDungeonUI_ConfirmEnterBtnPopUpUI"
     };

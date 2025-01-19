@@ -55,13 +55,13 @@ public class BossStageInfoUI : UIBase
             switch (DungeonManager.Instance.currentDungeonInfo.type)
             {
                 case DungeonType.GoldDungeon:
-                    dungeonNameLabel.text = $"폐허가된 광산 {DungeonManager.Instance.currentDungeonInfo.level}단계";
+                    dungeonNameLabel.text = $"골드 던전 {DungeonManager.Instance.currentDungeonInfo.level}단계";
                     break;
                 case DungeonType.CubeDungeon:
                     dungeonNameLabel.text = $"큐브 던전 {DungeonManager.Instance.currentDungeonInfo.level}단계";
                     break;
-                case DungeonType.EXPDungeon:
-                    dungeonNameLabel.text = $"경험의 숲 {DungeonManager.Instance.currentDungeonInfo.level}단계";
+                case DungeonType.EmeraldDungeon:
+                    dungeonNameLabel.text = $"에메랄드 던전 {DungeonManager.Instance.currentDungeonInfo.level}단계";
                     break;
             }
         }

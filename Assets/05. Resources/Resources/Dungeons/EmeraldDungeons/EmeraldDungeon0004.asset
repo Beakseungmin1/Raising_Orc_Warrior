@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 362ce8ad7608dfc43b5a3454a34d43cc, type: 3}
-  m_Name: ExpDungeon0004
+  m_Name: EmeraldDungeon0004
   m_EditorClassIdentifier: 
   level: 4
   type: 2

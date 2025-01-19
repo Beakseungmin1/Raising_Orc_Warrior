@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9921569, g: 0.5803922, b: 0.16470589, a: 1}
+  m_Color: {r: 0.1254902, g: 0.8078432, b: 0.35686275, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -806,7 +806,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7735849, g: 0.4140474, b: 0.05108569, a: 1}
+  m_Color: {r: 0.1254902, g: 0.80784315, b: 0.35686275, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -896,7 +896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.1254902, g: 0.80784315, b: 0.35686275, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -954,7 +954,7 @@ GameObject:
   - component: {fileID: 586685420623888642}
   - component: {fileID: 2366734570290926694}
   m_Layer: 5
-  m_Name: EXPDungeonUI
+  m_Name: EmeraldDungeonUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1058,7 +1058,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uACBD\uD5D8\uCE58 \uB358\uC804"
+  m_text: "\uC5D0\uBA54\uB784\uB4DC \uB358\uC804"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 79ee000067f477c4c9879e8a6fcb51b2, type: 2}
   m_sharedMaterial: {fileID: -3795136696553960580, guid: 79ee000067f477c4c9879e8a6fcb51b2, type: 2}
@@ -1237,9 +1237,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uACBD\uD5D8\uCE58\uB97C \uD68D\uB4DD\uD560 \uC218 \uC788\uB294 \uB358\uC804\uC785\uB2C8\uB2E4.\n\uBCF4\uC2A4\uC5D0\uAC8C
-    \uC785\uD78C \uB370\uBBF8\uC9C0\uC5D0 \uBE44\uB840\uD558\uC5EC \uACBD\uD5D8\uCE58\uB97C
-    \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  m_text: "\uC5D0\uBA54\uB784\uB4DC\uB97C \uD68D\uB4DD\uD560 \uC218 \uC788\uB294
+    \uB358\uC804\uC785\uB2C8\uB2E4.\n\uBCF4\uC2A4\uC5D0\uAC8C \uC785\uD78C \uB370\uBBF8\uC9C0\uC5D0
+    \uBE44\uB840\uD558\uC5EC \uC5D0\uBA54\uB784\uB4DC\uB97C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 79ee000067f477c4c9879e8a6fcb51b2, type: 2}
   m_sharedMaterial: {fileID: -3795136696553960580, guid: 79ee000067f477c4c9879e8a6fcb51b2, type: 2}
@@ -1367,7 +1367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.61635214, g: 0.21753842, b: 0.03682595, a: 1}
+  m_Color: {r: 0, g: 0.45911938, b: 0.056346525, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1398,7 +1398,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 552bfbf29e62ad645ac50e792856e5f6, type: 3}
     - target: {fileID: 1012756886657336343, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.84412265
       objectReference: {fileID: 0}
     - target: {fileID: 1012756886657336343, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Color.g
@@ -1406,16 +1406,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1012756886657336343, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.76415086
       objectReference: {fileID: 0}
     - target: {fileID: 2985296322260237328, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Name
-      value: EXPDungeonEnterBtn (1)
+      value: EmeraldDungeonEnterSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: dungeonLabel
+      value: 
+      objectReference: {fileID: 3763947825060097777}
     - target: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: dungeonInfoSO
       value: 
       objectReference: {fileID: 11400000, guid: 5714af01f4888d34793300478278a7c0, type: 2}
+    - target: {fileID: 6443269879033008288, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5762338696635009001}
+    - target: {fileID: 6443269879033008288, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowEmeraldDungeonUI_ConfirmEnterBtnPopUpUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6443269879033008288, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EmeraldDungeonEnterSlotUI, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1430,7 +1446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1438,7 +1454,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1478,11 +1494,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 440
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -330
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1501,6 +1517,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+--- !u!114 &3763947825060097777 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3336948429557761904, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+  m_PrefabInstance: {fileID: 1905869749386553729}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5762338696635009001 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+  m_PrefabInstance: {fileID: 1905869749386553729}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcab30568b36e5f4cb0332fbc0ffdede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8259332290126448157 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
@@ -1520,7 +1558,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 552bfbf29e62ad645ac50e792856e5f6, type: 3}
     - target: {fileID: 1012756886657336343, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.84412265
       objectReference: {fileID: 0}
     - target: {fileID: 1012756886657336343, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Color.g
@@ -1528,16 +1566,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1012756886657336343, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.76415086
       objectReference: {fileID: 0}
     - target: {fileID: 2985296322260237328, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Name
-      value: EXPDungeonEnterBtn (2)
+      value: EmeraldDungeonEnterSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: dungeonLabel
+      value: 
+      objectReference: {fileID: 554466214098772479}
     - target: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: dungeonInfoSO
       value: 
       objectReference: {fileID: 11400000, guid: 091d34ef5ccc12b45a97ff2be4d5e6a7, type: 2}
+    - target: {fileID: 6443269879033008288, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8969505852867561703}
+    - target: {fileID: 6443269879033008288, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowEmeraldDungeonUI_ConfirmEnterBtnPopUpUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6443269879033008288, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EmeraldDungeonEnterSlotUI, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1552,7 +1606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1560,7 +1614,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1600,11 +1654,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 440
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -540
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1623,11 +1677,33 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+--- !u!114 &554466214098772479 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3336948429557761904, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+  m_PrefabInstance: {fileID: 3026107784359224975}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4689070170918422803 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
   m_PrefabInstance: {fileID: 3026107784359224975}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8969505852867561703 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+  m_PrefabInstance: {fileID: 3026107784359224975}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcab30568b36e5f4cb0332fbc0ffdede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3504999138846601361
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1642,7 +1718,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 552bfbf29e62ad645ac50e792856e5f6, type: 3}
     - target: {fileID: 1012756886657336343, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.84412265
       objectReference: {fileID: 0}
     - target: {fileID: 1012756886657336343, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Color.g
@@ -1650,16 +1726,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1012756886657336343, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.76415086
       objectReference: {fileID: 0}
     - target: {fileID: 2985296322260237328, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Name
-      value: EXPDungeonEnterBtn (3)
+      value: EmeraldDungeonEnterSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: dungeonLabel
+      value: 
+      objectReference: {fileID: 2228009470956861409}
     - target: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: dungeonInfoSO
       value: 
       objectReference: {fileID: 11400000, guid: dd494665b7ff4684d877f2d177cfe906, type: 2}
+    - target: {fileID: 6443269879033008288, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7287018631483072249}
+    - target: {fileID: 6443269879033008288, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowEmeraldDungeonUI_ConfirmEnterBtnPopUpUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6443269879033008288, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EmeraldDungeonEnterSlotUI, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1674,7 +1766,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1682,7 +1774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1722,11 +1814,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 440
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -750
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1745,11 +1837,33 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+--- !u!114 &2228009470956861409 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3336948429557761904, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+  m_PrefabInstance: {fileID: 3504999138846601361}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6361416527865962253 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
   m_PrefabInstance: {fileID: 3504999138846601361}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7287018631483072249 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+  m_PrefabInstance: {fileID: 3504999138846601361}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcab30568b36e5f4cb0332fbc0ffdede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6093577835812105403
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1764,7 +1878,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 552bfbf29e62ad645ac50e792856e5f6, type: 3}
     - target: {fileID: 1012756886657336343, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.84412265
       objectReference: {fileID: 0}
     - target: {fileID: 1012756886657336343, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Color.g
@@ -1772,16 +1886,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1012756886657336343, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.76415086
       objectReference: {fileID: 0}
     - target: {fileID: 2985296322260237328, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Name
-      value: EXPDungeonEnterBtn
+      value: EmeraldDungeonEnterSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: dungeonLabel
+      value: 
+      objectReference: {fileID: 8853940713110416331}
     - target: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: dungeonInfoSO
       value: 
       objectReference: {fileID: 11400000, guid: a3a248e7cb51c5c4396d9cc78b6a44b1, type: 2}
+    - target: {fileID: 6443269879033008288, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 77773071887745747}
+    - target: {fileID: 6443269879033008288, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowEmeraldDungeonUI_ConfirmEnterBtnPopUpUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6443269879033008288, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EmeraldDungeonEnterSlotUI, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1796,7 +1926,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1804,7 +1934,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1844,11 +1974,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 440
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -120
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1867,11 +1997,33 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+--- !u!114 &77773071887745747 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+  m_PrefabInstance: {fileID: 6093577835812105403}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcab30568b36e5f4cb0332fbc0ffdede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4358556745962455847 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
   m_PrefabInstance: {fileID: 6093577835812105403}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8853940713110416331 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3336948429557761904, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+  m_PrefabInstance: {fileID: 6093577835812105403}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6883652330696381171
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1886,7 +2038,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 552bfbf29e62ad645ac50e792856e5f6, type: 3}
     - target: {fileID: 1012756886657336343, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.84412265
       objectReference: {fileID: 0}
     - target: {fileID: 1012756886657336343, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Color.g
@@ -1894,16 +2046,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1012756886657336343, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.76415086
       objectReference: {fileID: 0}
     - target: {fileID: 2985296322260237328, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Name
-      value: EXPDungeonEnterBtn (4)
+      value: EmeraldDungeonEnterSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: dungeonLabel
+      value: 
+      objectReference: {fileID: 8198976537004086659}
     - target: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: dungeonInfoSO
       value: 
       objectReference: {fileID: 11400000, guid: 867f03df63f76ba4f880e8155b54a8b5, type: 2}
+    - target: {fileID: 6443269879033008288, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 721516714583489691}
+    - target: {fileID: 6443269879033008288, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowEmeraldDungeonUI_ConfirmEnterBtnPopUpUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6443269879033008288, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EmeraldDungeonEnterSlotUI, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1918,7 +2086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1926,7 +2094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1966,11 +2134,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 440
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -960
       objectReference: {fileID: 0}
     - target: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1989,8 +2157,30 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+--- !u!114 &721516714583489691 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6162317318999502440, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+  m_PrefabInstance: {fileID: 6883652330696381171}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcab30568b36e5f4cb0332fbc0ffdede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3993476637328751983 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7560427242757533596, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
   m_PrefabInstance: {fileID: 6883652330696381171}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8198976537004086659 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3336948429557761904, guid: f471b434ee1574b42987b6deaa0d9c96, type: 3}
+  m_PrefabInstance: {fileID: 6883652330696381171}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

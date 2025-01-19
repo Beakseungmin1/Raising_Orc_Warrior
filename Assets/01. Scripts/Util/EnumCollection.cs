@@ -94,7 +94,7 @@ public enum DungeonType
 {
     GoldDungeon,
     CubeDungeon,
-    EXPDungeon
+    EmeraldDungeon
 }
 
 public enum DungeonState
