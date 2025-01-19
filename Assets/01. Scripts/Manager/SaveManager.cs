@@ -61,8 +61,6 @@ public class Datas
     public int SkillSummonLevel = 1;
     public float SkillSummonExp = 0f;
     public float SkillSummonNextExp = 100f;
-    public List<Weapon> WeaponInventory;
-    public List<Accessory> AccessoryInventory;
 }
 
 
@@ -71,6 +69,8 @@ public class SaveManager : Singleton<SaveManager>
 
     public Datas datas;
     public List<SkillSaveData> SkillInventory;
+    public List<Weapon> WeaponInventory;
+    public List<Accessory> AccessoryInventory;
 
 
     private string KeyName = "Datas";
