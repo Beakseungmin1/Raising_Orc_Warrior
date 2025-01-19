@@ -56,7 +56,7 @@ public class Main_ShopUI : UIBase
         ShowOrHideRedDot();
         RefreshUI();
     }
-    private void OnDisble()
+    private void OnDisable()
     {
         GameEventsManager.Instance.currencyEvents.onDiamondChanged -= ShowOrHideRedDot;
     }
