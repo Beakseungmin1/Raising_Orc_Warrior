@@ -18,6 +18,12 @@ public class MainButtonsUI : UIBase
     public TextMeshProUGUI dungeonUIBtnLabel;
     public TextMeshProUGUI shopUIBtnLabel;
 
+    public GameObject playerLevelUpRedDot;
+    public GameObject skillRedDot;
+    public GameObject equipmentRedDot;
+    public GameObject dungeonRedDot;
+    public GameObject shopRedDot;
+
     private Dictionary<string, (Image, TextMeshProUGUI)> buttonElements;
 
     private void Awake()
@@ -36,12 +42,15 @@ public class MainButtonsUI : UIBase
     private void OnEnable()
     {
         GameEventsManager.Instance.dungeonEvents.onDungeonUIChanged += UpdateButtonColors;
+        GameEventsManager.Instance.currencyEvents.onDungeonTicketChanged += ShowOrHideRedDot;
         UpdateButtonColors();
+        ShowOrHideRedDot();
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.dungeonEvents.onDungeonUIChanged -= UpdateButtonColors;
+        GameEventsManager.Instance.currencyEvents.onDungeonTicketChanged -= ShowOrHideRedDot;
     }
 
     /*
@@ -125,7 +134,7 @@ public class MainButtonsUI : UIBase
                 {
                     //Debug.Log("isPlayerInDungeon:" + DungeonManager.Instance.isPlayerInDungeon);
                     //Debug.Log("isPlayerInBossStage:" + StageManager.Instance.isPlayerInBossStage);
-                    GameEventsManager.Instance.messageEvents.ShowMessage(MessageTextType.DungeonEntryBlocked);
+                    GameEventsManager.Instance.messageEvents.ShowMessage(MessageTextType.DungeonEntryBlocked, 0.4f, 100);
                 }
                 else
                 {
@@ -155,4 +164,10 @@ public class MainButtonsUI : UIBase
             return Color.white; // 기본값으로 흰색 반환
         }
     }
+
+    private void ShowOrHideRedDot()
+    {
+        dungeonRedDot.SetActive(CurrencyManager.Instance.GetCurrency(CurrencyType.DungeonTicket) > 0);
+    }
+
 }

@@ -10,18 +10,13 @@ public class Main_DungeonUI : UIBase
 
     private void OnEnable()
     {
-        if (CurrencyManager.Instance.GetCurrency(CurrencyType.DungeonTicket) > 0)
-        {
-            goldRedDot.SetActive(true);
-            cubeRedDot.SetActive(true);
-            expRedDot.SetActive(true);
-        }
-        else
-        {
-            goldRedDot.SetActive(false);
-            cubeRedDot.SetActive(false);
-            expRedDot.SetActive(false);
-        }
+        GameEventsManager.Instance.currencyEvents.onDungeonTicketChanged += ShowOrHideRedDot;
+        ShowOrHideRedDot();
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.currencyEvents.onDungeonTicketChanged -= ShowOrHideRedDot;
     }
 
     public void ShowEXPDungeonUI()
@@ -38,5 +33,20 @@ public class Main_DungeonUI : UIBase
     {
         Hide();
         UIManager.Instance.Show<CubeDungeonUI>();
+    }
+    public void ShowOrHideRedDot()
+    {
+        if (CurrencyManager.Instance.GetCurrency(CurrencyType.DungeonTicket) > 0)
+        {
+            goldRedDot.SetActive(true);
+            cubeRedDot.SetActive(true);
+            expRedDot.SetActive(true);
+        }
+        else
+        {
+            goldRedDot.SetActive(false);
+            cubeRedDot.SetActive(false);
+            expRedDot.SetActive(false);
+        }
     }
 }

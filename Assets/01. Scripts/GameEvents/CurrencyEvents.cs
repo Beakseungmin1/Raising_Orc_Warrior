@@ -60,4 +60,14 @@ public class CurrencyEvents
             onCubeChanged();
         }
     }
+
+    public event Action onDungeonTicketChanged;
+
+    public void DungeonTicketChanged()
+    {
+        if (onDungeonTicketChanged != null)
+        {
+            onDungeonTicketChanged();
+        }
+    }
 }
