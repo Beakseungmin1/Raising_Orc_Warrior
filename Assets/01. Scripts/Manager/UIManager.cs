@@ -16,6 +16,7 @@ public class UIManager : Singleton<UIManager>
     private int currentSortingOrder = 0;
 
     private const int ReservedSortingOrder = 100; // 특정 UI의 고정 sortingOrder 값
+    private const int MainButtonSortingOrder = 105;
     private const int PopupSortingOrder = 110;
 
     public UIBase currentMainUI = new UIBase();
@@ -196,7 +197,12 @@ public class UIManager : Singleton<UIManager>
         ui.name = ui.name.Replace("(Clone)", "");
         ui.canvas = canvas;
 
-        if (reservedUISet.Contains(uiName))
+        if (uiName == "MainButtonsUI")
+        {
+            ui.canvas.sortingOrder = MainButtonSortingOrder;
+        }
+
+        else if (reservedUISet.Contains(uiName))
         {
             // 고정된 UI는 ReservedSortingOrder를 사용
             ui.canvas.sortingOrder = ReservedSortingOrder;
@@ -212,7 +218,7 @@ public class UIManager : Singleton<UIManager>
             currentSortingOrder++;
             if (currentSortingOrder >= ReservedSortingOrder)
             {
-                currentSortingOrder = ReservedSortingOrder - 1; // ReservedSortingOrder를 넘지 않도록 보장
+                currentSortingOrder = ReservedSortingOrder - 1; // MainButtonSortingOrder을 넘지 않도록 보장
             }
             ui.canvas.sortingOrder = currentSortingOrder;
         }
