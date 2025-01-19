@@ -21,9 +21,11 @@ MonoBehaviour:
   currencyIcon: {fileID: 0}
   requiredCurrencyForUpgrade: 17
   currentLevel: 1
+  maxLevel: 100
   equipHpAndHpRecoveryIncreaseRate: 50
   passiveHpAndHpRecoveryIncreaseRate: 0
   passiveMpAndMpRecoveryIncreaseRate: 0
   passiveAddEXPRate: 0
+  AccessoryId: 3
   rank: 1
   requireFuseItemCount: 5

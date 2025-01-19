@@ -71,21 +71,7 @@ public class PlayerInventory : MonoBehaviour
         return AccessoryInventory;
     }
 
-
-
-    public void SetSkillInventory(List<BaseSkill> skillInven)
-    {
-        foreach (BaseSkill item in skillInven)
-        {
-            for (int i = 0; i < item.StackCount; i++)
-            {
-                AddItem(SkillInventory, CreateSkillInstance(item.SkillData));
-            }
-        }
-        OnSkillsChanged?.Invoke();
-    }
-
-    public void SetTestSkillInventory(SkillSaveData skills)
+    public void SetSkillSaveDataInventory(SkillSaveData skills)
     {
         SkillDataSO skillData = new SkillDataSO();
 
@@ -93,26 +79,34 @@ public class PlayerInventory : MonoBehaviour
         for (int i = 0; i < skills.StackCount; i++)
         {
             AddItem(SkillInventory, CreateSkillInstance(skillData));
-            //인챈트레벨 넣는법도 구상
+            //강화레벨 넣는법도 구상
         }
         OnSkillsChanged?.Invoke();
     }
 
-    public void SetWeaponInventory(GenericInventory<Weapon> weaponInven)
+    public void SetWeaponSaveDataInventory(WeaponSaveData weapons)
     {
-        foreach (var item in weaponInven.GetRealItems())
+        WeaponDataSO weaponData = new WeaponDataSO();
+
+        weaponData = weapons.WeaponDataSO;
+        for (int i = 0; i < weapons.StackCount; i++)
         {
-            AddItem(WeaponInventory, item);
+            AddItem(WeaponInventory, new Weapon(weaponData));
+            //강화레벨 넣는법도 구상
         }
         OnInventoryChanged?.Invoke(true);
         PassiveManager.Instance.UpdateWeaponEffects();
     }
 
-    public void SetAccessoryInventory(GenericInventory<Accessory> accessoryinven)
+    public void SetAccessorySaveDataInventory(AccessorySaveData accessorys)
     {
-        foreach (var item in accessoryinven.GetRealItems())
+        AccessoryDataSO accessoryData = new AccessoryDataSO();
+
+        accessoryData = accessorys.AccessoryDataSO;
+        for (int i = 0; i < accessorys.StackCount; i++)
         {
-            AddItem(AccessoryInventory, item);
+            AddItem(AccessoryInventory, new Accessory(accessoryData));
+            //강화레벨 넣는법도 구상
         }
         OnInventoryChanged?.Invoke(false);
         PassiveManager.Instance.UpdateAccessoryEffects();

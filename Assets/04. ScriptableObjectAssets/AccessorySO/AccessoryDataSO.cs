@@ -12,6 +12,7 @@ public class AccessoryDataSO : BaseItemDataSO
     public int passiveAddEXPRate; // 추가 경험치 증가율 (보유 효과)
 
     [Header("General Info")]
+    public int AccessoryId;
     public int rank;
 
     [Header("Fuse Info")]

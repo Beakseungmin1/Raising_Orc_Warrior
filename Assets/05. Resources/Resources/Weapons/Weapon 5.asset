@@ -21,9 +21,11 @@ MonoBehaviour:
   currencyIcon: {fileID: 0}
   requiredCurrencyForUpgrade: 25
   currentLevel: 1
+  maxLevel: 100
   equipAtkIncreaseRate: 60
   passiveEquipAtkIncreaseRate: 0
   passiveCriticalDamageBonus: 0
   passiveGoldGainRate: 0
+  weaponId: 5
   rank: 3
   requireFuseItemCount: 5
