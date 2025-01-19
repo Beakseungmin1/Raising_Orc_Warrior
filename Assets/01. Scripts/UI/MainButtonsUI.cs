@@ -39,6 +39,8 @@ public class MainButtonsUI : UIBase
         };
 
         playerLevelUpRedDot.SetActive(false);
+        skillRedDot.SetActive(false);
+        equipmentRedDot.SetActive(false);
     }
 
     private void OnEnable()
