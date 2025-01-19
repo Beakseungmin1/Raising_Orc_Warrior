@@ -50,7 +50,6 @@ public class HUDPanel : UIBase
 
     public void ShowPlayerInfoPopupUI()
     {
-        UIManager.Instance.Show<DimmedUI>();
         UIManager.Instance.Show<PlayerInfoPopupUI>();
         SoundManager.Instance.PlaySFXOneShot(SFXType.Button);
         stat.UpdateUserInformationUI?.Invoke();
@@ -82,7 +81,6 @@ public class HUDPanel : UIBase
 
     public void ShowSettingPopup()
     {
-        UIManager.Instance.Show<DimmedUI>();
         UIManager.Instance.Show<SettingPopupUI>();
         SoundManager.Instance.PlaySFXOneShot(SFXType.Button);
     }

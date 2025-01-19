@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
+using UnityEngine;
 
 public class DungeonUI_ConfirmEnterBtnPopUpUI : UIBase
 {
@@ -16,26 +18,28 @@ public class DungeonUI_ConfirmEnterBtnPopUpUI : UIBase
     public void ExitBtn()
     {
         Hide();
-        UIManager.Instance.Hide<DimmedUI>();
     }
 
     public void OnGoToDungeonBtnClick()
     {
         if (CurrencyManager.Instance.GetCurrency(CurrencyType.DungeonTicket) >= 1)
         {
-            Hide();
-
             string uiName = dungeonInfoSO.type.ToString() + "UI";
+
+            Hide();
             UIManager.Instance.Hide(uiName);
             UIManager.Instance.Hide<StageInfoUI>();
-            UIManager.Instance.Hide<DimmedUI>();
             UIManager.Instance.Show<Main_PlayerUpgradeUI>();
             UIManager.Instance.Show<BossStageInfoUI>();
- 
-            GameEventsManager.Instance.dungeonEvents.DungeonUIChanged();
 
+            GameEventsManager.Instance.dungeonEvents.DungeonUIChanged();
             CurrencyManager.Instance.SubtractCurrency(CurrencyType.DungeonTicket, 1);
+            GameEventsManager.Instance.currencyEvents.DungeonTicketChanged();
             StageManager.Instance.GoToDungeonStage(dungeonInfoSO.type, dungeonInfoSO.level);
+        }
+        else
+        {
+            GameEventsManager.Instance.messageEvents.ShowMessage(MessageTextType.DungeonTicketNotEnough, 0.4f, 145);
         }
     }
 }

@@ -150,7 +150,7 @@ public class DungeonManager : Singleton<DungeonManager>
         double lostPercentage = (maxHpDouble - currentHpDouble) / maxHpDouble * 100.0;
 
         BigInteger lastRewardAmount = ClaimRewards(dungeon, (float)lostPercentage);
-        UIManager.Instance.Show<DimmedUI>();
+        
         DungeonRewardPopupUI dungeonRewardPopupUI = UIManager.Instance.Show<DungeonRewardPopupUI>();
         dungeonRewardPopupUI.SetUI(currentDungeonInfo, lastRewardAmount);
     }

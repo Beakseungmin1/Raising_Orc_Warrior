@@ -31,7 +31,6 @@ public class CubeDungeonEnterSlotUI : UIBase
 
     public void ShowCubeDungeonUI_ConfirmEnterBtnPopUpUI()
     {
-        UIManager.Instance.Show<DimmedUI>();
         CubeDungeonUI_ConfirmEnterBtnPopUpUI btnPopupUI = UIManager.Instance.Show<CubeDungeonUI_ConfirmEnterBtnPopUpUI>(dungeonInfoSO);
         btnPopupUI.dungeonInfoSO = null;
         btnPopupUI.dungeonInfoSO = this.dungeonInfoSO;

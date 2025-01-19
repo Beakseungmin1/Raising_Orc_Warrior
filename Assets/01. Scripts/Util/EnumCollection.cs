@@ -131,6 +131,8 @@ public static class GradeHelper
 
 public enum MessageTextType
 {
-    DungeonEntryBlocked, //던전입장이 불가합니다.
-    Equipped //장착을 완료했습니다.
+    DungeonEntryBlocked, //전투중 입장이 불가합니다.
+    Equipped, //장착을 완료했습니다.
+    DungeonTicketNotEnough, //던전 티켓이 부족하여 입장이 불가합니다.
+    TakeQuestReward //퀘스트 보상을 수령했습니다.
 }

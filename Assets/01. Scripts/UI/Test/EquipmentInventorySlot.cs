@@ -107,8 +107,6 @@ public class EquipmentInventorySlot : UIBase
 
     private void OpenItemDetails()
     {
-        UIManager.Instance.Show<DimmedUI>();
-
         var upgradePopup = UIManager.Instance.Show<EquipmentUpgradePopupUI>();
         if (upgradePopup != null)
         {

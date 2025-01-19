@@ -21,7 +21,6 @@ public class QuestBtnUI : UIBase
 
     public void ShowQuestPopupUI()
     {
-        UIManager.Instance.Show<DimmedUI>();
         UIManager.Instance.Show<QuestPopupUI>();
         SoundManager.Instance.PlaySFXOneShot(SFXType.Button);
     }

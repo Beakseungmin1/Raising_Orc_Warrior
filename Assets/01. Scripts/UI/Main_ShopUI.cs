@@ -23,125 +23,99 @@ public class Main_ShopUI : UIBase
     [SerializeField] private TextMeshProUGUI skillSummonExpTxt;
     public Slider skillExpSlider;
 
-    private Dictionary<ItemType, int> summonTypeMapping;
+    private Dictionary<GameObject, int> summonRedDotMapping;
+
+    public GameObject weaponOneTimesRedDot; //ItemType.Weapon; 50;
+    public GameObject weaponElevenTimesRedDot; //ItemType.Weapon; 500;
+    public GameObject accessoryOneTimeRedDot; //ItemType.Accessory; 50;
+    public GameObject accessoryElevenTimesRedDot; //ItemType.Accessory; 500;
+    public GameObject skillOneTimeRedDot; //ItemType.Skill; 300;
+    public GameObject skillElevenTimesRedDot; //ItemType.Skill; 3000;
 
     private void Awake()
     {
+        // Initialize summonRedDotMapping (GameObject를 Key로, 비용(int)을 Value로 설정)
+        summonRedDotMapping = new Dictionary<GameObject, int>
+        {
+            { weaponOneTimesRedDot, 50 },
+            { weaponElevenTimesRedDot, 500 },
+            { accessoryOneTimeRedDot, 50 },
+            { accessoryElevenTimesRedDot, 500 },
+            { skillOneTimeRedDot, 300 },
+            { skillElevenTimesRedDot, 3000 }
+        };
+
         summon = GetComponent<Summon>();
-        RefreshUI();
         SummonDataManager.Instance.OnExpChanged += RefreshUI;
         SummonDataManager.Instance.OnLevelChanged += RefreshUI;
     }
+
+    private void OnEnable()
+    {
+        GameEventsManager.Instance.currencyEvents.onDiamondChanged += ShowOrHideRedDot;
+        ShowOrHideRedDot();
+        RefreshUI();
+    }
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.currencyEvents.onDiamondChanged -= ShowOrHideRedDot;
+    }
+
     public void OnWeaponSummon(int summonCount)
     {
-        float price = 0;
+        float price = summonCount == 1 ? 50f : summonCount == 11 ? 500f : 1500f;
 
-        switch (summonCount)
-        {
-            case 1:
-                price = 50f;
-                break;
-            case 11:
-                price = 500f;
-                break;
-            default:
-                price = 1500f;
-                break;
-        }
+        // Weapon 소환 데이터 리스트 생성
+        List<WeaponDataSO> weaponDataSOs = summon.SummonWeaponDataSOList(summonCount);
 
-        if (CurrencyManager.Instance.GetCurrency(CurrencyType.Diamond) >= price)
-        {
-            CurrencyManager.Instance.SubtractCurrency(CurrencyType.Diamond, price);
-
-            List<WeaponDataSO> weaponDataSOs = new List<WeaponDataSO>();
-            weaponDataSOs = summon.SummonWeaponDataSOList(summonCount); //웨폰데이터 리스트가 세팅된다. //OK
-
-            SummonPopupUI summonPopupUI = UIManager.Instance.Show<SummonPopupUI>();
-            summonPopupUI.curSummoningItemType = ItemType.Weapon;
-            summonPopupUI.SetSlotAsCount(summonCount);
-            summonPopupUI.ClearSlotData();
-            summonPopupUI.StartSetDataSOs(weaponDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
-
-            if (SummonDataManager.Instance.GetLevel(ItemType.Weapon) < 50)
-            {
-                SummonDataManager.Instance.AddExperience(ItemType.Weapon, summonCount);
-            }
-        }
+        // 공통 작업 수행
+        PerformSummon(ItemType.Weapon, summonCount, price, weaponDataSOs);
     }
 
     public void OnAccSummon(int summonCount)
     {
-        float price = 0;
+        float price = summonCount == 1 ? 50f : summonCount == 11 ? 500f : 1500f;
 
-        switch (summonCount)
-        {
-            case 1:
-                price = 50f;
-                break;
-            case 11:
-                price = 500f;
-                break;
-            default:
-                price = 1500f;
-                break;
-        }
+        // Accessory 소환 데이터 리스트 생성
+        List<AccessoryDataSO> accessoryDataSOs = summon.SummonAccessoryDataSOList(summonCount);
 
-        if (CurrencyManager.Instance.GetCurrency(CurrencyType.Diamond) >= price)
-        {
-            CurrencyManager.Instance.SubtractCurrency(CurrencyType.Diamond, price);
-
-            List<AccessoryDataSO> accessoryDataSOs = new List<AccessoryDataSO>();
-            accessoryDataSOs = summon.SummonAccessoryDataSOList(summonCount);
-
-            SummonPopupUI summonPopupUI = UIManager.Instance.Show<SummonPopupUI>();
-            summonPopupUI.curSummoningItemType = ItemType.Accessory;
-            summonPopupUI.SetSlotAsCount(summonCount);
-            summonPopupUI.ClearSlotData();
-            summonPopupUI.StartSetDataSOs(accessoryDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
-
-            if (SummonDataManager.Instance.GetLevel(ItemType.Accessory) < 50)
-            {
-                SummonDataManager.Instance.AddExperience(ItemType.Accessory, summonCount);
-            }
-        }
+        // 공통 작업 수행
+        PerformSummon(ItemType.Accessory, summonCount, price, accessoryDataSOs);
     }
 
     public void OnSkillCardSummon(int summonCount)
     {
-        float price = 0;
+        float price = summonCount == 1 ? 300f : summonCount == 11 ? 3000f : 9000f;
 
-        switch (summonCount)
-        {
-            case 1:
-                price = 300f;
-                break;
-            case 11:
-                price = 3000f;
-                break;
-            default:
-                price = 9000f;
-                break;
-        }
+        // Skill 소환 데이터 리스트 생성
+        List<SkillDataSO> skillDataSOs = summon.SummonSkillDataSOList(summonCount);
 
+        // 공통 작업 수행
+        PerformSummon(ItemType.Skill, summonCount, price, skillDataSOs);
+    }
+
+    private void PerformSummon<T>(ItemType itemType, int summonCount, float price, List<T> dataSOList) where T : BaseItemDataSO
+    {
+        // 다이아몬드가 충분한지 확인
         if (CurrencyManager.Instance.GetCurrency(CurrencyType.Diamond) >= price)
         {
+            // 다이아몬드 차감
             CurrencyManager.Instance.SubtractCurrency(CurrencyType.Diamond, price);
 
-            List<SkillDataSO> skillDataSOs = new List<SkillDataSO>();
-            skillDataSOs = summon.SummonSkillDataSOList(summonCount);
-
             SummonPopupUI summonPopupUI = UIManager.Instance.Show<SummonPopupUI>();
-            summonPopupUI.curSummoningItemType = ItemType.Skill;
+            summonPopupUI.curSummoningItemType = itemType;
             summonPopupUI.SetSlotAsCount(summonCount);
             summonPopupUI.ClearSlotData();
-            summonPopupUI.StartSetDataSOs(skillDataSOs); //그 생성된 웨폰데이터를 바탕으로 웨폰데이터를 세팅해준다.
+            summonPopupUI.StartSetDataSOs(dataSOList); // 소환 데이터 세팅
 
-            if (SummonDataManager.Instance.GetLevel(ItemType.Skill) < 50)
+            // 경험치 추가
+            if (SummonDataManager.Instance.GetLevel(itemType) < 50)
             {
-                SummonDataManager.Instance.AddExperience(ItemType.Skill, summonCount);
+                SummonDataManager.Instance.AddExperience(itemType, summonCount);
             }
         }
     }
+
 
     public void RefreshUI()
     {
@@ -170,6 +144,29 @@ public class Main_ShopUI : UIBase
         {
             skillSummonExpTxt.text = "Max Level";
             skillExpSlider.value = 1;
+        }
+    }
+
+    public void ShowOrHideRedDot()
+    {
+        // 현재 보유한 DungeonTicket 수량을 가져옴
+        float currentDiamond = CurrencyManager.Instance.GetCurrency(CurrencyType.Diamond);
+
+        // 딕셔너리를 순회하면서 Key(가격)와 Value(GameObject)를 확인
+        foreach (var pair in summonRedDotMapping)
+        {
+            int requiredDiamond = pair.Value;           // 필요한 DungeonTicket (Key)
+            GameObject redDot = pair.Key;           // RedDot GameObject (Value)
+
+            // SetActive 처리: 보유한 티켓이 Key 값 이상인지 확인
+            if (currentDiamond >= requiredDiamond)
+            {
+                redDot.SetActive(true);  // 티켓이 충분하면 활성화
+            }
+            else
+            {
+                redDot.SetActive(false); // 부족하면 비활성화
+            }
         }
     }
 }

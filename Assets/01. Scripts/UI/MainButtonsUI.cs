@@ -18,6 +18,12 @@ public class MainButtonsUI : UIBase
     public TextMeshProUGUI dungeonUIBtnLabel;
     public TextMeshProUGUI shopUIBtnLabel;
 
+    public GameObject playerLevelUpRedDot;
+    public GameObject skillRedDot;
+    public GameObject equipmentRedDot;
+    public GameObject dungeonRedDot;
+    public GameObject shopRedDot;
+
     private Dictionary<string, (Image, TextMeshProUGUI)> buttonElements;
 
     private void Awake()
@@ -31,33 +37,26 @@ public class MainButtonsUI : UIBase
             { "Main_DungeonUI", (dungeonUIBtn, dungeonUIBtnLabel) },
             { "Main_ShopUI", (shopUIBtn, shopUIBtnLabel) }
         };
+
+        playerLevelUpRedDot.SetActive(false);
     }
 
     private void OnEnable()
     {
         GameEventsManager.Instance.dungeonEvents.onDungeonUIChanged += UpdateButtonColors;
+        GameEventsManager.Instance.currencyEvents.onDungeonTicketChanged += ShowOrHideRedDot;
+        GameEventsManager.Instance.currencyEvents.onDiamondChanged += ShowOrHideRedDot;
         UpdateButtonColors();
+        ShowOrHideRedDot();
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.dungeonEvents.onDungeonUIChanged -= UpdateButtonColors;
+        GameEventsManager.Instance.currencyEvents.onDiamondChanged -= ShowOrHideRedDot;
     }
 
     /*
-    public void RefreshDungeonRedDotUI()
-    {
-        // 티켓이 남아있다면
-        if (CurrencyManager.Instance.GetCurrency(CurrencyType.DungeonTicket) > 0)
-        {
-            dungeonRedDot.SetActive(true);
-        }
-        else
-        {
-            dungeonRedDot.SetActive(false);
-        }
-    }
-
     public void RefreshEquipmentRedDot()
     {
         if ( 융합할 게 있거나, + 장착할 게 있다면 )
@@ -68,11 +67,6 @@ public class MainButtonsUI : UIBase
         {
             dungeonRedDot.SetActive(false);
         }
-    }
-
-    public void RefreshSummonRedDot()
-    {
-        //소환할 보석이 있다면
     }
 
     public void RefreshSkillRedDot()
@@ -123,9 +117,9 @@ public class MainButtonsUI : UIBase
             case 3:
                 if (DungeonManager.Instance.isPlayerInDungeon || StageManager.Instance.isPlayerInBossStage)
                 {
-                    //Debug.Log("isPlayerInDungeon:" + DungeonManager.Instance.isPlayerInDungeon);
-                    //Debug.Log("isPlayerInBossStage:" + StageManager.Instance.isPlayerInBossStage);
-                    GameEventsManager.Instance.messageEvents.ShowMessage(MessageTextType.DungeonEntryBlocked);
+                    Debug.Log("isPlayerInDungeon:" + DungeonManager.Instance.isPlayerInDungeon);
+                    Debug.Log("isPlayerInBossStage:" + StageManager.Instance.isPlayerInBossStage);
+                    GameEventsManager.Instance.messageEvents.ShowMessage(MessageTextType.DungeonEntryBlocked, 0.4f, 100);
                 }
                 else
                 {
@@ -155,4 +149,13 @@ public class MainButtonsUI : UIBase
             return Color.white; // 기본값으로 흰색 반환
         }
     }
+
+    private void ShowOrHideRedDot()
+    {
+        // playerLevelUpRedDot.SetActive(false); //Awake딴에서 한번 false처리, 현재 기능 구현 상 다시 true될 일 없음
+        dungeonRedDot.SetActive(CurrencyManager.Instance.GetCurrency(CurrencyType.DungeonTicket) > 0);
+        shopRedDot.SetActive(CurrencyManager.Instance.GetCurrency(CurrencyType.Diamond) >= 50); //50원은 최소 소환 다이아몬드
+
+    }
+
 }

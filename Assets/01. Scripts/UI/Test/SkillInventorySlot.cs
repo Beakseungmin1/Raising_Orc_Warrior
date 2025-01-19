@@ -106,7 +106,6 @@ public class SkillInventorySlot : UIBase
 
     private void OnClickSlot(SkillDataSO skillDataSO = null)
     {
-        var dimmedUI = UIManager.Instance.Show<DimmedUI>();
         var skillDetailUIInstance = UIManager.Instance.Show<SkillInfoPopupUI>();
 
         if (skillDetailUIInstance != null)

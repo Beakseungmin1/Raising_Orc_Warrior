@@ -12,7 +12,6 @@ public class Main_PlayerUpgradeUI : UIBase
 
     public void ShowPlayerInfoPopupUI()
     {
-        UIManager.Instance.Show<DimmedUI>();
         UIManager.Instance.Show<PlayerInfoPopupUI>();
         SoundManager.Instance.PlaySFXOneShot(SFXType.Button);
         stat.UpdateUserInformationUI?.Invoke();

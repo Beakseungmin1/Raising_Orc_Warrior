@@ -211,6 +211,7 @@ public class SummonPopupUI : UIBase
     public void OnExitBtn()
     {
         Hide();
+        UIManager.Instance.Show<MainButtonsUI>();
     }
 
     public void OnClickMoreBtn(int summonCount)

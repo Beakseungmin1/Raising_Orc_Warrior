@@ -279,7 +279,6 @@ public class EquipmentFusionPopupUI : UIBase
 
     private void ClosePopup()
     {
-        UIManager.Instance.Hide<DimmedUI>();
         Hide();
     }
 

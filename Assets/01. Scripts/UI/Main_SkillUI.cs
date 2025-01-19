@@ -6,7 +6,6 @@ public class Main_SkillUI : UIBase
 {
     public void ShowSkillInfoPopupUI()
     {
-        UIManager.Instance.Show<DimmedUI>();
         UIManager.Instance.Show<SkillInfoPopupUI>();
     }
 }

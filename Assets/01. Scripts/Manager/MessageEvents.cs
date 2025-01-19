@@ -2,13 +2,13 @@
 
 public class MessageEvents
 {
-    public event Action<MessageTextType> onShowMessage;
+    public event Action<MessageTextType, float, int> onShowMessage;
 
-    public void ShowMessage(MessageTextType messageType)
+    public void ShowMessage(MessageTextType messageType, float duration, int sortOrder)
     {
         if (onShowMessage != null)
         {
-            onShowMessage(messageType);
+            onShowMessage(messageType, duration, sortOrder);
         }
     }
 }
