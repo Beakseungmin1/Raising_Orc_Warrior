@@ -68,6 +68,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
                 CancelInvoke("PlayerAttack");
                 animator.SetBool("2_Attack", false);
                 BattleManager.Instance.EndBattle();
+                Debug.LogWarning("아이들전환");
                 break;
 
             case State.Attacking:
@@ -234,23 +235,33 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private void HandleSkillUsed(BaseSkill skill)
     {
-        currentState = State.Skill;
-        animator.SetTrigger("7_Skill");
-        StartCoroutine(ResetToIdleAfterSkill());
+        if (skill is ActiveSkill activeSkill)
+        {
+            if (playerStat.mana < activeSkill.SkillData.manaCost)
+            {
+                return;
+            }
+
+            currentState = State.Skill;
+            animator.SetTrigger("7_Skill");
+            StartCoroutine(ResetToIdleAfterSkill());
+        }
     }
 
     private IEnumerator ResetToIdleAfterSkill()
     {
         yield return new WaitForSeconds(0.5f);
-        yield return new WaitForSeconds(0.2f);
 
         animator.ResetTrigger("7_Skill");
         animator.SetBool("2_Attack", false);
 
+        // 몬스터가 없거나 죽었다면 Idle 상태로 돌아감
         if (currentMonster == null || !currentMonster.GetActive())
         {
-            currentState = State.Idle;
+            // 애니메이션이 끝날 때까지 기다리고 상태 전환
             animator.Play("IDLE");
+            yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+            currentState = State.Idle;
         }
         else
         {
