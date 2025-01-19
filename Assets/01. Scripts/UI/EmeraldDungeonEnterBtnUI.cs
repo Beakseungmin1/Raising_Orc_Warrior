@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class EXPDungeonEnterSlotUI : UIBase
+public class EmeraldDungeonEnterSlotUI : UIBase
 {
     public DungeonInfoSO dungeonInfoSO;
 
@@ -28,9 +28,9 @@ public class EXPDungeonEnterSlotUI : UIBase
         }
     }
 
-    public void ShowEXPDungeonUI_ConfirmEnterBtnPopUpUI()
+    public void ShowEmeraldDungeonUI_ConfirmEnterBtnPopUpUI()
     {
-        EXPDungeonUI_ConfirmEnterBtnPopUpUI btnPopupUI = UIManager.Instance.Show<EXPDungeonUI_ConfirmEnterBtnPopUpUI>(dungeonInfoSO);
+        EmeraldDungeonUI_ConfirmEnterBtnPopUpUI btnPopupUI = UIManager.Instance.Show<EmeraldDungeonUI_ConfirmEnterBtnPopUpUI>(dungeonInfoSO);
         btnPopupUI.dungeonInfoSO = null;
         btnPopupUI.dungeonInfoSO = this.dungeonInfoSO;
         btnPopupUI.Init();

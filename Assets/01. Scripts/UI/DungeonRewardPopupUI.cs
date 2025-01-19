@@ -15,7 +15,7 @@ public class DungeonRewardPopupUI : UIBase
 
     public Sprite rewardTypeCube;
     public Sprite rewardTypeGold;
-    public Sprite rewardTypeExp;
+    public Sprite rewardTypeEmerald;
 
     public void SetUI(DungeonInfoSO infoSO, BigInteger lastRewardAmount)
     {
@@ -24,8 +24,8 @@ public class DungeonRewardPopupUI : UIBase
 
         switch (dungeonInfoSO.type)
         {
-            case(DungeonType.EXPDungeon):
-                rewardIconImage.sprite = rewardTypeExp;
+            case(DungeonType.EmeraldDungeon):
+                rewardIconImage.sprite = rewardTypeEmerald;
                 break;
             case (DungeonType.CubeDungeon):
                 rewardIconImage.sprite = rewardTypeCube;

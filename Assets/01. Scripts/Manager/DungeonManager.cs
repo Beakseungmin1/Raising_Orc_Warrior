@@ -47,9 +47,9 @@ public class DungeonManager : Singleton<DungeonManager>
         dungeonMap[DungeonType.CubeDungeon] = levelToCubeDungeonMap;
 
 
-        DungeonInfoSO[] expDungeons = Resources.LoadAll<DungeonInfoSO>("Dungeons/ExpDungeons");
+        DungeonInfoSO[] emeraldDungeons = Resources.LoadAll<DungeonInfoSO>("Dungeons/EmeraldDungeons");
         Dictionary<int, Dungeon> levelToExpDungeonMap = new Dictionary<int, Dungeon>();
-        foreach (DungeonInfoSO dungeonInfo in expDungeons)
+        foreach (DungeonInfoSO dungeonInfo in emeraldDungeons)
         {
             if (levelToExpDungeonMap.ContainsKey(dungeonInfo.level))
             {
@@ -57,7 +57,7 @@ public class DungeonManager : Singleton<DungeonManager>
             }
             levelToExpDungeonMap.Add(dungeonInfo.level, LoadDungeon(dungeonInfo));
         }
-        dungeonMap[DungeonType.EXPDungeon] = levelToExpDungeonMap;
+        dungeonMap[DungeonType.EmeraldDungeon] = levelToExpDungeonMap;
 
         return dungeonMap;
     }
@@ -111,8 +111,8 @@ public class DungeonManager : Singleton<DungeonManager>
             case DungeonType.GoldDungeon:
                 CurrencyManager.Instance.AddGold(lastRewardAmount);
                 break;
-            default:
-                PlayerObjManager.Instance.Player.stat.AddExp(lastRewardAmount);
+            default://DungeonType.EmeraldDungeon; 에메랄드 던전
+                CurrencyManager.Instance.AddCurrency(CurrencyType.Emerald, (float)lastRewardAmount);
                 break;
         }
 

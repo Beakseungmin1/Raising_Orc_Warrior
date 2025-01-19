@@ -6,7 +6,7 @@ public class Main_DungeonUI : UIBase
 {
     public GameObject goldRedDot;
     public GameObject cubeRedDot;
-    public GameObject expRedDot;
+    public GameObject emeraldRedDot;
 
     private void OnEnable()
     {
@@ -19,10 +19,10 @@ public class Main_DungeonUI : UIBase
         GameEventsManager.Instance.currencyEvents.onDungeonTicketChanged -= ShowOrHideRedDot;
     }
 
-    public void ShowEXPDungeonUI()
+    public void ShowEmeraldDungeonUI()
     {
         Hide();
-        UIManager.Instance.Show<EXPDungeonUI>();
+        UIManager.Instance.Show<EmeraldDungeonUI>();
     }
     public void ShowGoldDungeonUI()
     {
@@ -40,13 +40,13 @@ public class Main_DungeonUI : UIBase
         {
             goldRedDot.SetActive(true);
             cubeRedDot.SetActive(true);
-            expRedDot.SetActive(true);
+            emeraldRedDot.SetActive(true);
         }
         else
         {
             goldRedDot.SetActive(false);
             cubeRedDot.SetActive(false);
-            expRedDot.SetActive(false);
+            emeraldRedDot.SetActive(false);
         }
     }
 }

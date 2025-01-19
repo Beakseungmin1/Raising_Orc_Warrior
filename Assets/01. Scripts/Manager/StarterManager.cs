@@ -90,7 +90,7 @@ public class StarterManager : Singleton<StarterManager>
     private void OpenFirstDungeons()
     {
         DungeonManager.Instance.ChangeDungeonState(DungeonType.CubeDungeon, 1, DungeonState.OPENED);
-        DungeonManager.Instance.ChangeDungeonState(DungeonType.EXPDungeon, 1, DungeonState.OPENED);
+        DungeonManager.Instance.ChangeDungeonState(DungeonType.EmeraldDungeon, 1, DungeonState.OPENED);
         DungeonManager.Instance.ChangeDungeonState(DungeonType.GoldDungeon, 1, DungeonState.OPENED);
     }
 }

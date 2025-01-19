@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 362ce8ad7608dfc43b5a3454a34d43cc, type: 3}
-  m_Name: ExpDungeon0003
+  m_Name: EmeraldDungeon0001
   m_EditorClassIdentifier: 
-  level: 3
+  level: 1
   type: 2
   dungeonBoss: {fileID: 11400000, guid: 141d795a02777924e81e256d587a2497, type: 2}
   enemySOs: []
-  rewardAmount: 10000
+  rewardAmount: 1000
