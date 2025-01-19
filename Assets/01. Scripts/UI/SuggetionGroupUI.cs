@@ -163,7 +163,7 @@ public class SuggetionGroupUI : UIBase
         {
             equipManager.EquipWeapon(bestWeapon);
             HideWeaponUI();
-            GameEventsManager.Instance.messageEvents.ShowMessage(MessageTextType.Equipped);
+            GameEventsManager.Instance.messageEvents.ShowMessage(MessageTextType.Equipped, 0.5f, 100);
         }
     }
 
@@ -189,7 +189,7 @@ public class SuggetionGroupUI : UIBase
         {
             equipManager.EquipAccessory(bestAccessory);
             HideAccessoryUI();
-            GameEventsManager.Instance.messageEvents.ShowMessage(MessageTextType.Equipped);
+            GameEventsManager.Instance.messageEvents.ShowMessage(MessageTextType.Equipped, 0.5f, 100);
         }
     }
 

@@ -23,12 +23,16 @@ public class MessagePopupUI : UIBase
         messageObj.SetActive(false);
     }
 
-    public void ShowMessage(MessageTextType messageType)
+    public void ShowMessage(MessageTextType messageType, float duration, int sortingOrder)
     {
         if (!gameObject.activeInHierarchy)
         {
             gameObject.SetActive(true);
         }
+
+        displayDuration = duration; //0.5f;
+        fadeInDuration = duration * 0.5f; //0.25f;
+        fadeOutDuration = duration * 0.5f; //0.25f;
 
         switch (messageType)
         {
@@ -38,6 +42,12 @@ public class MessagePopupUI : UIBase
             case MessageTextType.DungeonEntryBlocked:
                 messageTxt.text = "전투 중 던전 입장이 불가합니다.";
                 break ;
+            case MessageTextType.DungeonTicketNotEnough:
+                messageTxt.text = "던전 티켓이 부족합니다.";
+                break;
+            case MessageTextType.TakeQuestReward:
+                messageTxt.text = "퀘스트 보상을 받았습니다.";
+                break;
             default:
                 break;
         }
@@ -46,18 +56,26 @@ public class MessagePopupUI : UIBase
         {
             StopCoroutine(displayCoroutine);
         }
-        displayCoroutine = StartCoroutine(DisplayMessageCoroutine());
+        displayCoroutine = StartCoroutine(DisplayMessageCoroutine(sortingOrder));
     }
 
-    private IEnumerator DisplayMessageCoroutine()
+    private IEnumerator DisplayMessageCoroutine(int sortOrder)
     {
         messageObj.SetActive(true);
+
+        //소팅 오더 설정 
+        int savedSortingOrder = messageObj.GetComponent<MessagePopupUI>().canvas.sortingOrder;
+        messageObj.GetComponent<MessagePopupUI>().canvas.sortingOrder = sortOrder;
+
         SetMessageAlpha(0f);
         yield return FadeInMessage();
         yield return new WaitForSeconds(displayDuration);
         yield return FadeOutMessage();
         messageObj.SetActive(false);
         displayCoroutine = null;
+
+        //소팅오더 원상복구
+        messageObj.GetComponent<MessagePopupUI>().canvas.sortingOrder = savedSortingOrder;
     }
 
     private void SetMessageAlpha(float alpha)
