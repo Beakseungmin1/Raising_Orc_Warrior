@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadQuestState: 0
-  questGameObjs: []
 --- !u!114 &1773905168374146265
 MonoBehaviour:
   m_ObjectHideFlags: 0
