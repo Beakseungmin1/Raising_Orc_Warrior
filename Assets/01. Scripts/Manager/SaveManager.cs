@@ -61,8 +61,6 @@ public class Datas
     public int SkillSummonLevel = 1;
     public float SkillSummonExp = 0f;
     public float SkillSummonNextExp = 100f;
-    public List<Weapon> WeaponInventory;
-    public List<Accessory> AccessoryInventory;
 }
 
 
@@ -71,6 +69,8 @@ public class SaveManager : Singleton<SaveManager>
 
     public Datas datas;
     public List<SkillSaveData> SkillInventory;
+    public List<WeaponSaveData> WeaponInventory;
+    public List<AccessorySaveData> AccessoryInventory;
 
 
     private string KeyName = "Datas";
@@ -85,6 +85,8 @@ public class SaveManager : Singleton<SaveManager>
     {
         datas = new Datas();
         SkillInventory = new List<SkillSaveData>();
+        WeaponInventory = new List<WeaponSaveData>();
+        AccessoryInventory = new List<AccessorySaveData>();
 
         stat = PlayerObjManager.Instance.Player.stat;
         inventory = PlayerObjManager.Instance.Player.inventory;
@@ -154,7 +156,7 @@ public class SaveManager : Singleton<SaveManager>
         datas.SkillSummonNextExp = SummonDataManager.Instance.GetExpToNextLevel(ItemType.Skill);
 
 
-        SkillInventory = new List<SkillSaveData>();
+        SkillInventory.Clear();
         List<BaseSkill> skills = inventory.GetSkillInventory().GetAllItems();
         foreach (BaseSkill skill in skills)
         {
@@ -168,7 +170,36 @@ public class SaveManager : Singleton<SaveManager>
 
             SkillInventory.Add(newSkillData);
         }
-        //Debug.Log(SkillInventory[0].skillData);
+
+        WeaponInventory.Clear();
+        List<Weapon> weapons = inventory.GetWeaponInventory().GetAllItems();
+        foreach (Weapon weapon in weapons)
+        {
+            WeaponSaveData newWeaponData = new WeaponSaveData();
+
+
+            newWeaponData.WeaponId = weapon.BaseData.weaponId;
+            newWeaponData.EnhancementLevel = weapon.EnhancementLevel;
+            newWeaponData.StackCount = weapon.StackCount;
+
+
+            WeaponInventory.Add(newWeaponData);
+        }
+
+        AccessoryInventory.Clear();
+        List<Accessory> accessorys = inventory.GetAccessoryInventory().GetAllItems();
+        foreach (Accessory access in accessorys)
+        {
+            AccessorySaveData newAccessoryData = new AccessorySaveData();
+
+
+            newAccessoryData.AccessoryId = access.BaseData.AccessoryId;
+            newAccessoryData.EnhancementLevel = access.EnhancementLevel;
+            newAccessoryData.StackCount = access.StackCount;
+
+
+            AccessoryInventory.Add(newAccessoryData);
+        }
 
         //datas.WeaponInventory = inventory.GetWeaponInventory().GetAllItems();
         //datas.AccessoryInventory = inventory.GetAccessoryInventory().GetAllItems();
@@ -176,6 +207,8 @@ public class SaveManager : Singleton<SaveManager>
 
         //Unity에서 UnityEngine.Object 타입의 필드(예: Component, ScriptableObject, Texture2D 등)는 참조로 저장되서 따로 저장하고 불러야함
         ES3.Save("SkillInventory", SkillInventory);
+        ES3.Save("WeaponInventory", WeaponInventory);
+        ES3.Save("AccessoryInventory", AccessoryInventory);
 
         ES3.Save("Datas", datas);
     }
@@ -184,8 +217,10 @@ public class SaveManager : Singleton<SaveManager>
     {
         if (ES3.FileExists(fileName))
         {
-            // 리스트 로드 할려면 무조건 이렇게 해야한다 시발 조금이라도 다른명령어 쓰면 절대안됌
+            // 리스트 로드 할려면 무조건 이렇게 해야한다 조금이라도 다른명령어 쓰면 절대안됌
             List<SkillSaveData> skillSaveDatas = ES3.Load<List<SkillSaveData>>("SkillInventory");
+            List<WeaponSaveData> weaponSaveDatas = ES3.Load<List<WeaponSaveData>>("WeaponInventory");
+            List<AccessorySaveData> accessorySavedatas = ES3.Load<List<AccessorySaveData>>("AccessoryInventory");
 
             ES3.LoadInto(KeyName, datas);
             stat.StatDataLoad();
@@ -209,26 +244,51 @@ public class SaveManager : Singleton<SaveManager>
             SummonDataManager.Instance.SetExp(ItemType.Skill, datas.SkillSummonExp);
             SummonDataManager.Instance.SetExpToNextLevel(ItemType.Skill, datas.SkillSummonNextExp);
 
-
+            // 모든 스킬의 So데이터를 가져옴
             List<SkillDataSO> allSkills = DataManager.Instance.GetAllSkills();
 
             //저장해놓은 스킬데이터들을 모두 살펴봄
             foreach (SkillSaveData skill in skillSaveDatas)
             {
                 //찾은 저장스킬데이터를 모든 스킬데이터들이랑 비교후 같은걸 집어넣음
-                foreach (SkillDataSO data in allSkills)
+                foreach (SkillDataSO skillData in allSkills)
                 {
-                    if (skill.Skillid == data.SkillId)
+                    if (skill.Skillid == skillData.SkillId)
                     {
-                        skill.SkillDataSO = data;
+                        skill.SkillDataSO = skillData;
                     }
                 }
-                inventory.SetTestSkillInventory(skill);
+                // 넣은 SO 데이터를 가지고있던 갯수만큼 추가해줌
+                inventory.SetSkillSaveDataInventory(skill);
             }
 
-            //inventory.SetSkillInventory(datas.SkillInventory);
-            //inventory.SetWeaponInventory(datas.WeaponInventory);
-            //inventory.SetAccessoryInventory(datas.AccessoryInventory);
+            List<WeaponDataSO> allWeapons = DataManager.Instance.GetAllWeapons();
+
+            foreach (WeaponSaveData weapon in weaponSaveDatas)
+            {
+                foreach (WeaponDataSO weaponData in allWeapons)
+                {
+                    if (weapon.WeaponId == weaponData.weaponId)
+                    {
+                        weapon.WeaponDataSO = weaponData;
+                    }
+                }
+                inventory.SetWeaponSaveDataInventory(weapon);
+            }
+
+            List<AccessoryDataSO> allAccessorys = DataManager.Instance.GetAllAccessories();
+
+            foreach (AccessorySaveData accessory in accessorySavedatas)
+            {
+                foreach (AccessoryDataSO accessoryData in allAccessorys)
+                {
+                    if (accessory.AccessoryId == accessoryData.AccessoryId)
+                    {
+                        accessory.AccessoryDataSO = accessoryData;
+                    }
+                }
+                inventory.SetAccessorySaveDataInventory(accessory);
+            }
         }
         else
         {
