@@ -543,7 +543,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statUpgradeMultiplier: 0
-  save: {fileID: 0}
+  savedata:
+    level: 0
+    attackPower: 20
+    criticalProbability: 0
+    criticalIncreaseDamage: 100
+    bluecriticalIncreaseDamage: 0
+    bluecriticalProbability: 0
+    maxMana: 200
+    mana: 200
+    manaRegeneration: 5
+    hitLate: 0
+    avoid: 0
+    attackSpeed: 0
+    normalMonsterIncreaseDamage: 0
+    bossMonsterIncreaseDamage: 0
+    attackLevel: 1
+    healthLevel: 1
+    healthRegenerationLevel: 1
+    criticalIncreaseDamageLevel: 1
+    criticalProbabilityLevel: 1
+    bluecriticalIncreaseDamageLevel: 1
+    bluecriticalProbabilityLevel: 1
+    Emerald: 0
+    Cube: 0
+    Diamond: 0
+    DungeonTicket: 0
+    curChapter: 0
+    curStageIndex: 0
+    curStageIndexInThisChapter: 0
+    MaxStageIndexInThisChapter: 0
+    WeaponSummonLevel: 1
+    WeaponSummonExp: 0
+    WeaponSummonNextExp: 100
+    AccessorySummonLevel: 1
+    AccessorySummonExp: 0
+    AccessorySummonNextExp: 100
+    SkillSummonLevel: 1
+    SkillSummonExp: 0
+    SkillSummonNextExp: 100
+    WeaponInventory: []
+    AccessoryInventory: []
 --- !u!114 &7265899195095097864
 MonoBehaviour:
   m_ObjectHideFlags: 0
