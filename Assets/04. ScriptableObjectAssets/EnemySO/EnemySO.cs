@@ -13,6 +13,7 @@ public class EnemySO : ScriptableObject
     public string giveMoneyString; // 주는 돈
     public GameObject model; //적 모델
     public float bossTimeLimit = 10f;
+    public float giveDiamond = 1000f;
 
     [Header("Skill Properties")]
     public float cooldown; // 쿨다운 시간 (보스가 스킬을 지니고 있을시 사용)

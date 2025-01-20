@@ -15,6 +15,7 @@ public class Enemy : EnemyBase, IEnemy
     [SerializeField] private BigInteger maxHp;
     [SerializeField] private BigInteger giveExp;
     [SerializeField] private BigInteger giveMoney;
+    [SerializeField] private float giveDiamond;
     [SerializeField] private GameObject model;
     private Animator animator;
 
@@ -129,6 +130,10 @@ public class Enemy : EnemyBase, IEnemy
         giveExp = BigInteger.Parse(enemySO.giveExpString);
         giveMoney = BigInteger.Parse(enemySO.giveMoneyString);
 
+        // 확률적으로 giveDiamond를 0~3배로 설정
+        int multiplier = UnityEngine.Random.Range(0, 4); // 0~3 사이의 정수
+        giveDiamond = enemySO.giveDiamond * multiplier;
+
         if (model == null)
         {
             model = enemySO.model;
@@ -144,6 +149,11 @@ public class Enemy : EnemyBase, IEnemy
         isClearing = false;
 
         UpdateHealthBar();
+    }
+    
+    public float GiveDiamond()
+    {
+        return giveDiamond;
     }
 
     public void ClearEnemy()

@@ -13,6 +13,7 @@ public class EnemyBoss : EnemyBase, IEnemy
     [SerializeField] private BigInteger maxHp; // 최대체력
     [SerializeField] private BigInteger giveExp; // 주는 경험치
     [SerializeField] private BigInteger giveMoney; // 주는 돈
+    [SerializeField] private float giveDiamond;
     [SerializeField] private GameObject model; //적 모델
     [SerializeField] private Animator animator;
     private Collider2D enemyBossCollider;
@@ -109,6 +110,11 @@ public class EnemyBoss : EnemyBase, IEnemy
         }
     }
 
+    public float GiveDiamond()
+    {
+        return giveDiamond;
+    }
+
     public BigInteger GiveExp()
     {
         return giveExp;
@@ -139,6 +145,7 @@ public class EnemyBoss : EnemyBase, IEnemy
         hp = BigInteger.Parse(enemySO.hpString);
         maxHp = BigInteger.Parse(enemySO.maxHpString);
         giveExp = BigInteger.Parse(enemySO.giveExpString);
+        giveDiamond = enemySO.giveDiamond;
         //if (model == null)
         //{
         //    model = enemySO.model;

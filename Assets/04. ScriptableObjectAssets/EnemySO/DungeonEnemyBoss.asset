@@ -19,6 +19,7 @@ MonoBehaviour:
   giveMoneyString: 0
   model: {fileID: 0}
   bossTimeLimit: 60
+  giveDiamond: 0
   cooldown: 10
   skillEffectPrefab: {fileID: 0}
   effectRange: {fileID: 0}

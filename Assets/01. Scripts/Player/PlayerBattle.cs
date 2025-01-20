@@ -170,9 +170,11 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     public void GetMonsterReward()
     {
+        
         playerStat.AddExpFromMonsters(currentMonster);
         BigInteger monsterGold = currentMonster.GiveMoney();
         CurrencyManager.Instance.AddGold(monsterGold);
+        CurrencyManager.Instance.AddCurrency(CurrencyType.Diamond, currentMonster.GiveDiamond());
         currentMonster = null;
 
         if (!isDead)

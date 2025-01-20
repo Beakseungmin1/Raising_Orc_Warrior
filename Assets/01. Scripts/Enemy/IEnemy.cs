@@ -9,6 +9,8 @@ public interface IEnemy
 
     BigInteger GiveMoney();
 
+    float GiveDiamond();
+
     void Die();
     bool GetActive();
 
