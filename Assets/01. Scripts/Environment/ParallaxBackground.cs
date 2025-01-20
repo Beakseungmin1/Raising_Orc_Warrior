@@ -80,6 +80,11 @@ public class ParallaxBackground : MonoBehaviour
         scrollSpeed = defaultSpeed;
     }
 
+    public void ChangeScrollSpeed2f()
+    {
+        scrollSpeed = 2f;
+    }
+
     private void ScrollBackground(Vector3 direction)
     {
         foreach (var background in backgrounds)

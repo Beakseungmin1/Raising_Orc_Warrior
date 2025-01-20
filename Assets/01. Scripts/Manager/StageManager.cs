@@ -183,6 +183,7 @@ public class StageManager : Singleton<StageManager>
         curStageIndex++;
         curStageIndexInThisChapter = 0;
         BackgroundManager.Instance.ChangeBackGround();
+        BackgroundManager.Instance.ParallaxBackground.ChangeScrollSpeed2f();
         SetStageList();
         SetBossStageList();
         RefreshChapter();
