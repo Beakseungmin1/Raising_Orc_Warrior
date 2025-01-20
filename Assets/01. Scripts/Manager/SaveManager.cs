@@ -201,10 +201,6 @@ public class SaveManager : Singleton<SaveManager>
             AccessoryInventory.Add(newAccessoryData);
         }
 
-        //datas.WeaponInventory = inventory.GetWeaponInventory().GetAllItems();
-        //datas.AccessoryInventory = inventory.GetAccessoryInventory().GetAllItems();
-        // 필요한 필드만 가지고 있는 클래스를 하나 만들면 어떨까 직렬화 가능하게
-
         //Unity에서 UnityEngine.Object 타입의 필드(예: Component, ScriptableObject, Texture2D 등)는 참조로 저장되서 따로 저장하고 불러야함
         ES3.Save("SkillInventory", SkillInventory);
         ES3.Save("WeaponInventory", WeaponInventory);

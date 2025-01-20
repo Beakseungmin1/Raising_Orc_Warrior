@@ -106,11 +106,12 @@ public class ParallaxBackground : MonoBehaviour
 
     public void StartScrollingRight(float knockbackTime)
     {
-        Debug.Log(isKnockback);
+        isKnockback = false;
         if (!isKnockback)
         {
             isKnockback = true;
             OnKnockback?.Invoke(knockbackTime);
+            Debug.Log(isKnockback);
             StartCoroutine(StopScrollingRightAfterDuration(knockbackTime));
         }
     }
