@@ -204,7 +204,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     {
         if (collision.CompareTag("Monster"))
         {
-            Debug.Log("OnTriggerEnter2D");
             currentMonster = collision.GetComponent<IEnemy>();
             currentState = State.Attacking;
         }
@@ -216,15 +215,12 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         {
             if (!currentMonster.GetActive())
             {
-                Debug.Log("OnTriggerExit2D: GetMonsterReward");
                 GetMonsterReward();
             }
             else
             {
                 if (!isDead)
                 {
-                    Debug.Log("OnTriggerExit2D: !isDead");
-
                     animator.ResetTrigger("7_Skill");
                     animator.ResetTrigger("3_Damaged");
                     animator.SetBool("2_Attack", false);
@@ -244,7 +240,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
             {
                 return;
             }
-            Debug.Log("HandleSkillUsed");
             currentState = State.Skill;
             animator.SetTrigger("7_Skill");
             StartCoroutine(ResetToIdleAfterSkill());
