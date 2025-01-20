@@ -35,7 +35,7 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        background = BackgroundManager.Instance.ParallaxBackground;
+
         PlayerDamageCalculator = GetComponent<PlayerDamageCalculator>();
         playerStat = GetComponent<PlayerStat>();
         animator = GetComponentInChildren<Animator>();
@@ -52,6 +52,11 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private void Update()
     {
+        if (background == null)
+        {
+            background = BackgroundManager.Instance.ParallaxBackground;
+        }
+
         switch (currentState)
         {
             case State.Idle:

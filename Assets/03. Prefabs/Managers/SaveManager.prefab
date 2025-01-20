@@ -74,3 +74,12 @@ MonoBehaviour:
     curStageIndex: 0
     curStageIndexInThisChapter: 0
     MaxStageIndexInThisChapter: 0
+    WeaponSummonLevel: 1
+    WeaponSummonExp: 0
+    WeaponSummonNextExp: 100
+    AccessorySummonLevel: 1
+    AccessorySummonExp: 0
+    AccessorySummonNextExp: 100
+    SkillSummonLevel: 1
+    SkillSummonExp: 0
+    SkillSummonNextExp: 100

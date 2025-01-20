@@ -9,11 +9,13 @@ public class StarterManager : Singleton<StarterManager>
 
     void Start()
     {
+        Debug.Log("Persistent Data Path: " + Application.persistentDataPath);
+
         SaveManager.Instance.Init();
         StageManager.Instance.ResetStage();
         PlayerObjManager.Instance.Player.StatCalculator.UpdateValue();
         BackgroundManager.Instance.Init();
-        
+
         CreateInitialUI();
         CreateEventSystem();
 
@@ -73,7 +75,7 @@ public class StarterManager : Singleton<StarterManager>
         UIManager.Instance.Show<MainButtonsUI>();
         UIManager.Instance.Show<SuggetionGroupUI>();
         UIManager.Instance.Show<MessagePopupUI>();
-        UIManager.Instance.Show<SkillEquipSlotManager>();        
+        UIManager.Instance.Show<SkillEquipSlotManager>();
     }
 
     private void CreateEventSystem()
