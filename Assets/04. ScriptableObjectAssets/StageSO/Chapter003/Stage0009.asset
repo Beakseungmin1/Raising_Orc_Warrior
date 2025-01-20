@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Stage0009
   m_EditorClassIdentifier: 
   enemySOs:
-  - {fileID: 11400000, guid: f4bd227021db74845bc17f61a8f9b701, type: 2}
-  - {fileID: 11400000, guid: f4bd227021db74845bc17f61a8f9b701, type: 2}
-  - {fileID: 11400000, guid: f4bd227021db74845bc17f61a8f9b701, type: 2}
-  - {fileID: 11400000, guid: f4bd227021db74845bc17f61a8f9b701, type: 2}
-  - {fileID: 11400000, guid: aab18786d9a44bd43be1e2b3336c04d9, type: 2}
-  - {fileID: 11400000, guid: aab18786d9a44bd43be1e2b3336c04d9, type: 2}
-  - {fileID: 11400000, guid: f3b26c85834e32e48adbc7170b3a18e9, type: 2}
-  - {fileID: 11400000, guid: f3b26c85834e32e48adbc7170b3a18e9, type: 2}
-  - {fileID: 11400000, guid: f3b26c85834e32e48adbc7170b3a18e9, type: 2}
-  - {fileID: 11400000, guid: f3b26c85834e32e48adbc7170b3a18e9, type: 2}
+  - {fileID: 11400000, guid: 968af564a9bcf2743bdac5e6485ca5ae, type: 2}
+  - {fileID: 11400000, guid: 968af564a9bcf2743bdac5e6485ca5ae, type: 2}
+  - {fileID: 11400000, guid: 968af564a9bcf2743bdac5e6485ca5ae, type: 2}
+  - {fileID: 11400000, guid: 968af564a9bcf2743bdac5e6485ca5ae, type: 2}
+  - {fileID: 11400000, guid: 968af564a9bcf2743bdac5e6485ca5ae, type: 2}
+  - {fileID: 11400000, guid: 968af564a9bcf2743bdac5e6485ca5ae, type: 2}
+  - {fileID: 11400000, guid: 968af564a9bcf2743bdac5e6485ca5ae, type: 2}
+  - {fileID: 11400000, guid: 968af564a9bcf2743bdac5e6485ca5ae, type: 2}
+  - {fileID: 11400000, guid: 968af564a9bcf2743bdac5e6485ca5ae, type: 2}
+  - {fileID: 11400000, guid: 968af564a9bcf2743bdac5e6485ca5ae, type: 2}
   stageName: "\uB9C8\uC9C0\uB9C9 \uC2A4\uD14C\uC774\uC9C0"

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b47a7f738dfaec4aa384fe6ab378b38, type: 3}
-  m_Name: TestEnemy 2
+  m_Name: TestEnemy 9
   m_EditorClassIdentifier: 
   enemyCode: 1
-  hpString: 800
-  maxHpString: 800
-  giveExpString: 80
-  giveMoneyString: 800
+  hpString: 3000000
+  maxHpString: 3000000
+  giveExpString: 81920
+  giveMoneyString: 81920
   model: {fileID: 1210817250785749426, guid: 2b434b09afde1294994206c9d058e9a8, type: 3}
   bossTimeLimit: 10
   cooldown: 10

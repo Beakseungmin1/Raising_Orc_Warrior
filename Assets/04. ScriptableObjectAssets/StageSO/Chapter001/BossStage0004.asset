@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3272f8dd3a6fb134b80c0562f8149c47, type: 3}
   m_Name: BossStage0004
   m_EditorClassIdentifier: 
-  bossEnemySO: {fileID: 11400000, guid: 22d84c7d7c0bb21468253ae3fb8c0744, type: 2}
+  bossEnemySO: {fileID: 11400000, guid: a9fe9c860f0755f4abd5518f8debf870, type: 2}
   stageName: "\uC911\uAE09\uC790 \uC0AC\uB0E5\uD130 I Boss"
