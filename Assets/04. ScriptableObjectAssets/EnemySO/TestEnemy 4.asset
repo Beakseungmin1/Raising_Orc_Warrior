@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: TestEnemy 4
   m_EditorClassIdentifier: 
   enemyCode: 1
-  hpString: 20000
-  maxHpString: 20000
+  hpString: 2500000
+  maxHpString: 2500000
   giveExpString: 640
   giveMoneyString: 6400
   model: {fileID: 1210817250785749426, guid: 2b434b09afde1294994206c9d058e9a8, type: 3}
   bossTimeLimit: 10
-  giveDiamond: 400
+  giveDiamond: 200
   cooldown: 10
   skillEffectPrefab: {fileID: 0}
   effectRange: {fileID: 0}
