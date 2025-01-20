@@ -59,12 +59,21 @@ public class PlayerBattle : MonoBehaviour, IDamageable
             background = BackgroundManager.Instance.ParallaxBackground;
         }
 
+
         switch (currentState)
         {
             case State.Idle:
-                CancelInvoke("PlayerAttack");
-                animator.SetBool("2_Attack", false);
-                BattleManager.Instance.EndBattle();
+                if(currentMonster == null)
+                {
+                    CancelInvoke("PlayerAttack");
+                    animator.SetBool("2_Attack", false);
+                    animator.ResetTrigger("7_Skill");
+                    BattleManager.Instance.EndBattle();
+                }
+                else
+                {
+                    currentState = State.Attacking;
+                }
                 break;
 
             case State.Attacking:
@@ -187,7 +196,6 @@ public class PlayerBattle : MonoBehaviour, IDamageable
 
     private IEnumerator DelayBeforeReturningToIdle()
     {
-        bool isDead = false;
         animator.ResetTrigger("7_Skill");
         animator.ResetTrigger("3_Damaged");
         animator.SetBool("isDeath", false);
