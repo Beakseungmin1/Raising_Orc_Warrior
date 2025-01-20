@@ -135,6 +135,7 @@ public class StageManager : Singleton<StageManager>
         RegenManager.Instance.CacheEnemies();
         RegenManager.Instance.RegenStagesEnemy();
         GameEventsManager.Instance.stageEvents.ChangeStage();
+        BackgroundManager.Instance.ParallaxBackground.ChangeScrollSpeed2f();
     }
 
     public void GoToBossStage()
@@ -150,6 +151,7 @@ public class StageManager : Singleton<StageManager>
         RegenManager.Instance.RegenStagesBossEnemy();
         SetTimer(bossStageSOs[curStageIndexInThisChapter].bossEnemySO.bossTimeLimit);
         GameEventsManager.Instance.stageEvents.ChangeStage();
+        BackgroundManager.Instance.ParallaxBackground.ChangeScrollSpeed2f();
     }
 
 
@@ -172,6 +174,7 @@ public class StageManager : Singleton<StageManager>
         GameEventsManager.Instance.stageEvents.ChangeStage();
         DungeonManager.Instance.isPlayerInDungeon = true;
         BattleManager.Instance.EndBattle();
+        BackgroundManager.Instance.ParallaxBackground.ChangeScrollSpeed2f();
     }
 
 
