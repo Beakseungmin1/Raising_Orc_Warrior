@@ -582,8 +582,6 @@ MonoBehaviour:
     SkillSummonLevel: 1
     SkillSummonExp: 0
     SkillSummonNextExp: 100
-    WeaponInventory: []
-    AccessoryInventory: []
 --- !u!114 &7265899195095097864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -681,7 +679,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 5
