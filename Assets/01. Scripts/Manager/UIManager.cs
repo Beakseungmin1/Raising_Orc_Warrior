@@ -86,37 +86,6 @@ public class UIManager : Singleton<UIManager>
             currentMainUI = ui;
         }
 
-        // 스크린 비율에 따라 UI 위치 조정
-        RectTransform rectTransform = ui.GetComponent<RectTransform>();
-        if (rectTransform != null)
-        {
-            // 기존 위치값 가져오기
-            Vector2 currentPosition = rectTransform.anchoredPosition;
-
-            // 스크린 비율 계산
-            float targetAspect = 9f / 16f; // 목표 비율
-            float screenAspect = (float)Screen.width / Screen.height;
-            float scaleHeight = screenAspect / targetAspect; //목표비율 대비 얼마나 커졌는가.(크기가 얼마나 커졌는지 확인)
-
-            if (scaleHeight < 1)
-            {
-                // 스크린이 길어졌을 때 - 기존 Y 위치에서 추가로 이동
-                currentPosition.y -= (1f - scaleHeight) * Screen.height / 2f;
-            }
-            else
-            {
-                // 스크린이 짧아졌을 때 - 기존 위치 유지
-                currentPosition.y += 0; // 필요 시 로직 추가 가능
-            }
-
-            // 조정된 위치를 다시 적용
-            rectTransform.anchoredPosition = currentPosition;
-        }
-        else
-        {
-            Debug.LogWarning($"UI에 RectTransform이 없습니다: {uiName}");
-        }
-
         return (T)ui;
     }
 
@@ -151,37 +120,6 @@ public class UIManager : Singleton<UIManager>
         if (uiName.StartsWith("Main_"))
         {
             currentMainUI = ui;
-        }
-
-        // 스크린 비율에 따라 UI 위치 조정
-        RectTransform rectTransform = ui.GetComponent<RectTransform>();
-        if (rectTransform != null)
-        {
-            // 기존 위치값 가져오기
-            Vector2 currentPosition = rectTransform.anchoredPosition;
-
-            // 스크린 비율 계산
-            float targetAspect = 9f / 16f; // 목표 비율
-            float screenAspect = (float)Screen.width / Screen.height;
-            float scaleHeight = screenAspect / targetAspect; //목표비율 대비 얼마나 커졌는가.(크기가 얼마나 커졌는지 확인)
-
-            if (scaleHeight < 1)
-            {
-                // 스크린이 길어졌을 때 - 기존 Y 위치에서 추가로 이동
-                currentPosition.y -= (1f - scaleHeight) * Screen.height / 2f;
-            }
-            else
-            {
-                // 스크린이 짧아졌을 때 - 기존 위치 유지
-                currentPosition.y += 0; // 필요 시 로직 추가 가능
-            }
-
-            // 조정된 위치를 다시 적용
-            rectTransform.anchoredPosition = currentPosition;
-        }
-        else
-        {
-            Debug.LogWarning($"UI에 RectTransform이 없습니다: {uiName}");
         }
 
         return (T)ui;
@@ -274,37 +212,6 @@ public class UIManager : Singleton<UIManager>
             currentMainUI = ui;
         }
 
-        // 스크린 비율에 따라 UI 위치 조정
-        RectTransform rectTransform = ui.GetComponent<RectTransform>();
-        if (rectTransform != null)
-        {
-            // 기존 위치값 가져오기
-            Vector2 currentPosition = rectTransform.anchoredPosition;
-
-            // 스크린 비율 계산
-            float targetAspect = 9f / 16f; // 목표 비율
-            float screenAspect = (float)Screen.width / Screen.height;
-            float scaleHeight = screenAspect / targetAspect; //목표비율 대비 얼마나 커졌는가.(크기가 얼마나 커졌는지 확인)
-
-            if (scaleHeight < 1)
-            {
-                // 스크린이 길어졌을 때 - 기존 Y 위치에서 추가로 이동
-                currentPosition.y -= (1f - scaleHeight) * Screen.height / 2f;
-            }
-            else
-            {
-                // 스크린이 짧아졌을 때 - 기존 위치 유지
-                currentPosition.y += 0; // 필요 시 로직 추가 가능
-            }
-
-            // 조정된 위치를 다시 적용
-            rectTransform.anchoredPosition = currentPosition;
-        }
-        else
-        {
-            Debug.LogWarning($"UI에 RectTransform이 없습니다: {uiName}");
-        }
-
         return (T)ui;
     }
 
@@ -351,37 +258,6 @@ public class UIManager : Singleton<UIManager>
         }
 
         var ui = LoadFadeController<T>(go, uiName, fadeType); // 새 UI 생성
-
-        // 스크린 비율에 따라 UI 위치 조정
-        RectTransform rectTransform = ui.GetComponent<RectTransform>();
-        if (rectTransform != null)
-        {
-            // 기존 위치값 가져오기
-            Vector2 currentPosition = rectTransform.anchoredPosition;
-
-            // 스크린 비율 계산
-            float targetAspect = 9f / 16f; // 목표 비율
-            float screenAspect = (float)Screen.width / Screen.height;
-            float scaleHeight = screenAspect / targetAspect; //목표비율 대비 얼마나 커졌는가.(크기가 얼마나 커졌는지 확인)
-
-            if (scaleHeight < 1)
-            {
-                // 스크린이 길어졌을 때 - 기존 Y 위치에서 추가로 이동
-                currentPosition.y -= (1f - scaleHeight) * Screen.height / 2f;
-            }
-            else
-            {
-                // 스크린이 짧아졌을 때 - 기존 위치 유지
-                currentPosition.y += 0; // 필요 시 로직 추가 가능
-            }
-
-            // 조정된 위치를 다시 적용
-            rectTransform.anchoredPosition = currentPosition;
-        }
-        else
-        {
-            Debug.LogWarning($"UI에 RectTransform이 없습니다: {uiName}");
-        }
 
         return (T)ui;
     }
