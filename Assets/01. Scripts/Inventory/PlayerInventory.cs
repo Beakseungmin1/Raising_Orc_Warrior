@@ -69,14 +69,23 @@ public class PlayerInventory : MonoBehaviour
         return AccessoryInventory;
     }
 
-    public void SetSkillSaveDataInventory(SkillSaveData skills)
+    public void SetSkillSaveDataInventory(SkillSaveData skill)
     {
         SkillDataSO skillData = new SkillDataSO();
 
-        skillData = skills.SkillDataSO;
-        for (int i = 0; i < skills.StackCount; i++)
+        skillData = skill.SkillDataSO;
+        for (int i = 0; i < skill.StackCount; i++)
         {
             AddItem(SkillInventory, CreateSkillInstance(skillData));
+        }
+
+        List<BaseSkill> Inventoryskills = SkillInventory.GetAllItems();
+        foreach (BaseSkill baseSkill in Inventoryskills)
+        {
+            if (skill.Skillid == baseSkill.SkillData.SkillId)
+            {
+                baseSkill.EnhancementLevel = skill.EnhancementLevel;
+            }
         }
         OnSkillsChanged?.Invoke();
     }
@@ -107,6 +116,11 @@ public class PlayerInventory : MonoBehaviour
         }
         OnInventoryChanged?.Invoke(false);
         PassiveManager.Instance.UpdateAccessoryEffects();
+    }
+
+    public void SetSkillSaveEnhancementLevel()
+    {
+
     }
 
 
