@@ -46,6 +46,11 @@ public class PassiveManager : Singleton<PassiveManager>
 
     public void UpdateAccessoryEffects()
     {
+        if (stat == null)
+        {
+            stat = PlayerObjManager.Instance.Player.stat;
+        }
+
         totalExtraExpRate = (BigInteger)inventory.GetTotalAccessoryAddEXPRate();
         stat.ChangeExtraExpRate(totalExtraExpRate);
         statCalculator.UpdateValue();
@@ -53,6 +58,11 @@ public class PassiveManager : Singleton<PassiveManager>
 
     public void UpdateWeaponEffects()
     {
+        if (stat == null)
+        {
+            stat = PlayerObjManager.Instance.Player.stat;
+        }
+
         totalGoldGainRate = (BigInteger)inventory.GetTotalWeaponGoldGainRate();
         stat.ChangeExtraGoldGainRate(totalGoldGainRate);
         damageCalculator.GetTotalDamage();
