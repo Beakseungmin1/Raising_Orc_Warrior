@@ -24,4 +24,14 @@ public class EnemyEvents
             onEnemyCleared();
         }
     }
+
+    public event Action<IEnemy> onEnemyDie;
+
+    public void EnemyDie(IEnemy enemy)
+    {
+        if (onEnemyDie != null)
+        {
+            onEnemyDie(enemy);
+        }
+    }
 }

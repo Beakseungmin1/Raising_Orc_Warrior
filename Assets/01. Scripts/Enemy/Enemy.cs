@@ -97,6 +97,9 @@ public class Enemy : EnemyBase, IEnemy
         enemyCollider.enabled = false;
         GameEventsManager.Instance.enemyEvents.EnemyKilled();
 
+        IEnemy iEnemy = this.GetComponent<IEnemy>();
+        GameEventsManager.Instance.enemyEvents.EnemyDie(iEnemy);
+
         if (damageCoroutine != null)
         {
             StopCoroutine(damageCoroutine);
@@ -130,7 +133,7 @@ public class Enemy : EnemyBase, IEnemy
         giveExp = BigInteger.Parse(enemySO.giveExpString);
         giveMoney = BigInteger.Parse(enemySO.giveMoneyString);
 
-        // 확률적으로 giveDiamond를 0~3배로 설정
+        // 확률적으로 giveDiamond를 0~3로 설정
         int multiplier = UnityEngine.Random.Range(0, 4); // 0~3 사이의 정수
         giveDiamond = enemySO.giveDiamond * multiplier;
 
