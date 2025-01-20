@@ -13,11 +13,15 @@ public class ParallaxBackground : MonoBehaviour
     private float backgroundWidth;
     private bool isScrolling = true;
     private bool isBattlePaused = false;
-    private bool isKnockback = false;
+    private bool _isKnockback = false;
+
+    private bool isKnockback;
     private float defaultSpeed;
 
-    public event Action<float> OnKnockback;
+    // 코루틴을 저장할 변수 추가
+    private Coroutine knockbackCoroutine;
 
+    public event Action<float> OnKnockback;
 
     private void Start()
     {
@@ -48,6 +52,8 @@ public class ParallaxBackground : MonoBehaviour
             BattleManager.Instance.OnBattleStart += PauseScroll;
             BattleManager.Instance.OnBattleEnd += ResumeScroll;
         }
+
+        isKnockback = false;
     }
 
     private void Update()
@@ -101,18 +107,18 @@ public class ParallaxBackground : MonoBehaviour
         Transform temp = backgrounds[0];
         backgrounds[0] = backgrounds[1];
         backgrounds[1] = temp;
-
     }
 
     public void StartScrollingRight(float knockbackTime)
     {
         isKnockback = false;
+
         if (!isKnockback)
         {
             isKnockback = true;
             OnKnockback?.Invoke(knockbackTime);
-            Debug.Log(isKnockback);
-            StartCoroutine(StopScrollingRightAfterDuration(knockbackTime));
+
+            knockbackCoroutine = StartCoroutine(StopScrollingRightAfterDuration(knockbackTime));
         }
     }
 
