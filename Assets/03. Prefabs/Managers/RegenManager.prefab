@@ -48,4 +48,4 @@ MonoBehaviour:
   bossEnemy: {fileID: 0}
   totalEnemies: 0
   killedEnemies: 0
-  spawnDistance: 2.5
+  spawnDistance: 1

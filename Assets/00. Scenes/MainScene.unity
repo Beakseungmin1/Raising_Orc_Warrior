@@ -1710,10 +1710,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 482897182977766714, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
-      propertyPath: spawnDistance
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1894558700181277466, guid: e3f30e0cd0966554fb7f9cacbf9da4d7, type: 3}
       propertyPath: m_Name
       value: RegenManager
@@ -4968,14 +4964,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1773905168374146265, guid: 98eaf5341c0d0c14eb335bb5edf05570, type: 3}
-      propertyPath: questInfos.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1773905168374146265, guid: 98eaf5341c0d0c14eb335bb5edf05570, type: 3}
-      propertyPath: questInfos.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: 3cc466af6109f414cac96a6e208fc22f, type: 2}
     - target: {fileID: 3544765790054530863, guid: 98eaf5341c0d0c14eb335bb5edf05570, type: 3}
       propertyPath: m_Name
       value: QuestManager
