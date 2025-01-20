@@ -105,65 +105,6 @@ public sealed class SoundManager : SingletonDontDestroy<SoundManager>
     }
 
     /// <summary>
-    /// Scene 로드 시 자동으로 BGM 호출해주는 함수
-    /// </summary>
-    public void OnLoadCompleted(Scene scene, LoadSceneMode loadSceneMode)
-    {
-        switch (scene.name)
-        {
-            case "Title":
-                //bgmSource가 비어있거나 bgmsource가 enum BGMType의 Title과 다르다면(다른 노래가 재생되고 있다면)
-                if (bgmSource.clip == null || bgmSource.clip != soundDictionary[BGMType.Title])
-                {
-                    //Title enumBGMType로 바꿔라
-                    bgmSource.clip = soundDictionary[BGMType.Title];
-                    //반복재생
-                    bgmSource.Play();
-                }
-                break;
-
-
-            case "Town":
-                //위와 동일
-                if (bgmSource.clip == null || bgmSource.clip != soundDictionary[BGMType.Town])
-                {
-                    bgmSource.clip = soundDictionary[BGMType.Town];
-                    bgmSource.Play();
-                }
-                break;
-
-
-            case "Stage1":
-                //위와 동일
-                if (bgmSource.clip == null || bgmSource.clip != soundDictionary[BGMType.stageTo2])
-                {
-                    bgmSource.clip = soundDictionary[BGMType.stageTo2];
-                    bgmSource.Play();
-                }
-                break;
-
-
-            case "Stage2":
-                //위와 동일
-                if (bgmSource.clip == null || bgmSource.clip != soundDictionary[BGMType.stageTo2])
-                {
-                    bgmSource.clip = soundDictionary[BGMType.stageTo2];
-                    bgmSource.Play();
-                }
-                break;
-
-                
-            case "Stage3":
-                //위와 동일
-                if (bgmSource.clip == null || bgmSource.clip != soundDictionary[BGMType.stage3])
-                {
-                    bgmSource.clip = soundDictionary[BGMType.stage3];
-                    bgmSource.Play();
-                }
-                break;
-        }
-    }
-    /// <summary>
     /// SoundManager 생성 함수
     /// </summary>
     public void Init()

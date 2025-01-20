@@ -19,9 +19,8 @@ public class StarterManager : Singleton<StarterManager>
         CreateInitialUI();
         CreateEventSystem();
 
-        //임시
         SoundManager.Instance.Init();
-        SoundManager.Instance.PlayBGM(BGMType.Title);
+        SoundManager.Instance.PlayBGM(BGMType.InGame);
         OpenFirstDungeons();
         if (!isInitialized)
         {
