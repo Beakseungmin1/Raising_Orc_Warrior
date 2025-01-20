@@ -126,7 +126,7 @@ public class SummonDataManager : Singleton<SummonDataManager>
             { "Hero4", 2f }, { "Hero3", 1.5f }, { "Hero2", 1f }, { "Hero1", 0.5f },
             { "Legendary4", 1f }, { "Legendary3", 0.8f }, { "Legendary2", 0.7f }, { "Legendary1", 0.5f },
             { "Mythic4", 0.76f }, { "Mythic3", 0.57f }, { "Mythic2", 0.38f }, { "Mythic1", 0.19f },
-            { "Ultimate1", 0.1f }
+            { "Ultimate1", 0.001f }
             };
 
         // 소환 레벨 50의 목표 확률

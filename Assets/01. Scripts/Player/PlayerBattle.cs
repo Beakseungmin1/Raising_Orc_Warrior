@@ -48,6 +48,8 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         }
 
         OnPlayerAttack += GiveDamageToEnemy;
+
+        GameEventsManager.Instance.enemyEvents.onEnemyDie += GetMonsterReward;
     }
 
     private void Update()
@@ -168,13 +170,13 @@ public class PlayerBattle : MonoBehaviour, IDamageable
         SoundManager.Instance.PlaySFXOneShot(SFXType.playerAttack1);
     }
 
-    public void GetMonsterReward()
+    public void GetMonsterReward(IEnemy enemy)
     {
         
-        playerStat.AddExpFromMonsters(currentMonster);
-        BigInteger monsterGold = currentMonster.GiveMoney();
+        playerStat.AddExpFromMonsters(enemy);
+        BigInteger monsterGold = enemy.GiveMoney();
         CurrencyManager.Instance.AddGold(monsterGold);
-        CurrencyManager.Instance.AddCurrency(CurrencyType.Diamond, currentMonster.GiveDiamond());
+        CurrencyManager.Instance.AddCurrency(CurrencyType.Diamond, enemy.GiveDiamond());
         currentMonster = null;
 
         if (!isDead)
@@ -213,21 +215,14 @@ public class PlayerBattle : MonoBehaviour, IDamageable
     {
         if (collision.CompareTag("Monster"))
         {
-            if (!currentMonster.GetActive())
+            if (!isDead)
             {
-                GetMonsterReward();
-            }
-            else
-            {
-                if (!isDead)
-                {
-                    animator.ResetTrigger("7_Skill");
-                    animator.ResetTrigger("3_Damaged");
-                    animator.SetBool("2_Attack", false);
-                    animator.Play("IDLE");
-                    currentMonster = null;
-                    currentState = State.Idle;
-                }
+                animator.ResetTrigger("7_Skill");
+                animator.ResetTrigger("3_Damaged");
+                animator.SetBool("2_Attack", false);
+                animator.Play("IDLE");
+                currentMonster = null;
+                currentState = State.Idle;
             }
         }
     }

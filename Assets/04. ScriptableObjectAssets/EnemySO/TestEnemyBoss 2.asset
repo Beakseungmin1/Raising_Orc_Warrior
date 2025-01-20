@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: TestEnemyBoss 2
   m_EditorClassIdentifier: 
   enemyCode: 1
-  hpString: 8000
-  maxHpString: 8000
+  hpString: 500000
+  maxHpString: 500000
   giveExpString: 400
   giveMoneyString: 4000
   model: {fileID: 7548139898082791852, guid: 03d10b03e2eb6f143b7ca88c16582be6, type: 3}
