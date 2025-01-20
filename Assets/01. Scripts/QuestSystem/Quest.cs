@@ -14,7 +14,7 @@ public class Quest
     public Quest(QuestInfoSO questInfo)
     {
         this.info = questInfo;
-        this.state = QuestState.REQUIREMENTS_NOT_MET;
+        this.state = QuestState.IN_PROGRESS;
         this.currentQuestStepIndex = 0;
         this.questStepStates = new QuestStepState[info.questStepPrefabs.Length];
         this.questType = questInfo.questType;

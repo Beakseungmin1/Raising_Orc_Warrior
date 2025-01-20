@@ -35,12 +35,18 @@ public class BossStageInfoUI : UIBase
 
     private void Start()
     {
-        maxLimitTime = StageManager.Instance.timer.GetMaxTime();
+        if (StageManager.Instance.timer != null)
+        {
+            maxLimitTime = StageManager.Instance.timer.GetMaxTime();
+        }
     }
 
     private void FixedUpdate()
     {
-        timeSlider.value = StageManager.Instance.timer.GetLimitTime() / maxLimitTime;
+        if (StageManager.Instance.timer != null)
+        {
+            timeSlider.value = StageManager.Instance.timer.GetLimitTime() / maxLimitTime;
+        }
     }
 
     private void InitUI(BigInteger maxHP)
