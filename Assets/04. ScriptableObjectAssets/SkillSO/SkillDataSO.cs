@@ -32,7 +32,6 @@ public class SkillDataSO : BaseItemDataSO
 
     [Header("Upgrade Info")]
     public int requireSkillCardsForUpgrade;
-    public int maxLevel;
 
     [Header("Visual and Effects")]
     public GameObject effectPrefab;
