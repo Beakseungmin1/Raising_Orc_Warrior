@@ -77,7 +77,6 @@ public class PlayerInventory : MonoBehaviour
         for (int i = 0; i < skills.StackCount; i++)
         {
             AddItem(SkillInventory, CreateSkillInstance(skillData));
-            //강화레벨 넣는법도 구상
         }
         OnSkillsChanged?.Invoke();
     }
