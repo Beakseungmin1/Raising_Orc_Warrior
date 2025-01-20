@@ -13,15 +13,7 @@ public class PassiveManager : Singleton<PassiveManager>
     private PlayerStatCalculator statCalculator;
     private PlayerDamageCalculator damageCalculator;
 
-    private void OnValidate()
-    {
-        stat = PlayerObjManager.Instance.Player.stat;
-        inventory = PlayerObjManager.Instance.Player.inventory;
-        statCalculator = PlayerObjManager.Instance.Player.StatCalculator;
-        damageCalculator = PlayerObjManager.Instance.Player.DamageCalculator;
-    }
-
-    private void Start()
+    private void Awake()
     {
         if (stat == null)
         {
