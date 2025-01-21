@@ -338,7 +338,7 @@ public class PlayerStat : MonoBehaviour
     public void CriticalProbabilityLevelUp()
     {
         int multiplier = statUpgradeMultiplier == 0 ? 1 : (statUpgradeMultiplier == 1 ? 10 : 100);
-        BigInteger needUpgradeMoney = 1000 + ((criticalProbabilityLevel + 1) * 1000 * multiplier);
+        BigInteger needUpgradeMoney = criticalProbabilityLevel * 1000 * multiplier;
         needCriticalProbabilityUpgradeMoney = needUpgradeMoney;
 
         if (CurrencyManager.Instance.GetGold() >= needUpgradeMoney)
@@ -347,6 +347,7 @@ public class PlayerStat : MonoBehaviour
             criticalProbabilityLevel += multiplier;
             criticalProbability = (criticalProbabilityLevel - 1) * 0.1f;
 
+            SoundManager.Instance.PlaySFX(SFXType.StatUp);
             OnStatChange?.Invoke();
         }
         else
