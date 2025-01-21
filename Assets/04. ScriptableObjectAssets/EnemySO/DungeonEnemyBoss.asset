@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DungeonEnemyBoss
   m_EditorClassIdentifier: 
   enemyCode: 1
-  hpString: 999999999
-  maxHpString: 999999999
+  hpString: 9999999999
+  maxHpString: 9999999999
   giveExpString: 0
   giveMoneyString: 0
   model: {fileID: 0}
