@@ -27,7 +27,7 @@ public class ParallaxBackground : MonoBehaviour
     {
         if (backgrounds.Length > 0)
         {
-            defaultSpeed = scrollSpeed;
+            defaultSpeed = 2f;
 
             SpriteRenderer spriteRenderer = backgrounds[0].GetComponent<SpriteRenderer>();
             if (spriteRenderer != null)
@@ -54,6 +54,11 @@ public class ParallaxBackground : MonoBehaviour
         }
 
         isKnockback = false;
+    }
+
+    private void OnEnable()
+    {
+        scrollSpeed = 2f;
     }
 
     private void Update()
